@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SeedWorld - Game</title>
+    <link rel="stylesheet" href="./src/ui/tileGrid.css" />
+    <style>
+      :root {
+        --bg: #101514;
+        --panel: rgb(8 12 11 / 78%);
+        --panel-border: rgb(142 190 169 / 36%);
+        --ink: #dff0e8;
+        --ink-soft: #9bc2b1;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 0% 0%, #233a33 0%, transparent 44%),
+          radial-gradient(circle at 100% 100%, #142622 0%, transparent 42%),
+          var(--bg);
+        color: var(--ink);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .game-shell {
+        min-height: 100vh;
+        padding: 18px;
+        display: grid;
+        place-items: center;
+        position: relative;
+      }
+
+      #tile-grid-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .debug-window {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        width: min(330px, calc(100vw - 20px));
+        border: 1px solid var(--panel-border);
+        border-radius: 10px;
+        background: var(--panel);
+        backdrop-filter: blur(4px);
+        padding: 10px;
+        box-shadow: 0 10px 24px rgb(0 0 0 / 35%);
+      }
+
+      .debug-window h2 {
+        margin: 0 0 6px;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+
+      .resource-palette {
+        display: flex;
+        gap: 8px;
+        margin: 8px 0 6px;
+        flex-wrap: wrap;
+      }
+
+      .resource-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 2px solid #2a3d34;
+        background: #112219;
+        color: #e6fff2;
+        font-weight: 700;
+        font-size: 0.78rem;
+        cursor: pointer;
+      }
+
+      .resource-circle[data-type="mine"] { background: linear-gradient(180deg, #7b4a1f, #4b2e13); }
+      .resource-circle[data-type="factory"] { background: linear-gradient(180deg, #35585a, #233739); }
+      .resource-circle[data-type="storage"] { background: linear-gradient(180deg, #4e3d62, #30253d); }
+      .resource-circle[data-type="clear"] { background: #172720; }
+
+      .resource-circle.is-active {
+        border-color: #7dff7d;
+        box-shadow: 0 0 0 2px rgb(125 255 125 / 20%);
+      }
+
+      .hint {
+        margin: 0;
+        font-size: 0.68rem;
+        color: var(--ink-soft);
+      }
+
+      .radial-menu {
+        position: absolute;
+        width: 108px;
+        height: 108px;
+        margin-left: -54px;
+        margin-top: -54px;
+        border-radius: 999px;
+        border: 1px solid #355346;
+        background: rgb(6 16 12 / 90%);
+        backdrop-filter: blur(3px);
+        z-index: 30;
+      }
+
+      .radial-option {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        margin-left: -16px;
+        margin-top: -16px;
+        border-radius: 999px;
+        border: 1px solid #365948;
+        color: #e8fff3;
+        font-weight: 700;
+        cursor: pointer;
+        transform: rotate(calc(var(--a) * 1deg)) translateY(-38px) rotate(calc(var(--a) * -1deg));
+      }
+
+      .radial-option[data-type="mine"] { background: #6f411a; }
+      .radial-option[data-type="storage"] { background: #4d3a62; }
+      .radial-option[data-type="factory"] { background: #2e4f52; }
+      .radial-option[data-type="clear"] { background: #1e2f27; }
+
+      .radial-option.is-active {
+        box-shadow: 0 0 0 2px rgb(125 255 125 / 28%);
+        border-color: #7dff7d;
+      }
+
+      .debug-row {
+        display: grid;
+        gap: 2px;
+        margin-top: 8px;
+      }
+
+      .debug-row dt {
+        font-size: 0.72rem;
+        color: var(--ink-soft);
+      }
+
+      .debug-row dd {
+        margin: 0;
+        font-family: ui-monospace, "Cascadia Code", monospace;
+        font-size: 0.72rem;
+        line-height: 1.28;
+        max-height: 74px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .connection-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: visible;
+      }
+
+      .connection-line {
+        stroke: #62ffc4;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 12 8;
+        filter: drop-shadow(0 0 5px rgb(98 255 196 / 70%));
+      }
+
+      @media (max-width: 720px) {
+        .game-shell { padding: 12px; }
+        .debug-window { right: 8px; left: 8px; bottom: 8px; width: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game-shell" aria-label="SeedWorld Spielansicht">
+      <div id="tile-grid-container"></div>
+    </main>
+
+    <aside class="debug-window" aria-live="polite" aria-label="Debug Fenster">
+      <h2>Build Menu</h2>
+      <p class="hint">Tippe ein Feld im Grid: die Kreis-Auswahl erscheint direkt am Tipp-Punkt.</p>
+      <p class="hint">Verbindung: Mine -> Lager und Lager -> Fabrik.</p>
+      <dl>
+        <div class="debug-row">
+          <dt>Status</dt>
+          <dd id="status-value">-</dd>
+        </div>
+        <div class="debug-row">
+          <dt>Summary</dt>
+          <dd id="summary-value">-</dd>
+        </div>
+        <div class="debug-row">
+          <dt>State</dt>
+          <dd id="state-value">-</dd>
+        </div>
+      </dl>
+    </aside>
+
+    <script type="module" src="./src/main.js"></script>
+    <script type="module">
+      import { installRadialBuildController } from "./src/plugins/radialBuildController.js";
+      installRadialBuildController();
+    </script>
+  </body>
+</html>
