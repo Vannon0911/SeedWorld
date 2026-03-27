@@ -21,7 +21,7 @@ function verifyDeterministicRng() {
 }
 
 async function verifyServerModulesLoad() {
-  await import('../src/mainServer.js');
+  await import('../patchServer.mjs');
 }
 
 verifyDeterministicRng();

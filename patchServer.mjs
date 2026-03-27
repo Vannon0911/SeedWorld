@@ -15,7 +15,6 @@ import {
 import { readSessionLogs, readSessionStatus } from './tools/patch/lib/orchestrator.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = resolve(join(__filename, '..', '..')) === __filename ? process.cwd() : resolve(fileURLToPath(new URL('.', import.meta.url)));
 const ROOT_DIR = process.cwd();
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
@@ -240,7 +239,7 @@ async function handleCancel(res, sessionId) {
   }
 
   const paths = getSessionPaths(ROOT_DIR, sessionId);
-  await mkdir(resolve(paths.cancelPath, '..'), { recursive: true });
+  await mkdir(resolve(join(paths.cancelPath, '..')), { recursive: true });
   await writeFile(paths.cancelPath, `${new Date().toISOString()}\n`, 'utf8');
   json(res, 202, {
     sessionId,
@@ -342,6 +341,11 @@ async function routeRequest(req, res) {
         ? resolve(ROOT_DIR, 'patch-popup.html')
         : safePath(pathname);
 
+  if (routeFile.includes(`${ROOT_DIR}\\.patch-manager`) || routeFile.includes(`${ROOT_DIR}/.patch-manager`)) {
+    text(res, 404, 'Not found');
+    return;
+  }
+
   try {
     const fileInfo = await stat(routeFile);
     if (!fileInfo.isFile()) {
@@ -367,7 +371,9 @@ export class PatchServer {
   listen() {
     return new Promise((resolvePromise) => {
       this.server.listen(this.port, () => {
-        console.log(`[PATCH_SERVER] running on http://127.0.0.1:${this.port}`);
+        const address = this.server.address();
+        const port = typeof address === 'object' && address ? address.port : this.port;
+        console.log(`[PATCH_SERVER] running on http://127.0.0.1:${port}`);
         resolvePromise();
       });
     });

@@ -111,12 +111,13 @@ function buildSummary(status, backupOutcome = null) {
 }
 
 async function runCommand(command, args, cwd) {
-  const effectiveCommand = process.platform === 'win32' && command === 'npm' ? 'npm.cmd' : command;
   return new Promise((resolvePromise) => {
-    const child = spawn(effectiveCommand, args, {
+    const effectiveCommand = process.platform === 'win32' && command === 'npm' ? `npm ${args.join(' ')}` : command;
+    const effectiveArgs = process.platform === 'win32' && command === 'npm' ? [] : args;
+    const child = spawn(effectiveCommand, effectiveArgs, {
       cwd,
       stdio: ['ignore', 'pipe', 'pipe'],
-      shell: false
+      shell: process.platform === 'win32'
     });
 
     let stdout = '';
@@ -192,6 +193,7 @@ export async function runPatchSession({
   let lockHandle = null;
   let backupManifest = [];
   let backupOutcome = null;
+  let outcomeStatus = null;
 
   try {
     await setPhase(paths, 'intake');
@@ -305,7 +307,7 @@ export async function runPatchSession({
     }
 
     await setPhase(paths, 'finalize');
-    const succeededStatus = await updateStatus(paths.statusPath, {
+    outcomeStatus = await updateStatus(paths.statusPath, {
       state: 'finished',
       finalStatus: 'succeeded',
       endedAt: isoNow(),
@@ -315,7 +317,7 @@ export async function runPatchSession({
         test: testResult
       }
     });
-    await writeSummary(paths.summaryPath, buildSummary(succeededStatus));
+    await writeSummary(paths.summaryPath, buildSummary(outcomeStatus));
     await appendAudit(rootDir, {
       ts: isoNow(),
       type: 'session-finished',
@@ -323,8 +325,6 @@ export async function runPatchSession({
       actor,
       finalStatus: 'succeeded'
     });
-
-    return succeededStatus;
   } catch (error) {
     const phase = error.phase || (await readJson(paths.statusPath, baseStatus)).phase || 'finalize';
     const structuredError = createStructuredError({
@@ -351,7 +351,7 @@ export async function runPatchSession({
       : { restored: [], failed: [] };
 
     const finalStatus = backupOutcome.failed.length === 0 ? 'failed_rolled_back' : 'failed_partial';
-    const failedStatus = await updateStatus(paths.statusPath, {
+    outcomeStatus = await updateStatus(paths.statusPath, {
       state: 'finished',
       finalStatus,
       endedAt: isoNow(),
@@ -366,7 +366,7 @@ export async function runPatchSession({
       type: 'error',
       error: structuredError
     });
-    await writeSummary(paths.summaryPath, buildSummary(failedStatus, backupOutcome));
+    await writeSummary(paths.summaryPath, buildSummary(outcomeStatus, backupOutcome));
     await appendAudit(rootDir, {
       ts: isoNow(),
       type: 'session-failed',
@@ -376,7 +376,6 @@ export async function runPatchSession({
       error: structuredError
     });
 
-    return failedStatus;
   } finally {
     await setPhase(paths, 'release-lock');
     if (lockHandle) {
@@ -391,6 +390,8 @@ export async function runPatchSession({
       phase: 'release-lock'
     });
   }
+
+  return readJson(paths.statusPath, outcomeStatus || baseStatus);
 }
 
 export async function readSessionStatus(rootDir, sessionId) {
