@@ -4,7 +4,7 @@ import {
   MS_PER_TICK,
   getStorageCapacity,
   advanceTickState
-} from "../ui/IconAnimations.js";
+} from "./gameConstants.js";
 
 const STRUCTURE_LABELS = Object.freeze({
   miner: "Abbauer",

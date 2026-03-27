@@ -3,263 +3,341 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeedWorld - Patch Control</title>
+  <title>SeedWorld – Patch</title>
   <link rel="stylesheet" href="/src/patch-control.css">
+  <style>
+    .log-panel {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      background: #0a0e14;
+      border: 1px solid #1e2a38;
+      border-radius: 6px;
+      padding: 12px 14px;
+      height: 260px;
+      overflow-y: auto;
+      color: #8ba3c0;
+      line-height: 1.55;
+      scroll-behavior: smooth;
+    }
+    .log-panel .ok   { color: #5ecb8a; }
+    .log-panel .err  { color: #e05c5c; }
+    .log-panel .info { color: #8ba3c0; }
+    .log-panel .head { color: #f0c060; font-weight: bold; }
+    .log-panel .roll { color: #c07af0; }
+    .log-panel:empty::after { content: 'Warte auf Patch…'; opacity: 0.4; }
+
+    .entry-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .entry-bar label.pick {
+      cursor: pointer;
+      padding: 8px 16px;
+      border: 1px solid #2e4060;
+      border-radius: 5px;
+      color: #8bb4d8;
+      font-size: 0.85rem;
+      transition: background 0.15s;
+    }
+    .entry-bar label.pick:hover { background: #1a2535; }
+    #fileLabel {
+      flex: 1;
+      font-size: 0.82rem;
+      color: #5a7a9a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #1d2d3e;
+      color: #6a9fc0;
+    }
+    .pill.ok   { background: #0d2318; color: #5ecb8a; }
+    .pill.err  { background: #220d0d; color: #e05c5c; }
+    .pill.run  { background: #1d2010; color: #c8d040; }
+
+    .rollback-row { margin-top: 10px; }
+  </style>
 </head>
 <body class="patch-control-body">
   <div class="patch-shell">
+
     <section class="patch-hero">
       <div class="patch-hero-top">
         <div>
-          <p class="patch-kicker">Terminal Authority</p>
-          <h1>Ein Einstieg. Ein Lauf. Ein Ergebnis.</h1>
+          <p class="patch-kicker">Browser Runtime</p>
+          <h1>Ein Einstieg. Prüfen &amp; Anwenden.</h1>
         </div>
         <div class="patch-nav">
           <a class="patch-link" href="/">Game UI</a>
-          <button class="patch-button secondary" id="openPopup" type="button" disabled>Popup oeffnen</button>
         </div>
       </div>
-      <p class="patch-copy">Runtime-only Modus: Browser prueft Patches sicher im Speicher (ohne Repo-Write) und zeigt dir direkt Debug-Hinweise.</p>
+      <p class="patch-copy">
+        ZIP oder JSON wählen → Server prüft → Browser wendet an.<br>
+        Der Terminal-Lauf läuft separat via <code>npm run patch:apply</code>.
+      </p>
     </section>
 
     <div class="patch-grid">
+
+      <!-- Linke Karte: Intake + Status -->
       <section class="patch-card">
         <div class="patch-card-inner">
           <h2>Intake</h2>
-          <p class="patch-subtle">ZIP oder JSON hochladen. Danach laeuft ein runtime-seitiger Sicherheits- und Syntax-Check mit Debug-Ausgabe.</p>
-          <div class="patch-drop">
-            <strong>Datei fuer den Patch-Lauf</strong>
-            <div class="patch-drop-meta">
-              <span>Akzeptiert: ZIP, JSON</span>
-              <span>Actor: browser-ui</span>
-            </div>
-            <div class="patch-filename" id="selectedFile">Noch keine Datei gewaehlt</div>
-            <div class="patch-inline-actions">
-              <label class="patch-file-button patch-link" for="patchInput">Datei auswaehlen</label>
-              <input class="patch-hidden-input" id="patchInput" type="file" accept=".zip,.json,application/zip,application/json">
-              <button class="patch-button" id="startPatch" type="button" disabled>Runtime-Check starten</button>
-              <button class="patch-button secondary" id="cancelPatch" type="button" disabled>Cancel (runtime n/a)</button>
-            </div>
+          <p class="patch-subtle">ZIP oder JSON hochladen. Server prüft Sicherheit und Syntax. Bei Erfolg sofort anwenden.</p>
+
+          <div class="entry-bar">
+            <label class="pick" for="patchInput">Datei wählen</label>
+            <input id="patchInput" type="file" accept=".zip,.json,application/zip,application/json" style="display:none">
+            <span id="fileLabel">Keine Datei gewählt</span>
+            <button class="patch-button" id="runBtn" type="button" disabled>Patch starten</button>
           </div>
 
-          <div>
-            <h3>Session Status</h3>
-            <div class="patch-progress" aria-hidden="true"><div id="progressBar"></div></div>
+          <div style="margin-top:16px">
+            <h3>Status &nbsp;<span class="pill" id="statusPill">–</span></h3>
             <div class="patch-metrics">
-              <div class="patch-metric"><small>Session</small><span id="sessionId">-</span></div>
-              <div class="patch-metric"><small>Phase</small><span id="phaseValue">-</span></div>
-              <div class="patch-metric"><small>Mode</small><span id="lockValue">runtime-only</span></div>
-              <div class="patch-metric"><small>Risk</small><span id="riskValue">-</span></div>
-              <div class="patch-metric"><small>Datei</small><span id="fileValue">-</span></div>
-              <div class="patch-metric"><small>Patch</small><span id="patchValue">-</span></div>
+              <div class="patch-metric"><small>Check-ID</small><span id="metaCheckId">–</span></div>
+              <div class="patch-metric"><small>Mode</small><span id="metaMode">runtime-only</span></div>
+              <div class="patch-metric"><small>Gate</small><span id="metaGate">–</span></div>
+              <div class="patch-metric"><small>Patches</small><span id="metaPatches">–</span></div>
             </div>
           </div>
 
           <div class="patch-stage-list" id="stageList"></div>
+
+          <div class="rollback-row">
+            <button class="patch-button secondary" id="rollbackBtn" type="button" disabled>Rollback</button>
+          </div>
         </div>
       </section>
 
+      <!-- Rechte Karte: Live-Log + Ergebnis -->
       <section class="patch-card">
         <div class="patch-card-inner">
-          <div class="patch-banner" id="errorBanner">
-            <strong id="errorTitle">Fehler</strong>
-            <div id="errorMessage">-</div>
-            <div class="patch-error-meta">
-              <span id="errorCode">code:-</span>
-              <span id="errorPhase">phase:-</span>
-              <span id="errorFile">file:-</span>
-              <span id="errorPatch">patch:-</span>
-            </div>
-            <div id="errorFix">-</div>
-            <div class="patch-inline-actions">
-              <button class="patch-button secondary" id="showLogs" type="button">Log-Details</button>
-              <button class="patch-button secondary" id="showSummary" type="button">Summary oeffnen</button>
-            </div>
+          <h2>Live-Log</h2>
+          <div class="log-panel" id="logPanel" role="log" aria-live="polite" aria-label="Patch-Liveausgabe"></div>
+
+          <div style="margin-top:16px">
+            <h2>Ergebnis <span class="pill" id="resultPill">wartet</span></h2>
+            <div class="patch-summary" id="summaryBox">–</div>
           </div>
 
-          <div>
-            <h2>Logs</h2>
-            <div class="patch-log-list" id="logList">
-              <div class="patch-empty">Noch keine Logeintraege.</div>
+          <!-- SSE-Status für Server-Sessions -->
+          <div style="margin-top:14px; display:none" id="sseRow">
+            <h3>Server-Session</h3>
+            <div class="patch-metrics">
+              <div class="patch-metric"><small>Session</small><span id="sseSession">–</span></div>
+              <div class="patch-metric"><small>Phase</small><span id="ssePhase">–</span></div>
+              <div class="patch-metric"><small>Final</small><span id="sseFinal">–</span></div>
             </div>
-          </div>
-
-          <div>
-            <h2>Result</h2>
-            <div class="patch-result-badge" id="resultBadge">wartet</div>
-            <div class="patch-summary" id="summaryBox">Noch keine Summary.</div>
           </div>
         </div>
       </section>
+
     </div>
   </div>
 
   <script type="module">
-    const phases = ['intake', 'runtime-check', 'result'];
+    import { KernelController } from '/src/kernel/KernelController.js';
+    import { BrowserPatchRunner } from '/src/browser/BrowserPatchRunner.js';
+    import { LogBus } from '/src/browser/LogBus.js';
 
-    const state = {
-      selectedFile: null,
-      sessionId: null,
-      cancelToken: null,
-      eventSource: null,
-      lastStatus: null
-    };
+    // ── Kernel-Instanz (einmalig für diese Seite) ──────────────────────
+    const kernel = new KernelController({ seed: 'patch-ui-session' });
+    const runner = new BrowserPatchRunner(kernel);
 
-    const selectedFile = document.getElementById('selectedFile');
-    const patchInput = document.getElementById('patchInput');
-    const startPatch = document.getElementById('startPatch');
-    const cancelPatch = document.getElementById('cancelPatch');
-    const openPopup = document.getElementById('openPopup');
-    const progressBar = document.getElementById('progressBar');
-    const sessionId = document.getElementById('sessionId');
-    const phaseValue = document.getElementById('phaseValue');
-    const lockValue = document.getElementById('lockValue');
-    const riskValue = document.getElementById('riskValue');
-    const fileValue = document.getElementById('fileValue');
-    const patchValue = document.getElementById('patchValue');
-    const stageList = document.getElementById('stageList');
-    const errorBanner = document.getElementById('errorBanner');
-    const errorMessage = document.getElementById('errorMessage');
-    const errorCode = document.getElementById('errorCode');
-    const errorPhase = document.getElementById('errorPhase');
-    const errorFile = document.getElementById('errorFile');
-    const errorPatch = document.getElementById('errorPatch');
-    const errorFix = document.getElementById('errorFix');
-    const logList = document.getElementById('logList');
-    const resultBadge = document.getElementById('resultBadge');
-    const summaryBox = document.getElementById('summaryBox');
+    // ── DOM-Referenzen ─────────────────────────────────────────────────
+    const patchInput  = document.getElementById('patchInput');
+    const fileLabel   = document.getElementById('fileLabel');
+    const runBtn      = document.getElementById('runBtn');
+    const rollbackBtn = document.getElementById('rollbackBtn');
+    const logPanel    = document.getElementById('logPanel');
+    const statusPill  = document.getElementById('statusPill');
+    const resultPill  = document.getElementById('resultPill');
+    const summaryBox  = document.getElementById('summaryBox');
+    const metaCheckId = document.getElementById('metaCheckId');
+    const metaMode    = document.getElementById('metaMode');
+    const metaGate    = document.getElementById('metaGate');
+    const metaPatches = document.getElementById('metaPatches');
+    const stageList   = document.getElementById('stageList');
+    const sseRow      = document.getElementById('sseRow');
+    const sseSession  = document.getElementById('sseSession');
+    const ssePhase    = document.getElementById('ssePhase');
+    const sseFinal    = document.getElementById('sseFinal');
 
-    function renderStages(currentPhase) {
-      stageList.innerHTML = phases.map((phase) => {
-        const active = phase === currentPhase ? 'patch-stage active' : 'patch-stage';
-        return `<div class="${active}">${phase}</div>`;
+    const STAGES = ['intake', 'check', 'apply', 'done'];
+    let activeEventSource = null;
+    let selectedFile = null;
+
+    // ── Logging ────────────────────────────────────────────────────────
+    LogBus.subscribe(({ line, domain, message }) => {
+      const cls = domain === 'ok'       ? 'ok'
+                : domain === 'err'      ? 'err'
+                : domain === 'rollback' ? 'roll'
+                : domain === 'run'      ? 'head'
+                : 'info';
+      const el = document.createElement('div');
+      el.className = cls;
+      el.textContent = line;
+      logPanel.appendChild(el);
+      logPanel.scrollTop = logPanel.scrollHeight;
+    });
+
+    function appendLog(line) {
+      LogBus.emit({ domain: 'ui', message: line });
+    }
+
+    function clearLog() {
+      logPanel.innerHTML = '';
+    }
+
+    // ── Stage-Anzeige ──────────────────────────────────────────────────
+    function renderStages(active) {
+      stageList.innerHTML = STAGES.map(s => {
+        const cls = s === active ? 'patch-stage active' : 'patch-stage';
+        return `<div class="${cls}">${s}</div>`;
       }).join('');
     }
 
-    function setIdle() {
-      renderStages(null);
-      progressBar.style.width = '0%';
+    // ── Pills ──────────────────────────────────────────────────────────
+    function setPill(el, text, type = '') {
+      el.textContent = text;
+      el.className = `pill${type ? ' ' + type : ''}`;
     }
 
-    function renderStatus(status) {
-      state.lastStatus = status;
-      sessionId.textContent = status.sessionId || '-';
-      phaseValue.textContent = status.phase || '-';
-      lockValue.textContent = status.lock ? `locked by ${status.lock.sessionId}` : 'runtime-only';
-      riskValue.textContent = status.risk?.risk || '-';
-      fileValue.textContent = status.currentFile || '-';
-      patchValue.textContent = status.currentPatchId || '-';
-      progressBar.style.width = `${status.progress || 0}%`;
-      renderStages(status.phase);
-      cancelPatch.disabled = true;
-      openPopup.disabled = !status.sessionId;
-      startPatch.disabled = Boolean(status.sessionId && !status.finalStatus) || !state.selectedFile;
-      resultBadge.textContent = status.finalStatus || status.state || 'running';
-      resultBadge.className = status.finalStatus && status.finalStatus !== 'succeeded'
-        ? 'patch-result-badge fail'
-        : 'patch-result-badge';
-
-      if (status.error) {
-        errorBanner.classList.add('visible');
-        errorMessage.textContent = status.error.message || '-';
-        errorCode.textContent = `code:${status.error.code || '-'}`;
-        errorPhase.textContent = `phase:${status.error.phase || '-'}`;
-        errorFile.textContent = `file:${status.error.file || '-'}`;
-        errorPatch.textContent = `patch:${status.error.patchId || '-'}`;
-        errorFix.textContent = status.error.suggestedFix || '-';
-      } else {
-        errorBanner.classList.remove('visible');
-      }
-    }
-
-    async function refreshLogs() {}
-
-    async function refreshResult() {
-      if (!state.sessionId) return;
-      const response = await fetch(`/api/patch-sessions/${state.sessionId}/result`);
-      if (!response.ok) return;
-      const payload = await response.json();
-      summaryBox.textContent = payload.summary || 'Noch keine Summary.';
-    }
-
-    function bindEventSource() {}
-
+    // ── Datei-Auswahl ──────────────────────────────────────────────────
     patchInput.addEventListener('change', () => {
-      state.selectedFile = patchInput.files?.[0] || null;
-      selectedFile.textContent = state.selectedFile ? state.selectedFile.name : 'Noch keine Datei gewaehlt';
-      startPatch.disabled = !state.selectedFile;
+      selectedFile = patchInput.files?.[0] || null;
+      fileLabel.textContent = selectedFile ? selectedFile.name : 'Keine Datei gewählt';
+      runBtn.disabled = !selectedFile;
     });
 
-    startPatch.addEventListener('click', async () => {
-      if (!state.selectedFile) return;
+    // ── SSE: Server-Session live verfolgen ─────────────────────────────
+    function bindEventSource(sessionId) {
+      if (activeEventSource) {
+        activeEventSource(); // Close callback von LogBus
+      }
 
-      const form = new FormData();
-      form.append('input', state.selectedFile);
-      startPatch.disabled = true;
-      const response = await fetch('/api/runtime-patch-check', {
-        method: 'POST',
-        body: form
-      });
-      const payload = await response.json();
-      if (!response.ok) {
-        errorBanner.classList.add('visible');
-        const err = payload.error || {};
-        errorMessage.textContent = err.message || payload.error || 'Runtime-Check fehlgeschlagen.';
-        errorCode.textContent = `code:${err.code || '-'}`;
-        errorPhase.textContent = 'phase:runtime-check';
-        errorFile.textContent = `file:${err.source || '-'}`;
-        errorPatch.textContent = 'patch:-';
-        errorFix.textContent = 'Manifest/Hooks pruefen und erneut starten.';
-        startPatch.disabled = !state.selectedFile;
+      sseRow.style.display = '';
+      sseSession.textContent = sessionId;
+      setPill(statusPill, 'läuft…', 'run');
+
+      // LogBus handhabt nun die SSE Verbindung transparent mit.
+      activeEventSource = LogBus.connectSSE(sessionId);
+    }
+
+    // ── Rollback ───────────────────────────────────────────────────────
+    rollbackBtn.addEventListener('click', () => {
+      appendLog('[ROLLBACK] Patches werden entfernt…');
+      runner.rollback();
+      setPill(statusPill, 'rolled back', 'roll');
+      setPill(resultPill, '–');
+      rollbackBtn.disabled = true;
+    });
+
+    // ── HAUPTEINSTIEG ──────────────────────────────────────────────────
+    runBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      clearLog();
+      runBtn.disabled = true;
+      rollbackBtn.disabled = true;
+      metaCheckId.textContent = '–';
+      metaGate.textContent = '–';
+      metaPatches.textContent = '–';
+      setPill(statusPill, 'prüfe…', 'run');
+      setPill(resultPill, 'wartet');
+      summaryBox.textContent = '–';
+      renderStages('intake');
+
+      appendLog(`[INTAKE] Datei: ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(1)} KB)`);
+      renderStages('check');
+
+      // 1. Server-Gate: Sicherheitsprüfung
+      let payload;
+      try {
+        const form = new FormData();
+        form.append('input', selectedFile);
+        appendLog('[CHECK] Sende an Server-Gate…');
+        const res = await fetch('/api/runtime-patch-check', { method: 'POST', body: form });
+        payload = await res.json();
+      } catch (err) {
+        appendLog(`[ERR] Netzwerkfehler: ${err.message}`);
+        setPill(statusPill, 'fehler', 'err');
+        setPill(resultPill, 'fehler', 'err');
+        runBtn.disabled = false;
         return;
       }
 
-      state.sessionId = payload.checkId;
-      renderStatus({
-        sessionId: payload.checkId,
-        phase: 'result',
-        progress: 100,
-        state: payload.ok ? 'succeeded' : 'failed_partial',
-        finalStatus: payload.ok ? 'succeeded' : 'failed_partial',
-        llmGate: payload.llmGate || null
-      });
+      // Meta-Daten anzeigen
+      metaCheckId.textContent = payload.checkId || '–';
+      metaGate.textContent    = payload.llmGate?.decision || '–';
+      metaPatches.textContent = Array.isArray(payload.patches) ? payload.patches.length : '0';
 
-      const lines = [];
-      lines.push(`mode=runtime-only source=${payload.source || '-'}`);
-      if (Array.isArray(payload.debug)) {
-        lines.push(...payload.debug);
-      }
-      if (payload.llmGate?.decision === 'deny') {
-        for (const reason of payload.llmGate.reasons || []) {
-          lines.push(`DENY: ${reason}`);
+      // Gate abgelehnt?
+      if (!payload.ok) {
+        setPill(statusPill, 'abgelehnt', 'err');
+        setPill(resultPill, 'denied', 'err');
+        summaryBox.textContent = payload.summary || 'Gate hat abgelehnt.';
+        for (const reason of payload.llmGate?.reasons || []) {
+          appendLog(`[DENY] ${reason}`);
         }
+        for (const d of payload.debug || []) {
+          appendLog(`[DBG]  ${d}`);
+        }
+        appendLog('[CHECK] Fehlgeschlagen. Patch nicht angewendet.');
+        runBtn.disabled = false;
+        return;
       }
-      logList.innerHTML = lines.map((line) => `<div class="patch-log-item">${line}</div>`).join('');
-      summaryBox.textContent = payload.summary || 'Keine Summary';
-      resultBadge.textContent = payload.ok ? 'succeeded' : 'failed_partial';
-      resultBadge.className = payload.ok ? 'patch-result-badge' : 'patch-result-badge fail';
-      openPopup.disabled = true;
-      startPatch.disabled = !state.selectedFile;
+
+      // Gate bestanden
+      appendLog(`[CHECK] Gate: ${payload.llmGate?.decision} — ${payload.patches?.length ?? 0} Patch(es) freigegeben.`);
+      for (const d of payload.debug || []) {
+        appendLog(`[DBG]  ${d}`);
+      }
+
+      // 2. Browser-Apply
+      renderStages('apply');
+      setPill(statusPill, 'wendet an…', 'run');
+      appendLog('[APPLY] Starte Browser-Kernel-Integration…');
+
+      const result = runner.apply(payload.patches || []);
+
+      // 3. Ergebnis
+      renderStages('done');
+      summaryBox.textContent = payload.summary || '–';
+
+      if (result.ok) {
+        setPill(statusPill, 'aktiv', 'ok');
+        setPill(resultPill, 'succeeded', 'ok');
+        rollbackBtn.disabled = false;
+      } else {
+        setPill(statusPill, 'teilfehler', 'err');
+        setPill(resultPill, 'failed_partial', 'err');
+        for (const e of result.errors) {
+          appendLog(`[ERR] ${e}`);
+        }
+        rollbackBtn.disabled = result.applied.length === 0;
+      }
+
+      runBtn.disabled = false;
+
+      // SSE für Server-Sessions (wenn eine läuft)
+      if (payload.sessionId) {
+        bindEventSource(payload.sessionId);
+      }
     });
 
-    cancelPatch.addEventListener('click', async () => {
-      return;
-    });
-
-    openPopup.addEventListener('click', () => {
-      if (!state.sessionId) return;
-      window.open(`/popup?sessionId=${encodeURIComponent(state.sessionId)}`, 'seedworld-patch-popup', 'width=520,height=720');
-    });
-
-    document.getElementById('showLogs').addEventListener('click', () => {
-      logList.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    document.getElementById('showSummary').addEventListener('click', () => {
-      summaryBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    setIdle();
+    renderStages(null);
   </script>
 </body>
 </html>

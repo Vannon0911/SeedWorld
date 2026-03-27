@@ -57,7 +57,6 @@ export class KernelRouter {
 
     // Track call for audit
     this.callHistory.push({
-      timestamp: Date.now(),
       from: sourceDomain || 'external',
       to: domain,
       actionType: action?.type
@@ -84,7 +83,6 @@ export class KernelRouter {
     return {
       domain,
       actionType: action?.type,
-      timestamp: Date.now(),
       status: 'processed',
       // Patch domain only receives acknowledgement, never raw game state
       data: domain === 'patch' ? { acknowledged: true } : result

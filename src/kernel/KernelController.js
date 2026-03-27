@@ -1,5 +1,4 @@
 import { withDeterminismGuards } from "./runtimeGuards.js";
-import { UIPluginController } from "./UIPluginController.js";
 import { KernelRouter } from "./KernelRouter.js";
 import { PatchOrchestrator } from "./PatchOrchestrator.js";
 
@@ -27,9 +26,6 @@ export class KernelController {
 
     // Patch Orchestrator - only receives kernel acknowledgements
     this.patchOrchestrator = new PatchOrchestrator(this);
-
-    // UI Plugin Controller for deterministic UI management
-    this.uiPluginController = new UIPluginController(this);
 
     // Patch system state
     this.patches = new Map(); // patchId -> patchData
@@ -115,6 +111,8 @@ export class KernelController {
         return { success: true, sessionId: action.config?.sessionId || 'default' };
       case "endSession":
         return { success: true, ended: true };
+      case "applyBrowserPatch":
+        return this.#registerPatch({ patch: action.patch });
       case "applyPatch":
         // Patch application is routed through kernel - never touches game state directly
         return { success: true, applied: action.patchId, acknowledgement: true };
@@ -143,12 +141,6 @@ export class KernelController {
         return this.#listPatches();
       case "getHooks":
         return this.#getHooks();
-      case "registerUIPlugin":
-        return this.#registerUIPlugin(action);
-      case "unregisterUIPlugin":
-        return this.#unregisterUIPlugin(action);
-      case "executeUIPlugin":
-        return this.#executeUIPlugin(action);
       case "setDeterministicSeed":
         return this.#setDeterministicSeed(action);
       default:
@@ -425,7 +417,12 @@ export class KernelController {
         };
         
         // Deterministic LCG RNG (same seed = same sequence)
-        let currentSeed = this.hashCode(this.deterministicSeed);
+        let currentSeed = 123456789; // simplified for hook box
+        for (let i = 0; i < this.deterministicSeed.length; i++) {
+          currentSeed = ((currentSeed << 5) - currentSeed) + this.deterministicSeed.charCodeAt(i);
+        }
+        currentSeed = Math.abs(currentSeed);
+        
         const rng = () => {
           currentSeed = (currentSeed * 9301 + 49297) % 233280;
           return currentSeed / 233280;
@@ -439,49 +436,11 @@ export class KernelController {
     }
   }
 
-  // UI Plugin Management Methods
-  #registerUIPlugin(action) {
-    const pluginConfig = this.#readPlainObject(action, "plugin", "[REGISTER_UI_PLUGIN] plugin fehlt.");
-    const pluginId = this.#readString(pluginConfig, "id", "[REGISTER_UI_PLUGIN] plugin.id fehlt.");
-    
-    try {
-      this.uiPluginController.registerPlugin(pluginId, pluginConfig);
-      return { success: true, pluginId };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
-
-  #unregisterUIPlugin(action) {
-    const pluginId = this.#readString(action, "pluginId", "[UNREGISTER_UI_PLUGIN] pluginId fehlt.");
-    
-    try {
-      this.uiPluginController.unregisterPlugin(pluginId);
-      return { success: true, pluginId };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
-
-  #executeUIPlugin(action) {
-    const pluginId = this.#readString(action, "pluginId", "[EXECUTE_UI_PLUGIN] pluginId fehlt.");
-    const pluginAction = this.#readString(action, "action", "[EXECUTE_UI_PLUGIN] action fehlt.");
-    const args = action.args || [];
-    
-    try {
-      const result = this.uiPluginController.executePluginAction(pluginId, pluginAction, ...args);
-      return { success: true, result };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  }
-
   #setDeterministicSeed(action) {
     const seed = this.#readString(action, "seed", "[SET_DETERMINISTIC_SEED] seed fehlt.");
     
     this.deterministicSeed = seed;
     this.currentTick = 0;
-    this.uiPluginController.setDeterministicSeed(seed);
     
     return { success: true, seed, tick: this.currentTick };
   }
@@ -512,22 +471,5 @@ export class KernelController {
       tick: this.currentTick,
       mutation: mutation
     };
-  }
-
-  getUIPluginController() {
-    return this.uiPluginController;
-  }
-
-  /**
-   * Simple hash function for deterministic seeding
-   */
-  hashCode(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return Math.abs(hash);
   }
 }
