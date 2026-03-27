@@ -26,66 +26,55 @@ function deepFreeze(value) {
   return value;
 }
 
-function xmur3(str) {
-  let h = 1779033703 ^ str.length;
-  for (let i = 0; i < str.length; i += 1) {
-    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
-    h = (h << 13) | (h >>> 19);
-  }
-
-  return function seedFn() {
-    h = Math.imul(h ^ (h >>> 16), 2246822507);
-    h = Math.imul(h ^ (h >>> 13), 3266489909);
-    h ^= h >>> 16;
-    return h >>> 0;
-  };
-}
-
-function mulberry32(seedInt) {
-  return function random() {
-    let t = (seedInt += 0x6d2b79f5);
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+import { KernelController } from "./KernelController.js";
 
 export async function runDeterministicKernel(seed, ticks = 8, options = {}) {
   // @doc-anchor KERNEL-DETERMINISM
   // @doc-anchor KERNEL-GUARDS
   // @doc-anchor SEED-GUARD
-  return withDeterminismGuards(async () => {
-    assert(typeof seed === "string" && seed.trim().length > 0, "seed muss eine nicht-leere Zeichenkette sein");
-    assert(Number.isInteger(ticks) && ticks > 0 && ticks <= 256, "ticks ausserhalb 1..256");
-    assertPlainObject(options, "options fehlen oder sind kein Plain-Object");
+  
+  assert(typeof seed === "string" && seed.trim().length > 0, "seed muss eine nicht-leere Zeichenkette sein");
+  assert(Number.isInteger(ticks) && ticks > 0 && ticks <= 256, "ticks ausserhalb 1..256");
+  assertPlainObject(options, "options fehlen oder sind kein Plain-Object");
 
-    const seedHash = await assertSeedMatch(seed, options.expectedSeedHash);
-    const seedFactory = xmur3(`${seed}:${seedHash}`);
-    const random = mulberry32(seedFactory());
+  const seedHash = await assertSeedMatch(seed, options.expectedSeedHash);
 
-    let resources = 100;
-    let stability = 50;
-    const states = [];
+  // 1. Instanziierung des echten Kernels
+  const kernel = new KernelController({ seed });
 
-    // @mut-point MUT-KERNEL-LOOP
-    for (let tick = 1; tick <= ticks; tick += 1) {
-      const drift = Math.floor(random() * 7) - 3;
-      const production = 6 + Math.floor(random() * 5);
-      const upkeep = 3 + Math.floor(random() * 4);
-
-      resources = Math.max(0, resources + production - upkeep + drift);
-      stability = Math.max(0, Math.min(100, stability + (drift > 0 ? 2 : -1)));
-
-      states.push({ tick, resources, stability, drift, production, upkeep });
-    }
-
-    const mutFingerprint = await createMutFingerprint({
-      kernel: "seedworld.v1",
-      seedHash,
-      ticks,
-      states,
-    });
-
-    return deepFreeze({ seedHash, mutFingerprint, states });
+  // 2. Initial state creation via game domain
+  const initialRes = await kernel.execute({
+    domain: 'game',
+    action: { type: 'createInitialState' }
   });
+  
+  let state = initialRes.result;
+  const states = [];
+
+  // 3. Echte Tick-Loop über den KernelRouter
+  // @mut-point MUT-KERNEL-LOOP
+  for (let tick = 1; tick <= ticks; tick += 1) {
+    const advanceRes = await kernel.execute({
+      domain: 'game',
+      action: { type: 'advanceTick', state, ticks: 1 }
+    });
+    state = advanceRes.result;
+
+    // Wir speichern Snapshot-Auszüge, um den Fingerprint zu erzeugen
+    states.push({
+      tick: state.clock.tick,
+      resources: { ...state.resources },
+      statistics: { ...state.statistics }
+    });
+  }
+
+  const mutFingerprint = await createMutFingerprint({
+    kernel: "seedworld.v2.controller",
+    seedHash,
+    ticks,
+    states,
+    auditCalls: kernel.router.callHistory.length
+  });
+
+  return deepFreeze({ seedHash, mutFingerprint, states });
 }

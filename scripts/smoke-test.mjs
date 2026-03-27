@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { UIPluginController } from '../src/kernel/UIPluginController.js';
+import { UIPluginController } from '../src/ui/UIPluginController.js';
 
 class KernelStub {
   getCurrentTick() {
