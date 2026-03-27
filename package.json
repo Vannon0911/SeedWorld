@@ -8,8 +8,8 @@
     "start": "node src/main.js",
     "kernel": "node src/mainKernel.js",
     "server": "node src/mainServer.js",
-    "test": "node tests/MainTest.mjs",
-    "preflight": "node tools/runtime/preflight.mjs"
+    "test": "node scripts/smoke-test.mjs",
+    "preflight": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
     "jszip": "^3.10.1",

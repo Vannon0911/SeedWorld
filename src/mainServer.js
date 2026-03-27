@@ -102,19 +102,30 @@ class MainServer {
         // Create/update patch
         let body = '';
         let contentLength = 0;
+        let requestFinished = false;
+        
+        const sendJson = (status, payload) => {
+          if (requestFinished || res.writableEnded) return;
+          requestFinished = true;
+          res.writeHead(status, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(payload));
+        };
         
         // Set request timeout
         const timeout = setTimeout(() => {
-          res.writeHead(408, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, error: 'Request timeout' }));
+          sendJson(408, { success: false, error: 'Request timeout' });
+          req.destroy();
         }, this.requestTimeout);
         
         req.on('data', chunk => {
+          if (requestFinished) {
+            return;
+          }
           contentLength += chunk.length;
           if (contentLength > this.maxRequestSize) {
             clearTimeout(timeout);
-            res.writeHead(413, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: 'Request entity too large' }));
+            sendJson(413, { success: false, error: 'Request entity too large' });
+            req.destroy();
             return;
           }
           body += chunk;
@@ -122,25 +133,28 @@ class MainServer {
         
         req.on('end', () => {
           clearTimeout(timeout);
+          if (requestFinished) {
+            return;
+          }
           try {
             const patch = JSON.parse(body);
             const result = this.kernelInterface('patch.apply', {
               patch
             });
             
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(result));
+            sendJson(200, result);
           } catch (error) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: error.message }));
+            sendJson(400, { success: false, error: error.message });
           }
         });
         
         req.on('error', (error) => {
           clearTimeout(timeout);
+          if (requestFinished) {
+            return;
+          }
           console.error('[API] Request error:', error);
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, error: 'Request failed' }));
+          sendJson(500, { success: false, error: 'Request failed' });
         });
         
         return;
