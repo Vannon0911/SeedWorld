@@ -1,187 +1,379 @@
+import { MS_PER_TICK } from "./IconAnimations.js";
 import { TileGridRenderer } from "./TileGridRenderer.js";
-import { ResourceBar } from "./events.js";
+import { generateWorld } from "../game/worldGen.js";
+
+const DEFAULT_ACTION = Object.freeze({
+  type: "inspect",
+  payload: {}
+});
+
+const DEFAULT_STATE = Object.freeze({
+  world: {
+    seed: "seedworld-v1",
+    size: {
+      width: 16,
+      height: 12
+    }
+  }
+});
+
+function isPlainObject(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
+}
+
+function clone(value) {
+  return structuredClone(value);
+}
 
 function pretty(value) {
   return JSON.stringify(value, null, 2);
 }
 
-function setText(element, value) {
+function parseJson(text, fallback, label) {
+  const raw = typeof text === "string" ? text.trim() : "";
+  if (!raw) {
+    return clone(fallback);
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    if (!isPlainObject(parsed)) {
+      throw new Error(`${label} muss JSON-Objekt sein.`);
+    }
+
+    return parsed;
+  } catch (error) {
+    throw new Error(`[UI_CONTROLLER] ${label}: ${error.message}`);
+  }
+}
+
+function setTextContent(element, value) {
   if (element) {
     element.textContent = value;
   }
 }
 
+function setDisabled(elements, disabled) {
+  for (const element of elements) {
+    if (element) {
+      element.disabled = disabled;
+    }
+  }
+}
+
 export class UIController {
-  constructor({ gameLogic, elements = {} } = {}) {
-    if (!gameLogic || typeof gameLogic.createInitialState !== "function") {
-      throw new Error("[UI_CONTROLLER] gameLogic erforderlich.");
+  constructor({ kernel, gameLogic, kernelCommand, elements = {} } = {}) {
+    if (!kernel || typeof kernel.plan !== "function" || typeof kernel.apply !== "function") {
+      throw new Error("[UI_CONTROLLER] kernel mit plan/apply erforderlich.");
     }
 
+    if (!gameLogic || typeof gameLogic.calculateAction !== "function") {
+      throw new Error("[UI_CONTROLLER] gameLogic mit calculateAction erforderlich.");
+    }
+
+    if (typeof kernelCommand !== "function") {
+      throw new Error("[UI_CONTROLLER] kernelCommand erforderlich.");
+    }
+
+    this.kernel = kernel;
     this.gameLogic = gameLogic;
+    this.kernelCommand = kernelCommand;
     this.elements = elements;
-    this.currentState = this.gameLogic.createInitialState();
-    this.selectedTile = null;
+    this.currentState = clone(DEFAULT_STATE);
+    this.displayState = clone(DEFAULT_STATE);
+    this.lastPlan = null;
+    this.lastApply = null;
+    this.lastGuardResult = null;
+    this.busy = false;
+    this.currentTick = 0;
     this.tickTimer = null;
+    this.tickRateMs = Number.isFinite(elements.tickRateMs) ? elements.tickRateMs : MS_PER_TICK;
     this.tileGridRenderer = null;
-    this.resourceBar = null;
   }
 
   bootstrap() {
-    this.#ensureRenderer();
-    this.#ensureResourceBar();
-    this.#bindNavigation();
-    this.#renderAll();
-    this.#startTickLoop();
-  }
-
-  destroy() {
-    if (this.tickTimer) {
-      clearInterval(this.tickTimer);
-      this.tickTimer = null;
-    }
-  }
-
-  #ensureRenderer() {
-    if (this.tileGridRenderer) {
-      return;
-    }
-
-    const world = this.currentState.world;
-    this.tileGridRenderer = new TileGridRenderer(this.elements.tileGridContainer, world.width, world.height, 84);
-    this.tileGridRenderer.onTileClick(({ x, y }) => {
-      this.selectedTile = { x, y };
-      this.#renderSelection();
-      this.#renderBuildActions();
-      this.#renderGrid();
-    });
-  }
-
-  #ensureResourceBar() {
-    if (!this.resourceBar && this.elements.resourceBar) {
-      this.resourceBar = new ResourceBar(this.elements.resourceBar);
-    }
-  }
-
-  #bindNavigation() {
-    if (this.elements.homeButton) {
-      this.elements.homeButton.addEventListener("click", () => {
-        window.location.href = "./index.html";
-      });
-    }
-
-    if (this.elements.patcherButton) {
-      this.elements.patcherButton.addEventListener("click", () => {
-        window.location.href = "./patchUI.html";
-      });
-    }
-  }
-
-  #startTickLoop() {
-    const intervalMs = this.gameLogic.getTickMs();
-    this.tickTimer = setInterval(() => {
-      this.currentState = this.gameLogic.advanceTick(this.currentState, 1);
-      this.#renderHud();
-      this.#renderStatusTexts();
-      this.#renderStateDump();
-      this.#renderGrid();
-      this.#renderBuildActions();
-    }, intervalMs);
-  }
-
-  #renderAll() {
-    this.#renderHud();
-    this.#renderStatusTexts();
-    this.#renderSelection();
-    this.#renderBuildActions();
-    this.#renderStateDump();
+    this.#ensureDefaultInputs();
+    this.#ensureTileGrid();
+    this.#ensureWorldState();
     this.#renderGrid();
+    this.#startTickLoop();
+    this.refresh();
   }
 
-  #renderHud() {
-    if (this.resourceBar) {
-      this.resourceBar.render(this.gameLogic.getHudModel(this.currentState));
+  async handlePlan() {
+    try {
+      this.#setBusy(true);
+      const request = this.#readRequest();
+      const calculation = this.gameLogic.calculateAction(request.action, request.state);
+      const result = await this.kernel.plan({
+        domain: calculation.domain,
+        action: calculation.action,
+        state: request.state,
+        patches: calculation.patches,
+        actionSchema: this.gameLogic.getActionSchema(),
+        mutationMatrix: this.gameLogic.getMutationMatrix()
+      });
+
+      this.lastPlan = result;
+      this.displayState = clone(result.previewState);
+      this.#renderStatus("plan-ok");
+      this.#renderSummary({
+        mode: "plan",
+        kernel: result
+      });
+      this.#renderState(this.displayState);
+      this.#renderGrid();
+    } catch (error) {
+      this.#renderStatus("plan-blocked");
+      this.#renderSummary({ error: String(error.message || error) });
+    } finally {
+      this.#setBusy(false);
     }
   }
 
-  #renderStatusTexts() {
-    setText(this.elements.statusValue, this.currentState.meta?.statusText || "-");
-    setText(this.elements.summaryValue, this.currentState.meta?.summaryText || "-");
+  async handleApply() {
+    try {
+      this.#setBusy(true);
+      const request = this.#readRequest();
+      const calculation = this.gameLogic.calculateAction(request.action, request.state);
+      const result = await this.kernel.apply({
+        domain: calculation.domain,
+        action: calculation.action,
+        state: request.state,
+        patches: calculation.patches,
+        actionSchema: this.gameLogic.getActionSchema(),
+        mutationMatrix: this.gameLogic.getMutationMatrix()
+      });
+
+      this.currentState = clone(result.previewState);
+      this.displayState = clone(result.previewState);
+      this.lastApply = result;
+      this.#syncStateInput(this.currentState);
+      this.#renderStatus("apply-ok");
+      this.#renderSummary({
+        mode: "apply",
+        kernel: result
+      });
+      this.#renderState(this.currentState);
+      this.#renderGrid();
+    } catch (error) {
+      this.#renderStatus("apply-blocked");
+      this.#renderSummary({ error: String(error.message || error) });
+    } finally {
+      this.#setBusy(false);
+    }
   }
 
-  #renderSelection() {
-    if (!this.selectedTile) {
-      setText(this.elements.selectionValue, "Kein Feld ausgewaehlt");
+  refresh() {
+    try {
+      this.currentState = this.#readStateInput();
+      this.displayState = clone(this.currentState);
+      this.#ensureWorldState();
+      this.#renderStatus("refresh");
+      this.#renderSummary({
+        mode: "refresh",
+        kernelState: this.currentState
+      });
+      this.#renderState(this.currentState);
+      this.#renderGrid();
+    } catch (error) {
+      this.#renderStatus("refresh-blocked");
+      this.#renderSummary({ error: String(error.message || error) });
+    }
+  }
+
+  async handleGuard() {
+    this.#setBusy(true);
+    try {
+      const result = await this.kernelCommand("governance.llm-chain", {
+        domain: "kernelMeta",
+        state: { kernelMeta: { revision: 1, note: "baseline" } },
+        action: { type: "PATCH_REVIEW", payload: { requestedBy: "ui" } },
+        actionSchema: {
+          PATCH_REVIEW: { required: ["requestedBy"] }
+        },
+        mutationMatrix: {
+          kernelMeta: ["kernelMeta.revision", "kernelMeta.note"]
+        },
+        patches: [
+          { op: "set", path: "kernelMeta.revision", value: 2, domain: "kernelMeta" },
+          { op: "set", path: "kernelMeta.note", value: "reviewed", domain: "kernelMeta" }
+        ]
+      });
+
+      this.lastGuardResult = result;
+      this.#renderStatus("guard-ok");
+      setTextContent(this.elements.guardValue, pretty(result));
+    } catch (error) {
+      this.#renderStatus("guard-blocked");
+      setTextContent(this.elements.guardValue, String(error.message || error));
+    } finally {
+      this.#setBusy(false);
+    }
+  }
+
+  #readRequest() {
+    const action = parseJson(this.elements.actionInput?.value, DEFAULT_ACTION, "action");
+    const state = parseJson(this.elements.stateInput?.value, DEFAULT_STATE, "state");
+    return { action, state };
+  }
+
+  #readStateInput() {
+    if (!this.elements.stateInput) {
+      return clone(this.currentState);
+    }
+    return parseJson(this.elements.stateInput?.value, DEFAULT_STATE, "state");
+  }
+
+  #ensureDefaultInputs() {
+    if (this.elements.actionInput && !this.elements.actionInput.value.trim()) {
+      this.elements.actionInput.value = pretty(DEFAULT_ACTION);
+    }
+
+    if (this.elements.stateInput && !this.elements.stateInput.value.trim()) {
+      this.elements.stateInput.value = pretty(DEFAULT_STATE);
+    }
+
+    this.currentState = clone(DEFAULT_STATE);
+    this.displayState = clone(DEFAULT_STATE);
+    this.#renderStatus("ready");
+    this.#renderSummary({ mode: "boot" });
+    this.#renderState(this.currentState);
+    setTextContent(this.elements.guardValue, "-");
+  }
+
+  #ensureTileGrid() {
+    if (this.tileGridRenderer) {
       return;
     }
 
-    const info = this.gameLogic.inspectTile(this.currentState, this.selectedTile);
-    setText(this.elements.selectionValue, `${info.title}: ${info.summary}`);
-  }
-
-  #renderStateDump() {
-    setText(this.elements.stateValue, pretty(this.gameLogic.getStateSnapshot(this.currentState)));
-  }
-
-  #renderGrid() {
-    if (this.tileGridRenderer) {
-      this.tileGridRenderer.render(this.currentState, this.selectedTile);
-    }
-  }
-
-  #renderBuildActions() {
-    const container = this.elements.buildActions;
+    const container = this.elements.tileGridContainer || document.getElementById("tile-grid-container");
     if (!container) {
       return;
     }
 
-    container.replaceChildren();
-
-    if (!this.selectedTile) {
-      const hint = document.createElement("p");
-      hint.className = "build-actions__hint";
-      hint.textContent = "Klicke ein Feld an, um moegliche Gebaeude zu sehen.";
-      container.append(hint);
-      return;
-    }
-
-    const info = this.gameLogic.inspectTile(this.currentState, this.selectedTile);
-    const options = this.gameLogic.getBuildCatalog(this.currentState, this.selectedTile);
-
-    const title = document.createElement("p");
-    title.className = "build-actions__title";
-    title.textContent = `${info.title} (${this.selectedTile.x}, ${this.selectedTile.y})`;
-    container.append(title);
-
-    if (options.length === 0) {
-      const hint = document.createElement("p");
-      hint.className = "build-actions__hint";
-      hint.textContent = info.summary;
-      container.append(hint);
-      return;
-    }
-
-    for (const option of options) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "build-action-button";
-      button.disabled = !option.allowed;
-      button.innerHTML = `<strong>${option.label}</strong><span>${option.price?.label || "-"}</span>`;
-      button.title = option.reason || "";
-      button.addEventListener("click", () => {
-        const result = this.gameLogic.placeStructure(this.currentState, {
-          type: option.type,
-          x: this.selectedTile.x,
-          y: this.selectedTile.y
-        });
-        this.currentState = result.state;
-        this.#renderAll();
+    this.tileGridRenderer = new TileGridRenderer(container, 16, 12, 200);
+    this.tileGridRenderer.onTileClick(({ tile, x, y }) => {
+      this.#renderStatus(`tile:${x},${y}`);
+      this.#renderSummary({
+        mode: "tile-click",
+        tile
       });
-      container.append(button);
+    });
+  }
 
-      const note = document.createElement("p");
-      note.className = "build-actions__note";
-      note.textContent = option.reason || "";
-      container.append(note);
+  #renderGrid() {
+    if (this.tileGridRenderer) {
+      this.tileGridRenderer.render(this.displayState, this.currentTick);
     }
+  }
+
+  #ensureWorldState() {
+    const world = this.currentState?.world;
+    if (world && Array.isArray(world.tiles) && world.tiles.length > 0) {
+      return;
+    }
+
+    const payload = {
+      seed: typeof world?.seed === "string" && world.seed.trim() ? world.seed.trim() : "seedworld-v1",
+      width: Number.isInteger(world?.size?.width) ? world.size.width : 16,
+      height: Number.isInteger(world?.size?.height) ? world.size.height : 12
+    };
+
+    const applyLocalFallback = () => {
+      const generated = generateWorld(payload);
+      this.currentState = clone({
+        ...this.currentState,
+        world: generated
+      });
+      this.displayState = clone(this.currentState);
+      this.#syncStateInput(this.currentState);
+      this.#renderGrid();
+    };
+
+    try {
+      const calculation = this.gameLogic.calculateAction({ type: "generate_world", payload }, this.currentState);
+      const result = this.kernel.apply({
+        domain: calculation.domain,
+        action: calculation.action,
+        state: this.currentState,
+        patches: calculation.patches,
+        actionSchema: this.gameLogic.getActionSchema(),
+        mutationMatrix: this.gameLogic.getMutationMatrix()
+      });
+
+      if (result && typeof result.then === "function") {
+        result
+          .then((value) => {
+            this.currentState = clone(value.previewState);
+            this.displayState = clone(value.previewState);
+            this.#syncStateInput(this.currentState);
+            this.#renderGrid();
+          })
+          .catch(() => {
+            applyLocalFallback();
+          });
+        return;
+      }
+
+      this.currentState = clone(result.previewState);
+      this.displayState = clone(result.previewState);
+      this.#syncStateInput(this.currentState);
+    } catch (_) {
+      applyLocalFallback();
+    }
+  }
+
+  #startTickLoop() {
+    if (this.tickTimer !== null || typeof window === "undefined" || typeof window.setTimeout !== "function") {
+      return;
+    }
+
+    const loop = () => {
+      this.currentTick += 1;
+      this.#renderGrid();
+      this.tickTimer = window.setTimeout(loop, this.tickRateMs);
+    };
+
+    this.tickTimer = window.setTimeout(loop, this.tickRateMs);
+  }
+
+  #renderStatus(value) {
+    setTextContent(this.elements.statusValue, value);
+  }
+
+  #renderSummary(value) {
+    setTextContent(this.elements.summaryValue, pretty(value));
+  }
+
+  #renderState(value) {
+    setTextContent(this.elements.stateValue, pretty(value));
+  }
+
+  #syncStateInput(value) {
+    if (this.elements.stateInput) {
+      this.elements.stateInput.value = pretty(value);
+    }
+  }
+
+  #setBusy(isBusy) {
+    this.busy = isBusy;
+    const controls = [
+      this.elements.planButton,
+      this.elements.applyButton,
+      this.elements.refreshButton,
+      this.elements.guardButton
+    ];
+
+    if (this.elements.form) {
+      this.elements.form.toggleAttribute("aria-busy", isBusy);
+    }
+
+    setDisabled(controls.filter(Boolean), isBusy);
   }
 }

@@ -1,343 +1,822 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeedWorld – Patch</title>
-  <link rel="stylesheet" href="/src/patch-control.css">
-  <style>
-    .log-panel {
-      font-family: 'Courier New', monospace;
-      font-size: 0.8rem;
-      background: #0a0e14;
-      border: 1px solid #1e2a38;
-      border-radius: 6px;
-      padding: 12px 14px;
-      height: 260px;
-      overflow-y: auto;
-      color: #8ba3c0;
-      line-height: 1.55;
-      scroll-behavior: smooth;
-    }
-    .log-panel .ok   { color: #5ecb8a; }
-    .log-panel .err  { color: #e05c5c; }
-    .log-panel .info { color: #8ba3c0; }
-    .log-panel .head { color: #f0c060; font-weight: bold; }
-    .log-panel .roll { color: #c07af0; }
-    .log-panel:empty::after { content: 'Warte auf Patch…'; opacity: 0.4; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SeedWorld Patch Manager</title>
+    <link rel="stylesheet" href="./src/ui/common.css" />
+    <style>
+      :root {
+        --bg: #040907;
+        --panel: #0a1610;
+        --ink: #d7ffe6;
+        --soft: #94c8ab;
+        --ok: #2aff88;
+        --err: #ff5d5d;
+        --warn: #ffbf47;
+        --run: #56d4ff;
+        --border: #1f4c33;
+      }
 
-    .entry-bar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-    .entry-bar label.pick {
-      cursor: pointer;
-      padding: 8px 16px;
-      border: 1px solid #2e4060;
-      border-radius: 5px;
-      color: #8bb4d8;
-      font-size: 0.85rem;
-      transition: background 0.15s;
-    }
-    .entry-bar label.pick:hover { background: #1a2535; }
-    #fileLabel {
-      flex: 1;
-      font-size: 0.82rem;
-      color: #5a7a9a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-    .pill {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: #1d2d3e;
-      color: #6a9fc0;
-    }
-    .pill.ok   { background: #0d2318; color: #5ecb8a; }
-    .pill.err  { background: #220d0d; color: #e05c5c; }
-    .pill.run  { background: #1d2010; color: #c8d040; }
+      body {
+        background:
+          radial-gradient(circle at 0% 0%, #11271d 0%, transparent 42%),
+          radial-gradient(circle at 100% 100%, #0b1712 0%, transparent 46%),
+          var(--bg);
+      }
 
-    .rollback-row { margin-top: 10px; }
-  </style>
-</head>
-<body class="patch-control-body">
-  <div class="patch-shell">
+      .app {
+        width: min(1080px, 96vw);
+        margin: 0 auto;
+        padding: 0.55rem;
+        display: grid;
+        gap: 0.65rem;
+      }
 
-    <section class="patch-hero">
-      <div class="patch-hero-top">
-        <div>
-          <p class="patch-kicker">Browser Runtime</p>
-          <h1>Ein Einstieg. Prüfen &amp; Anwenden.</h1>
+      .card {
+        border-radius: 10px;
+        padding: 0.65rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 0.5rem;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 120px;
+      }
+
+      .row {
+        display: flex;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+      }
+
+      .input-compact {
+        min-width: 140px;
+      }
+
+      .input-wide {
+        flex: 1;
+        min-width: 260px;
+      }
+
+      .queue {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .item {
+        display: grid;
+        grid-template-columns: 22px 1fr auto;
+        gap: 0.5rem;
+        align-items: center;
+        border: 1px solid #224734;
+        border-radius: 8px;
+        padding: 0.45rem;
+        background: #08140f;
+      }
+
+      .tight {
+        margin: 0.25rem 0 0;
+      }
+
+      .state-ok { color: var(--ok); }
+      .state-err { color: var(--err); }
+      .state-run { color: var(--run); }
+      .state-pending { color: var(--soft); }
+
+      .progress {
+        height: 14px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        overflow: hidden;
+        background: #08120d;
+      }
+
+      .bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #0bbf66, #3bff9f);
+      }
+
+      .meta {
+        color: var(--soft);
+        font-size: 0.9rem;
+      }
+
+      .output-box {
+        border: 1px solid #2a4f3d;
+        border-radius: 8px;
+        background: #06110c;
+        padding: 0.5rem;
+      }
+
+      .output-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        border: 1px solid #2f6249;
+        padding: 0.1rem 0.5rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--soft);
+      }
+
+      .badge-ok {
+        border-color: #1f6b43;
+        color: var(--ok);
+      }
+
+      .badge-err {
+        border-color: #6b2a2a;
+        color: var(--err);
+      }
+
+      .badge-warn {
+        border-color: #6d5d24;
+        color: var(--warn);
+      }
+
+      .output-main {
+        margin-top: 0.55rem;
+        font-size: 0.96rem;
+      }
+
+      .output-detail {
+        margin-top: 0.45rem;
+        font-size: 0.82rem;
+        color: var(--soft);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .log {
+        background: #050b08;
+        border: 1px solid #1d3c2b;
+        border-radius: 7px;
+        padding: 0.5rem;
+        max-height: 180px;
+        overflow: auto;
+      }
+
+      .log-entry {
+        border-bottom: 1px dashed #173425;
+        padding: 0.4rem 0;
+      }
+
+      .log-entry:last-child {
+        border-bottom: none;
+      }
+
+      .flags {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      label {
+        font-size: 0.92rem;
+        color: var(--soft);
+      }
+
+      @media (max-width: 720px) {
+        .app {
+          width: 100%;
+          padding: 0.45rem;
+        }
+      }
+
+      @media (min-width: 980px) {
+        .app {
+          grid-template-columns: 1.35fr 1fr;
+          gap: 0.7rem;
+        }
+
+        .span-2 {
+          grid-column: 1 / -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <section class="card surface-panel span-2">
+        <h1>SeedWorld Patch Manager</h1>
+        <p class="meta tight">Kompaktes Dashboard fuer Patch-Dispatch, Verifikation und Live-Fehlerausgabe.</p>
+      </section>
+
+      <section class="card surface-panel">
+        <h2>Manifest laden</h2>
+        <div class="row">
+          <input id="manifest-file" type="file" accept=".json,.zip,application/json,application/zip" />
+          <button id="upload-file" type="button">Datei hochladen</button>
+          <button id="validate-btn" type="button">Manifest pruefen</button>
         </div>
-        <div class="patch-nav">
-          <a class="patch-link" href="/">Game UI</a>
+        <div class="row" style="margin-top:0.5rem;">
+          <input id="manifest-path" class="input-wide" type="text" placeholder="/storage/emulated/0/Download/patches.json" />
+          <button id="load-path-btn" type="button">Von Pfad laden</button>
+          <button id="load-project-btn" type="button">Projekt-Manifest laden</button>
         </div>
-      </div>
-      <p class="patch-copy">
-        ZIP oder JSON wählen → Server prüft → Browser wendet an.<br>
-        Der Terminal-Lauf läuft separat via <code>npm run patch:apply</code>.
-      </p>
-    </section>
+        <p class="meta">Oder JSON direkt einfuegen:</p>
+        <textarea id="manifest-text" spellcheck="false"></textarea>
+      </section>
 
-    <div class="patch-grid">
-
-      <!-- Linke Karte: Intake + Status -->
-      <section class="patch-card">
-        <div class="patch-card-inner">
-          <h2>Intake</h2>
-          <p class="patch-subtle">ZIP oder JSON hochladen. Server prüft Sicherheit und Syntax. Bei Erfolg sofort anwenden.</p>
-
-          <div class="entry-bar">
-            <label class="pick" for="patchInput">Datei wählen</label>
-            <input id="patchInput" type="file" accept=".zip,.json,application/zip,application/json" style="display:none">
-            <span id="fileLabel">Keine Datei gewählt</span>
-            <button class="patch-button" id="runBtn" type="button" disabled>Patch starten</button>
+      <section class="card surface-panel">
+        <h2>Ausgabe-Fenster</h2>
+        <div class="output-box">
+          <div class="output-head">
+            <h3 id="output-title">Bereit</h3>
+            <span id="output-badge" class="badge">Info</span>
           </div>
-
-          <div style="margin-top:16px">
-            <h3>Status &nbsp;<span class="pill" id="statusPill">–</span></h3>
-            <div class="patch-metrics">
-              <div class="patch-metric"><small>Check-ID</small><span id="metaCheckId">–</span></div>
-              <div class="patch-metric"><small>Mode</small><span id="metaMode">runtime-only</span></div>
-              <div class="patch-metric"><small>Gate</small><span id="metaGate">–</span></div>
-              <div class="patch-metric"><small>Patches</small><span id="metaPatches">–</span></div>
-            </div>
-          </div>
-
-          <div class="patch-stage-list" id="stageList"></div>
-
-          <div class="rollback-row">
-            <button class="patch-button secondary" id="rollbackBtn" type="button" disabled>Rollback</button>
-          </div>
+          <div id="output-main" class="output-main">Der Patcher wartet auf einen Start.</div>
+          <div id="output-detail" class="output-detail">Setup-Hinweis (Termux/Proot): JSON direkt laden. Fuer ZIP nutze node tools/patch/import-dispatch.mjs <datei.zip> und verfolge dann alles live hier im Browser.</div>
         </div>
       </section>
 
-      <!-- Rechte Karte: Live-Log + Ergebnis -->
-      <section class="patch-card">
-        <div class="patch-card-inner">
-          <h2>Live-Log</h2>
-          <div class="log-panel" id="logPanel" role="log" aria-live="polite" aria-label="Patch-Liveausgabe"></div>
-
-          <div style="margin-top:16px">
-            <h2>Ergebnis <span class="pill" id="resultPill">wartet</span></h2>
-            <div class="patch-summary" id="summaryBox">–</div>
-          </div>
-
-          <!-- SSE-Status für Server-Sessions -->
-          <div style="margin-top:14px; display:none" id="sseRow">
-            <h3>Server-Session</h3>
-            <div class="patch-metrics">
-              <div class="patch-metric"><small>Session</small><span id="sseSession">–</span></div>
-              <div class="patch-metric"><small>Phase</small><span id="ssePhase">–</span></div>
-              <div class="patch-metric"><small>Final</small><span id="sseFinal">–</span></div>
-            </div>
-          </div>
+      <section class="card surface-panel span-2">
+        <div class="row">
+          <button id="start-btn" type="button">Patches starten</button>
+          <button id="cancel-btn" type="button">Lauf abbrechen</button>
+          <input id="uninstall-id" class="input-compact" type="text" placeholder="patch-003" />
+          <button id="uninstall-btn" type="button">Patch deinstallieren</button>
+          <button id="refresh-btn" type="button">Status neu laden</button>
+          <button id="back-btn" type="button">Zur Startseite</button>
         </div>
+        <p id="counters" class="meta">Gesamt: 0 | Erfolgreich: 0 | Fehler: 0 | Aktiv: -</p>
+        <div class="progress" aria-label="Fortschritt"><div id="bar" class="bar"></div></div>
       </section>
 
-    </div>
-  </div>
+      <section class="card surface-panel span-2">
+        <h2>Patch-Warteschlange</h2>
+        <div id="queue" class="queue"></div>
+      </section>
 
-  <script type="module">
-    import { KernelController } from '/src/kernel/KernelController.js';
-    import { BrowserPatchRunner } from '/src/browser/BrowserPatchRunner.js';
-    import { LogBus } from '/src/browser/LogBus.js';
+      <section class="card surface-panel span-2">
+        <h2>Changelog / Log</h2>
+        <div class="flags">
+          <label><input id="flag-verify" type="checkbox" checked /> Nach jedem Patch verifizieren</label>
+          <label><input id="flag-continue-on-error" type="checkbox" checked /> Bei Fehler weiter (nur Stopp bei Konflikt)</label>
+          <label><input id="flag-refresh-game" type="checkbox" /> Game-Seite automatisch neu laden</label>
+          <label><input id="flag-checksum" type="checkbox" /> Checksummen vergleichen</label>
+        </div>
+        <div id="log" class="log"></div>
+      </section>
+    </main>
 
-    // ── Kernel-Instanz (einmalig für diese Seite) ──────────────────────
-    const kernel = new KernelController({ seed: 'patch-ui-session' });
-    const runner = new BrowserPatchRunner(kernel);
-
-    // ── DOM-Referenzen ─────────────────────────────────────────────────
-    const patchInput  = document.getElementById('patchInput');
-    const fileLabel   = document.getElementById('fileLabel');
-    const runBtn      = document.getElementById('runBtn');
-    const rollbackBtn = document.getElementById('rollbackBtn');
-    const logPanel    = document.getElementById('logPanel');
-    const statusPill  = document.getElementById('statusPill');
-    const resultPill  = document.getElementById('resultPill');
-    const summaryBox  = document.getElementById('summaryBox');
-    const metaCheckId = document.getElementById('metaCheckId');
-    const metaMode    = document.getElementById('metaMode');
-    const metaGate    = document.getElementById('metaGate');
-    const metaPatches = document.getElementById('metaPatches');
-    const stageList   = document.getElementById('stageList');
-    const sseRow      = document.getElementById('sseRow');
-    const sseSession  = document.getElementById('sseSession');
-    const ssePhase    = document.getElementById('ssePhase');
-    const sseFinal    = document.getElementById('sseFinal');
-
-    const STAGES = ['intake', 'check', 'apply', 'done'];
-    let activeEventSource = null;
-    let selectedFile = null;
-
-    // ── Logging ────────────────────────────────────────────────────────
-    LogBus.subscribe(({ line, domain, message }) => {
-      const cls = domain === 'ok'       ? 'ok'
-                : domain === 'err'      ? 'err'
-                : domain === 'rollback' ? 'roll'
-                : domain === 'run'      ? 'head'
-                : 'info';
-      const el = document.createElement('div');
-      el.className = cls;
-      el.textContent = line;
-      logPanel.appendChild(el);
-      logPanel.scrollTop = logPanel.scrollHeight;
-    });
-
-    function appendLog(line) {
-      LogBus.emit({ domain: 'ui', message: line });
-    }
-
-    function clearLog() {
-      logPanel.innerHTML = '';
-    }
-
-    // ── Stage-Anzeige ──────────────────────────────────────────────────
-    function renderStages(active) {
-      stageList.innerHTML = STAGES.map(s => {
-        const cls = s === active ? 'patch-stage active' : 'patch-stage';
-        return `<div class="${cls}">${s}</div>`;
-      }).join('');
-    }
-
-    // ── Pills ──────────────────────────────────────────────────────────
-    function setPill(el, text, type = '') {
-      el.textContent = text;
-      el.className = `pill${type ? ' ' + type : ''}`;
-    }
-
-    // ── Datei-Auswahl ──────────────────────────────────────────────────
-    patchInput.addEventListener('change', () => {
-      selectedFile = patchInput.files?.[0] || null;
-      fileLabel.textContent = selectedFile ? selectedFile.name : 'Keine Datei gewählt';
-      runBtn.disabled = !selectedFile;
-    });
-
-    // ── SSE: Server-Session live verfolgen ─────────────────────────────
-    function bindEventSource(sessionId) {
-      if (activeEventSource) {
-        activeEventSource(); // Close callback von LogBus
-      }
-
-      sseRow.style.display = '';
-      sseSession.textContent = sessionId;
-      setPill(statusPill, 'läuft…', 'run');
-
-      // LogBus handhabt nun die SSE Verbindung transparent mit.
-      activeEventSource = LogBus.connectSSE(sessionId);
-    }
-
-    // ── Rollback ───────────────────────────────────────────────────────
-    rollbackBtn.addEventListener('click', () => {
-      appendLog('[ROLLBACK] Patches werden entfernt…');
-      runner.rollback();
-      setPill(statusPill, 'rolled back', 'roll');
-      setPill(resultPill, '–');
-      rollbackBtn.disabled = true;
-    });
-
-    // ── HAUPTEINSTIEG ──────────────────────────────────────────────────
-    runBtn.addEventListener('click', async () => {
-      if (!selectedFile) return;
-
-      clearLog();
-      runBtn.disabled = true;
-      rollbackBtn.disabled = true;
-      metaCheckId.textContent = '–';
-      metaGate.textContent = '–';
-      metaPatches.textContent = '–';
-      setPill(statusPill, 'prüfe…', 'run');
-      setPill(resultPill, 'wartet');
-      summaryBox.textContent = '–';
-      renderStages('intake');
-
-      appendLog(`[INTAKE] Datei: ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(1)} KB)`);
-      renderStages('check');
-
-      // 1. Server-Gate: Sicherheitsprüfung
-      let payload;
-      try {
-        const form = new FormData();
-        form.append('input', selectedFile);
-        appendLog('[CHECK] Sende an Server-Gate…');
-        const res = await fetch('/api/runtime-patch-check', { method: 'POST', body: form });
-        payload = await res.json();
-      } catch (err) {
-        appendLog(`[ERR] Netzwerkfehler: ${err.message}`);
-        setPill(statusPill, 'fehler', 'err');
-        setPill(resultPill, 'fehler', 'err');
-        runBtn.disabled = false;
-        return;
-      }
-
-      // Meta-Daten anzeigen
-      metaCheckId.textContent = payload.checkId || '–';
-      metaGate.textContent    = payload.llmGate?.decision || '–';
-      metaPatches.textContent = Array.isArray(payload.patches) ? payload.patches.length : '0';
-
-      // Gate abgelehnt?
-      if (!payload.ok) {
-        setPill(statusPill, 'abgelehnt', 'err');
-        setPill(resultPill, 'denied', 'err');
-        summaryBox.textContent = payload.summary || 'Gate hat abgelehnt.';
-        for (const reason of payload.llmGate?.reasons || []) {
-          appendLog(`[DENY] ${reason}`);
+    <script>
+      const state = {
+        manifest: null,
+        status: null,
+        log: [],
+        source: null,
+        output: {
+          level: "info",
+          title: "Bereit",
+          message: "Der Patcher wartet auf einen Start.",
+          detail: ""
         }
-        for (const d of payload.debug || []) {
-          appendLog(`[DBG]  ${d}`);
+      };
+
+      const el = {
+        file: document.getElementById("manifest-file"),
+        text: document.getElementById("manifest-text"),
+        uploadFile: document.getElementById("upload-file"),
+        validate: document.getElementById("validate-btn"),
+        loadPath: document.getElementById("load-path-btn"),
+        loadProject: document.getElementById("load-project-btn"),
+        manifestPath: document.getElementById("manifest-path"),
+        start: document.getElementById("start-btn"),
+        cancel: document.getElementById("cancel-btn"),
+        uninstallId: document.getElementById("uninstall-id"),
+        uninstall: document.getElementById("uninstall-btn"),
+        refresh: document.getElementById("refresh-btn"),
+        back: document.getElementById("back-btn"),
+        queue: document.getElementById("queue"),
+        counters: document.getElementById("counters"),
+        bar: document.getElementById("bar"),
+        log: document.getElementById("log"),
+        verify: document.getElementById("flag-verify"),
+        continueOnError: document.getElementById("flag-continue-on-error"),
+        refreshGame: document.getElementById("flag-refresh-game"),
+        checksum: document.getElementById("flag-checksum"),
+        outputTitle: document.getElementById("output-title"),
+        outputBadge: document.getElementById("output-badge"),
+        outputMain: document.getElementById("output-main"),
+        outputDetail: document.getElementById("output-detail")
+      };
+
+      function nowLocal() {
+        return new Date().toLocaleTimeString("de-DE");
+      }
+
+      function saveManifestCache(text) {
+        localStorage.setItem("seedworld.patch.manifest", text || "");
+      }
+
+      function loadManifestCache() {
+        const raw = localStorage.getItem("seedworld.patch.manifest") || "";
+        if (raw.trim()) {
+          el.text.value = raw;
         }
-        appendLog('[CHECK] Fehlgeschlagen. Patch nicht angewendet.');
-        runBtn.disabled = false;
-        return;
       }
 
-      // Gate bestanden
-      appendLog(`[CHECK] Gate: ${payload.llmGate?.decision} — ${payload.patches?.length ?? 0} Patch(es) freigegeben.`);
-      for (const d of payload.debug || []) {
-        appendLog(`[DBG]  ${d}`);
+      function eventLabel(event) {
+        const map = {
+          "manifest-loaded": "Manifest geladen",
+          "patch-started": "Patch gestartet",
+          "patch-progress": "Patch Fortschritt",
+          "patch-success": "Patch erfolgreich",
+          "patch-error": "Patch Fehler",
+          "patch.parsed": "Patch geparst",
+          "patch.validated": "Patch validiert",
+          "patch.classified": "Risiko klassifiziert",
+          "patch.sandboxed": "Sandbox Snapshot",
+          "patch.pending-confirmation": "Wartet auf Freigabe",
+          "patch.executed": "Patch ausgefuehrt",
+          "lock.updated": "Lock aktualisiert",
+          "patch-verified": "Patch verifiziert",
+          "patch-verification-failed": "Verifizierung fehlgeschlagen",
+          "all-complete": "Lauf abgeschlossen",
+          cancelled: "Lauf abgebrochen",
+          "sse-error": "Live-Verbindung getrennt",
+          "ui-error": "UI-Fehler",
+          "start-error": "Startfehler",
+          "upload-error": "Uploadfehler",
+          "validate-error": "Validierungsfehler",
+          "load-path-error": "Pfad-Ladefehler",
+          "cancel-error": "Abbruchfehler",
+          "uninstall-error": "Deinstallationsfehler"
+        };
+        return map[event] || event;
       }
 
-      // 2. Browser-Apply
-      renderStages('apply');
-      setPill(statusPill, 'wendet an…', 'run');
-      appendLog('[APPLY] Starte Browser-Kernel-Integration…');
+      function explainEvent(event, payload = {}) {
+        if (event === "manifest-loaded") return "Setup 1/3: Manifest wurde geladen.";
+        if (event === "patch-started") return "Setup 2/3: Patchlauf gestartet.";
+        if (event === "patch-progress") return `Patch ${payload.index || "?"}/${payload.total || "?"}: ${payload.patchId || "-"}`;
+        if (event === "patch-success") return `Erfolg: ${payload.id || payload.patchId || "Patch"} angewendet.`;
+        if (event === "patch-error") return `Fehler: ${payload.patchId || "Patch"} fehlgeschlagen.`;
+        if (event === "patch.parsed") return `Format erkannt: ${payload.kind || "unknown"}`;
+        if (event === "patch.validated") return `Validierung: Risiko ${payload.riskLevel || "unknown"}`;
+        if (event === "patch.classified") return `Klassifizierung: ${payload.riskLevel || "unknown"} (auto=${payload.shouldAutoExecute ? "ja" : "nein"})`;
+        if (event === "patch.sandboxed") return `Sandbox-${payload.stage || "snapshot"} abgeschlossen`;
+        if (event === "patch.pending-confirmation") return `Freigabe noetig: ${payload.pendingId || "-"}`;
+        if (event === "patch.executed") return "Ausfuehrung abgeschlossen";
+        if (event === "lock.updated") return `trace-lock aktualisiert (${payload.count || 0} Datei(en))`;
+        if (event === "all-complete") return "Setup 3/3: Lauf abgeschlossen.";
+        return eventLabel(event);
+      }
 
-      const result = runner.apply(payload.patches || []);
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
 
-      // 3. Ergebnis
-      renderStages('done');
-      summaryBox.textContent = payload.summary || '–';
-
-      if (result.ok) {
-        setPill(statusPill, 'aktiv', 'ok');
-        setPill(resultPill, 'succeeded', 'ok');
-        rollbackBtn.disabled = false;
-      } else {
-        setPill(statusPill, 'teilfehler', 'err');
-        setPill(resultPill, 'failed_partial', 'err');
-        for (const e of result.errors) {
-          appendLog(`[ERR] ${e}`);
+      function extractMessage(payload) {
+        if (!payload || typeof payload !== "object") {
+          return "";
         }
-        rollbackBtn.disabled = result.applied.length === 0;
+        if (typeof payload.message === "string" && payload.message.trim()) {
+          return payload.message.trim();
+        }
+        if (typeof payload.error === "string" && payload.error.trim()) {
+          return payload.error.trim();
+        }
+        return "";
       }
 
-      runBtn.disabled = false;
-
-      // SSE für Server-Sessions (wenn eine läuft)
-      if (payload.sessionId) {
-        bindEventSource(payload.sessionId);
+      function lintManifestForExecution(manifest) {
+        const issues = [];
+        if (!manifest || typeof manifest !== "object") {
+          issues.push("Manifest fehlt oder ist ungueltig.");
+          return issues;
+        }
+        const patches = Array.isArray(manifest.patches) ? manifest.patches : [];
+        for (const patch of patches) {
+          if (!patch || patch.type !== "run-command") {
+            continue;
+          }
+          const patchId = patch.id || "unknown";
+          const command = typeof patch.command === "string" ? patch.command : "";
+          if (!command.trim()) {
+            issues.push(`[${patchId}] run-command ist leer.`);
+            continue;
+          }
+          if (/[;|`&<>$()]/.test(command) || /\r|\n/.test(command)) {
+            issues.push(`[${patchId}] enthaelt verbotene Zeichen fuer run-command.`);
+          }
+        }
+        return issues;
       }
-    });
 
-    renderStages(null);
-  </script>
-</body>
+      function showLintResult(manifest) {
+        const issues = lintManifestForExecution(manifest);
+        if (issues.length > 0) {
+          setOutput(
+            "warn",
+            "Manifest hat Start-Blocker",
+            "Mindestens ein run-command wird vom Server blockiert.",
+            issues.join("\n")
+          );
+          return issues;
+        }
+        return [];
+      }
+
+      function setOutput(level, title, message, detail = "") {
+        state.output = { level, title, message, detail };
+        renderOutput();
+      }
+
+      function renderOutput() {
+        const o = state.output;
+        el.outputTitle.textContent = o.title;
+        el.outputMain.textContent = o.message;
+        el.outputDetail.textContent = o.detail || "";
+
+        el.outputBadge.className = "badge";
+        if (o.level === "ok") {
+          el.outputBadge.classList.add("badge-ok");
+          el.outputBadge.textContent = "OK";
+          return;
+        }
+        if (o.level === "error") {
+          el.outputBadge.classList.add("badge-err");
+          el.outputBadge.textContent = "Fehler";
+          return;
+        }
+        if (o.level === "warn") {
+          el.outputBadge.classList.add("badge-warn");
+          el.outputBadge.textContent = "Hinweis";
+          return;
+        }
+        el.outputBadge.textContent = "Info";
+      }
+
+      function mapFriendlyOutput(event, payload = {}) {
+        const msg = extractMessage(payload);
+
+        if (msg.includes("enthaelt verbotene Zeichen")) {
+          return {
+            level: "error",
+            title: "Befehl blockiert",
+            message: "Der run-command nutzt unzulaessige Sonderzeichen.",
+            detail: "In Termux/Proot nur einfache Kommandos ohne ; | & < > $ ( ) verwenden. Beispiel: npm test"
+          };
+        }
+
+        if (msg.includes("Erlaubte Prefixe:")) {
+          return {
+            level: "error",
+            title: "Befehl nicht freigegeben",
+            message: "Der Startbefehl ist nicht in der Server-Whitelist.",
+            detail: msg
+          };
+        }
+
+        if (msg.includes("Patch-Ziel ausserhalb Whitelist:")) {
+          return {
+            level: "error",
+            title: "Patch-Ziel nicht erlaubt",
+            message: "Die Datei liegt ausserhalb der erlaubten Patch-Pfade.",
+            detail: "Loesung: Manifest unter meta.gates.allowedFilePrefixes erweitern, z.B. um \"patchUtils.js\" oder einen Ordner wie \"src/\"."
+          };
+        }
+
+        if (event === "patch-error") {
+          const conflict = payload.conflict === true;
+          const action = payload.action === "run-stop" ? "Patchlauf gestoppt." : "Patchlauf laeuft weiter.";
+          const detail = conflict
+            ? "Konflikt erkannt (z.B. alter find-Text passt nicht mehr). Bitte Konfliktpatch zuerst beheben."
+            : "Kein Konflikt erkannt. Nachfolgende Patches werden weiter ausgefuehrt.";
+          return {
+            level: "error",
+            title: "Patch fehlgeschlagen",
+            message: msg || "Ein Patch konnte nicht angewendet werden.",
+            detail: `${action} ${detail}`
+          };
+        }
+
+        if (event === "patch-success") {
+          return {
+            level: "ok",
+            title: "Patch angewendet",
+            message: `Patch ${payload.patchId || ""} wurde erfolgreich angewendet.`.trim(),
+            detail: ""
+          };
+        }
+
+        if (event === "patch-progress") {
+          return {
+            level: "info",
+            title: "Patch laeuft",
+            message: `Arbeite an ${payload.patchId || "Patch"} (${payload.index || "?"}/${payload.total || "?"}).`,
+            detail: ""
+          };
+        }
+
+        if (event === "all-complete") {
+          const failed = Number(payload.failed || 0);
+          const total = Number(payload.total || 0);
+          const success = Number(payload.success || 0);
+          if (failed > 0) {
+            return {
+              level: "warn",
+              title: "Lauf beendet mit Fehlern",
+              message: `Fertig: ${success} erfolgreich, ${failed} fehlgeschlagen.`,
+              detail: `runId: ${payload.runId || "-"}`
+            };
+          }
+          return {
+            level: "ok",
+            title: "Lauf erfolgreich abgeschlossen",
+            message: `Alle Patches durch. Erfolg: ${success}/${total || success}.`,
+            detail: `runId: ${payload.runId || "-"}`
+          };
+        }
+
+        if (event === "cancelled") {
+          return {
+            level: "warn",
+            title: "Lauf abgebrochen",
+            message: "Die Queue wurde gestoppt.",
+            detail: ""
+          };
+        }
+
+        if (event === "sse-error") {
+          return {
+            level: "warn",
+            title: "Live-Verbindung getrennt",
+            message: "SSE ist unterbrochen. Seite neu laden oder Status manuell aktualisieren.",
+            detail: ""
+          };
+        }
+
+        if (msg) {
+          return {
+            level: "warn",
+            title: eventLabel(event),
+            message: msg,
+            detail: ""
+          };
+        }
+
+        return null;
+      }
+
+      function pushUiEvent(event, payload = {}) {
+        state.log.push({ event, payload, time: nowLocal() });
+        const out = mapFriendlyOutput(event, payload);
+        if (out) {
+          setOutput(out.level, out.title, out.message, out.detail);
+        }
+        renderLog();
+      }
+
+      function renderQueue() {
+        const patches = state.manifest?.patches || [];
+        const statuses = new Map((state.status?.patches || []).map((x) => [x.id, x]));
+        el.queue.innerHTML = "";
+
+        for (const patch of patches) {
+          const s = statuses.get(patch.id) || { state: "pending" };
+          const icon = s.state === "success" ? "✓" : s.state === "failed" ? "✗" : s.state === "running" ? "⟳" : "○";
+          const klass = s.state === "success" ? "state-ok" : s.state === "failed" ? "state-err" : s.state === "running" ? "state-run" : "state-pending";
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `<span class="${klass}">${icon}</span><span>${patch.id}: ${patch.name} <span class="meta">(${patch.file || "n/a"})</span></span><span class="${klass}">${s.state}</span>`;
+          el.queue.appendChild(div);
+        }
+      }
+
+      function renderStatus() {
+        const st = state.status || { total: 0, success: 0, failed: 0, runningId: "-", percent: 0 };
+        el.counters.textContent = `Gesamt: ${st.total || 0} | Erfolgreich: ${st.success || 0} | Fehler: ${st.failed || 0} | Aktiv: ${st.runningId || "-"}`;
+        el.bar.style.width = `${Math.max(0, Math.min(100, st.percent || 0))}%`;
+      }
+
+      function renderLog() {
+        el.log.innerHTML = "";
+        for (const row of state.log.slice().reverse()) {
+          const div = document.createElement("div");
+          div.className = "log-entry";
+          div.innerHTML = `<strong>[${escapeHtml(eventLabel(row.event))}]</strong> <span class="meta">${escapeHtml(row.time)}</span><br>${escapeHtml(explainEvent(row.event, row.payload || {}))}<br><code>${escapeHtml(JSON.stringify(row.payload || {}, null, 2))}</code>`;
+          el.log.appendChild(div);
+        }
+      }
+
+      async function api(path, opts = {}) {
+        const res = await fetch(path, {
+          method: opts.method || "GET",
+          headers: { "content-type": "application/json" },
+          body: opts.body ? JSON.stringify(opts.body) : undefined
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const detail = data.details ? ` | ${data.details}` : "";
+          throw new Error((data.error || `HTTP ${res.status}`) + detail);
+        }
+        return data;
+      }
+
+      function connectEvents() {
+        if (state.source) {
+          state.source.close();
+        }
+        const source = new EventSource("/api/events");
+        state.source = source;
+
+        const names = [
+          "manifest-loaded",
+          "patch-started",
+          "patch-progress",
+          "patch-success",
+          "patch-error",
+          "patch.parsed",
+          "patch.validated",
+          "patch.classified",
+          "patch.sandboxed",
+          "patch.pending-confirmation",
+          "patch.executed",
+          "lock.updated",
+          "patch-verified",
+          "patch-verification-failed",
+          "all-complete",
+          "cancelled"
+        ];
+
+        for (const name of names) {
+          source.addEventListener(name, (evt) => {
+            const payload = JSON.parse(evt.data || "{}");
+            pushUiEvent(name, payload);
+            refreshStatus(false);
+          });
+        }
+
+        source.onerror = () => {
+          pushUiEvent("sse-error", { message: "SSE disconnected" });
+        };
+      }
+
+      async function refreshStatus(withLog = true) {
+        try {
+          const status = await api("/api/status");
+          state.status = status;
+          if (status.manifest) {
+            state.manifest = status.manifest;
+          }
+          if (withLog) {
+            const logData = await api("/api/log");
+            state.log = logData.entries || [];
+          }
+          renderQueue();
+          renderStatus();
+          renderLog();
+        } catch (error) {
+          pushUiEvent("ui-error", { message: error.message });
+        }
+      }
+
+      async function uploadManifestObject(manifest) {
+        const data = await api("/api/upload-manifest", { method: "POST", body: { manifest } });
+        state.manifest = data.manifest;
+        saveManifestCache(JSON.stringify(manifest, null, 2));
+        const issues = showLintResult(data.manifest);
+        if (issues.length === 0) {
+          setOutput("ok", "Manifest bereit", "Manifest wurde geladen und ist startklar.");
+        }
+        await refreshStatus();
+      }
+
+      el.uploadFile.addEventListener("click", async () => {
+        try {
+          const file = el.file.files?.[0];
+          if (!file) {
+            throw new Error("Keine Datei gewaehlt.");
+          }
+          const text = await file.text();
+          const manifest = JSON.parse(text);
+          el.text.value = JSON.stringify(manifest, null, 2);
+          await uploadManifestObject(manifest);
+        } catch (error) {
+          pushUiEvent("upload-error", { message: error.message });
+        }
+      });
+
+      el.validate.addEventListener("click", async () => {
+        try {
+          const manifest = JSON.parse(el.text.value || "{}");
+          await uploadManifestObject(manifest);
+        } catch (error) {
+          pushUiEvent("validate-error", { message: error.message });
+        }
+      });
+
+      el.loadPath.addEventListener("click", async () => {
+        try {
+          const p = String(el.manifestPath.value || "").trim();
+          if (!p) {
+            throw new Error("Manifest-Pfad fehlt.");
+          }
+          const data = await api("/api/load-manifest-path", { method: "POST", body: { path: p } });
+          state.manifest = data.manifest;
+          el.text.value = JSON.stringify(data.manifest, null, 2);
+          saveManifestCache(el.text.value);
+          setOutput("ok", "Manifest vom Pfad geladen", "Manifest wurde erfolgreich aus dem Dateipfad gelesen.");
+          await refreshStatus();
+        } catch (error) {
+          pushUiEvent("load-path-error", { message: error.message });
+        }
+      });
+
+      el.loadProject.addEventListener("click", async () => {
+        try {
+          const data = await api("/api/load-manifest-path", { method: "POST", body: { path: "patches.json" } });
+          state.manifest = data.manifest;
+          el.manifestPath.value = "patches.json";
+          el.text.value = JSON.stringify(data.manifest, null, 2);
+          saveManifestCache(el.text.value);
+          const issues = showLintResult(data.manifest);
+          if (issues.length === 0) {
+            setOutput("ok", "Projekt-Manifest geladen", "patches.json wurde geladen und validiert.");
+          }
+          await refreshStatus();
+        } catch (error) {
+          pushUiEvent("load-path-error", { message: error.message });
+        }
+      });
+
+      el.start.addEventListener("click", async () => {
+        try {
+          if (!state.manifest) {
+            throw new Error("Kein Manifest geladen. Bitte zuerst laden oder validieren.");
+          }
+          const issues = showLintResult(state.manifest);
+          if (issues.length > 0) {
+            throw new Error("Start blockiert: Manifest enthaelt ungueltige run-command Eintraege.");
+          }
+          const options = {
+            verifyAfterEach: el.verify.checked,
+            continueOnError: el.continueOnError.checked,
+            compareChecksums: el.checksum.checked,
+            autoRefreshGame: el.refreshGame.checked
+          };
+          await api("/api/start-patches", { method: "POST", body: { options } });
+          setOutput("info", "Patchlauf gestartet", "Die Queue wird jetzt der Reihe nach auf den Basecode angewendet.");
+          await refreshStatus(false);
+        } catch (error) {
+          pushUiEvent("start-error", { message: error.message });
+        }
+      });
+
+      el.cancel.addEventListener("click", async () => {
+        try {
+          await api("/api/cancel", { method: "POST" });
+          setOutput("warn", "Abbruch angefordert", "Der aktuelle Lauf wird gestoppt.");
+          await refreshStatus(false);
+        } catch (error) {
+          pushUiEvent("cancel-error", { message: error.message });
+        }
+      });
+
+      el.uninstall.addEventListener("click", async () => {
+        try {
+          const patchId = String(el.uninstallId.value || "").trim();
+          if (!patchId) {
+            throw new Error("Patch-ID fehlt.");
+          }
+          await api("/api/uninstall-patch", { method: "POST", body: { patchId } });
+          setOutput("ok", "Patch deinstalliert", `Patch ${patchId} wurde rueckgaengig gemacht.`);
+          await refreshStatus(true);
+        } catch (error) {
+          pushUiEvent("uninstall-error", { message: error.message });
+        }
+      });
+
+      el.refresh.addEventListener("click", () => refreshStatus(true));
+      el.back.addEventListener("click", () => {
+        window.location.href = "./index.html";
+      });
+
+      renderOutput();
+      loadManifestCache();
+      connectEvents();
+      refreshStatus(true);
+    </script>
+  </body>
 </html>

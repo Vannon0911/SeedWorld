@@ -1,74 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeedWorld - Game UI</title>
-    <link rel="stylesheet" href="src/styles.css">
-</head>
-<body>
-    <div id="app">
-        <header class="app-header">
-            <div class="header-left">
-                <h1>SeedWorld</h1>
-                <span class="mode-indicator">GAME MODE</span>
-            </div>
-            <div class="header-right">
-                <button id="openPatcher" class="mode-toggle">
-                    <span class="toggle-text">Open Main Menu</span>
-                </button>
-                <div class="connection-status" id="connectionStatus">
-                    <span class="status-dot offline"></span>
-                    <span class="status-text">Offline</span>
-                </div>
-            </div>
-        </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SeedWorld Launcher</title>
+    <link rel="stylesheet" href="./src/ui/common.css" />
+    <style>
+      :root {
+        --bg: #030704;
+        --panel: #06140b;
+        --ink: #d3ffe2;
+        --accent: #2cff88;
+        --accent-2: #0ea75b;
+        --border: #174428;
+      }
 
-        <main id="gameMode" class="mode-content game-mode"></main>
-    </div>
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at top, #0a1a10, var(--bg) 58%);
+      }
 
-    <script type="module">
-        import { GameLogicController } from './src/game/GameLogicController.js';
-        import { GameUIController } from './src/ui/GameUIController.js';
+      .shell {
+        width: min(980px, 96vw);
+        border-radius: 18px;
+        padding: 1.4rem;
+      }
 
-        const gameMode = document.getElementById('gameMode');
-        const openPatcher = document.getElementById('openPatcher');
-        const statusElement = document.getElementById('connectionStatus');
-        const statusDot = statusElement.querySelector('.status-dot');
-        const statusText = statusElement.querySelector('.status-text');
+      h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.4rem, 3.8vw, 2rem);
+        letter-spacing: 0.04em;
+      }
 
-        openPatcher.addEventListener('click', () => {
-            window.location.href = './menu';
-        });
+      .menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
 
-        function initializeWebSocket() {
-            const ws = new WebSocket('ws://localhost:8080');
+      .menu button {
+        background: linear-gradient(180deg, #0a2d18, #06140b);
+        padding: 1.2rem;
+        border-radius: 14px;
+        font-size: clamp(1rem, 2.8vw, 1.25rem);
+        font-weight: 700;
+      }
 
-            ws.onopen = () => {
-                statusDot.classList.remove('offline');
-                statusDot.classList.add('online');
-                statusText.textContent = 'Connected';
-            };
+      .menu button strong {
+        display: block;
+        font-size: 1.15em;
+        margin-bottom: 0.35rem;
+        color: var(--accent);
+      }
 
-            ws.onclose = () => {
-                statusDot.classList.remove('online');
-                statusDot.classList.add('offline');
-                statusText.textContent = 'Offline';
-            };
+      .menu button:active { transform: translateY(1px); }
+      .menu button:hover { border-color: var(--accent-2); }
 
-            ws.onerror = () => {
-                statusDot.classList.remove('online');
-                statusDot.classList.add('offline');
-                statusText.textContent = 'Offline';
-            };
-        }
+      .hint {
+        margin: 1rem 0 0;
+        font-size: 0.92rem;
+        opacity: 0.88;
+      }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            initializeWebSocket();
-            const gameController = new GameLogicController();
-            const gameUIController = new GameUIController(gameController);
-            await gameUIController.initialize(gameMode);
-        });
+      @media (max-width: 680px) {
+        .menu { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell surface-panel">
+      <h1>SeedWorld</h1>
+      <section class="menu" aria-label="Startmenue">
+        <button id="start-game" type="button">
+          <strong>🎮 START GAME</strong>
+          Spieloberflaeche oeffnen
+        </button>
+        <button id="start-patches" type="button">
+          <strong>🔧 PATCH MANAGER</strong>
+          Update-Pakete laden und ausfuehren
+        </button>
+      </section>
+      <p class="hint">Steuerung und Ausgabe laufen ueber Browser-UI. Keine Terminal-Eingabe noetig.</p>
+    </main>
+
+    <script>
+      document.getElementById("start-game").addEventListener("click", () => {
+        window.location.href = "./game.html";
+      });
+
+      document.getElementById("start-patches").addEventListener("click", () => {
+        window.location.href = "./patchUI.html";
+      });
     </script>
-</body>
+  </body>
 </html>

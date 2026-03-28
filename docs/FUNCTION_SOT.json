@@ -1,0 +1,2010 @@
+{
+  "version": "function-sot.v1",
+  "generatedFrom": [
+    "src",
+    "tools/runtime",
+    "tests"
+  ],
+  "functions": [
+    {
+      "id": "src/game/GameLogicController.js#isPlainObject@109",
+      "name": "isPlainObject",
+      "file": "src/game/GameLogicController.js",
+      "line": 109,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#deepClone@118",
+      "name": "deepClone",
+      "file": "src/game/GameLogicController.js",
+      "line": 118,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#deepFreeze@122",
+      "name": "deepFreeze",
+      "file": "src/game/GameLogicController.js",
+      "line": 122,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#coercePositiveInteger@133",
+      "name": "coercePositiveInteger",
+      "file": "src/game/GameLogicController.js",
+      "line": 133,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#coerceString@142",
+      "name": "coerceString",
+      "file": "src/game/GameLogicController.js",
+      "line": 142,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#normalizeKernelApi@155",
+      "name": "normalizeKernelApi",
+      "file": "src/game/GameLogicController.js",
+      "line": 155,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#readAction@188",
+      "name": "readAction",
+      "file": "src/game/GameLogicController.js",
+      "line": 188,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#readState@202",
+      "name": "readState",
+      "file": "src/game/GameLogicController.js",
+      "line": 202,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#readSchema@210",
+      "name": "readSchema",
+      "file": "src/game/GameLogicController.js",
+      "line": 210,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#readMutationMatrix@218",
+      "name": "readMutationMatrix",
+      "file": "src/game/GameLogicController.js",
+      "line": 218,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getMachineStateKey@226",
+      "name": "getMachineStateKey",
+      "file": "src/game/GameLogicController.js",
+      "line": 226,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getResourcePath@233",
+      "name": "getResourcePath",
+      "file": "src/game/GameLogicController.js",
+      "line": 233,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getStoragePath@241",
+      "name": "getStoragePath",
+      "file": "src/game/GameLogicController.js",
+      "line": 241,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getCountAtPath@249",
+      "name": "getCountAtPath",
+      "file": "src/game/GameLogicController.js",
+      "line": 249,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#readCount@256",
+      "name": "readCount",
+      "file": "src/game/GameLogicController.js",
+      "line": 256,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#buildProgressSnapshot@266",
+      "name": "buildProgressSnapshot",
+      "file": "src/game/GameLogicController.js",
+      "line": 266,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#buildRewardFeedback@341",
+      "name": "buildRewardFeedback",
+      "file": "src/game/GameLogicController.js",
+      "line": 341,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#setCountPatch@386",
+      "name": "setCountPatch",
+      "file": "src/game/GameLogicController.js",
+      "line": 386,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#createWorldPatches@390",
+      "name": "createWorldPatches",
+      "file": "src/game/GameLogicController.js",
+      "line": 390,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#buildPatches@407",
+      "name": "buildPatches",
+      "file": "src/game/GameLogicController.js",
+      "line": 407,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#validateActionAgainstSchema@475",
+      "name": "validateActionAgainstSchema",
+      "file": "src/game/GameLogicController.js",
+      "line": 475,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#validatePatchesAgainstMatrix@489",
+      "name": "validatePatchesAgainstMatrix",
+      "file": "src/game/GameLogicController.js",
+      "line": 489,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#buildOperationSummary@519",
+      "name": "buildOperationSummary",
+      "file": "src/game/GameLogicController.js",
+      "line": 519,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#createGameLogicController@605",
+      "name": "createGameLogicController",
+      "file": "src/game/GameLogicController.js",
+      "line": 605,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getDefaultGameActionSchema@609",
+      "name": "getDefaultGameActionSchema",
+      "file": "src/game/GameLogicController.js",
+      "line": 609,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/GameLogicController.js#getDefaultGameMutationMatrix@613",
+      "name": "getDefaultGameMutationMatrix",
+      "file": "src/game/GameLogicController.js",
+      "line": 613,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#assert@5",
+      "name": "assert",
+      "file": "src/game/worldGen.js",
+      "line": 5,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#isPlainObject@11",
+      "name": "isPlainObject",
+      "file": "src/game/worldGen.js",
+      "line": 11,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#toInt@19",
+      "name": "toInt",
+      "file": "src/game/worldGen.js",
+      "line": 19,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#clamp@23",
+      "name": "clamp",
+      "file": "src/game/worldGen.js",
+      "line": 23,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#hashString@27",
+      "name": "hashString",
+      "file": "src/game/worldGen.js",
+      "line": 27,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#hashInts@37",
+      "name": "hashInts",
+      "file": "src/game/worldGen.js",
+      "line": 37,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#hashToUnit@54",
+      "name": "hashToUnit",
+      "file": "src/game/worldGen.js",
+      "line": 54,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#valueNoise2D@58",
+      "name": "valueNoise2D",
+      "file": "src/game/worldGen.js",
+      "line": 58,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#corner@66",
+      "name": "corner",
+      "file": "src/game/worldGen.js",
+      "line": 66,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#createVoronoiSites@82",
+      "name": "createVoronoiSites",
+      "file": "src/game/worldGen.js",
+      "line": 82,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#classifyBiomeFromSites@97",
+      "name": "classifyBiomeFromSites",
+      "file": "src/game/worldGen.js",
+      "line": 97,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#createLakeMask@129",
+      "name": "createLakeMask",
+      "file": "src/game/worldGen.js",
+      "line": 129,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#isLakeTile@154",
+      "name": "isLakeTile",
+      "file": "src/game/worldGen.js",
+      "line": 154,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#createTileBase@163",
+      "name": "createTileBase",
+      "file": "src/game/worldGen.js",
+      "line": 163,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#createTerrainStamps@177",
+      "name": "createTerrainStamps",
+      "file": "src/game/worldGen.js",
+      "line": 177,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#stampEligibility@224",
+      "name": "stampEligibility",
+      "file": "src/game/worldGen.js",
+      "line": 224,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#applyStamp@239",
+      "name": "applyStamp",
+      "file": "src/game/worldGen.js",
+      "line": 239,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#applyDeterministicStamps@255",
+      "name": "applyDeterministicStamps",
+      "file": "src/game/worldGen.js",
+      "line": 255,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#generateWorld@293",
+      "name": "generateWorld",
+      "file": "src/game/worldGen.js",
+      "line": 293,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#buildWorldFromState@351",
+      "name": "buildWorldFromState",
+      "file": "src/game/worldGen.js",
+      "line": 351,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/game/worldGen.js#validateWorldShape@362",
+      "name": "validateWorldShape",
+      "file": "src/game/worldGen.js",
+      "line": 362,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#assert@5",
+      "name": "assert",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 5,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#assertPlainObject@11",
+      "name": "assertPlainObject",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 11,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#deepFreeze@18",
+      "name": "deepFreeze",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 18,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#xmur3@29",
+      "name": "xmur3",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 29,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#seedFn@36",
+      "name": "seedFn",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 36,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#mulberry32@44",
+      "name": "mulberry32",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 44,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#random@45",
+      "name": "random",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 45,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/deterministicKernel.js#runDeterministicKernel@53",
+      "name": "runDeterministicKernel",
+      "file": "src/kernel/deterministicKernel.js",
+      "line": 53,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/fingerprint.js#sha256Hex@1",
+      "name": "sha256Hex",
+      "file": "src/kernel/fingerprint.js",
+      "line": 1,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/fingerprint.js#createMutFingerprint@14",
+      "name": "createMutFingerprint",
+      "file": "src/kernel/fingerprint.js",
+      "line": 14,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/fingerprint.js#stableStringify@19",
+      "name": "stableStringify",
+      "file": "src/kernel/fingerprint.js",
+      "line": 19,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/fingerprint.js#stableStringifyInternal@23",
+      "name": "stableStringifyInternal",
+      "file": "src/kernel/fingerprint.js",
+      "line": 23,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/fingerprint.js#isPlainObject@100",
+      "name": "isPlainObject",
+      "file": "src/kernel/fingerprint.js",
+      "line": 100,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/interface.js#assert@5",
+      "name": "assert",
+      "file": "src/kernel/interface.js",
+      "line": 5,
+      "kind": "function",
+      "category": "kernel-interface"
+    },
+    {
+      "id": "src/kernel/interface.js#assertPlainObject@11",
+      "name": "assertPlainObject",
+      "file": "src/kernel/interface.js",
+      "line": 11,
+      "kind": "function",
+      "category": "kernel-interface"
+    },
+    {
+      "id": "src/kernel/interface.js#executeKernelCommand@20",
+      "name": "executeKernelCommand",
+      "file": "src/kernel/interface.js",
+      "line": 20,
+      "kind": "function",
+      "category": "kernel-interface"
+    },
+    {
+      "id": "src/kernel/kornerCore.js#deepFreeze@1",
+      "name": "deepFreeze",
+      "file": "src/kernel/kornerCore.js",
+      "line": 1,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/kornerCore.js#clone@54",
+      "name": "clone",
+      "file": "src/kernel/kornerCore.js",
+      "line": 54,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/kornerCore.js#getKornerManifest@58",
+      "name": "getKornerManifest",
+      "file": "src/kernel/kornerCore.js",
+      "line": 58,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/kornerCore.js#getKornerStringMatrix@64",
+      "name": "getKornerStringMatrix",
+      "file": "src/kernel/kornerCore.js",
+      "line": 64,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/kornerCore.js#getKornerModuleSnapshot@68",
+      "name": "getKornerModuleSnapshot",
+      "file": "src/kernel/kornerCore.js",
+      "line": 68,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#isPlainObject@4",
+      "name": "isPlainObject",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 4,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#hasOwn@13",
+      "name": "hasOwn",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 13,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#sanitizePath@17",
+      "name": "sanitizePath",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 17,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#assertAllowedPath@41",
+      "name": "assertAllowedPath",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 41,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#validateActionSchema@48",
+      "name": "validateActionSchema",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 48,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#validatePatchGate@96",
+      "name": "validatePatchGate",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 96,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/llmGovernance.js#enforceLlmGovernanceChain@149",
+      "name": "enforceLlmGovernanceChain",
+      "file": "src/kernel/llmGovernance.js",
+      "line": 149,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#isPlainObject@18",
+      "name": "isPlainObject",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 18,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#gateError@27",
+      "name": "gateError",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 27,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#assert@33",
+      "name": "assert",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 33,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#addUnique@39",
+      "name": "addUnique",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 39,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#stableStringify@46",
+      "name": "stableStringify",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 46,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#createPatchSignature@60",
+      "name": "createPatchSignature",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 60,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#parsePatchEnvelope@68",
+      "name": "parsePatchEnvelope",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 68,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#analyzePatch@112",
+      "name": "analyzePatch",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 112,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#createConfirmationToken@174",
+      "name": "createConfirmationToken",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 174,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#planPatchDispatch@179",
+      "name": "planPatchDispatch",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 179,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#applyPatchDispatch@205",
+      "name": "applyPatchDispatch",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 205,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/patchDispatcher.js#getPatchStateSnapshot@246",
+      "name": "getPatchStateSnapshot",
+      "file": "src/kernel/patchDispatcher.js",
+      "line": 246,
+      "kind": "function",
+      "category": "kernel-dispatcher"
+    },
+    {
+      "id": "src/kernel/runtimeGuards.js#createDeterminismError@1",
+      "name": "createDeterminismError",
+      "file": "src/kernel/runtimeGuards.js",
+      "line": 1,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/runtimeGuards.js#patch@7",
+      "name": "patch",
+      "file": "src/kernel/runtimeGuards.js",
+      "line": 7,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/runtimeGuards.js#createGuardedDate@44",
+      "name": "createGuardedDate",
+      "file": "src/kernel/runtimeGuards.js",
+      "line": 44,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/runtimeGuards.js#GuardedDate@45",
+      "name": "GuardedDate",
+      "file": "src/kernel/runtimeGuards.js",
+      "line": 45,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/runtimeGuards.js#withDeterminismGuards@68",
+      "name": "withDeterminismGuards",
+      "file": "src/kernel/runtimeGuards.js",
+      "line": 68,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#guardError@3",
+      "name": "guardError",
+      "file": "src/kernel/seedGuard.js",
+      "line": 3,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#assert@7",
+      "name": "assert",
+      "file": "src/kernel/seedGuard.js",
+      "line": 7,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#normalizeHex64@13",
+      "name": "normalizeHex64",
+      "file": "src/kernel/seedGuard.js",
+      "line": 13,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#isHex64@18",
+      "name": "isHex64",
+      "file": "src/kernel/seedGuard.js",
+      "line": 18,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#constantTimeHexEqual@22",
+      "name": "constantTimeHexEqual",
+      "file": "src/kernel/seedGuard.js",
+      "line": 22,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/seedGuard.js#assertSeedMatch@35",
+      "name": "assertSeedMatch",
+      "file": "src/kernel/seedGuard.js",
+      "line": 35,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#isPlainObject@1",
+      "name": "isPlainObject",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 1,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#hasOwn@10",
+      "name": "hasOwn",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 10,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#assertSafeKey@14",
+      "name": "assertSafeKey",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 14,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#assertDataPropertyDescriptor@20",
+      "name": "assertDataPropertyDescriptor",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 20,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#sanitizePlainObject@26",
+      "name": "sanitizePlainObject",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 26,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#sanitizeArray@40",
+      "name": "sanitizeArray",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 40,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#deepSanitize@63",
+      "name": "deepSanitize",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 63,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#sanitizePath@96",
+      "name": "sanitizePath",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 96,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#hasOwnStringField@120",
+      "name": "hasOwnStringField",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 120,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#setAtPath@132",
+      "name": "setAtPath",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 132,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#removeAtPath@145",
+      "name": "removeAtPath",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 145,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#mergeAtPath@158",
+      "name": "mergeAtPath",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 158,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#assertAllowedPath@177",
+      "name": "assertAllowedPath",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 177,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#assertDomainGate@184",
+      "name": "assertDomainGate",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 184,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#applyPatches@194",
+      "name": "applyPatches",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 194,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/applyPatches.js#sanitizeForStore@268",
+      "name": "sanitizeForStore",
+      "file": "src/kernel/store/applyPatches.js",
+      "line": 268,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#isPlainObject@4",
+      "name": "isPlainObject",
+      "file": "src/kernel/store/createStore.js",
+      "line": 4,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#hasOwn@13",
+      "name": "hasOwn",
+      "file": "src/kernel/store/createStore.js",
+      "line": 13,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#deepFreeze@17",
+      "name": "deepFreeze",
+      "file": "src/kernel/store/createStore.js",
+      "line": 17,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#validateActionAgainstSchema@28",
+      "name": "validateActionAgainstSchema",
+      "file": "src/kernel/store/createStore.js",
+      "line": 28,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#createStore@73",
+      "name": "createStore",
+      "file": "src/kernel/store/createStore.js",
+      "line": 73,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/kernel/store/createStore.js#runWithGuard@114",
+      "name": "runWithGuard",
+      "file": "src/kernel/store/createStore.js",
+      "line": 114,
+      "kind": "function",
+      "category": "kernel-core"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#resourceLabel@4",
+      "name": "resourceLabel",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 4,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#iconLabel@11",
+      "name": "iconLabel",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 11,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#keyFor@19",
+      "name": "keyFor",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 19,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#waitForGridRoot@23",
+      "name": "waitForGridRoot",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 23,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#tick@25",
+      "name": "tick",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 25,
+      "kind": "arrow",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#ensureTiles@38",
+      "name": "ensureTiles",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 38,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#getTilesRef@67",
+      "name": "getTilesRef",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 67,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#sortByGrid@75",
+      "name": "sortByGrid",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 75,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#buildLinks@80",
+      "name": "buildLinks",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 80,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#distanceSq@95",
+      "name": "distanceSq",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 95,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#pairNearest@101",
+      "name": "pairNearest",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 101,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#getTileCenter@132",
+      "name": "getTileCenter",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 132,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#drawConnections@143",
+      "name": "drawConnections",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 143,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#installRadialMenu@161",
+      "name": "installRadialMenu",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 161,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#updateDebug@189",
+      "name": "updateDebug",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 189,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#installRadialBuildController@200",
+      "name": "installRadialBuildController",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 200,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#resizeSvg@210",
+      "name": "resizeSvg",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 210,
+      "kind": "arrow",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#optionNodes@221",
+      "name": "optionNodes",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 221,
+      "kind": "arrow",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#setActive@223",
+      "name": "setActive",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 223,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#openMenuAt@230",
+      "name": "openMenuAt",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 230,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#closeMenu@241",
+      "name": "closeMenu",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 241,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#redrawConnections@245",
+      "name": "redrawConnections",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 245,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#applyPlacement@251",
+      "name": "applyPlacement",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 251,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/plugins/radialBuildController.js#animate@329",
+      "name": "animate",
+      "file": "src/plugins/radialBuildController.js",
+      "line": 329,
+      "kind": "arrow",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/events.js#installUiEvents@1",
+      "name": "installUiEvents",
+      "file": "src/ui/events.js",
+      "line": 1,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/IconAnimations.js#clamp01@4",
+      "name": "clamp01",
+      "file": "src/ui/IconAnimations.js",
+      "line": 4,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/IconAnimations.js#cyclePosition@16",
+      "name": "cyclePosition",
+      "file": "src/ui/IconAnimations.js",
+      "line": 16,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/IconAnimations.js#sineDegrees@23",
+      "name": "sineDegrees",
+      "file": "src/ui/IconAnimations.js",
+      "line": 23,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/IconAnimations.js#triangleWave@28",
+      "name": "triangleWave",
+      "file": "src/ui/IconAnimations.js",
+      "line": 28,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/IconAnimations.js#pulseOpacity@33",
+      "name": "pulseOpacity",
+      "file": "src/ui/IconAnimations.js",
+      "line": 33,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/TileGridRenderer.js#isPlainObject@6",
+      "name": "isPlainObject",
+      "file": "src/ui/TileGridRenderer.js",
+      "line": 6,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/TileGridRenderer.js#toFiniteNumber@15",
+      "name": "toFiniteNumber",
+      "file": "src/ui/TileGridRenderer.js",
+      "line": 15,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/TileGridRenderer.js#normalizeType@19",
+      "name": "normalizeType",
+      "file": "src/ui/TileGridRenderer.js",
+      "line": 19,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/TileGridRenderer.js#normalizeTick@24",
+      "name": "normalizeTick",
+      "file": "src/ui/TileGridRenderer.js",
+      "line": 24,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#isPlainObject@19",
+      "name": "isPlainObject",
+      "file": "src/ui/UIController.js",
+      "line": 19,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#clone@28",
+      "name": "clone",
+      "file": "src/ui/UIController.js",
+      "line": 28,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#pretty@32",
+      "name": "pretty",
+      "file": "src/ui/UIController.js",
+      "line": 32,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#parseJson@36",
+      "name": "parseJson",
+      "file": "src/ui/UIController.js",
+      "line": 36,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#setTextContent@54",
+      "name": "setTextContent",
+      "file": "src/ui/UIController.js",
+      "line": 54,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#setDisabled@60",
+      "name": "setDisabled",
+      "file": "src/ui/UIController.js",
+      "line": 60,
+      "kind": "function",
+      "category": "app"
+    },
+    {
+      "id": "src/ui/UIController.js#loop@319",
+      "name": "loop",
+      "file": "src/ui/UIController.js",
+      "line": 319,
+      "kind": "arrow",
+      "category": "app"
+    },
+    {
+      "id": "tests/MainTest.mjs#assert@10",
+      "name": "assert",
+      "file": "tests/MainTest.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/MainTest.mjs#loadModule@16",
+      "name": "loadModule",
+      "file": "tests/MainTest.mjs",
+      "line": 16,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/MainTest.mjs#loadModules@26",
+      "name": "loadModules",
+      "file": "tests/MainTest.mjs",
+      "line": 26,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/MainTest.mjs#run@44",
+      "name": "run",
+      "file": "tests/MainTest.mjs",
+      "line": 44,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/00.mandatory.module.mjs#run@10",
+      "name": "run",
+      "file": "tests/modules/00.mandatory.module.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/01.redteam.module.mjs#runPreflight@12",
+      "name": "runPreflight",
+      "file": "tests/modules/01.redteam.module.mjs",
+      "line": 12,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/01.redteam.module.mjs#expectPreflightFail@17",
+      "name": "expectPreflightFail",
+      "file": "tests/modules/01.redteam.module.mjs",
+      "line": 17,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/01.redteam.module.mjs#withTempMutation@32",
+      "name": "withTempMutation",
+      "file": "tests/modules/01.redteam.module.mjs",
+      "line": 32,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/01.redteam.module.mjs#run@44",
+      "name": "run",
+      "file": "tests/modules/01.redteam.module.mjs",
+      "line": 44,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/02.kernel-interface.module.mjs#runPreflight@11",
+      "name": "runPreflight",
+      "file": "tests/modules/02.kernel-interface.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/02.kernel-interface.module.mjs#run@15",
+      "name": "run",
+      "file": "tests/modules/02.kernel-interface.module.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/03.patch-dispatcher-gate.module.mjs#run@6",
+      "name": "run",
+      "file": "tests/modules/03.patch-dispatcher-gate.module.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/04.trace-lock-sync.module.mjs#runPreflight@12",
+      "name": "runPreflight",
+      "file": "tests/modules/04.trace-lock-sync.module.mjs",
+      "line": 12,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/04.trace-lock-sync.module.mjs#runUpdateTraceLock@16",
+      "name": "runUpdateTraceLock",
+      "file": "tests/modules/04.trace-lock-sync.module.mjs",
+      "line": 16,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/04.trace-lock-sync.module.mjs#expectPreflightFail@20",
+      "name": "expectPreflightFail",
+      "file": "tests/modules/04.trace-lock-sync.module.mjs",
+      "line": 20,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/04.trace-lock-sync.module.mjs#sha256Hex@35",
+      "name": "sha256Hex",
+      "file": "tests/modules/04.trace-lock-sync.module.mjs",
+      "line": 35,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/04.trace-lock-sync.module.mjs#run@39",
+      "name": "run",
+      "file": "tests/modules/04.trace-lock-sync.module.mjs",
+      "line": 39,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/05.preflight-doc-anchor.module.mjs#runPreflight@11",
+      "name": "runPreflight",
+      "file": "tests/modules/05.preflight-doc-anchor.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/05.preflight-doc-anchor.module.mjs#run@15",
+      "name": "run",
+      "file": "tests/modules/05.preflight-doc-anchor.module.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/06.seed-guard.module.mjs#run@6",
+      "name": "run",
+      "file": "tests/modules/06.seed-guard.module.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/07.function-sot-sync.module.mjs#runPreflight@11",
+      "name": "runPreflight",
+      "file": "tests/modules/07.function-sot-sync.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/07.function-sot-sync.module.mjs#runSyncDocs@15",
+      "name": "runSyncDocs",
+      "file": "tests/modules/07.function-sot-sync.module.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/07.function-sot-sync.module.mjs#run@19",
+      "name": "run",
+      "file": "tests/modules/07.function-sot-sync.module.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/07.function-sot-sync.module.mjs#__functionSotProbe__@29",
+      "name": "__functionSotProbe__",
+      "file": "tests/modules/07.function-sot-sync.module.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/08.korner-module.module.mjs#run@7",
+      "name": "run",
+      "file": "tests/modules/08.korner-module.module.mjs",
+      "line": 7,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/09.store-and-governance-gates.module.mjs#run@6",
+      "name": "run",
+      "file": "tests/modules/09.store-and-governance-gates.module.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/10.traceability-policy-lock.module.mjs#runPreflight@11",
+      "name": "runPreflight",
+      "file": "tests/modules/10.traceability-policy-lock.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/10.traceability-policy-lock.module.mjs#run@15",
+      "name": "run",
+      "file": "tests/modules/10.traceability-policy-lock.module.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/11.cached-reference-bypass.module.mjs#run@6",
+      "name": "run",
+      "file": "tests/modules/11.cached-reference-bypass.module.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/11.deadman-trigger.module.mjs#run@7",
+      "name": "run",
+      "file": "tests/modules/11.deadman-trigger.module.mjs",
+      "line": 7,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/12.blueprint-scope-gate.module.mjs#runPreflight@11",
+      "name": "runPreflight",
+      "file": "tests/modules/12.blueprint-scope-gate.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/12.blueprint-scope-gate.module.mjs#parseOutput@15",
+      "name": "parseOutput",
+      "file": "tests/modules/12.blueprint-scope-gate.module.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/12.blueprint-scope-gate.module.mjs#expectPreflightFailure@19",
+      "name": "expectPreflightFailure",
+      "file": "tests/modules/12.blueprint-scope-gate.module.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/12.blueprint-scope-gate.module.mjs#run@32",
+      "name": "run",
+      "file": "tests/modules/12.blueprint-scope-gate.module.mjs",
+      "line": 32,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/13.mobile-perf-guardrails.module.mjs#resolveBudget@14",
+      "name": "resolveBudget",
+      "file": "tests/modules/13.mobile-perf-guardrails.module.mjs",
+      "line": 14,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/13.mobile-perf-guardrails.module.mjs#runPreflight@27",
+      "name": "runPreflight",
+      "file": "tests/modules/13.mobile-perf-guardrails.module.mjs",
+      "line": 27,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/13.mobile-perf-guardrails.module.mjs#run@37",
+      "name": "run",
+      "file": "tests/modules/13.mobile-perf-guardrails.module.mjs",
+      "line": 37,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#exists@10",
+      "name": "exists",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#makeManifest@19",
+      "name": "makeManifest",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#startPatchServer@34",
+      "name": "startPatchServer",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 34,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#stopPatchServer@65",
+      "name": "stopPatchServer",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 65,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#apiFetch@76",
+      "name": "apiFetch",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 76,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#waitForRunCompletion@86",
+      "name": "waitForRunCompletion",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 86,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/14.patch-server-security.module.mjs#run@98",
+      "name": "run",
+      "file": "tests/modules/14.patch-server-security.module.mjs",
+      "line": 98,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tests/modules/15.worldgen-deterministic.module.mjs#run@6",
+      "name": "run",
+      "file": "tests/modules/15.worldgen-deterministic.module.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "tools/runtime/deadmanGuard.mjs#sha256@19",
+      "name": "sha256",
+      "file": "tools/runtime/deadmanGuard.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/deadmanGuard.mjs#hashFile@23",
+      "name": "hashFile",
+      "file": "tools/runtime/deadmanGuard.mjs",
+      "line": 23,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/deadmanGuard.mjs#createDeadmanSnapshot@29",
+      "name": "createDeadmanSnapshot",
+      "file": "tools/runtime/deadmanGuard.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/deadmanGuard.mjs#assertDeadmanIntact@44",
+      "name": "assertDeadmanIntact",
+      "file": "tools/runtime/deadmanGuard.mjs",
+      "line": 44,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#toPosixRelative@10",
+      "name": "toPosixRelative",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#categoryForFile@14",
+      "name": "categoryForFile",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 14,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#lineForIndex@42",
+      "name": "lineForIndex",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 42,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#parseFunctionsInFile@46",
+      "name": "parseFunctionsInFile",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 46,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#listFilesRecursive@66",
+      "name": "listFilesRecursive",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 66,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#isTargetFile@88",
+      "name": "isTargetFile",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 88,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/functionSotShared.mjs#buildFunctionSot@92",
+      "name": "buildFunctionSot",
+      "file": "tools/runtime/functionSotShared.mjs",
+      "line": 92,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#sha256@19",
+      "name": "sha256",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#splitLines@23",
+      "name": "splitLines",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 23,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#findLineForIndex@27",
+      "name": "findLineForIndex",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 27,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#findFirstChangedLine@31",
+      "name": "findFirstChangedLine",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 31,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#parseMutPoints@42",
+      "name": "parseMutPoints",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 42,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#nearestMutId@56",
+      "name": "nearestMutId",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 56,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#readJson@71",
+      "name": "readJson",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 71,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#listFilesRecursive@76",
+      "name": "listFilesRecursive",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 76,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#toPosixRelative@92",
+      "name": "toPosixRelative",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 92,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#fail@96",
+      "name": "fail",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 96,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#resolvePreflightBudgetMs@101",
+      "name": "resolvePreflightBudgetMs",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 101,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#findFirstSotDifference@115",
+      "name": "findFirstSotDifference",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 115,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#main@131",
+      "name": "main",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 131,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/preflight.mjs#readTextCached@135",
+      "name": "readTextCached",
+      "file": "tools/runtime/preflight.mjs",
+      "line": 135,
+      "kind": "arrow",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#lockPathForRoot@11",
+      "name": "lockPathForRoot",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#isPidAlive@15",
+      "name": "isPidAlive",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#readLockState@28",
+      "name": "readLockState",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 28,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#canReuseActiveLock@37",
+      "name": "canReuseActiveLock",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 37,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#acquireRepoLock@50",
+      "name": "acquireRepoLock",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 50,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/repoLock.mjs#withRepoLock@104",
+      "name": "withRepoLock",
+      "file": "tools/runtime/repoLock.mjs",
+      "line": 104,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/syncDocs.mjs#runTool@9",
+      "name": "runTool",
+      "file": "tools/runtime/syncDocs.mjs",
+      "line": 9,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/syncDocs.mjs#main@29",
+      "name": "main",
+      "file": "tools/runtime/syncDocs.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/updateFunctionSot.mjs#main@7",
+      "name": "main",
+      "file": "tools/runtime/updateFunctionSot.mjs",
+      "line": 7,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/updateTraceLock.mjs#sha256@9",
+      "name": "sha256",
+      "file": "tools/runtime/updateTraceLock.mjs",
+      "line": 9,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/updateTraceLock.mjs#splitLines@13",
+      "name": "splitLines",
+      "file": "tools/runtime/updateTraceLock.mjs",
+      "line": 13,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/updateTraceLock.mjs#parseMutPoints@17",
+      "name": "parseMutPoints",
+      "file": "tools/runtime/updateTraceLock.mjs",
+      "line": 17,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/updateTraceLock.mjs#main@31",
+      "name": "main",
+      "file": "tools/runtime/updateTraceLock.mjs",
+      "line": 31,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#assert@4",
+      "name": "assert",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 4,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#normalizeScope@10",
+      "name": "normalizeScope",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#readJson@14",
+      "name": "readJson",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 14,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#readText@19",
+      "name": "readText",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#ensureStringArray@23",
+      "name": "ensureStringArray",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 23,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "tools/runtime/validateBlueprintScopes.mjs#validateBlueprintScopes@35",
+      "name": "validateBlueprintScopes",
+      "file": "tools/runtime/validateBlueprintScopes.mjs",
+      "line": 35,
+      "kind": "function",
+      "category": "runtime-tooling"
+    }
+  ]
+}

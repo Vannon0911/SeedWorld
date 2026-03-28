@@ -1,30 +1,23 @@
 {
   "name": "seedworld",
-  "version": "3.0.0",
+  "version": "2.7.1",
   "private": true,
   "type": "module",
-  "description": "SeedWorld - Pure Kernel-Based RTS Game (No Server Patching)",
   "scripts": {
-    "start": "node patchServer.mjs",
-    "kernel": "node src/mainKernel.js",
-    "server": "node patchServer.mjs",
+    "preflight": "node tools/runtime/preflight.mjs",
     "patch:server": "node patchServer.mjs",
-    "patch:apply": "node tools/patch/apply.mjs",
-    "cleanup:baseline": "node scripts/repo-cleanup-baseline.mjs --write",
-    "test": "node scripts/test-runner.mjs",
-    "preflight": "node scripts/test-runner.mjs"
-  },
-  "dependencies": {
-    "jszip": "^3.10.1",
-    "playwright": "^1.58.2"
-  },
-  "keywords": [
-    "deterministic",
-    "browser-game",
-    "rts",
-    "kernel",
-    "no-patching"
-  ],
-  "author": "SeedWorld Team",
-  "license": "MIT"
+    "patch:flow-test": "node scripts/patch-flow-test.mjs",
+    "patch:matrix:validate": "node tools/patch/validate-patch-matrix.mjs",
+    "llm:classify": "node tools/llm-preflight.mjs classify",
+    "llm:entry": "node tools/llm-preflight.mjs entry",
+    "llm:ack": "node tools/llm-preflight.mjs ack",
+    "llm:check": "node tools/llm-preflight.mjs check",
+    "llm:update-lock": "node tools/llm-preflight.mjs update-lock",
+    "sync:function-sot": "node tools/runtime/updateFunctionSot.mjs",
+    "sync:docs": "node tools/runtime/syncDocs.mjs",
+    "test": "node tests/MainTest.mjs",
+    "test:all": "npm test",
+    "start": "npm run preflight && python3 -m http.server 8080",
+    "patch:dispatch": "node tools/patch/import-dispatch.mjs"
+  }
 }
