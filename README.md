@@ -1,84 +1,95 @@
-# SeedWorld
+# SeedWorld LLM
 
-SeedWorld nutzt einen einheitlichen Patch-Flow mit Terminal-Authority. Es gibt genau einen kanonischen Write-Einstieg:
+[![CI](https://img.shields.io/badge/CI-required-success)](https://github.com/Vannon0911/seedWorldLLM/actions)
+[![Governance](https://img.shields.io/badge/governance-fail--closed-blue)](./src/kernel/KernelController.js)
+[![Docs](https://img.shields.io/badge/docs-synced-informational)](./docs/ORIENTATION.md)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-```bash
-npm run patch:apply -- --input <pfad-zur-zip-oder-json>
-```
+SeedWorld LLM is a deterministic RTS playground with a strict terminal-authority patch pipeline and enforced kernel governance.
 
-## Schnellstart
+## Why this project
+
+- Deterministic simulation core for repeatable runtime behavior
+- Fail-closed patch orchestration with policy gates and lock discipline
+- Governance-enforced action execution via action registry + gate manager
+- Browser control plane separated from execution authority
+
+## Quickstart
 
 ```bash
 npm install
 npm run server
 ```
 
+Local endpoints:
+
 - Game UI: `http://127.0.0.1:3000/`
 - Main Menu: `http://127.0.0.1:3000/menu`
 - Patch Control: `http://127.0.0.1:3000/patch`
 - Popup: `http://127.0.0.1:3000/popup`
 
-## Patch-Flow
-
-Optionaler Actor:
+## Core Commands
 
 ```bash
-npm run patch:apply -- --input <pfad> --actor <name>
-```
+# Required integrity line
+npm run check:required
 
-Phasen:
-
-`intake -> unpack -> manifest-validate -> normalize -> risk-classify -> acquire-lock -> policy-gates -> backup -> apply -> verify -> test -> finalize -> release-lock`
-
-## Browser Control Plane
-
-Die Browser-UI darf nur:
-- Session starten
-- Session beobachten
-- Logs und Summary lesen
-- Cancel anfordern
-
-Runtime-only Browser Update-Check:
-- Endpoint: `POST /api/runtime-patch-check`
-- Input: `multipart/form-data` mit Datei-Feld `input` (`.zip` oder `.json`)
-- Verhalten: nur In-Memory-Validierung mit Debug-Ausgabe, keine Repo-Schreiboperation.
-
-Die Browser-UI darf nicht:
-- `llm:*` Gates direkt ausfuehren
-- direkte Execute-/Apply-/Validate-Endpunkte triggern
-- Locking umgehen
-
-Entfernte Legacy-Endpunkte:
-- `GET /api/patches`
-- `POST /api/patches`
-- `DELETE /api/patches/:id`
-- `GET /api/hooks`
-
-## Session-Artefakte
-
-- Lock: `.patch-manager/terminal-session.lock`
-- Intake: `.patch-manager/intake/<session-id>/`
-- Status: `.patch-manager/sessions/<session-id>.status.json`
-- Logs: `.patch-manager/logs/<session-id>.jsonl`
-- Summary: `.patch-manager/logs/<session-id>.summary.txt`
-- Test-Evidence: `.patch-manager/logs/test-run-<timestamp>.json`
-
-## LLM Gate Policy
-
-- Policy-Datei: `docs/llm-gate-policy.json`
-- Gate-Ergebnis im Session-Status: `llmGate = { decision, reasons, policyVersion }`
-- Verweigerung beendet den Lauf fail-closed mit `LLM_GATE_DENIED`
-
-## Cancel Contract
-
-- `POST /api/patch-sessions` gibt `cancelToken` zurueck.
-- `POST /api/patch-sessions/:id/cancel` akzeptiert:
-  - Header: `X-Patch-Cancel-Token`
-  - Fallback: JSON-Body `{ "cancelToken": "..." }`
-- Cancel ist idempotent, session-spezifisch und leicht rate-limitiert.
-
-## Tests
-
-```bash
+# Full automated tests
 npm test
+npm run test:playwright:fulltiles
+
+# Governance & hygiene
+npm run governance:verify
+npm run hygiene:map
+npm run hygiene:why -- src/ui/TileAnimationSDK.js
 ```
+
+## Architecture at a glance
+
+- `src/kernel/` deterministic routing, governance enforcement, patch acknowledgements
+- `src/game/` action schema, mutation matrix, domain patch planning
+- `src/ui/` rendering, input, viewport orchestration
+- `tools/patch/` terminal patch apply workflow
+- `tools/runtime/` verification, docs sync, hygiene tooling
+
+Detailed docs:
+
+- Orientation: [docs/ORIENTATION.md](./docs/ORIENTATION.md)
+- Workflow: [docs/WORKFLOW.md](./docs/WORKFLOW.md)
+- Determinism inventory: [docs/DETERMINISM_INVENTORY.md](./docs/DETERMINISM_INVENTORY.md)
+- Repo hygiene map: [docs/REPO_HYGIENE_MAP.md](./docs/REPO_HYGIENE_MAP.md)
+
+## Governance & safety guarantees
+
+- Single write entrypoint for patch apply:
+
+```bash
+npm run patch:apply -- --input <zip|json>
+```
+
+- `KernelController.#execute()` is the governance chokepoint
+- Unknown actions are denied (`ACTION_NOT_REGISTERED`) with `auditId`
+- Registry + gates are verified by `governance:verify`
+- Browser UI cannot bypass terminal patch authority
+
+## Wiki
+
+Project wiki pages:
+
+- [Home](https://github.com/Vannon0911/seedWorldLLM/wiki)
+- [Architecture](https://github.com/Vannon0911/seedWorldLLM/wiki/Architecture)
+- [Kernel Governance](https://github.com/Vannon0911/seedWorldLLM/wiki/Kernel-Governance)
+- [Patch Flow](https://github.com/Vannon0911/seedWorldLLM/wiki/Patch-Flow)
+- [Developer Onboarding](https://github.com/Vannon0911/seedWorldLLM/wiki/Developer-Onboarding)
+- [Cleanup & Removal Playbook](https://github.com/Vannon0911/seedWorldLLM/wiki/Cleanup-and-Removal-Playbook)
+
+## Contributing
+
+1. Run `npm run check:required`.
+2. Keep action changes inside registry + gates.
+3. Add/update tests for new behavior.
+4. Sync docs with `npm run sync:docs`.
+
+---
+
+For deeper internal notes, see [README-DEV.md](./README-DEV.md).
