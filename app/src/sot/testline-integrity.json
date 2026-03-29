@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-29T06:40:42.999Z",
+  "generatedAt": "2026-03-29T09:12:57.7235000+02:00",
   "monitoredRoots": [
     "dev/scripts",
     "dev/tests"
@@ -21,6 +21,7 @@
     "dev/tests/modules/04.patch-utils.module.mjs",
     "dev/tests/modules/05.static-handler-security.module.mjs",
     "dev/tests/modules/06.governance-enforcement.module.mjs",
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs"
   ],
   "fileHashes": {
@@ -39,6 +40,7 @@
     "dev/tests/modules/04.patch-utils.module.mjs": "4b0bd95ff63557107771a73bd3e09d82085d046742c47e894caf41aaa315720c",
     "dev/tests/modules/05.static-handler-security.module.mjs": "ecf4d446f36dd9a68c3bf9feffb9d485cc4270155512fd8cbcf2982ae1d54264",
     "dev/tests/modules/06.governance-enforcement.module.mjs": "b0a8d87c0ff2caef046c0a0fb7516df1223c4e2f5591d5b1224d671608430dfa",
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs": "e43cd0be1846ed0d4c113acc6cacaa68d3f4022bb7df9f5588c76e23cfcbf283",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs": "fea5d5b7fdd72c55a08d6b5cfe5a4f8d717be7aac9c76c80c35bbab90869f25e"
   }
 }

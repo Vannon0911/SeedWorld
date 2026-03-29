@@ -160,6 +160,7 @@ if (writeMode && currentLlmIndex !== llmIndexContent) {
 }
 
 if (!writeMode && drift.length > 0) {
+  console.error("[SYNC_DOCS_DRIFT]");
   console.error("[SYNC_DOCS] BLOCK: docs/SoT muessen vor preflight/testline synchron sein.");
   for (const item of drift) {
     console.error(` - ${item}`);

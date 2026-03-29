@@ -10,8 +10,9 @@ set -e
 
 echo "[hook:pre-commit] signing guard + docs/SoT sync + llm guard + guard challenge + verify preflight"
 npm run signing:guard -- --config-only
+npm run sot:apply
 npm run sync:docs:apply
-git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/REPO_HYGIENE_MAP.json
+git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/FUNCTION_SOT.json app/src/sot/REPO_HYGIENE_MAP.json
 npm run llm:guard -- --action commit
 npm run preflight:guard
 PREFLIGHT_GUARD_MODE=verify npm run preflight
@@ -22,19 +23,25 @@ set -e
 
 ZERO_SHA="0000000000000000000000000000000000000000"
 
+# Hard safety gate: reject history rewrites and ref deletions.
+# pre-push stdin lines: <local ref> <local sha> <remote ref> <remote sha>
 while read local_ref local_sha remote_ref remote_sha
 do
+  # Ignore empty lines.
   [ -z "$local_ref" ] && continue
 
+  # Block deleting remote refs.
   if [ "$local_sha" = "$ZERO_SHA" ]; then
     echo "[hook:pre-push] BLOCK: ref deletion is forbidden ($remote_ref)"
     exit 1
   fi
 
+  # New remote refs are fine (no remote ancestor yet).
   if [ "$remote_sha" = "$ZERO_SHA" ]; then
     continue
   fi
 
+  # Non-fast-forward means force/update rewrite.
   if ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
     echo "[hook:pre-push] BLOCK: non-fast-forward push is forbidden ($local_ref -> $remote_ref)"
     echo "[hook:pre-push] BLOCK: --force/--force-with-lease/history rewrite are not allowed."

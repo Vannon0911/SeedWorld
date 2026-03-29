@@ -98,7 +98,7 @@ try {
   console.log("[PREFLIGHT] OK");
 } catch (error) {
   const msg = String(error?.message || error);
-  if (msg.includes("dev/tools/runtime/syncDocs.mjs")) {
+  if (msg.includes("[SYNC_DOCS_DRIFT]")) {
     console.error("[PREFLIGHT] BLOCK: Docs-/SoT-Sync ist Pflicht vor der Testline. Nicht halbgar 'fixen' - erst `npm run sync:docs:apply` bzw. den Pre-Commit-Hook sauber durchlaufen lassen.");
   }
   console.error(`[PREFLIGHT] BLOCK: ${msg}`);
