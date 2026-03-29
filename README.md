@@ -5,14 +5,14 @@
 [![Docs](https://img.shields.io/badge/docs-synced-informational)](./docs/INDEX.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./legacy/UNVERFID/root-legacy/LICENSE)
 
-SeedWorld LLM is a deterministic RTS playground with a strict terminal-authority patch pipeline and enforced kernel governance.
+SeedWorld LLM is a deterministic RTS playground with enforced kernel governance and a terminal-isolated patch pipeline.
 
 ## Why this project
 
 - Deterministic simulation core for repeatable runtime behavior
 - Fail-closed patch orchestration with policy gates and lock discipline
 - Governance-enforced action execution via action registry + gate manager
-- Browser control plane separated from execution authority
+- Browser runtime separated from terminal-only patch execution
 
 ## Quickstart
 
@@ -25,8 +25,6 @@ Local endpoints:
 
 - Game UI: `http://127.0.0.1:3000/`
 - Main Menu: `http://127.0.0.1:3000/menu`
-- Patch Control: `http://127.0.0.1:3000/patch`
-- Popup: `http://127.0.0.1:3000/popup`
 
 ## Core Commands
 
@@ -54,7 +52,7 @@ npm run hygiene:why -- app/src/ui/TileAnimationSDK.js
 - `app/src/kernel/` deterministic routing, governance enforcement, patch acknowledgements
 - `app/src/game/` action schema, mutation matrix, domain patch planning
 - `app/src/ui/` rendering, input, viewport orchestration
-- `dev/tools/patch/` terminal patch apply workflow
+- `dev/tools/patch/` terminal-only patch apply workflow
 - `dev/tools/runtime/` verification, docs sync, hygiene tooling
 
 Detailed docs:
@@ -77,7 +75,7 @@ npm run patch:apply -- --input <zip|json>
 - `KernelController.#execute()` is the governance chokepoint
 - Unknown actions are denied (`ACTION_NOT_REGISTERED`) with `auditId`
 - Registry + gates are verified by `governance:verify`
-- Browser UI cannot bypass terminal patch authority
+- Browser runtime cannot invoke patch execution paths
 - Push safety: non-fast-forward/force/deletion pushes are blocked by `pre-push`
 
 ## Wiki

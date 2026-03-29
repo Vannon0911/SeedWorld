@@ -6,21 +6,20 @@
 - **Game Logic**: Action schema, mutation matrix, world/domain calculations
   prefixes: app/src/game/
 - **UI Layer**: Rendering, input and browser-side orchestration
-  prefixes: app/src/ui/, app/src/plugins/, app/src/workers/, app/src/browser/, app/src/main.js, app/src/styles.css, app/src/patch-control.css, app/src/SeedWorld_WorldGen.mjs
-- **Patch Runtime**: Terminal patch flow and browser control-plane API
-  prefixes: dev/tools/patch/, app/server/patchServer.mjs, app/public/patchUI.html, app/public/patch-popup.html, app/public/index.html, app/public/menu.html, app/public/game.html, app/server/patchUtils.js
-- **Runtime Tooling**: Verification, docs sync, server handlers and regression harnesses
-  prefixes: dev/tools/runtime/, dev/scripts/, dev/tests/, app/server/
+  prefixes: app/src/ui/, app/src/plugins/, app/src/workers/, app/src/browser/, app/src/main.js, app/src/styles.css, app/src/patch-control.css, app/src/SeedWorld_WorldGen.mjs, app/public/
+- **Patch Tooling**: Terminal patch flow helpers, validation and manifest utilities
+  prefixes: dev/tools/patch/, app/server/patchUtils.js
+- **Runtime Tooling**: Verification, docs sync, runtime server entrypoints and regression harnesses
+  prefixes: dev/tools/runtime/, dev/scripts/, dev/tests/, app/server/appServer.mjs, app/server/staticHandler.mjs, start-server.js
 - **Documentation**: Contracts, orientation, audit and operational notes
   prefixes: docs/
 
 ## Entry Points
 - app/src/main.js
-- app/server/patchServer.mjs
+- app/server/appServer.mjs
 - start-server.js
 - dev/scripts/smoke-test.mjs
 - dev/scripts/runtime-guards-test.mjs
-- dev/scripts/patch-flow-test.mjs
 - dev/tests/MainTest.mjs
 
 ## Unowned Files
@@ -32,13 +31,13 @@
 - app/src/sot/repo-boundaries.json
 - app/src/sot/testline-integrity.json
 - dev/tools/llm-preflight.mjs
-- start-server.js
 
 ## Unreachable Code Files (from configured entrypoints)
-- app/server/runtimeCheckHandler.mjs
+- app/server/patchUtils.js
 - app/src/SeedWorld_WorldGen.mjs
 - app/src/browser/BrowserPatchRunner.js
 - app/src/browser/LogBus.js
+- app/src/game/contracts/mutationMatrixConstraints.js
 - app/src/game/gameConstants.js
 - app/src/kernel/deterministicKernel.js
 - app/src/kernel/fingerprint.js
@@ -60,15 +59,22 @@
 - dev/tests/helpers/runScriptTest.mjs
 - dev/tests/modules/00.smoke-script.module.mjs
 - dev/tests/modules/01.runtime-guards-script.module.mjs
-- dev/tests/modules/02.patch-flow-script.module.mjs
 - dev/tests/modules/03.kernel-same-action-same-tick.module.mjs
 - dev/tests/modules/04.patch-utils.module.mjs
 - dev/tests/modules/05.static-handler-security.module.mjs
 - dev/tests/modules/06.governance-enforcement.module.mjs
+- dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
 - dev/tools/patch/apply.mjs
 - dev/tools/patch/import-dispatch.mjs
+- dev/tools/patch/lib/backup.mjs
+- dev/tools/patch/lib/constants.mjs
+- dev/tools/patch/lib/intake.mjs
+- dev/tools/patch/lib/lock.mjs
+- dev/tools/patch/lib/normalize.mjs
+- dev/tools/patch/lib/orchestrator.mjs
+- dev/tools/patch/lib/session-store.mjs
 - dev/tools/patch/patchMatrix.js
 - dev/tools/patch/validate-patch-matrix.mjs
 - dev/tools/runtime/apply-github-ruleset.mjs
@@ -94,7 +100,7 @@
 - dev/tools/runtime/verify-testline-integrity.mjs
 
 ## Zero Inbound Code Files (excluding entrypoints)
-- app/server/runtimeCheckHandler.mjs
+- app/server/patchUtils.js
 - app/src/SeedWorld_WorldGen.mjs
 - app/src/browser/BrowserPatchRunner.js
 - app/src/game/gameConstants.js
@@ -109,11 +115,11 @@
 - dev/scripts/verify-evidence.mjs
 - dev/tests/modules/00.smoke-script.module.mjs
 - dev/tests/modules/01.runtime-guards-script.module.mjs
-- dev/tests/modules/02.patch-flow-script.module.mjs
 - dev/tests/modules/03.kernel-same-action-same-tick.module.mjs
 - dev/tests/modules/04.patch-utils.module.mjs
 - dev/tests/modules/05.static-handler-security.module.mjs
 - dev/tests/modules/06.governance-enforcement.module.mjs
+- dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
 - dev/tools/patch/apply.mjs
@@ -140,31 +146,16 @@
 - dev/tools/runtime/verify-testline-integrity.mjs
 
 ## Cross-Owner Imports
-- app/server/patchServer.mjs (Patch Runtime) -> app/server/sessionRoutes.mjs (Runtime Tooling)
-- app/server/patchServer.mjs (Patch Runtime) -> app/server/staticHandler.mjs (Runtime Tooling)
-- app/server/patchServer.mjs (Patch Runtime) -> app/src/kernel/interface.js (Kernel Core)
-- app/server/sessionRoutes.mjs (Runtime Tooling) -> dev/tools/patch/lib/constants.mjs (Patch Runtime)
-- app/server/sessionRoutes.mjs (Runtime Tooling) -> dev/tools/patch/lib/orchestrator.mjs (Patch Runtime)
-- app/server/sessionRoutes.mjs (Runtime Tooling) -> dev/tools/patch/lib/session-store.mjs (Patch Runtime)
 - app/src/game/gameConstants.js (Game Logic) -> app/src/plugins/radialBuildController.js (UI Layer)
 - app/src/main.js (UI Layer) -> app/src/game/GameLogicController.js (Game Logic)
 - app/src/main.js (UI Layer) -> app/src/kernel/interface.js (Kernel Core)
 - app/src/main.js (UI Layer) -> app/src/kernel/KernelController.js (Kernel Core)
 - app/src/ui/UIController.js (UI Layer) -> app/src/game/worldGen.js (Game Logic)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> app/server/patchServer.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/constants.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/intake.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/lock.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/normalize.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/orchestrator.mjs (Patch Runtime)
-- dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/session-store.mjs (Patch Runtime)
 - dev/scripts/runtime-guards-test.mjs (Runtime Tooling) -> app/src/kernel/runtimeGuards.js (Kernel Core)
-- dev/scripts/smoke-test.mjs (Runtime Tooling) -> app/server/patchServer.mjs (Patch Runtime)
 - dev/scripts/smoke-test.mjs (Runtime Tooling) -> app/src/ui/UIPluginController.js (UI Layer)
 - dev/scripts/test-runner.mjs (Runtime Tooling) -> app/src/kernel/deterministicKernel.js (Kernel Core)
 - dev/scripts/test-runner.mjs (Runtime Tooling) -> app/src/kernel/fingerprint.js (Kernel Core)
-- dev/tools/patch/lib/normalize.mjs (Patch Runtime) -> app/src/game/contracts/mutationMatrixConstraints.js (Game Logic)
-- start-server.js (UNOWNED) -> app/server/patchServer.mjs (Patch Runtime)
+- dev/tools/patch/lib/normalize.mjs (Patch Tooling) -> app/src/game/contracts/mutationMatrixConstraints.js (Game Logic)
 
 ## Notes
 - Unreachable/zero-inbound are candidates, not auto-delete orders.

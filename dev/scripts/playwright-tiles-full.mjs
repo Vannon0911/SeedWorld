@@ -24,9 +24,7 @@ function resolvePath(urlPathname) {
   const routeMap = new Map([
     ["/", "app/public/game.html"],
     ["/game.html", "app/public/game.html"],
-    ["/menu.html", "app/public/menu.html"],
-    ["/patchUI.html", "app/public/patchUI.html"],
-    ["/patch-popup.html", "app/public/patch-popup.html"]
+    ["/menu.html", "app/public/menu.html"]
   ]);
   const mapped = normalized.startsWith("/src/") ? `/app${normalized}` : normalized;
   const rawRel = routeMap.get(mapped) || mapped.replace(/^\/+/, "");

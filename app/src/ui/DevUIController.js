@@ -294,10 +294,10 @@ export class DevUIController extends BaseUIController {
     
     content.innerHTML = `
       <div class="patch-debug-header">
-        <h2>Patch Control Plane</h2>
+        <h2>Patch Tooling Notes</h2>
         <div class="patch-debug-controls">
-          <button class="patch-btn" id="openPatchControl">Open Patch Control</button>
-          <button class="patch-btn" id="openPatchPopup">Open Popup</button>
+          <button class="patch-btn" id="openLauncher">Open Launcher</button>
+          <button class="patch-btn" id="openMenu">Open Menu</button>
         </div>
       </div>
       
@@ -310,19 +310,19 @@ export class DevUIController extends BaseUIController {
 Write authority lives in:
 - npm run patch:apply -- --input <zip|json>
 
-Browser may only:
-- start orchestrated sessions
-- watch status/logs/result
-- request cancel
+Browser runtime may only:
+- launch the app shell
+- render the game
+- inspect runtime state
 
-No direct validate/apply/execute endpoints remain.</textarea>
+No browser patch control plane remains.</textarea>
           </div>
         </div>
         
         <div class="patch-test-panel">
-          <h3>Session Notes</h3>
+          <h3>Workflow Notes</h3>
           <div class="test-results" id="patchTestResults">
-            <div class="no-results">Use the patch control plane to upload a ZIP or JSON manifest and monitor the run.</div>
+            <div class="no-results">Use terminal patch tooling for manifests. This tab is documentation only.</div>
           </div>
         </div>
       </div>
@@ -671,18 +671,18 @@ No direct validate/apply/execute endpoints remain.</textarea>
 
   // Additional methods for other tabs...
   setupPatchDebug(content) {
-    const openPatchControl = content.querySelector('#openPatchControl');
-    const openPatchPopup = content.querySelector('#openPatchPopup');
+    const openLauncher = content.querySelector('#openLauncher');
+    const openMenu = content.querySelector('#openMenu');
 
-    if (openPatchControl) {
-      this.addEventListener(openPatchControl, 'click', () => {
-        window.location.href = '/patch';
+    if (openLauncher) {
+      this.addEventListener(openLauncher, 'click', () => {
+        window.location.href = '/';
       });
     }
 
-    if (openPatchPopup) {
-      this.addEventListener(openPatchPopup, 'click', () => {
-        window.open('/popup', 'seedworld-patch-popup', 'width=520,height=720');
+    if (openMenu) {
+      this.addEventListener(openMenu, 'click', () => {
+        window.location.href = '/menu';
       });
     }
   }

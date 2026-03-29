@@ -3,13 +3,19 @@ import { pathToFileURL } from "node:url";
 
 export const id = "05-static-handler-security";
 
+/**
+ * Verifies the static resolver only exposes approved runtime files.
+ */
 export async function test({ assert, root }) {
   const mod = await import(pathToFileURL(path.join(root, "app/server/staticHandler.mjs")).href);
   const { resolveStaticPath } = mod;
 
-  const patchUi = resolveStaticPath("/patch");
-  assert.equal(typeof patchUi, "string");
-  assert.equal(path.basename(patchUi), "patchUI.html");
+  const gamePath = resolveStaticPath("/game");
+  assert.equal(typeof gamePath, "string");
+  assert.equal(path.basename(gamePath), "game.html");
+
+  const removedPatchUi = resolveStaticPath("/patch");
+  assert.equal(removedPatchUi, null);
 
   const stylePath = resolveStaticPath("/src/styles.css");
   assert.equal(typeof stylePath, "string");

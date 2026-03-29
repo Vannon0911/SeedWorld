@@ -1,11 +1,10 @@
 {
   "entrypoints": [
     "app/src/main.js",
-    "app/server/patchServer.mjs",
+    "app/server/appServer.mjs",
     "start-server.js",
     "dev/scripts/smoke-test.mjs",
     "dev/scripts/runtime-guards-test.mjs",
-    "dev/scripts/patch-flow-test.mjs",
     "dev/tests/MainTest.mjs"
   ],
   "owners": [
@@ -33,23 +32,18 @@
         "app/src/main.js",
         "app/src/styles.css",
         "app/src/patch-control.css",
-        "app/src/SeedWorld_WorldGen.mjs"
+        "app/src/SeedWorld_WorldGen.mjs",
+        "app/public/"
       ],
       "purpose": "Rendering, input and browser-side orchestration"
     },
     {
-      "name": "Patch Runtime",
+      "name": "Patch Tooling",
       "prefixes": [
         "dev/tools/patch/",
-        "app/server/patchServer.mjs",
-        "app/public/patchUI.html",
-        "app/public/patch-popup.html",
-        "app/public/index.html",
-        "app/public/menu.html",
-        "app/public/game.html",
         "app/server/patchUtils.js"
       ],
-      "purpose": "Terminal patch flow and browser control-plane API"
+      "purpose": "Terminal patch flow helpers, validation and manifest utilities"
     },
     {
       "name": "Runtime Tooling",
@@ -57,9 +51,11 @@
         "dev/tools/runtime/",
         "dev/scripts/",
         "dev/tests/",
-        "app/server/"
+        "app/server/appServer.mjs",
+        "app/server/staticHandler.mjs",
+        "start-server.js"
       ],
-      "purpose": "Verification, docs sync, server handlers and regression harnesses"
+      "purpose": "Verification, docs sync, runtime server entrypoints and regression harnesses"
     },
     {
       "name": "Documentation",
@@ -70,8 +66,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 108,
-    "codeFiles": 94
+    "allFiles": 105,
+    "codeFiles": 91
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
@@ -81,14 +77,14 @@
     "app/src/sot/release-manifest.json",
     "app/src/sot/repo-boundaries.json",
     "app/src/sot/testline-integrity.json",
-    "dev/tools/llm-preflight.mjs",
-    "start-server.js"
+    "dev/tools/llm-preflight.mjs"
   ],
   "unreachableCode": [
-    "app/server/runtimeCheckHandler.mjs",
+    "app/server/patchUtils.js",
     "app/src/SeedWorld_WorldGen.mjs",
     "app/src/browser/BrowserPatchRunner.js",
     "app/src/browser/LogBus.js",
+    "app/src/game/contracts/mutationMatrixConstraints.js",
     "app/src/game/gameConstants.js",
     "app/src/kernel/deterministicKernel.js",
     "app/src/kernel/fingerprint.js",
@@ -110,15 +106,22 @@
     "dev/tests/helpers/runScriptTest.mjs",
     "dev/tests/modules/00.smoke-script.module.mjs",
     "dev/tests/modules/01.runtime-guards-script.module.mjs",
-    "dev/tests/modules/02.patch-flow-script.module.mjs",
     "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
     "dev/tests/modules/04.patch-utils.module.mjs",
     "dev/tests/modules/05.static-handler-security.module.mjs",
     "dev/tests/modules/06.governance-enforcement.module.mjs",
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/apply.mjs",
     "dev/tools/patch/import-dispatch.mjs",
+    "dev/tools/patch/lib/backup.mjs",
+    "dev/tools/patch/lib/constants.mjs",
+    "dev/tools/patch/lib/intake.mjs",
+    "dev/tools/patch/lib/lock.mjs",
+    "dev/tools/patch/lib/normalize.mjs",
+    "dev/tools/patch/lib/orchestrator.mjs",
+    "dev/tools/patch/lib/session-store.mjs",
     "dev/tools/patch/patchMatrix.js",
     "dev/tools/patch/validate-patch-matrix.mjs",
     "dev/tools/runtime/apply-github-ruleset.mjs",
@@ -144,7 +147,7 @@
     "dev/tools/runtime/verify-testline-integrity.mjs"
   ],
   "zeroInboundNonEntrypoints": [
-    "app/server/runtimeCheckHandler.mjs",
+    "app/server/patchUtils.js",
     "app/src/SeedWorld_WorldGen.mjs",
     "app/src/browser/BrowserPatchRunner.js",
     "app/src/game/gameConstants.js",
@@ -159,11 +162,11 @@
     "dev/scripts/verify-evidence.mjs",
     "dev/tests/modules/00.smoke-script.module.mjs",
     "dev/tests/modules/01.runtime-guards-script.module.mjs",
-    "dev/tests/modules/02.patch-flow-script.module.mjs",
     "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
     "dev/tests/modules/04.patch-utils.module.mjs",
     "dev/tests/modules/05.static-handler-security.module.mjs",
     "dev/tests/modules/06.governance-enforcement.module.mjs",
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/apply.mjs",
@@ -190,42 +193,6 @@
     "dev/tools/runtime/verify-testline-integrity.mjs"
   ],
   "crossOwnerImports": [
-    {
-      "from": "app/server/patchServer.mjs",
-      "to": "app/server/sessionRoutes.mjs",
-      "fromOwner": "Patch Runtime",
-      "toOwner": "Runtime Tooling"
-    },
-    {
-      "from": "app/server/patchServer.mjs",
-      "to": "app/server/staticHandler.mjs",
-      "fromOwner": "Patch Runtime",
-      "toOwner": "Runtime Tooling"
-    },
-    {
-      "from": "app/server/patchServer.mjs",
-      "to": "app/src/kernel/interface.js",
-      "fromOwner": "Patch Runtime",
-      "toOwner": "Kernel Core"
-    },
-    {
-      "from": "app/server/sessionRoutes.mjs",
-      "to": "dev/tools/patch/lib/constants.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "app/server/sessionRoutes.mjs",
-      "to": "dev/tools/patch/lib/orchestrator.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "app/server/sessionRoutes.mjs",
-      "to": "dev/tools/patch/lib/session-store.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
     {
       "from": "app/src/game/gameConstants.js",
       "to": "app/src/plugins/radialBuildController.js",
@@ -257,58 +224,10 @@
       "toOwner": "Game Logic"
     },
     {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "app/server/patchServer.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/constants.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/intake.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/lock.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/normalize.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/orchestrator.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
-      "from": "dev/scripts/patch-flow-test.mjs",
-      "to": "dev/tools/patch/lib/session-store.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
-    },
-    {
       "from": "dev/scripts/runtime-guards-test.mjs",
       "to": "app/src/kernel/runtimeGuards.js",
       "fromOwner": "Runtime Tooling",
       "toOwner": "Kernel Core"
-    },
-    {
-      "from": "dev/scripts/smoke-test.mjs",
-      "to": "app/server/patchServer.mjs",
-      "fromOwner": "Runtime Tooling",
-      "toOwner": "Patch Runtime"
     },
     {
       "from": "dev/scripts/smoke-test.mjs",
@@ -331,21 +250,13 @@
     {
       "from": "dev/tools/patch/lib/normalize.mjs",
       "to": "app/src/game/contracts/mutationMatrixConstraints.js",
-      "fromOwner": "Patch Runtime",
+      "fromOwner": "Patch Tooling",
       "toOwner": "Game Logic"
-    },
-    {
-      "from": "start-server.js",
-      "to": "app/server/patchServer.mjs",
-      "fromOwner": "UNOWNED",
-      "toOwner": "Patch Runtime"
     }
   ],
   "inboundCounts": {
-    "app/server/patchServer.mjs": 3,
-    "app/server/patchUtils.js": 1,
-    "app/server/runtimeCheckHandler.mjs": 0,
-    "app/server/sessionRoutes.mjs": 1,
+    "app/server/appServer.mjs": 2,
+    "app/server/patchUtils.js": 0,
     "app/server/staticHandler.mjs": 1,
     "app/src/browser/BrowserPatchRunner.js": 0,
     "app/src/browser/LogBus.js": 1,
@@ -361,7 +272,7 @@
     "app/src/kernel/GateManager.js": 1,
     "app/src/kernel/gates/accessGates.js": 1,
     "app/src/kernel/gates/operationGates.js": 1,
-    "app/src/kernel/interface.js": 2,
+    "app/src/kernel/interface.js": 1,
     "app/src/kernel/KernelController.js": 3,
     "app/src/kernel/KernelGates.js": 1,
     "app/src/kernel/KernelRouter.js": 1,
@@ -385,33 +296,32 @@
     "app/src/ui/ViewportManager.js": 1,
     "app/src/workers/worldRenderWorker.js": 0,
     "dev/scripts/build-evidence-bundle.mjs": 0,
-    "dev/scripts/patch-flow-test.mjs": 0,
     "dev/scripts/playwright-tiles-full.mjs": 0,
     "dev/scripts/repo-cleanup-baseline.mjs": 0,
     "dev/scripts/runtime-guards-test.mjs": 0,
     "dev/scripts/smoke-test.mjs": 0,
     "dev/scripts/test-runner.mjs": 0,
     "dev/scripts/verify-evidence.mjs": 0,
-    "dev/tests/helpers/runScriptTest.mjs": 3,
+    "dev/tests/helpers/runScriptTest.mjs": 2,
     "dev/tests/MainTest.mjs": 0,
     "dev/tests/modules/00.smoke-script.module.mjs": 0,
     "dev/tests/modules/01.runtime-guards-script.module.mjs": 0,
-    "dev/tests/modules/02.patch-flow-script.module.mjs": 0,
     "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs": 0,
     "dev/tests/modules/04.patch-utils.module.mjs": 0,
     "dev/tests/modules/05.static-handler-security.module.mjs": 0,
     "dev/tests/modules/06.governance-enforcement.module.mjs": 0,
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs": 0,
     "dev/tests/modules/15.worldgen-deterministic.module.mjs": 0,
     "dev/tools/llm-preflight.mjs": 0,
     "dev/tools/patch/apply.mjs": 0,
     "dev/tools/patch/import-dispatch.mjs": 0,
     "dev/tools/patch/lib/backup.mjs": 1,
-    "dev/tools/patch/lib/constants.mjs": 5,
-    "dev/tools/patch/lib/intake.mjs": 2,
-    "dev/tools/patch/lib/lock.mjs": 2,
-    "dev/tools/patch/lib/normalize.mjs": 3,
-    "dev/tools/patch/lib/orchestrator.mjs": 3,
-    "dev/tools/patch/lib/session-store.mjs": 6,
+    "dev/tools/patch/lib/constants.mjs": 3,
+    "dev/tools/patch/lib/intake.mjs": 1,
+    "dev/tools/patch/lib/lock.mjs": 1,
+    "dev/tools/patch/lib/normalize.mjs": 2,
+    "dev/tools/patch/lib/orchestrator.mjs": 1,
+    "dev/tools/patch/lib/session-store.mjs": 4,
     "dev/tools/patch/patchMatrix.js": 1,
     "dev/tools/patch/validate-patch-matrix.mjs": 0,
     "dev/tools/runtime/apply-github-ruleset.mjs": 0,
@@ -438,19 +348,10 @@
     "start-server.js": 0
   },
   "imports": {
-    "app/server/patchServer.mjs": [
-      "app/server/patchUtils.js",
-      "app/server/sessionRoutes.mjs",
-      "app/server/staticHandler.mjs",
-      "app/src/kernel/interface.js"
+    "app/server/appServer.mjs": [
+      "app/server/staticHandler.mjs"
     ],
     "app/server/patchUtils.js": [],
-    "app/server/runtimeCheckHandler.mjs": [],
-    "app/server/sessionRoutes.mjs": [
-      "dev/tools/patch/lib/constants.mjs",
-      "dev/tools/patch/lib/orchestrator.mjs",
-      "dev/tools/patch/lib/session-store.mjs"
-    ],
     "app/server/staticHandler.mjs": [],
     "app/src/browser/BrowserPatchRunner.js": [
       "app/src/browser/LogBus.js"
@@ -537,22 +438,13 @@
     "app/src/ui/ViewportManager.js": [],
     "app/src/workers/worldRenderWorker.js": [],
     "dev/scripts/build-evidence-bundle.mjs": [],
-    "dev/scripts/patch-flow-test.mjs": [
-      "app/server/patchServer.mjs",
-      "dev/tools/patch/lib/constants.mjs",
-      "dev/tools/patch/lib/intake.mjs",
-      "dev/tools/patch/lib/lock.mjs",
-      "dev/tools/patch/lib/normalize.mjs",
-      "dev/tools/patch/lib/orchestrator.mjs",
-      "dev/tools/patch/lib/session-store.mjs"
-    ],
     "dev/scripts/playwright-tiles-full.mjs": [],
     "dev/scripts/repo-cleanup-baseline.mjs": [],
     "dev/scripts/runtime-guards-test.mjs": [
       "app/src/kernel/runtimeGuards.js"
     ],
     "dev/scripts/smoke-test.mjs": [
-      "app/server/patchServer.mjs",
+      "app/server/appServer.mjs",
       "app/src/ui/UIPluginController.js"
     ],
     "dev/scripts/test-runner.mjs": [
@@ -568,13 +460,11 @@
     "dev/tests/modules/01.runtime-guards-script.module.mjs": [
       "dev/tests/helpers/runScriptTest.mjs"
     ],
-    "dev/tests/modules/02.patch-flow-script.module.mjs": [
-      "dev/tests/helpers/runScriptTest.mjs"
-    ],
     "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs": [],
     "dev/tests/modules/04.patch-utils.module.mjs": [],
     "dev/tests/modules/05.static-handler-security.module.mjs": [],
     "dev/tests/modules/06.governance-enforcement.module.mjs": [],
+    "dev/tests/modules/07.preflight-mutation-guard.module.mjs": [],
     "dev/tests/modules/15.worldgen-deterministic.module.mjs": [],
     "dev/tools/llm-preflight.mjs": [],
     "dev/tools/patch/apply.mjs": [
@@ -640,7 +530,7 @@
     "dev/tools/runtime/updateRedActions.mjs": [],
     "dev/tools/runtime/verify-testline-integrity.mjs": [],
     "start-server.js": [
-      "app/server/patchServer.mjs"
+      "app/server/appServer.mjs"
     ]
   }
 }
