@@ -82,6 +82,7 @@
 - dev/tools/runtime/llm-read-shared.mjs
 - dev/tools/runtime/new-action-template.mjs
 - dev/tools/runtime/preflight-mutation-guard.mjs
+- dev/tools/runtime/preflight-override.mjs
 - dev/tools/runtime/preflight.mjs
 - dev/tools/runtime/release-guard.mjs
 - dev/tools/runtime/repo-hygiene-map.mjs
@@ -128,6 +129,7 @@
 - dev/tools/runtime/llm-read-guard.mjs
 - dev/tools/runtime/new-action-template.mjs
 - dev/tools/runtime/preflight-mutation-guard.mjs
+- dev/tools/runtime/preflight-override.mjs
 - dev/tools/runtime/preflight.mjs
 - dev/tools/runtime/release-guard.mjs
 - dev/tools/runtime/repo-hygiene-map.mjs

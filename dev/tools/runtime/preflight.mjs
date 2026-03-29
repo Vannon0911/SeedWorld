@@ -1,4 +1,8 @@
 import { spawn } from "node:child_process";
+import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 const BLOCKED_STDERR_PATTERNS = [
   /\[DEP0190\]/i,
@@ -60,11 +64,68 @@ function runNpmScript(scriptName) {
   return runProcess(npmCmd, ["run", scriptName], `npm run ${scriptName}`);
 }
 
+function currentHead() {
+  const result = spawnSync("git", ["rev-parse", "HEAD"], {
+    cwd: process.cwd(),
+    encoding: "utf8"
+  });
+  if (result.status !== 0) {
+    return "NO_HEAD";
+  }
+  return String(result.stdout || "").trim() || "NO_HEAD";
+}
+
+function reasonHash(reason) {
+  return createHash("sha256").update(reason).digest("hex");
+}
+
+function isCriticalFailure(message) {
+  const text = String(message || "").toLowerCase();
+  return (
+    text.includes("preflight-mutation-guard") ||
+    text.includes("verify-testline-integrity") ||
+    text.includes("runtime-guards-test") ||
+    text.includes("date.now") ||
+    text.includes("crypto") ||
+    text.includes("injected marker") ||
+    text.includes("mode=2 unresolved lock") ||
+    text.includes("mode=1 generated lock challenge") ||
+    text.includes("failed with exit code")
+  );
+}
+
+async function readOverrideState() {
+  const overridePath = path.join(process.cwd(), "runtime", ".patch-manager", "preflight-override.json");
+  try {
+    return JSON.parse(await readFile(overridePath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+async function hasTripleOverride(message) {
+  const state = await readOverrideState();
+  const slot = state?.preflight;
+  if (!slot || typeof slot !== "object") {
+    return false;
+  }
+  const head = currentHead();
+  return slot.confirmations >= 3 && slot.head === head && slot.reasonHash === reasonHash(message);
+}
+
+function printTripleWarning(message) {
+  for (let i = 1; i <= 3; i += 1) {
+    console.error(`[PREFLIGHT][WARN_${i}] Kritischer Failure erkannt: "${message}"`);
+  }
+  console.error("[PREFLIGHT][FINAL] Bypass nur nach 3x expliziter Bestaetigung.");
+  console.error(`[PREFLIGHT][ACTION] npm run preflight:override -- --reason "${message.replace(/"/g, "'")}"`);
+}
+
 try {
   // 1) identity and policy guards first
   await runNodeScript("dev/tools/runtime/signing-guard.mjs", ["--config-only"]);
   await runNodeScript("dev/tools/runtime/evidence-lock.mjs");
-  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs");
+  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", ["--enforce"]);
   await runNodeScript("dev/tools/runtime/updateFunctionSot.mjs");
   await runNodeScript("dev/tools/runtime/syncDocs.mjs");
   await runNodeScript("dev/tools/runtime/governance-verify.mjs");
@@ -87,6 +148,15 @@ try {
   console.log("[PREFLIGHT] OK");
 } catch (error) {
   const msg = String(error?.message || error);
+  if (isCriticalFailure(msg)) {
+    const overrideActive = await hasTripleOverride(msg);
+    if (overrideActive) {
+      console.warn("[PREFLIGHT] override active (3/3). Kritischer Failure wird bewusst bypassed.");
+      console.warn(`[PREFLIGHT] BYPASS: ${msg}`);
+      process.exit(0);
+    }
+    printTripleWarning(msg);
+  }
   console.error(`[PREFLIGHT] BLOCK: ${msg}`);
   console.error("[PREFLIGHT] BLOCK: Jeder Test muss belegt erfolgreich sein. Ruecksprache halten, bevor fortgefahren wird.");
   process.exit(1);

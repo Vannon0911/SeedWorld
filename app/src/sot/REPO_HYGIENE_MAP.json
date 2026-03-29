@@ -70,8 +70,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 108,
-    "codeFiles": 94
+    "allFiles": 109,
+    "codeFiles": 95
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
@@ -132,6 +132,7 @@
     "dev/tools/runtime/llm-read-shared.mjs",
     "dev/tools/runtime/new-action-template.mjs",
     "dev/tools/runtime/preflight-mutation-guard.mjs",
+    "dev/tools/runtime/preflight-override.mjs",
     "dev/tools/runtime/preflight.mjs",
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
@@ -178,6 +179,7 @@
     "dev/tools/runtime/llm-read-guard.mjs",
     "dev/tools/runtime/new-action-template.mjs",
     "dev/tools/runtime/preflight-mutation-guard.mjs",
+    "dev/tools/runtime/preflight-override.mjs",
     "dev/tools/runtime/preflight.mjs",
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
@@ -425,6 +427,7 @@
     "dev/tools/runtime/llm-read-shared.mjs": 3,
     "dev/tools/runtime/new-action-template.mjs": 0,
     "dev/tools/runtime/preflight-mutation-guard.mjs": 0,
+    "dev/tools/runtime/preflight-override.mjs": 0,
     "dev/tools/runtime/preflight.mjs": 0,
     "dev/tools/runtime/release-guard.mjs": 0,
     "dev/tools/runtime/repo-hygiene-map.mjs": 0,
@@ -627,6 +630,7 @@
     "dev/tools/runtime/llm-read-shared.mjs": [],
     "dev/tools/runtime/new-action-template.mjs": [],
     "dev/tools/runtime/preflight-mutation-guard.mjs": [],
+    "dev/tools/runtime/preflight-override.mjs": [],
     "dev/tools/runtime/preflight.mjs": [],
     "dev/tools/runtime/release-guard.mjs": [],
     "dev/tools/runtime/repo-hygiene-map.mjs": [],

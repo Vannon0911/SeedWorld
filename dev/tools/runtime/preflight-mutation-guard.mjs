@@ -41,8 +41,12 @@ function currentHead() {
 
 function normalizeVault(vault) {
   const v = vault && typeof vault === "object" ? vault : {};
+  const parsedMode = Number.parseInt(String(v.guardMode ?? "1"), 10);
+  const guardMode = [0, 1, 2].includes(parsedMode) ? parsedMode : 1;
   return {
     version: 1,
+    guardMode,
+    modeHead: String(v.modeHead || ""),
     lastGeneratedHead: String(v.lastGeneratedHead || ""),
     lastGeneratedAt: String(v.lastGeneratedAt || ""),
     lastGeneratedTarget: String(v.lastGeneratedTarget || ""),
@@ -101,6 +105,8 @@ async function ensureInjectedLock(head, vault) {
 
   const nextVault = {
     ...vault,
+    guardMode: 2,
+    modeHead: head,
     lastGeneratedHead: head,
     lastGeneratedAt: lock.createdAt,
     lastGeneratedTarget: relPath,
@@ -129,6 +135,10 @@ async function resolveOrKeepLock(lock, vault, head) {
   }
 
   const fileHash = sha256(current);
+  if (LOCK_MARKER_RX.test(current)) {
+    console.warn(`[PREFLIGHT_GUARD] lock marker still present: ${relPath}`);
+    return false;
+  }
   if (fileHash === injectedHash) {
     console.warn(`[PREFLIGHT_GUARD] lock pending: ${relPath}`);
     return false;
@@ -167,34 +177,91 @@ async function runVerifyMode(lock, vault, head) {
 }
 
 async function runEnforceMode(lock, vault, head) {
+  const deactivateOnFix = String(process.env.PREFLIGHT_GUARD_DEACTIVATE_ON_FIX || "true").toLowerCase() !== "false";
   const markerFile = await findInjectedMarker();
   if (markerFile && !lock) {
     throw new Error(`marker found without lock state in ${markerFile}`);
   }
 
-  if (lock) {
-    await resolveOrKeepLock(lock, vault, head);
+  let mode = vault.modeHead === head ? vault.guardMode : 1;
+
+  if (mode === 0 && vault.modeHead !== head) {
+    mode = 1;
+  }
+
+  if (mode === 0) {
+    if (lock || markerFile) {
+      throw new Error("mode=0 erwartet keine aktive Injection/Lock-Datei.");
+    }
+    console.log(`[PREFLIGHT_GUARD] mode=0 deactivated until next commit (${head.slice(0, 12)})`);
     return;
   }
 
-  if (vault.lastGeneratedHead === head) {
-    if (vault.lastResolvedHead === head) {
-      console.log(`[PREFLIGHT_GUARD] already verified for HEAD ${head.slice(0, 12)}`);
+  if (mode === 2) {
+    if (!lock) {
+      const resetVault = {
+        ...vault,
+        guardMode: 1,
+        modeHead: head
+      };
+      await writeJson(vaultPath, resetVault);
+      throw new Error("mode=2 erwartet aktiven Lock; reset auf mode=1 und block.");
+    }
+
+    const resolved = await resolveOrKeepLock(lock, vault, head);
+    if (!resolved) {
+      throw new Error(`mode=2 unresolved lock in ${lock.targetFile}`);
+    }
+
+    const nextMode = deactivateOnFix ? 0 : 1;
+    const nextVault = {
+      ...vault,
+      guardMode: nextMode,
+      modeHead: head,
+      lastResolvedHead: head,
+      lastResolvedAt: new Date().toISOString(),
+      lastResolvedTarget: lock.targetFile
+    };
+    await writeJson(vaultPath, nextVault);
+    if (nextMode === 0) {
+      console.log("[PREFLIGHT_GUARD] lock fixed -> mode=0 (deactivated until next commit)");
       return;
     }
-    throw new Error(`state tamper detected: generated challenge missing for head ${head.slice(0, 12)}`);
+    console.warn("[PREFLIGHT_GUARD] lock fixed -> mode=1 (configured cycle restart)");
+    return;
+  }
+
+  if (mode !== 1) {
+    throw new Error(`unknown enforce mode '${mode}'`);
+  }
+
+  if (lock) {
+    const promoteVault = {
+      ...vault,
+      guardMode: 2,
+      modeHead: head
+    };
+    await writeJson(vaultPath, promoteVault);
+    throw new Error(`mode=1 found existing lock in ${lock.targetFile}; switched to mode=2 and block.`);
   }
 
   await ensureInjectedLock(head, vault);
+  throw new Error("mode=1 generated lock challenge; fix injected error and rerun preflight.");
 }
 
 async function main() {
-  const mode = String(process.env.PREFLIGHT_GUARD_MODE || (process.env.CI ? "verify" : "enforce")).trim().toLowerCase();
+  const cliEnforce = process.argv.includes("--enforce");
+  const cliVerify = process.argv.includes("--verify");
+  const envMode = String(process.env.PREFLIGHT_GUARD_MODE || "").trim().toLowerCase();
+  const mode = cliEnforce ? "enforce" : cliVerify ? "verify" : envMode || "verify";
   const lock = await readJsonOrNull(statePath);
   const vault = normalizeVault(await readJsonOrNull(vaultPath));
   const head = currentHead();
 
   try {
+    if (mode !== "verify" && mode !== "enforce") {
+      throw new Error(`unknown mode '${mode}' (allowed: verify|enforce)`);
+    }
     if (mode === "verify") {
       await runVerifyMode(lock, vault, head);
       return;

@@ -5121,26 +5121,26 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@82",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@86",
       "name": "ensureInjectedLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 82,
+      "line": 86,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findInjectedMarker@68",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findInjectedMarker@72",
       "name": "findInjectedMarker",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 68,
+      "line": 72,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@189",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@250",
       "name": "main",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 189,
+      "line": 250,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5169,34 +5169,34 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@55",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@59",
       "name": "readJsonOrNull",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 55,
+      "line": 59,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@114",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@120",
       "name": "resolveOrKeepLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 114,
+      "line": 120,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@167",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@177",
       "name": "runEnforceMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 167,
+      "line": 177,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@147",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@157",
       "name": "runVerifyMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 147,
+      "line": 157,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5209,42 +5209,130 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#writeJson@63",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#writeJson@67",
       "name": "writeJson",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 63,
+      "line": 67,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#hasBlockedStderr@6",
+      "id": "dev/tools/runtime/preflight-override.mjs#currentHead@15",
+      "name": "currentHead",
+      "file": "dev/tools/runtime/preflight-override.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-override.mjs#main@35",
+      "name": "main",
+      "file": "dev/tools/runtime/preflight-override.mjs",
+      "line": 35,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-override.mjs#parseArgs@4",
+      "name": "parseArgs",
+      "file": "dev/tools/runtime/preflight-override.mjs",
+      "line": 4,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-override.mjs#readJsonOrDefault@27",
+      "name": "readJsonOrDefault",
+      "file": "dev/tools/runtime/preflight-override.mjs",
+      "line": 27,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-override.mjs#reasonHash@23",
+      "name": "reasonHash",
+      "file": "dev/tools/runtime/preflight-override.mjs",
+      "line": 23,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#currentHead@65",
+      "name": "currentHead",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 65,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#hasBlockedStderr@10",
       "name": "hasBlockedStderr",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 6,
+      "line": 10,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@48",
-      "name": "runNodeScript",
+      "id": "dev/tools/runtime/preflight.mjs#hasTripleOverride@104",
+      "name": "hasTripleOverride",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 48,
+      "line": 104,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@52",
-      "name": "runNpmScript",
+      "id": "dev/tools/runtime/preflight.mjs#isCriticalFailure@80",
+      "name": "isCriticalFailure",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 80,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#printTripleWarning@114",
+      "name": "printTripleWarning",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 114,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#readOverrideState@95",
+      "name": "readOverrideState",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 95,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#reasonHash@76",
+      "name": "reasonHash",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 76,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@52",
+      "name": "runNodeScript",
       "file": "dev/tools/runtime/preflight.mjs",
       "line": 52,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#runProcess@10",
+      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@56",
+      "name": "runNpmScript",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 56,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#runProcess@14",
       "name": "runProcess",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 10,
+      "line": 14,
       "kind": "function",
       "category": "runtime-tooling"
     },
