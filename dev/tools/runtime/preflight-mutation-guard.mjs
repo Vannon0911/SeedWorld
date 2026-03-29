@@ -50,7 +50,12 @@ function normalizeVault(vault) {
     lastResolvedAt: String(v.lastResolvedAt || ""),
     lastResolvedTarget: String(v.lastResolvedTarget || ""),
     lastMarkerHash: String(v.lastMarkerHash || ""),
-    lastInjectedFileHash: String(v.lastInjectedFileHash || "")
+    lastInjectedFileHash: String(v.lastInjectedFileHash || ""),
+    pendingFailureCount: Number.isInteger(v.pendingFailureCount) ? v.pendingFailureCount : 0,
+    lastFailureHead: String(v.lastFailureHead || ""),
+    lastFailureAt: String(v.lastFailureAt || ""),
+    lastFailureTarget: String(v.lastFailureTarget || ""),
+    secondFailureNotifiedAt: String(v.secondFailureNotifiedAt || "")
   };
 }
 
@@ -81,6 +86,33 @@ async function findInjectedMarker() {
   return "";
 }
 
+async function recordPendingFailure(vault, head, relPath) {
+  const sameFailure =
+    vault.lastFailureHead === head &&
+    vault.lastFailureTarget === relPath;
+  const pendingFailureCount = sameFailure ? vault.pendingFailureCount + 1 : 1;
+  const nowIso = new Date().toISOString();
+  const nextVault = {
+    ...vault,
+    pendingFailureCount,
+    lastFailureHead: head,
+    lastFailureAt: nowIso,
+    lastFailureTarget: relPath,
+    secondFailureNotifiedAt:
+      pendingFailureCount >= 2
+        ? nowIso
+        : ""
+  };
+  await writeJson(vaultPath, nextVault);
+
+  if (pendingFailureCount >= 2) {
+    console.error(`[PREFLIGHT_GUARD] NOTIFY: zweiter Fehlschlag fuer ${relPath} auf HEAD ${head.slice(0, 12)}.`);
+    console.error("[PREFLIGHT_GUARD] NOTIFY: Merge/Autofix jetzt stoppen, Lock bewusst lesen und manuell aufloesen.");
+  }
+
+  return pendingFailureCount;
+}
+
 async function ensureInjectedLock(head, vault) {
   const relPath = pickTarget();
   const absPath = path.join(root, relPath);
@@ -105,7 +137,12 @@ async function ensureInjectedLock(head, vault) {
     lastGeneratedAt: lock.createdAt,
     lastGeneratedTarget: relPath,
     lastMarkerHash: lock.markerHash,
-    lastInjectedFileHash: lock.injectedFileHash
+    lastInjectedFileHash: lock.injectedFileHash,
+    pendingFailureCount: 0,
+    lastFailureHead: "",
+    lastFailureAt: "",
+    lastFailureTarget: "",
+    secondFailureNotifiedAt: ""
   };
 
   await writeJson(statePath, lock);
@@ -131,7 +168,11 @@ async function resolveOrKeepLock(lock, vault, head) {
 
   const fileHash = sha256(current);
   if (fileHash === injectedHash) {
+    const failureCount = await recordPendingFailure(vault, head, relPath);
     console.warn(`[PREFLIGHT_GUARD] lock pending: ${relPath}`);
+    if (failureCount >= 2) {
+      console.warn(`[PREFLIGHT_GUARD] escalation active: pendingFailureCount=${failureCount}`);
+    }
     return false;
   }
 
@@ -140,7 +181,12 @@ async function resolveOrKeepLock(lock, vault, head) {
     ...vault,
     lastResolvedHead: head,
     lastResolvedAt: new Date().toISOString(),
-    lastResolvedTarget: relPath
+    lastResolvedTarget: relPath,
+    pendingFailureCount: 0,
+    lastFailureHead: "",
+    lastFailureAt: "",
+    lastFailureTarget: "",
+    secondFailureNotifiedAt: ""
   };
   await writeJson(vaultPath, nextVault);
   console.log("[PREFLIGHT_GUARD] lock resolved");

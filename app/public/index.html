@@ -77,12 +77,12 @@
           <strong>🎮 START GAME</strong>
           Spieloberflaeche oeffnen
         </button>
-        <button id="start-patches" type="button">
-          <strong>🔧 PATCH MANAGER</strong>
-          Update-Pakete laden und ausfuehren
+        <button id="open-menu" type="button">
+          <strong>🧭 OPEN MENU</strong>
+          Runtime-Menue und Hinweise anzeigen
         </button>
       </section>
-      <p class="hint">Steuerung und Ausgabe laufen ueber Browser-UI. Keine Terminal-Eingabe noetig.</p>
+      <p class="hint">Der Browser startet nur noch App-Ansichten. Patch-Workflows bleiben isoliert im Terminal-Tooling.</p>
     </main>
 
     <script>
@@ -90,8 +90,8 @@
         window.location.href = "./game.html";
       });
 
-      document.getElementById("start-patches").addEventListener("click", () => {
-        window.location.href = "./patchUI.html";
+      document.getElementById("open-menu").addEventListener("click", () => {
+        window.location.href = "./menu";
       });
     </script>
   </body>

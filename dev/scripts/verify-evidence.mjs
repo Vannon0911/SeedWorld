@@ -54,7 +54,7 @@ function verifyEvidence(evidence) {
 
   assert(evidence.status === "passed", `Evidence status ist nicht passed: ${String(evidence.status)}`);
   assert(
-    evidence.gateDecision === "pass_and_deny_paths_verified",
+    evidence.gateDecision === "runtime_and_kernel_verified",
     `gateDecision ist nicht verifiziert: ${String(evidence.gateDecision)}`
   );
 

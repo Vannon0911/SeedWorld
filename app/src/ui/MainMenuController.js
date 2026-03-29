@@ -41,14 +41,6 @@ export class MainMenuController extends BaseUIController {
       kernelGate: 'dev.access'
     });
 
-    this.modes.set('patcher', {
-      name: 'Patch Control',
-      icon: '📦', 
-      description: 'Open the terminal-authority patch control plane',
-      controller: 'ExternalPatchControl',
-      requires: [],
-      kernelGate: 'patcher.access'
-    });
   }
 
   createBaseStructure() {
@@ -199,11 +191,6 @@ export class MainMenuController extends BaseUIController {
     }
 
     try {
-      if (modeConfig.controller === 'ExternalPatchControl') {
-        window.location.href = '/patch';
-        return;
-      }
-
       // Execute before mode switch hooks
       await this.executeKernelGate('beforeModeSwitch', {
         from: this.currentMode,
