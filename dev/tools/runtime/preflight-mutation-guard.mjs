@@ -148,6 +148,31 @@ async function readText(absPath) {
   return readFile(absPath, "utf8");
 }
 
+async function readStagedOrWorkingTree(relPath) {
+  const result = spawnSync("git", ["ls-files", "--stage", "--", relPath], {
+    cwd: root,
+    encoding: "utf8"
+  });
+  if (result.status === 0 && result.stdout && result.stdout.trim()) {
+    const showResult = spawnSync("git", ["show", `:${relPath}`], {
+      cwd: root,
+      encoding: "utf8"
+    });
+    if (showResult.status === 0 && showResult.stdout) {
+      return showResult.stdout;
+    }
+  }
+  return readFile(path.join(root, relPath), "utf8");
+}
+
+async function detectUnstagedChanges(relPath) {
+  const diffResult = spawnSync("git", ["diff", "--name-only", "--", relPath], {
+    cwd: root,
+    encoding: "utf8"
+  });
+  return diffResult.status === 0 && diffResult.stdout && diffResult.stdout.trim().length > 0;
+}
+
 async function renderLsOutput(absPath) {
   try {
     const entries = await readdir(absPath, { withFileTypes: true });
@@ -193,7 +218,7 @@ async function emitPreflightLsOutput() {
 async function findLegacyMarker() {
   for (const relPath of TARGET_FILES) {
     try {
-      const content = await readText(path.join(root, relPath));
+      const content = await readStagedOrWorkingTree(relPath);
       if (LEGACY_LOCK_MARKER_RX.test(content)) {
         return relPath;
       }
@@ -234,7 +259,7 @@ export function isFaultStillActive(relPath, content) {
 async function findActiveHiddenFault() {
   for (const relPath of TARGET_FILES) {
     try {
-      const content = await readText(path.join(root, relPath));
+      const content = await readStagedOrWorkingTree(relPath);
       if (isFaultStillActive(relPath, content)) {
         return relPath;
       }
@@ -478,7 +503,7 @@ async function clearStaleHeadDriftIfSafe(lock, vault, head) {
     return { lock, vault };
   }
 
-  const current = await readText(path.join(root, lock.targetFile));
+  const current = await readStagedOrWorkingTree(lock.targetFile);
   const drift = assessHeadDrift(lock, current, head);
   if (drift.action === "keep") {
     return { lock, vault };
@@ -526,9 +551,8 @@ async function ensureInjectedLock(head, vault) {
   const seed = ensureVaultSeed(vault);
   const relPath = pickTargetFile(seed, head);
   const absPath = path.join(root, relPath);
-  const before = await readText(absPath);
+  const before = await readStagedOrWorkingTree(relPath);
   const injection = injectFault(relPath, before, { seed, head });
-  await writeFile(absPath, injection.content, "utf8");
 
   const lock = {
     version: POLICY_VERSION,
@@ -563,8 +587,8 @@ async function ensureInjectedLock(head, vault) {
   // behind without the corresponding attestation record.
   await writeJson(vaultPath, nextVault);
   await writeJson(statePath, lock);
-  console.warn(`[PREFLIGHT_GUARD] attestation armed in ${relPath}`);
   await writeFile(absPath, injection.content, "utf8");
+  console.warn(`[PREFLIGHT_GUARD] attestation armed in ${relPath}`);
   return relPath;
 }
 
@@ -592,7 +616,7 @@ async function resolveOrKeepLock(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] lock head drift (${lock.head.slice(0, 12)} -> ${head.slice(0, 12)})`);
   }
 
-  const current = await readText(path.join(root, lock.targetFile));
+  const current = await readStagedOrWorkingTree(lock.targetFile);
   const resolution = validateResolutionCandidate(lock, current, vault.seed);
   if (!resolution.ok) {
     const failureCount = await recordPendingFailure(vault, head, lock.targetFile);

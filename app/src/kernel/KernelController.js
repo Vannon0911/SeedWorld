@@ -736,6 +736,13 @@ export class KernelController {
     this.deterministicSeed = seed;
     this.currentTick = 0;
 
+    if (this.state) {
+      if (!this.state.statistics) {
+        this.state.statistics = {};
+      }
+      this.state.statistics.seedSignature = deriveSeedSignature(seed);
+    }
+
     return { success: true, seed, tick: this.currentTick };
   }
 

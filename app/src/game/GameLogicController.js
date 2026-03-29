@@ -477,7 +477,7 @@ function normalizeWorldState(state) {
  * @throws {Error} If the coordinates `(x,y)` are outside the normalized world's bounds.
  */
 function updateTileTypeInWorld(state, payload = {}) {
-  const world = normalizeWorldState(state);
+  const fullWorld = normalizeWorldState(state);
   const x = coerceInteger(payload.x, "set_tile_type.x");
   const y = coerceInteger(payload.y, "set_tile_type.y");
   const tileType = coerceString(payload.tileType, "set_tile_type.tileType");
@@ -486,13 +486,13 @@ function updateTileTypeInWorld(state, payload = {}) {
     throw new Error(`[GAME_LOGIC] Unbekannter Tile-Typ: ${tileType}`);
   }
 
-  const width = Number.isInteger(world?.size?.width) ? world.size.width : 0;
-  const height = Number.isInteger(world?.size?.height) ? world.size.height : 0;
+  const width = Number.isInteger(fullWorld?.size?.width) ? fullWorld.size.width : 0;
+  const height = Number.isInteger(fullWorld?.size?.height) ? fullWorld.size.height : 0;
   if (x < 0 || y < 0 || x >= width || y >= height) {
     throw new Error(`[GAME_LOGIC] Tile ausserhalb der Welt: ${x},${y}`);
   }
 
-  const nextTiles = world.tiles.map((tile, index) => {
+  const nextTiles = fullWorld.tiles.map((tile, index) => {
     const tileX = Number.isInteger(tile?.x) ? tile.x : index % width;
     const tileY = Number.isInteger(tile?.y) ? tile.y : Math.floor(index / width);
     if (tileX !== x || tileY !== y) {
@@ -511,7 +511,12 @@ function updateTileTypeInWorld(state, payload = {}) {
     };
   });
 
-  return [setCountPatch("world.tiles", nextTiles)];
+  const updatedWorld = {
+    ...fullWorld,
+    tiles: nextTiles
+  };
+
+  return [setCountPatch("world", updatedWorld)];
 }
 
 /**
@@ -538,11 +543,17 @@ function applyPatchToState(state, patch) {
     throw new Error("[GAME_LOGIC] Patch path fehlt.");
   }
 
+  for (const segment of segments) {
+    if (segment === "__proto__" || segment === "prototype" || segment === "constructor") {
+      throw new Error("[GAME_LOGIC] Ungueltiger Patch-Pfad.");
+    }
+  }
+
   let cursor = state;
   for (let index = 0; index < segments.length - 1; index += 1) {
     const key = segments[index];
     if (!isPlainObject(cursor[key])) {
-      cursor[key] = {};
+      cursor[key] = Object.create(null);
     }
     cursor = cursor[key];
   }
