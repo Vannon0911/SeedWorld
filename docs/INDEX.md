@@ -12,7 +12,7 @@ Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
 ## Wichtige Einstiegspunkte
 
 - Root Start: `README.md`
-- Runtime Entry: `start-server.js` + `app/server/patchServer.mjs`
+- Runtime Entry: `start-server.js` + `app/server/appServer.mjs`
 - Test Entry: `dev/tests/MainTest.mjs`
 
 ## Mapping

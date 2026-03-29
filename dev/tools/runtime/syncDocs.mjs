@@ -32,7 +32,8 @@ const orientationContent = `# SeedWorld Orientation (Synced: ${today})
 - \`app/src/ui/\`: Rendering und Input, keine direkten Domain-State Writes.
 - \`app/src/game/\`: Gameplay-Regeln und erlaubte Patch-Berechnung.
 - \`app/src/kernel/\`: Deterministische Domain-Grenzen und Mutationskontrolle.
-- \`dev/tools/patch/\`: Intake, Locking, Normalisierung, Orchestrierung.
+- \`app/server/\`: Schlanker Runtime-Server fuer Launcher, Menue und Game-Assets.
+- \`dev/tools/patch/\`: Terminal-only Patch-Tooling, keine Browser-Apply-Pfade.
 - \`dev/tests/\`: Einstieg \`dev/tests/MainTest.mjs\`, Module unter \`dev/tests/modules/\`.
 
 ## 2) Lokale Reihenfolge
@@ -49,12 +50,12 @@ npm start
 
 - \`node dev/scripts/smoke-test.mjs\`
 - \`node dev/scripts/runtime-guards-test.mjs\`
-- \`node dev/scripts/patch-flow-test.mjs\`
 - \`node dev/scripts/test-runner.mjs\`
 
 ## 4) Hinweise
 
-- Patch-Server startet nur bei Direct-Run und blockiert keine Test-Imports.
+- Browser-Runtime startet nur Launcher, Menue und Game-Ansichten.
+- Patch-Ausfuehrung bleibt terminalseitig ueber \`npm run patch:apply -- --input <zip|json>\`.
 - Terrain/DOM/SVG-Rendering ist getrennt: Canvas unten, DOM Mitte, SVG oben.
 `;
 
@@ -72,7 +73,7 @@ Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
 ## Wichtige Einstiegspunkte
 
 - Root Start: \`README.md\`
-- Runtime Entry: \`start-server.js\` + \`app/server/patchServer.mjs\`
+- Runtime Entry: \`start-server.js\` + \`app/server/appServer.mjs\`
 - Test Entry: \`dev/tests/MainTest.mjs\`
 
 ## Mapping
@@ -159,6 +160,7 @@ if (writeMode && currentLlmIndex !== llmIndexContent) {
 }
 
 if (!writeMode && drift.length > 0) {
+  console.error("[SYNC_DOCS_DRIFT]");
   console.error("[SYNC_DOCS] BLOCK: docs/SoT muessen vor preflight/testline synchron sein.");
   for (const item of drift) {
     console.error(` - ${item}`);

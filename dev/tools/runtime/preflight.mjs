@@ -28,13 +28,26 @@ function runProcess(command, args, label) {
     });
 
     child.on("close", (code) => {
+      const stderrDetail = stderrBuffer.trim();
       if (code !== 0) {
-        reject(new Error(`${label} failed with exit code ${code}`));
+        const error = new Error(
+          stderrDetail
+            ? `${label} failed with exit code ${code}: ${stderrDetail}`
+            : `${label} failed with exit code ${code}`
+        );
+        error.stderr = stderrBuffer;
+        reject(error);
         return;
       }
 
       if (hasBlockedStderr(stderrBuffer)) {
-        reject(new Error(`${label} emitted blocked stderr pattern`));
+        const error = new Error(
+          stderrDetail
+            ? `${label} emitted blocked stderr pattern: ${stderrDetail}`
+            : `${label} emitted blocked stderr pattern`
+        );
+        error.stderr = stderrBuffer;
+        reject(error);
         return;
       }
 
@@ -97,8 +110,9 @@ try {
 
   console.log("[PREFLIGHT] OK");
 } catch (error) {
+  const detail = String(error?.stderr || error?.message || error);
   const msg = String(error?.message || error);
-  if (msg.includes("dev/tools/runtime/syncDocs.mjs")) {
+  if (detail.includes("[SYNC_DOCS_DRIFT]")) {
     console.error("[PREFLIGHT] BLOCK: Docs-/SoT-Sync ist Pflicht vor der Testline. Nicht halbgar 'fixen' - erst `npm run sync:docs:apply` bzw. den Pre-Commit-Hook sauber durchlaufen lassen.");
   }
   console.error(`[PREFLIGHT] BLOCK: ${msg}`);

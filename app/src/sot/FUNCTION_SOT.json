@@ -9,346 +9,42 @@
   ],
   "functions": [
     {
-      "id": "app/server/patchServer.mjs#activateServerSession@150",
-      "name": "activateServerSession",
-      "file": "app/server/patchServer.mjs",
-      "line": 150,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#applyOnePatch@546",
-      "name": "applyOnePatch",
-      "file": "app/server/patchServer.mjs",
-      "line": 546,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#assertInsideSafeRoot@293",
-      "name": "assertInsideSafeRoot",
-      "file": "app/server/patchServer.mjs",
-      "line": 293,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#assertPatchFileAllowed@278",
-      "name": "assertPatchFileAllowed",
-      "file": "app/server/patchServer.mjs",
-      "line": 278,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#assertWriteSessionActive@170",
-      "name": "assertWriteSessionActive",
-      "file": "app/server/patchServer.mjs",
-      "line": 170,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#backupTarget@527",
-      "name": "backupTarget",
-      "file": "app/server/patchServer.mjs",
-      "line": 527,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#checksumFile@375",
-      "name": "checksumFile",
-      "file": "app/server/patchServer.mjs",
-      "line": 375,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#clearServerSession@160",
-      "name": "clearServerSession",
-      "file": "app/server/patchServer.mjs",
-      "line": 160,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#close@1394",
+      "id": "app/server/appServer.mjs#close@65",
       "name": "close",
-      "file": "app/server/patchServer.mjs",
-      "line": 1394,
+      "file": "app/server/appServer.mjs",
+      "line": 65,
       "kind": "method",
       "category": "server"
     },
     {
-      "id": "app/server/patchServer.mjs#countLineDelta@368",
-      "name": "countLineDelta",
-      "file": "app/server/patchServer.mjs",
-      "line": 368,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#deepMerge@391",
-      "name": "deepMerge",
-      "file": "app/server/patchServer.mjs",
-      "line": 391,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#emitSse@118",
-      "name": "emitSse",
-      "file": "app/server/patchServer.mjs",
-      "line": 118,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#ensureDirs@103",
-      "name": "ensureDirs",
-      "file": "app/server/patchServer.mjs",
-      "line": 103,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#executeCommand@406",
-      "name": "executeCommand",
-      "file": "app/server/patchServer.mjs",
-      "line": 406,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#executeParsedPatch@772",
-      "name": "executeParsedPatch",
-      "file": "app/server/patchServer.mjs",
-      "line": 772,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#fileExists@359",
-      "name": "fileExists",
-      "file": "app/server/patchServer.mjs",
-      "line": 359,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#findExistingParent@302",
-      "name": "findExistingParent",
-      "file": "app/server/patchServer.mjs",
-      "line": 302,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#handle@1364",
-      "name": "handle",
-      "file": "app/server/patchServer.mjs",
-      "line": 1364,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#handleApi@1084",
-      "name": "handleApi",
-      "file": "app/server/patchServer.mjs",
-      "line": 1084,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#isLikelyPatchConflict@513",
-      "name": "isLikelyPatchConflict",
-      "file": "app/server/patchServer.mjs",
-      "line": 513,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#isPlainObject@191",
-      "name": "isPlainObject",
-      "file": "app/server/patchServer.mjs",
-      "line": 191,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#json@90",
-      "name": "json",
-      "file": "app/server/patchServer.mjs",
-      "line": 90,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#listen@1387",
+      "id": "app/server/appServer.mjs#listen@55",
       "name": "listen",
-      "file": "app/server/patchServer.mjs",
-      "line": 1387,
+      "file": "app/server/appServer.mjs",
+      "line": 55,
       "kind": "method",
       "category": "server"
     },
     {
-      "id": "app/server/patchServer.mjs#loadState@138",
-      "name": "loadState",
-      "file": "app/server/patchServer.mjs",
-      "line": 138,
+      "id": "app/server/appServer.mjs#sendJson@8",
+      "name": "sendJson",
+      "file": "app/server/appServer.mjs",
+      "line": 8,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/patchServer.mjs#normalizeRelFile@250",
-      "name": "normalizeRelFile",
-      "file": "app/server/patchServer.mjs",
-      "line": 250,
+      "id": "app/server/appServer.mjs#startAppServer@75",
+      "name": "startAppServer",
+      "file": "app/server/appServer.mjs",
+      "line": 75,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/patchServer.mjs#nowIso@86",
-      "name": "nowIso",
-      "file": "app/server/patchServer.mjs",
-      "line": 86,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#parseRegex@380",
-      "name": "parseRegex",
-      "file": "app/server/patchServer.mjs",
-      "line": 380,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#persistState@129",
-      "name": "persistState",
-      "file": "app/server/patchServer.mjs",
-      "line": 129,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#pushLog@108",
-      "name": "pushLog",
-      "file": "app/server/patchServer.mjs",
-      "line": 108,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#readAllowedPrefixes@240",
-      "name": "readAllowedPrefixes",
-      "file": "app/server/patchServer.mjs",
-      "line": 240,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#readBody@347",
-      "name": "readBody",
-      "file": "app/server/patchServer.mjs",
-      "line": 347,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#requireManifestShape@199",
-      "name": "requireManifestShape",
-      "file": "app/server/patchServer.mjs",
-      "line": 199,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#resolvePatchPath@316",
-      "name": "resolvePatchPath",
-      "file": "app/server/patchServer.mjs",
-      "line": 316,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#runGateCommand@870",
-      "name": "runGateCommand",
-      "file": "app/server/patchServer.mjs",
-      "line": 870,
-      "kind": "arrow",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#runPatchQueue@846",
-      "name": "runPatchQueue",
-      "file": "app/server/patchServer.mjs",
-      "line": 846,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#sendError@99",
-      "name": "sendError",
-      "file": "app/server/patchServer.mjs",
-      "line": 99,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#serveStatic@1058",
-      "name": "serveStatic",
-      "file": "app/server/patchServer.mjs",
-      "line": 1058,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#startPatchServer@1454",
-      "name": "startPatchServer",
-      "file": "app/server/patchServer.mjs",
-      "line": 1454,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#stopPatchServer@1477",
-      "name": "stopPatchServer",
-      "file": "app/server/patchServer.mjs",
-      "line": 1477,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#tokenizeCommand@462",
-      "name": "tokenizeCommand",
-      "file": "app/server/patchServer.mjs",
-      "line": 462,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#uninstallPatch@1013",
-      "name": "uninstallPatch",
-      "file": "app/server/patchServer.mjs",
-      "line": 1013,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#updateTraceLockAfterPatch@729",
-      "name": "updateTraceLockAfterPatch",
-      "file": "app/server/patchServer.mjs",
-      "line": 729,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/patchServer.mjs#verifyPatch@657",
-      "name": "verifyPatch",
-      "file": "app/server/patchServer.mjs",
-      "line": 657,
+      "id": "app/server/appServer.mjs#stopAppServer@88",
+      "name": "stopAppServer",
+      "file": "app/server/appServer.mjs",
+      "line": 88,
       "kind": "function",
       "category": "server"
     },
@@ -417,194 +113,42 @@
       "category": "server"
     },
     {
-      "id": "app/server/runtimeCheckHandler.mjs#collectBody@10",
-      "name": "collectBody",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 10,
+      "id": "app/server/staticHandler.mjs#handleStaticRequest@76",
+      "name": "handleStaticRequest",
+      "file": "app/server/staticHandler.mjs",
+      "line": 76,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/runtimeCheckHandler.mjs#handleRuntimePatchCheck@131",
-      "name": "handleRuntimePatchCheck",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 131,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/runtimeCheckHandler.mjs#normalizePatches@95",
-      "name": "normalizePatches",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 95,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/runtimeCheckHandler.mjs#parseJsonFromBuffer@59",
-      "name": "parseJsonFromBuffer",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 59,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/runtimeCheckHandler.mjs#parseMultipart@28",
-      "name": "parseMultipart",
-      "file": "app/server/runtimeCheckHandler.mjs",
+      "id": "app/server/staticHandler.mjs#hasHiddenSegment@28",
+      "name": "hasHiddenSegment",
+      "file": "app/server/staticHandler.mjs",
       "line": 28,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/runtimeCheckHandler.mjs#parseRuntimeManifest@67",
-      "name": "parseRuntimeManifest",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 67,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/runtimeCheckHandler.mjs#validateRuntimePatchSet@101",
-      "name": "validateRuntimePatchSet",
-      "file": "app/server/runtimeCheckHandler.mjs",
-      "line": 101,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#collectBody@26",
-      "name": "collectBody",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 26,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#consumeCancelBudget@96",
-      "name": "consumeCancelBudget",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 96,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleCancel@118",
-      "name": "handleCancel",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 118,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleCreateSession@50",
-      "name": "handleCreateSession",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 50,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleEvents@169",
-      "name": "handleEvents",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 169,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleLogs@80",
-      "name": "handleLogs",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 80,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleResult@88",
-      "name": "handleResult",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 88,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#handleStatus@74",
-      "name": "handleStatus",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 74,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#parseCancelToken@108",
-      "name": "parseCancelToken",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 108,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#parseMultipart@35",
-      "name": "parseMultipart",
-      "file": "app/server/sessionRoutes.mjs",
+      "id": "app/server/staticHandler.mjs#isPathInside@35",
+      "name": "isPathInside",
+      "file": "app/server/staticHandler.mjs",
       "line": 35,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/sessionRoutes.mjs#sanitizeStatus@19",
-      "name": "sanitizeStatus",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 19,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/sessionRoutes.mjs#sendSnapshot@175",
-      "name": "sendSnapshot",
-      "file": "app/server/sessionRoutes.mjs",
-      "line": 175,
-      "kind": "arrow",
-      "category": "server"
-    },
-    {
-      "id": "app/server/staticHandler.mjs#handleStaticRequest@59",
-      "name": "handleStaticRequest",
-      "file": "app/server/staticHandler.mjs",
-      "line": 59,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/staticHandler.mjs#hasHiddenSegment@24",
-      "name": "hasHiddenSegment",
-      "file": "app/server/staticHandler.mjs",
-      "line": 24,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/staticHandler.mjs#isPathInside@28",
-      "name": "isPathInside",
-      "file": "app/server/staticHandler.mjs",
-      "line": 28,
-      "kind": "function",
-      "category": "server"
-    },
-    {
-      "id": "app/server/staticHandler.mjs#resolveStaticPath@33",
+      "id": "app/server/staticHandler.mjs#resolveStaticPath@43",
       "name": "resolveStaticPath",
       "file": "app/server/staticHandler.mjs",
-      "line": 33,
+      "line": 43,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#serveFile@52",
+      "id": "app/server/staticHandler.mjs#serveFile@66",
       "name": "serveFile",
       "file": "app/server/staticHandler.mjs",
-      "line": 52,
+      "line": 66,
       "kind": "function",
       "category": "server"
     },
@@ -2705,98 +2249,98 @@
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#addModeSwitcher@320",
+      "id": "app/src/ui/MainMenuController.js#addModeSwitcher@307",
       "name": "addModeSwitcher",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 320,
+      "line": 307,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#checkKernelGate@280",
+      "id": "app/src/ui/MainMenuController.js#checkKernelGate@267",
       "name": "checkKernelGate",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 280,
+      "line": 267,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#createBaseStructure@52",
+      "id": "app/src/ui/MainMenuController.js#createBaseStructure@44",
       "name": "createBaseStructure",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 52,
+      "line": 44,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#createMenuHeader@87",
+      "id": "app/src/ui/MainMenuController.js#createMenuHeader@79",
       "name": "createMenuHeader",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 87,
+      "line": 79,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#createModeCard@121",
+      "id": "app/src/ui/MainMenuController.js#createModeCard@113",
       "name": "createModeCard",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 121,
+      "line": 113,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#createModeGrid@109",
+      "id": "app/src/ui/MainMenuController.js#createModeGrid@101",
       "name": "createModeGrid",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 109,
+      "line": 101,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#createStatusPanel@154",
+      "id": "app/src/ui/MainMenuController.js#createStatusPanel@146",
       "name": "createStatusPanel",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 154,
+      "line": 146,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#executeKernelGate@301",
+      "id": "app/src/ui/MainMenuController.js#executeKernelGate@288",
       "name": "executeKernelGate",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 301,
+      "line": 288,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#getAvailableModes@427",
+      "id": "app/src/ui/MainMenuController.js#getAvailableModes@414",
       "name": "getAvailableModes",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 427,
+      "line": 414,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#getControllerArgs@266",
+      "id": "app/src/ui/MainMenuController.js#getControllerArgs@253",
       "name": "getControllerArgs",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 266,
+      "line": 253,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#getCurrentController@423",
+      "id": "app/src/ui/MainMenuController.js#getCurrentController@410",
       "name": "getCurrentController",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 423,
+      "line": 410,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#getCurrentMode@420",
+      "id": "app/src/ui/MainMenuController.js#getCurrentMode@407",
       "name": "getCurrentMode",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 420,
+      "line": 407,
       "kind": "method",
       "category": "ui"
     },
@@ -2809,66 +2353,66 @@
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#loadModeController@252",
+      "id": "app/src/ui/MainMenuController.js#loadModeController@239",
       "name": "loadModeController",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 252,
+      "line": 239,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#logActivity@387",
+      "id": "app/src/ui/MainMenuController.js#logActivity@374",
       "name": "logActivity",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 387,
+      "line": 374,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#registerKernelGate@412",
+      "id": "app/src/ui/MainMenuController.js#registerKernelGate@399",
       "name": "registerKernelGate",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 412,
+      "line": 399,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#returnToMainMenu@335",
+      "id": "app/src/ui/MainMenuController.js#returnToMainMenu@322",
       "name": "returnToMainMenu",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 335,
+      "line": 322,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#showAccessDenied@372",
+      "id": "app/src/ui/MainMenuController.js#showAccessDenied@359",
       "name": "showAccessDenied",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 372,
+      "line": 359,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#showError@376",
+      "id": "app/src/ui/MainMenuController.js#showError@363",
       "name": "showError",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 376,
+      "line": 363,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#switchToMode@186",
+      "id": "app/src/ui/MainMenuController.js#switchToMode@178",
       "name": "switchToMode",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 186,
+      "line": 178,
       "kind": "method",
       "category": "ui"
     },
     {
-      "id": "app/src/ui/MainMenuController.js#updateConnectionStatus@351",
+      "id": "app/src/ui/MainMenuController.js#updateConnectionStatus@338",
       "name": "updateConnectionStatus",
       "file": "app/src/ui/MainMenuController.js",
-      "line": 351,
+      "line": 338,
       "kind": "method",
       "category": "ui"
     },
@@ -3809,102 +3353,6 @@
       "category": "testing"
     },
     {
-      "id": "dev/scripts/patch-flow-test.mjs#createTempRepo@12",
-      "name": "createTempRepo",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 12,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#ensureGatePolicy@16",
-      "name": "ensureGatePolicy",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 16,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testLlmGateDeny@309",
-      "name": "testLlmGateDeny",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 309,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testLocking@62",
-      "name": "testLocking",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 62,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testManifestAmbiguityFailsClosed@152",
-      "name": "testManifestAmbiguityFailsClosed",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 152,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testManifestDetectionError@29",
-      "name": "testManifestDetectionError",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 29,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testNormalizationDeterminism@49",
-      "name": "testNormalizationDeterminism",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 49,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testPatchServerCancelAuthAndRateLimit@369",
-      "name": "testPatchServerCancelAuthAndRateLimit",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 369,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testPatchServerLegacyApisRemoved@347",
-      "name": "testPatchServerLegacyApisRemoved",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 347,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testPathTraversalIsRejected@264",
-      "name": "testPathTraversalIsRejected",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 264,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testRollbackAfterFailingTests@219",
-      "name": "testRollbackAfterFailingTests",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 219,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/scripts/patch-flow-test.mjs#testZipSessionSuccess@173",
-      "name": "testZipSessionSuccess",
-      "file": "dev/scripts/patch-flow-test.mjs",
-      "line": 173,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
       "id": "dev/scripts/playwright-tiles-full.mjs#contentType@8",
       "name": "contentType",
       "file": "dev/scripts/playwright-tiles-full.mjs",
@@ -3913,10 +3361,10 @@
       "category": "testing"
     },
     {
-      "id": "dev/scripts/playwright-tiles-full.mjs#createServer@39",
+      "id": "dev/scripts/playwright-tiles-full.mjs#createServer@37",
       "name": "createServer",
       "file": "dev/scripts/playwright-tiles-full.mjs",
-      "line": 39,
+      "line": 37,
       "kind": "function",
       "category": "testing"
     },
@@ -3929,18 +3377,18 @@
       "category": "testing"
     },
     {
-      "id": "dev/scripts/playwright-tiles-full.mjs#run@73",
+      "id": "dev/scripts/playwright-tiles-full.mjs#run@71",
       "name": "run",
       "file": "dev/scripts/playwright-tiles-full.mjs",
-      "line": 73,
+      "line": 71,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/playwright-tiles-full.mjs#sleep@101",
+      "id": "dev/scripts/playwright-tiles-full.mjs#sleep@99",
       "name": "sleep",
       "file": "dev/scripts/playwright-tiles-full.mjs",
-      "line": 101,
+      "line": 99,
       "kind": "arrow",
       "category": "testing"
     },
@@ -3985,26 +3433,26 @@
       "category": "testing"
     },
     {
-      "id": "dev/scripts/smoke-test.mjs#getCurrentTick@4",
+      "id": "dev/scripts/smoke-test.mjs#getCurrentTick@7",
       "name": "getCurrentTick",
       "file": "dev/scripts/smoke-test.mjs",
-      "line": 4,
+      "line": 7,
       "kind": "method",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/smoke-test.mjs#verifyDeterministicRng@8",
+      "id": "dev/scripts/smoke-test.mjs#verifyDeterministicRng@15",
       "name": "verifyDeterministicRng",
       "file": "dev/scripts/smoke-test.mjs",
-      "line": 8,
+      "line": 15,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/smoke-test.mjs#verifyServerModulesLoad@21",
+      "id": "dev/scripts/smoke-test.mjs#verifyServerModulesLoad@31",
       "name": "verifyServerModulesLoad",
       "file": "dev/scripts/smoke-test.mjs",
-      "line": 21,
+      "line": 31,
       "kind": "function",
       "category": "testing"
     },
@@ -4153,14 +3601,6 @@
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/02.patch-flow-script.module.mjs#test@3",
-      "name": "test",
-      "file": "dev/tests/modules/02.patch-flow-script.module.mjs",
-      "line": 3,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
       "id": "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs#test@4",
       "name": "test",
       "file": "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
@@ -4177,10 +3617,10 @@
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/05.static-handler-security.module.mjs#test@4",
+      "id": "dev/tests/modules/05.static-handler-security.module.mjs#test@8",
       "name": "test",
       "file": "dev/tests/modules/05.static-handler-security.module.mjs",
-      "line": 4,
+      "line": 8,
       "kind": "function",
       "category": "testing"
     },
@@ -4189,6 +3629,22 @@
       "name": "test",
       "file": "dev/tests/modules/06.governance-enforcement.module.mjs",
       "line": 4,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/07.preflight-mutation-guard.module.mjs#createDigest@68",
+      "name": "createDigest",
+      "file": "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
+      "line": 68,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/07.preflight-mutation-guard.module.mjs#test@5",
+      "name": "test",
+      "file": "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
+      "line": 5,
       "kind": "function",
       "category": "testing"
     },
@@ -5113,106 +4569,266 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#currentHead@29",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#apply@23",
+      "name": "apply",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 23,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#apply@32",
+      "name": "apply",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 32,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#apply@41",
+      "name": "apply",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 41,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#apply@50",
+      "name": "apply",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 50,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#buildResolutionProof@204",
+      "name": "buildResolutionProof",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 204,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#clearLegacyStateIfSafe@273",
+      "name": "clearLegacyStateIfSafe",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 273,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#currentHead@62",
       "name": "currentHead",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 29,
+      "line": 62,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@82",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#deriveToken@73",
+      "name": "deriveToken",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 73,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@307",
       "name": "ensureInjectedLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 82,
+      "line": 307,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findInjectedMarker@68",
-      "name": "findInjectedMarker",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureVaultSeed@163",
+      "name": "ensureVaultSeed",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 68,
+      "line": 163,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@190",
-      "name": "main",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findActiveHiddenFault@190",
+      "name": "findActiveHiddenFault",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
       "line": 190,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#markerFor@25",
-      "name": "markerFor",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findLegacyMarker@149",
+      "name": "findLegacyMarker",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 25,
+      "line": 149,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#normalizeVault@40",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#injectFault@172",
+      "name": "injectFault",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 172,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#isActive@26",
+      "name": "isActive",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 26,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#isActive@35",
+      "name": "isActive",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 35,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#isActive@44",
+      "name": "isActive",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 44,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#isActive@53",
+      "name": "isActive",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 53,
+      "kind": "method",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#isFaultStillActive@186",
+      "name": "isFaultStillActive",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 186,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@441",
+      "name": "main",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 441,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#normalizeLock@89",
+      "name": "normalizeLock",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 89,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#normalizeVault@110",
       "name": "normalizeVault",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 40,
+      "line": 110,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#pickTarget@20",
-      "name": "pickTarget",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#pickTargetFile@167",
+      "name": "pickTargetFile",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 20,
+      "line": 167,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@55",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@132",
       "name": "readJsonOrNull",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 55,
+      "line": 132,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@115",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readText@145",
+      "name": "readText",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 145,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#recordPendingFailure@245",
+      "name": "recordPendingFailure",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 245,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@349",
       "name": "resolveOrKeepLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 115,
+      "line": 349,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@168",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@414",
       "name": "runEnforceMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 168,
+      "line": 414,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@148",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@389",
       "name": "runVerifyMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 148,
+      "line": 389,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#sha256@16",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#sha256@58",
       "name": "sha256",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 16,
+      "line": 58,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#writeJson@63",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#strategyFor@81",
+      "name": "strategyFor",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 81,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#toIndex@77",
+      "name": "toIndex",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 77,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#validateResolutionCandidate@217",
+      "name": "validateResolutionCandidate",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 217,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#writeJson@140",
       "name": "writeJson",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 63,
+      "line": 140,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5225,26 +4841,26 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#mutationGuardArgs@61",
+      "id": "dev/tools/runtime/preflight.mjs#mutationGuardArgs@74",
       "name": "mutationGuardArgs",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 74,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@61",
+      "name": "runNodeScript",
       "file": "dev/tools/runtime/preflight.mjs",
       "line": 61,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@48",
-      "name": "runNodeScript",
-      "file": "dev/tools/runtime/preflight.mjs",
-      "line": 48,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@52",
+      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@65",
       "name": "runNpmScript",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 52,
+      "line": 65,
       "kind": "function",
       "category": "runtime-tooling"
     },

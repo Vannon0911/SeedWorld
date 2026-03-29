@@ -23,20 +23,30 @@ const PATCH_SCHEMA_PATHS = new Set([
   '/patches/patch-matrix.json'
 ]);
 
+/**
+ * Rejects hidden path segments so static routing cannot expose dotfiles.
+ */
 function hasHiddenSegment(pathname) {
   return pathname.split('/').filter(Boolean).some((s) => s.startsWith('.'));
 }
 
+/**
+ * Ensures a resolved static candidate stays inside an approved parent directory.
+ */
 function isPathInside(parentDir, candidate) {
   const parent = resolve(parentDir);
   return candidate.startsWith(`${parent}\\`) || candidate.startsWith(`${parent}/`);
 }
 
+/**
+ * Maps public runtime routes to safe files on disk.
+ */
 export function resolveStaticPath(pathname) {
   if (pathname === '/menu') return resolve(PUBLIC_DIR, 'menu.html');
+  if (pathname === '/menu.html') return resolve(PUBLIC_DIR, 'menu.html');
   if (pathname === '/')     return resolve(PUBLIC_DIR, 'index.html');
-  if (pathname === '/patch') return resolve(PUBLIC_DIR, 'patchUI.html');
-  if (pathname === '/popup') return resolve(PUBLIC_DIR, 'patch-popup.html');
+  if (pathname === '/game') return resolve(PUBLIC_DIR, 'game.html');
+  if (pathname === '/game.html') return resolve(PUBLIC_DIR, 'game.html');
 
   if (hasHiddenSegment(pathname)) return null;
 
@@ -51,6 +61,9 @@ export function resolveStaticPath(pathname) {
   return null;
 }
 
+/**
+ * Streams a resolved static file with a content type derived from its extension.
+ */
 export async function serveFile(res, filePath) {
   const ext = extname(filePath).toLowerCase();
   const body = await readFile(filePath);
@@ -58,6 +71,9 @@ export async function serveFile(res, filePath) {
   res.end(body);
 }
 
+/**
+ * Resolves and serves a static request, returning whether a file was handled.
+ */
 export async function handleStaticRequest(res, pathname) {
   const filePath = resolveStaticPath(pathname);
   if (!filePath) return false;

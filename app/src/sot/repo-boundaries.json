@@ -12,18 +12,18 @@
     },
     {
       "name": "UI Layer",
-      "prefixes": ["app/src/ui/", "app/src/plugins/", "app/src/workers/", "app/src/browser/", "app/src/main.js", "app/src/styles.css", "app/src/patch-control.css", "app/src/SeedWorld_WorldGen.mjs"],
+      "prefixes": ["app/src/ui/", "app/src/plugins/", "app/src/workers/", "app/src/browser/", "app/src/main.js", "app/src/styles.css", "app/src/patch-control.css", "app/src/SeedWorld_WorldGen.mjs", "app/public/"],
       "purpose": "Rendering, input and browser-side orchestration"
     },
     {
-      "name": "Patch Runtime",
-      "prefixes": ["dev/tools/patch/", "app/server/patchServer.mjs", "app/public/patchUI.html", "app/public/patch-popup.html", "app/public/index.html", "app/public/menu.html", "app/public/game.html", "app/server/patchUtils.js"],
-      "purpose": "Terminal patch flow and browser control-plane API"
+      "name": "Patch Tooling",
+      "prefixes": ["dev/tools/patch/", "app/server/patchUtils.js"],
+      "purpose": "Terminal patch flow helpers, validation and manifest utilities"
     },
     {
       "name": "Runtime Tooling",
-      "prefixes": ["dev/tools/runtime/", "dev/scripts/", "dev/tests/", "app/server/"],
-      "purpose": "Verification, docs sync, server handlers and regression harnesses"
+      "prefixes": ["dev/tools/runtime/", "dev/scripts/", "dev/tests/", "app/server/appServer.mjs", "app/server/staticHandler.mjs", "start-server.js"],
+      "purpose": "Verification, docs sync, runtime server entrypoints and regression harnesses"
     },
     {
       "name": "Documentation",
@@ -33,11 +33,11 @@
   ],
   "entrypoints": [
     "app/src/main.js",
-    "app/server/patchServer.mjs",
+    "app/server/appServer.mjs",
     "start-server.js",
+    "dev/tools/patch/apply.mjs",
     "dev/scripts/smoke-test.mjs",
     "dev/scripts/runtime-guards-test.mjs",
-    "dev/scripts/patch-flow-test.mjs",
     "dev/tests/MainTest.mjs"
   ],
   "scanRoots": [

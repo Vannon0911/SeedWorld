@@ -10,7 +10,6 @@
 
 - `00`: Smoke (`dev/scripts/smoke-test.mjs`)
 - `01`: Runtime-Guards (`dev/scripts/runtime-guards-test.mjs`)
-- `02`: Patch-Flow und Server-Vertragschecks (`dev/scripts/patch-flow-test.mjs`)
 - `03`: Kernel-Determinismus für `same action + same tick`
 - `04`: `patchUtils` Parse/Snapshot/Lock-Validation/Risk-Classification
 - `05`: Static-Path-Security für HTTP-Static-Resolver
