@@ -4,6 +4,18 @@ import { pathToFileURL } from "node:url";
 
 export const id = "07-preflight-mutation-guard-attestation";
 
+/**
+ * Runs an integration test that verifies the preflight mutation guard's attestation workflow and related messaging.
+ *
+ * The test covers deterministic target selection, fault injection and detection, lock/vault normalization,
+ * unresolved candidate validation, challenge message generation for armed and escalated phases,
+ * HEAD-drift assessment for stale active faults and cleared locks, deterministic resolution proof generation,
+ * and a minimal smoke check of the world generator module.
+ *
+ * @param {object} params - Test context.
+ * @param {object} params.assert - Assertion helpers used by the test harness.
+ * @param {string} params.root - Absolute path to the repository root used to locate test fixtures and modules.
+ */
 export async function test({ assert, root }) {
   const guardModule = await import(pathToFileURL(path.join(root, "dev/tools/runtime/preflight-mutation-guard.mjs")).href);
   const worldGenPath = path.join(root, "app/src/game/worldGen.js");

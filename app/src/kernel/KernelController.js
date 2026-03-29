@@ -17,6 +17,15 @@ const UNUSED_GATE_ALLOWLIST = new Set([
   "patcher.access"
 ]);
 
+/**
+ * Determine whether a value is a plain object.
+ *
+ * A plain object is a non-null, non-array object whose prototype is either
+ * `Object.prototype` or `null`.
+ *
+ * @param {*} value - The value to test.
+ * @returns {boolean} `true` if `value` is a plain object, `false` otherwise.
+ */
 function isPlainObject(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
@@ -25,6 +34,11 @@ function isPlainObject(value) {
   return proto === Object.prototype || proto === null;
 }
 
+/**
+ * Produce an 8-character hexadecimal signature for a seed string.
+ * @param {string} seed - Input seed string from which the signature is derived.
+ * @returns {string} An 8-character, zero-padded lowercase hexadecimal signature derived from `seed`.
+ */
 function deriveSeedSignature(seed) {
   let hash = 2166136261;
   for (let i = 0; i < seed.length; i += 1) {
