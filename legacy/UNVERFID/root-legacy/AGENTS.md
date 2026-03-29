@@ -4,5 +4,5 @@
 - Ein Agent arbeitet immer nur an einem Patch-Lauf gleichzeitig.
 - `policy-gates` duerfen nur im terminalseitigen Orchestrator laufen.
 - Browser-UI ist nur Control-Plane und darf keine direkten Gate-/Execute-Pfade anstossen.
-- Locking ist verpflichtend. Stale-Locks duerfen nur ueber TTL/Deadman uebernommen werden.
+- Locking ist verpflichtend. Stale-Locks duerfen nur ueber TTL/Verification-Gate uebernommen werden.
 - Bei Policy-Verletzung oder unklarer Lage gilt fail-closed.

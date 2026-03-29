@@ -1,10 +1,29 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { spawn } from "node:child_process";
 import path from "node:path";
 
 const root = process.cwd();
 const orientationTarget = path.join(root, "docs", "SOT", "ORIENTATION.md");
 const indexTarget = path.join(root, "docs", "INDEX.md");
+const llmIndexTarget = path.join(root, "docs", "LLM", "INDEX.md");
+const writeMode = process.argv.includes("--write");
 const today = new Date().toISOString().slice(0, 10);
+
+function runTool(scriptPath, args = []) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [scriptPath, ...args], {
+      cwd: root,
+      stdio: "inherit"
+    });
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`${scriptPath} failed with exit code ${code}`));
+      }
+    });
+  });
+}
 
 const orientationContent = `# SeedWorld Orientation (Synced: ${today})
 
@@ -70,6 +89,7 @@ Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
   - [LLM Index](./LLM/INDEX.md)
   - [LLM Entry](./LLM/ENTRY.md)
   - [LLM Policy](./LLM/POLICY.md)
+  - [AKTUELLE RED ACTIONS](./LLM/AKTUELLE_RED_ACTIONS.md)
 - Source SoT (Runtime/LLM):
   - [app/src/sot/repo-boundaries.json](../app/src/sot/repo-boundaries.json)
   - [app/src/sot/release-manifest.json](../app/src/sot/release-manifest.json)
@@ -83,6 +103,17 @@ Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
 
 `;
 
+const llmIndexContent = `# LLM Index
+
+- Entry: [ENTRY.md](./ENTRY.md)
+- Policy: [POLICY.md](./POLICY.md)
+- Aktuelle Red Actions: [AKTUELLE_RED_ACTIONS.md](./AKTUELLE_RED_ACTIONS.md)
+`;
+
+const toolModeArgs = writeMode ? ["--write"] : [];
+await runTool("dev/tools/runtime/updateRedActions.mjs", toolModeArgs);
+await runTool("dev/tools/runtime/repo-hygiene-map.mjs", toolModeArgs);
+
 let currentOrientation = "";
 try {
   currentOrientation = await readFile(orientationTarget, "utf8");
@@ -90,7 +121,12 @@ try {
   currentOrientation = "";
 }
 
+const drift = [];
+
 if (currentOrientation !== orientationContent) {
+  drift.push("docs/SOT/ORIENTATION.md");
+}
+if (writeMode && currentOrientation !== orientationContent) {
   await writeFile(orientationTarget, orientationContent, "utf8");
 }
 
@@ -102,7 +138,33 @@ try {
 }
 
 if (currentIndex !== indexContent) {
+  drift.push("docs/INDEX.md");
+}
+if (writeMode && currentIndex !== indexContent) {
   await writeFile(indexTarget, indexContent, "utf8");
 }
 
-console.log("[SYNC_DOCS] OK");
+let currentLlmIndex = "";
+try {
+  currentLlmIndex = await readFile(llmIndexTarget, "utf8");
+} catch {
+  currentLlmIndex = "";
+}
+
+if (currentLlmIndex !== llmIndexContent) {
+  drift.push("docs/LLM/INDEX.md");
+}
+if (writeMode && currentLlmIndex !== llmIndexContent) {
+  await writeFile(llmIndexTarget, llmIndexContent, "utf8");
+}
+
+if (!writeMode && drift.length > 0) {
+  console.error("[SYNC_DOCS] DRIFT:");
+  for (const item of drift) {
+    console.error(` - ${item}`);
+  }
+  console.error("[SYNC_DOCS] FIX: npm run sync:docs:apply");
+  process.exit(1);
+} else {
+  console.log(`[SYNC_DOCS] OK (mode=${writeMode ? "write" : "check"})`);
+}

@@ -1,5 +1,4 @@
 {
-  "generatedAt": "2026-03-28T23:14:10.870Z",
   "entrypoints": [
     "app/src/main.js",
     "app/server/patchServer.mjs",
@@ -71,8 +70,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 96,
-    "codeFiles": 83
+    "allFiles": 107,
+    "codeFiles": 93
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
@@ -81,6 +80,7 @@
     "app/src/sot/patches.schema.json",
     "app/src/sot/release-manifest.json",
     "app/src/sot/repo-boundaries.json",
+    "app/src/sot/testline-integrity.json",
     "dev/tools/llm-preflight.mjs",
     "start-server.js"
   ],
@@ -121,16 +121,26 @@
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/patchMatrix.js",
     "dev/tools/patch/validate-patch-matrix.mjs",
+    "dev/tools/runtime/evidence-lock.mjs",
+    "dev/tools/runtime/function-sot-shared.mjs",
     "dev/tools/runtime/governance-verify.mjs",
     "dev/tools/runtime/installGitHooks.mjs",
+    "dev/tools/runtime/llm-entry.mjs",
+    "dev/tools/runtime/llm-override.mjs",
+    "dev/tools/runtime/llm-read-guard.mjs",
+    "dev/tools/runtime/llm-read-shared.mjs",
     "dev/tools/runtime/new-action-template.mjs",
+    "dev/tools/runtime/preflight-mutation-guard.mjs",
     "dev/tools/runtime/preflight.mjs",
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
     "dev/tools/runtime/signing-guard.mjs",
     "dev/tools/runtime/syncDocs.mjs",
-    "dev/tools/runtime/updateFunctionSot.mjs"
+    "dev/tools/runtime/update-testline-integrity.mjs",
+    "dev/tools/runtime/updateFunctionSot.mjs",
+    "dev/tools/runtime/updateRedActions.mjs",
+    "dev/tools/runtime/verify-testline-integrity.mjs"
   ],
   "zeroInboundNonEntrypoints": [
     "app/server/runtimeCheckHandler.mjs",
@@ -158,16 +168,24 @@
     "dev/tools/patch/apply.mjs",
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/validate-patch-matrix.mjs",
+    "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/governance-verify.mjs",
     "dev/tools/runtime/installGitHooks.mjs",
+    "dev/tools/runtime/llm-entry.mjs",
+    "dev/tools/runtime/llm-override.mjs",
+    "dev/tools/runtime/llm-read-guard.mjs",
     "dev/tools/runtime/new-action-template.mjs",
+    "dev/tools/runtime/preflight-mutation-guard.mjs",
     "dev/tools/runtime/preflight.mjs",
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
     "dev/tools/runtime/signing-guard.mjs",
     "dev/tools/runtime/syncDocs.mjs",
-    "dev/tools/runtime/updateFunctionSot.mjs"
+    "dev/tools/runtime/update-testline-integrity.mjs",
+    "dev/tools/runtime/updateFunctionSot.mjs",
+    "dev/tools/runtime/updateRedActions.mjs",
+    "dev/tools/runtime/verify-testline-integrity.mjs"
   ],
   "crossOwnerImports": [
     {
@@ -394,16 +412,26 @@
     "dev/tools/patch/lib/session-store.mjs": 6,
     "dev/tools/patch/patchMatrix.js": 1,
     "dev/tools/patch/validate-patch-matrix.mjs": 0,
+    "dev/tools/runtime/evidence-lock.mjs": 0,
+    "dev/tools/runtime/function-sot-shared.mjs": 1,
     "dev/tools/runtime/governance-verify.mjs": 0,
     "dev/tools/runtime/installGitHooks.mjs": 0,
+    "dev/tools/runtime/llm-entry.mjs": 0,
+    "dev/tools/runtime/llm-override.mjs": 0,
+    "dev/tools/runtime/llm-read-guard.mjs": 0,
+    "dev/tools/runtime/llm-read-shared.mjs": 3,
     "dev/tools/runtime/new-action-template.mjs": 0,
+    "dev/tools/runtime/preflight-mutation-guard.mjs": 0,
     "dev/tools/runtime/preflight.mjs": 0,
     "dev/tools/runtime/release-guard.mjs": 0,
     "dev/tools/runtime/repo-hygiene-map.mjs": 0,
     "dev/tools/runtime/repo-hygiene-why.mjs": 0,
     "dev/tools/runtime/signing-guard.mjs": 0,
     "dev/tools/runtime/syncDocs.mjs": 0,
+    "dev/tools/runtime/update-testline-integrity.mjs": 0,
     "dev/tools/runtime/updateFunctionSot.mjs": 0,
+    "dev/tools/runtime/updateRedActions.mjs": 0,
+    "dev/tools/runtime/verify-testline-integrity.mjs": 0,
     "start-server.js": 0
   },
   "imports": {
@@ -579,16 +607,34 @@
     "dev/tools/patch/validate-patch-matrix.mjs": [
       "dev/tools/patch/patchMatrix.js"
     ],
+    "dev/tools/runtime/evidence-lock.mjs": [],
+    "dev/tools/runtime/function-sot-shared.mjs": [],
     "dev/tools/runtime/governance-verify.mjs": [],
     "dev/tools/runtime/installGitHooks.mjs": [],
+    "dev/tools/runtime/llm-entry.mjs": [
+      "dev/tools/runtime/llm-read-shared.mjs"
+    ],
+    "dev/tools/runtime/llm-override.mjs": [
+      "dev/tools/runtime/llm-read-shared.mjs"
+    ],
+    "dev/tools/runtime/llm-read-guard.mjs": [
+      "dev/tools/runtime/llm-read-shared.mjs"
+    ],
+    "dev/tools/runtime/llm-read-shared.mjs": [],
     "dev/tools/runtime/new-action-template.mjs": [],
+    "dev/tools/runtime/preflight-mutation-guard.mjs": [],
     "dev/tools/runtime/preflight.mjs": [],
     "dev/tools/runtime/release-guard.mjs": [],
     "dev/tools/runtime/repo-hygiene-map.mjs": [],
     "dev/tools/runtime/repo-hygiene-why.mjs": [],
     "dev/tools/runtime/signing-guard.mjs": [],
     "dev/tools/runtime/syncDocs.mjs": [],
-    "dev/tools/runtime/updateFunctionSot.mjs": [],
+    "dev/tools/runtime/update-testline-integrity.mjs": [],
+    "dev/tools/runtime/updateFunctionSot.mjs": [
+      "dev/tools/runtime/function-sot-shared.mjs"
+    ],
+    "dev/tools/runtime/updateRedActions.mjs": [],
+    "dev/tools/runtime/verify-testline-integrity.mjs": [],
     "start-server.js": [
       "app/server/patchServer.mjs"
     ]

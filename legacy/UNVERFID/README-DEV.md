@@ -13,7 +13,7 @@ Der neue Flow ist absichtlich linear:
 1. Intake
 2. Normalize
 3. Risk-Classify
-4. Lock + Deadman
+4. Lock + Verification Gate
 5. Terminal-only `policy-gates`
 6. Backup
 7. Apply

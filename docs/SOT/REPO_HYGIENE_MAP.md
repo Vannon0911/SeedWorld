@@ -30,6 +30,7 @@
 - app/src/sot/patches.schema.json
 - app/src/sot/release-manifest.json
 - app/src/sot/repo-boundaries.json
+- app/src/sot/testline-integrity.json
 - dev/tools/llm-preflight.mjs
 - start-server.js
 
@@ -70,16 +71,26 @@
 - dev/tools/patch/import-dispatch.mjs
 - dev/tools/patch/patchMatrix.js
 - dev/tools/patch/validate-patch-matrix.mjs
+- dev/tools/runtime/evidence-lock.mjs
+- dev/tools/runtime/function-sot-shared.mjs
 - dev/tools/runtime/governance-verify.mjs
 - dev/tools/runtime/installGitHooks.mjs
+- dev/tools/runtime/llm-entry.mjs
+- dev/tools/runtime/llm-override.mjs
+- dev/tools/runtime/llm-read-guard.mjs
+- dev/tools/runtime/llm-read-shared.mjs
 - dev/tools/runtime/new-action-template.mjs
+- dev/tools/runtime/preflight-mutation-guard.mjs
 - dev/tools/runtime/preflight.mjs
 - dev/tools/runtime/release-guard.mjs
 - dev/tools/runtime/repo-hygiene-map.mjs
 - dev/tools/runtime/repo-hygiene-why.mjs
 - dev/tools/runtime/signing-guard.mjs
 - dev/tools/runtime/syncDocs.mjs
+- dev/tools/runtime/update-testline-integrity.mjs
 - dev/tools/runtime/updateFunctionSot.mjs
+- dev/tools/runtime/updateRedActions.mjs
+- dev/tools/runtime/verify-testline-integrity.mjs
 
 ## Zero Inbound Code Files (excluding entrypoints)
 - app/server/runtimeCheckHandler.mjs
@@ -107,16 +118,24 @@
 - dev/tools/patch/apply.mjs
 - dev/tools/patch/import-dispatch.mjs
 - dev/tools/patch/validate-patch-matrix.mjs
+- dev/tools/runtime/evidence-lock.mjs
 - dev/tools/runtime/governance-verify.mjs
 - dev/tools/runtime/installGitHooks.mjs
+- dev/tools/runtime/llm-entry.mjs
+- dev/tools/runtime/llm-override.mjs
+- dev/tools/runtime/llm-read-guard.mjs
 - dev/tools/runtime/new-action-template.mjs
+- dev/tools/runtime/preflight-mutation-guard.mjs
 - dev/tools/runtime/preflight.mjs
 - dev/tools/runtime/release-guard.mjs
 - dev/tools/runtime/repo-hygiene-map.mjs
 - dev/tools/runtime/repo-hygiene-why.mjs
 - dev/tools/runtime/signing-guard.mjs
 - dev/tools/runtime/syncDocs.mjs
+- dev/tools/runtime/update-testline-integrity.mjs
 - dev/tools/runtime/updateFunctionSot.mjs
+- dev/tools/runtime/updateRedActions.mjs
+- dev/tools/runtime/verify-testline-integrity.mjs
 
 ## Cross-Owner Imports
 - app/server/patchServer.mjs (Patch Runtime) -> app/server/sessionRoutes.mjs (Runtime Tooling)

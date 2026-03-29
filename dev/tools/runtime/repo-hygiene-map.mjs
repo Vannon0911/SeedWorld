@@ -5,6 +5,7 @@ const root = process.cwd();
 const boundaryConfigPath = path.join(root, "app", "src", "sot", "repo-boundaries.json");
 const reportPath = path.join(root, "docs", "SOT", "REPO_HYGIENE_MAP.md");
 const reportJsonPath = path.join(root, "app", "src", "sot", "REPO_HYGIENE_MAP.json");
+const writeMode = process.argv.includes("--write");
 
 function normalize(relPath) {
   return relPath.replace(/\\/g, "/");
@@ -243,7 +244,6 @@ async function main() {
   });
 
   const report = {
-    generatedAt: new Date().toISOString(),
     entrypoints,
     owners,
     fileCounts: {
@@ -262,9 +262,25 @@ async function main() {
     )
   };
 
-  await writeFile(reportJsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
-  await writeFile(reportPath, `${toMarkdown(report)}\n`, "utf8");
-  console.log(`[HYGIENE_MAP] OK (${codeFiles.length} code files, ${unreachableCode.length} unreachable)`);
+  const expectedJson = `${JSON.stringify(report, null, 2)}\n`;
+  const expectedMd = `${toMarkdown(report)}\n`;
+  const currentJson = await readFile(reportJsonPath, "utf8").catch(() => "");
+  const currentMd = await readFile(reportPath, "utf8").catch(() => "");
+  const drift = currentJson !== expectedJson || currentMd !== expectedMd;
+
+  if (writeMode && drift) {
+    await writeFile(reportJsonPath, expectedJson, "utf8");
+    await writeFile(reportPath, expectedMd, "utf8");
+  }
+
+  if (!writeMode && drift) {
+    console.error("[HYGIENE_MAP] DRIFT: REPO_HYGIENE_MAP ist nicht synchron.");
+    console.error("[HYGIENE_MAP] FIX: npm run sync:docs:apply");
+    process.exit(1);
+    return;
+  }
+
+  console.log(`[HYGIENE_MAP] OK (${codeFiles.length} code files, ${unreachableCode.length} unreachable, mode=${writeMode ? "write" : "check"})`);
 }
 
 await main();

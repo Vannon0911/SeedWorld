@@ -34,12 +34,17 @@ Local endpoints:
 # Required integrity line
 npm run check:required
 
+# Preflight mutation guard (automatic)
+npm run preflight
+
 # Full automated tests
 npm test
 npm run test:playwright:fulltiles
 
 # Governance & hygiene
 npm run governance:verify
+npm run sot:verify
+npm run evidence:lock:verify
 npm run hygiene:map
 npm run hygiene:why -- app/src/ui/TileAnimationSDK.js
 ```

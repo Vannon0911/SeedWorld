@@ -1,4 +1,4 @@
-# SeedWorld Docs Index (Synced: 2026-03-28)
+# SeedWorld Docs Index (Synced: 2026-03-29)
 
 Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
 
@@ -29,6 +29,7 @@ Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
   - [LLM Index](./LLM/INDEX.md)
   - [LLM Entry](./LLM/ENTRY.md)
   - [LLM Policy](./LLM/POLICY.md)
+  - [AKTUELLE RED ACTIONS](./LLM/AKTUELLE_RED_ACTIONS.md)
 - Source SoT (Runtime/LLM):
   - [app/src/sot/repo-boundaries.json](../app/src/sot/repo-boundaries.json)
   - [app/src/sot/release-manifest.json](../app/src/sot/release-manifest.json)

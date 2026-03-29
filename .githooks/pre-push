@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-echo "[hook:pre-push] signing config + llm guard + run tests"
+echo "[hook:pre-push] llm guard + signing guard + mandatory preflight"
+npm run llm:guard -- --action push
 npm run signing:guard -- --config-only
-npm run llm:guard
-npm test
+npm run preflight
