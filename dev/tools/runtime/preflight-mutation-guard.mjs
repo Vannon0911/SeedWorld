@@ -285,6 +285,61 @@ export function validateResolutionCandidate(lock, currentContent, seed) {
   };
 }
 
+export function assessHeadDrift(lock, currentContent, currentHead) {
+  const normalizedLock = normalizeLock(lock);
+  if (!normalizedLock || !normalizedLock.head || normalizedLock.head === currentHead) {
+    return { action: "keep" };
+  }
+
+  if (isFaultStillActive(normalizedLock.targetFile, currentContent)) {
+    return {
+      action: "block",
+      code: "stale-head-active-fault"
+    };
+  }
+
+  return {
+    action: "clear-stale-lock",
+    code: "stale-head-resolved"
+  };
+}
+
+export function buildChallengeBlockMessage({
+  phase,
+  targetFile = "",
+  faultKind = "",
+  pendingFailureCount = 0
+}) {
+  const target = targetFile || "<unknown-target>";
+  const kind = faultKind || "unknown-fault";
+
+  if (phase === "armed") {
+    return `[UNRESOLVED_ATTESTATION] challenge armed in ${target} (${kind}). Re-run preflight and behebe die Ursache manuell.`;
+  }
+
+  if (phase === "stale-active-fault") {
+    return `[UNRESOLVED_ATTESTATION] stale lock mit aktivem fault in ${target}. Ursache manuell beheben; keine automatische Freigabe.`;
+  }
+
+  if (phase === "missing-lock") {
+    return `[UNRESOLVED_ATTESTATION] missing lock state for unresolved HEAD. Ursache manuell beheben und danach preflight erneut ausfuehren.`;
+  }
+
+  if (phase === "metadata-drift") {
+    return `[STATE_DRIFT] unresolved attestation metadata for current HEAD. Ursache manuell beheben; kein stilles Weitermachen.`;
+  }
+
+  if (phase === "unresolved") {
+    if (pendingFailureCount >= 2) {
+      return `[UNRESOLVED_ATTESTATION] challenge unresolved in ${target} (${kind}). Eskalation aktiv: Ursache manuell beheben, Testline erneut laufen lassen, Nachweis pruefen.`;
+    }
+
+    return `[UNRESOLVED_ATTESTATION] challenge unresolved in ${target} (${kind}). Ursache manuell beheben und preflight erneut ausfuehren.`;
+  }
+
+  return `[UNRESOLVED_ATTESTATION] challenge unresolved in ${target} (${kind}).`;
+}
+
 async function recordPendingFailure(vault, head, relPath) {
   const sameFailure =
     vault.lastFailureHead === head &&
@@ -347,6 +402,46 @@ async function clearLegacyStateIfSafe(lock, vault) {
   return { lock: null, vault: nextVault };
 }
 
+async function clearStaleHeadDriftIfSafe(lock, vault, head) {
+  if (!lock || !lock.targetFile) {
+    return { lock, vault };
+  }
+
+  const current = await readText(path.join(root, lock.targetFile));
+  const drift = assessHeadDrift(lock, current, head);
+  if (drift.action === "keep") {
+    return { lock, vault };
+  }
+
+  if (drift.action === "block") {
+    throw new Error(
+      buildChallengeBlockMessage({
+        phase: "stale-active-fault",
+        targetFile: lock.targetFile,
+        faultKind: lock.faultKind,
+        pendingFailureCount: vault.pendingFailureCount
+      })
+    );
+  }
+
+  await rm(statePath, { force: true });
+  const nextVault = {
+    ...vault,
+    version: POLICY_VERSION,
+    policyVersion: POLICY_VERSION,
+    pendingFailureCount: 0,
+    lastFailureHead: "",
+    lastFailureAt: "",
+    lastFailureTarget: "",
+    secondFailureNotifiedAt: ""
+  };
+  await writeJson(vaultPath, nextVault);
+  console.warn(
+    `[PREFLIGHT_GUARD] stale lock cleared after HEAD drift (${lock.head.slice(0, 12)} -> ${head.slice(0, 12)}).`
+  );
+  return { lock: null, vault: nextVault };
+}
+
 async function ensureInjectedLock(head, vault) {
   const seed = ensureVaultSeed(vault);
   const relPath = pickTargetFile(seed, head);
@@ -384,9 +479,13 @@ async function ensureInjectedLock(head, vault) {
     secondFailureNotifiedAt: ""
   };
 
-  await writeJson(statePath, lock);
+  // Persist metadata before source mutation so a crash never leaves a hidden fault
+  // behind without the corresponding attestation record.
   await writeJson(vaultPath, nextVault);
+  await writeJson(statePath, lock);
   console.warn(`[PREFLIGHT_GUARD] attestation armed in ${relPath}`);
+  await writeFile(absPath, injection.content, "utf8");
+  return relPath;
 }
 
 async function resolveOrKeepLock(lock, vault, head) {
@@ -405,7 +504,11 @@ async function resolveOrKeepLock(lock, vault, head) {
     if (failureCount >= 2) {
       console.warn(`[PREFLIGHT_GUARD] escalation active: pendingFailureCount=${failureCount}`);
     }
-    return false;
+    return {
+      resolved: false,
+      pendingFailureCount: failureCount,
+      reasonCode: resolution.code
+    };
   }
 
   await rm(statePath, { force: true });
@@ -426,7 +529,11 @@ async function resolveOrKeepLock(lock, vault, head) {
   };
   await writeJson(vaultPath, nextVault);
   console.log("[PREFLIGHT_GUARD] attestation resolved");
-  return true;
+  return {
+    resolved: true,
+    pendingFailureCount: 0,
+    reasonCode: "resolved"
+  };
 }
 
 async function runVerifyMode(lock, vault, head) {
@@ -435,22 +542,29 @@ async function runVerifyMode(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
   }
 
-  const activeFaultFile = await findActiveHiddenFault();
-  if (activeFaultFile) {
-    throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
-  }
-
   if (!lock) {
+    const activeFaultFile = await findActiveHiddenFault();
+    if (activeFaultFile) {
+      throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
+    }
+
     if (vault.lastGeneratedHead === head && vault.lastResolvedHead !== head) {
-      throw new Error(`[UNRESOLVED_ATTESTATION] missing lock state for unresolved HEAD ${head.slice(0, 12)}`);
+      throw new Error(buildChallengeBlockMessage({ phase: "missing-lock" }));
     }
     console.log("[PREFLIGHT_GUARD] verify mode: no active attestation");
     return;
   }
 
-  const resolved = await resolveOrKeepLock(lock, vault, head);
-  if (!resolved) {
-    throw new Error(`[UNRESOLVED_ATTESTATION] ${lock.targetFile}`);
+  const resolution = await resolveOrKeepLock(lock, vault, head);
+  if (!resolution.resolved) {
+    throw new Error(
+      buildChallengeBlockMessage({
+        phase: "unresolved",
+        targetFile: lock.targetFile,
+        faultKind: lock.faultKind,
+        pendingFailureCount: resolution.pendingFailureCount
+      })
+    );
   }
 }
 
@@ -460,14 +574,24 @@ async function runEnforceMode(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
   }
 
+  if (lock) {
+    const resolution = await resolveOrKeepLock(lock, vault, head);
+    if (!resolution.resolved) {
+      throw new Error(
+        buildChallengeBlockMessage({
+          phase: "unresolved",
+          targetFile: lock.targetFile,
+          faultKind: lock.faultKind,
+          pendingFailureCount: resolution.pendingFailureCount
+        })
+      );
+    }
+    return;
+  }
+
   const activeFaultFile = await findActiveHiddenFault();
   if (activeFaultFile) {
     throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
-  }
-
-  if (lock) {
-    await resolveOrKeepLock(lock, vault, head);
-    return;
   }
 
   if (vault.lastGeneratedHead === head) {
@@ -475,10 +599,16 @@ async function runEnforceMode(lock, vault, head) {
       console.log(`[PREFLIGHT_GUARD] HEAD ${head.slice(0, 12)} bereits sauber attestiert; keine neue Injektion.`);
       return;
     }
-    throw new Error(`[STATE_DRIFT] unresolved attestation metadata for head ${head.slice(0, 12)}`);
+    throw new Error(buildChallengeBlockMessage({ phase: "metadata-drift" }));
   }
 
-  await ensureInjectedLock(head, vault);
+  const armedTarget = await ensureInjectedLock(head, vault);
+  throw new Error(
+    buildChallengeBlockMessage({
+      phase: "armed",
+      targetFile: armedTarget
+    })
+  );
 }
 
 async function main() {
@@ -503,6 +633,9 @@ async function main() {
     const prepared = await clearLegacyStateIfSafe(lock, vault);
     lock = prepared.lock;
     vault = prepared.vault;
+    const headPrepared = await clearStaleHeadDriftIfSafe(lock, vault, head);
+    lock = headPrepared.lock;
+    vault = headPrepared.vault;
 
     if (mode === "verify") {
       await runVerifyMode(lock, vault, head);

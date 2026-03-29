@@ -28,7 +28,7 @@ only_preflight_injection_changes() {
   return 0
 }
 
-echo "[hook:pre-commit] signing guard + llm guard + guard challenge + verify preflight"
+echo "[hook:pre-commit] signing guard + llm guard + guard challenge + enforce preflight"
 npm run signing:guard -- --config-only
 if only_preflight_injection_changes; then
   echo "[hook:pre-commit] injection-only commit detected; skipping docs/SoT sync"
@@ -38,7 +38,7 @@ else
   git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/FUNCTION_SOT.json app/src/sot/REPO_HYGIENE_MAP.json
 fi
 npm run llm:guard -- --action commit
-PREFLIGHT_GUARD_MODE=verify npm run preflight
+PREFLIGHT_GUARD_MODE=enforce npm run preflight
 `;
 
 const prePush = `#!/bin/sh

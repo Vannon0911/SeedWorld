@@ -116,15 +116,7 @@ export class UIController {
     try {
       this.#setBusy(true);
       const request = this.#readRequest();
-      const calculation = this.gameLogic.calculateAction(request.action, request.state);
-      const result = await this.kernel.plan({
-        domain: calculation.domain,
-        action: calculation.action,
-        state: request.state,
-        patches: calculation.patches,
-        actionSchema: this.gameLogic.getActionSchema(),
-        mutationMatrix: this.gameLogic.getMutationMatrix()
-      });
+      const result = this.gameLogic.applyActionLocally(request.action, request.state);
 
       this.lastPlan = result;
       this.displayState = clone(result.previewState);
@@ -147,15 +139,7 @@ export class UIController {
     try {
       this.#setBusy(true);
       const request = this.#readRequest();
-      const calculation = this.gameLogic.calculateAction(request.action, request.state);
-      const result = await this.kernel.apply({
-        domain: calculation.domain,
-        action: calculation.action,
-        state: request.state,
-        patches: calculation.patches,
-        actionSchema: this.gameLogic.getActionSchema(),
-        mutationMatrix: this.gameLogic.getMutationMatrix()
-      });
+      const result = this.gameLogic.applyActionLocally(request.action, request.state);
 
       this.currentState = clone(result.previewState);
       this.displayState = clone(result.previewState);
@@ -222,6 +206,17 @@ export class UIController {
     } finally {
       this.#setBusy(false);
     }
+  }
+
+  applyGameAction(action, state = this.currentState) {
+    const result = this.gameLogic.applyActionLocally(action, state);
+    this.currentState = clone(result.previewState);
+    this.displayState = clone(result.previewState);
+    this.lastApply = result;
+    this.#syncStateInput(this.currentState);
+    this.#renderState(this.currentState);
+    this.#renderGrid();
+    return result;
   }
 
   #readRequest() {
@@ -317,30 +312,7 @@ export class UIController {
     };
 
     try {
-      const calculation = this.gameLogic.calculateAction({ type: "generate_world", payload }, this.currentState);
-      const result = this.kernel.apply({
-        domain: calculation.domain,
-        action: calculation.action,
-        state: this.currentState,
-        patches: calculation.patches,
-        actionSchema: this.gameLogic.getActionSchema(),
-        mutationMatrix: this.gameLogic.getMutationMatrix()
-      });
-
-      if (result && typeof result.then === "function") {
-        result
-          .then((value) => {
-            this.currentState = clone(value.previewState);
-            this.displayState = clone(value.previewState);
-            this.#syncStateInput(this.currentState);
-            this.#renderGrid();
-          })
-          .catch(() => {
-            applyLocalFallback();
-          });
-        return;
-      }
-
+      const result = this.gameLogic.applyActionLocally({ type: "generate_world", payload }, this.currentState);
       this.currentState = clone(result.previewState);
       this.displayState = clone(result.previewState);
       this.#syncStateInput(this.currentState);

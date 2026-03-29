@@ -1,4 +1,4 @@
-import { generateWorld } from "./worldGen.js";
+import { buildWorldFromState, generateWorld } from "./worldGen.js";
 import { buildTransportPatches } from "./actions/transportAction.js";
 import { buildBuildPatches } from "./actions/buildAction.js";
 
@@ -19,6 +19,9 @@ const DEFAULT_ACTION_SCHEMA = Object.freeze({
   },
   inspect: {
     required: []
+  },
+  set_tile_type: {
+    required: ["x", "y", "tileType"]
   },
   generate_world: {
     required: ["seed"]
@@ -52,6 +55,14 @@ const BUILD_COSTS = Object.freeze({
   miner: 5,
   conveyor: 2,
   assembler: 8
+});
+
+const TILE_OUTPUT_LABELS = Object.freeze({
+  empty: "",
+  mine: "Erz",
+  storage: "Lager",
+  factory: "Fabrik",
+  connector: "Verbindung"
 });
 
 const PROGRESSION_LEVELS = Object.freeze([
@@ -152,6 +163,15 @@ function coerceString(value, label) {
   }
 
   return trimmed;
+}
+
+function coerceInteger(value, label) {
+  const number = Number(value);
+  if (!Number.isInteger(number)) {
+    throw new Error(`[GAME_LOGIC] ${label} muss eine ganze Zahl sein.`);
+  }
+
+  return number;
 }
 
 function normalizeKernelApi(kernelApi) {
@@ -389,6 +409,90 @@ function setCountPatch(path, value) {
   return { op: "set", domain: DEFAULT_DOMAIN, path, value };
 }
 
+function isKnownTileType(tileType) {
+  return Object.prototype.hasOwnProperty.call(TILE_OUTPUT_LABELS, tileType);
+}
+
+function normalizeWorldState(state) {
+  const world = isPlainObject(state.world) ? state.world : null;
+  if (world && isPlainObject(world.size) && Array.isArray(world.tiles) && world.tiles.length > 0) {
+    return deepClone(world);
+  }
+
+  return buildWorldFromState(state);
+}
+
+function updateTileTypeInWorld(state, payload = {}) {
+  const world = normalizeWorldState(state);
+  const x = coerceInteger(payload.x, "set_tile_type.x");
+  const y = coerceInteger(payload.y, "set_tile_type.y");
+  const tileType = coerceString(payload.tileType, "set_tile_type.tileType");
+
+  if (!isKnownTileType(tileType)) {
+    throw new Error(`[GAME_LOGIC] Unbekannter Tile-Typ: ${tileType}`);
+  }
+
+  const width = Number.isInteger(world?.size?.width) ? world.size.width : 0;
+  const height = Number.isInteger(world?.size?.height) ? world.size.height : 0;
+  if (x < 0 || y < 0 || x >= width || y >= height) {
+    throw new Error(`[GAME_LOGIC] Tile ausserhalb der Welt: ${x},${y}`);
+  }
+
+  const nextTiles = world.tiles.map((tile, index) => {
+    const tileX = Number.isInteger(tile?.x) ? tile.x : index % width;
+    const tileY = Number.isInteger(tile?.y) ? tile.y : Math.floor(index / width);
+    if (tileX !== x || tileY !== y) {
+      return deepClone(tile);
+    }
+
+    const nextType = tileType;
+    return {
+      ...deepClone(tile),
+      x,
+      y,
+      type: nextType,
+      outputText: TILE_OUTPUT_LABELS[nextType],
+      isActive: nextType !== "empty",
+      isEmpty: nextType === "empty"
+    };
+  });
+
+  return [setCountPatch("world.tiles", nextTiles)];
+}
+
+function applyPatchToState(state, patch) {
+  if (patch.op !== "set") {
+    throw new Error(`[GAME_LOGIC] Unsupported patch operation: ${String(patch.op)}`);
+  }
+
+  const segments = patch.path.split(".");
+  if (segments.length === 0) {
+    throw new Error("[GAME_LOGIC] Patch path fehlt.");
+  }
+
+  let cursor = state;
+  for (let index = 0; index < segments.length - 1; index += 1) {
+    const key = segments[index];
+    if (!isPlainObject(cursor[key])) {
+      cursor[key] = {};
+    }
+    cursor = cursor[key];
+  }
+
+  cursor[segments[segments.length - 1]] = deepClone(patch.value);
+}
+
+export function reduceGameState(state = {}, patches = []) {
+  const safeState = isPlainObject(state) ? state : {};
+  const nextState = deepClone(safeState);
+
+  for (const patch of patches) {
+    applyPatchToState(nextState, patch);
+  }
+
+  return nextState;
+}
+
 function createWorldPatches(seed, payload = {}) {
   const width = Number.isInteger(payload.width) ? payload.width : 16;
   const height = Number.isInteger(payload.height) ? payload.height : 12;
@@ -462,6 +566,9 @@ function buildPatches(action, state) {
 
     case "inspect":
       return [];
+
+    case "set_tile_type":
+      return updateTileTypeInWorld(state, action.payload);
 
     case "generate_world": {
       const seed = coerceString(action.payload.seed, "generate_world.seed");
@@ -574,6 +681,18 @@ export class GameLogicController {
       action,
       patches: deepClone(patches),
       summary: buildOperationSummary(action, patches)
+    };
+  }
+
+  reduceState(state = {}, patches = []) {
+    return reduceGameState(state, patches);
+  }
+
+  applyActionLocally(input = {}, state = {}) {
+    const calculation = this.calculateAction(input, state);
+    return {
+      ...calculation,
+      previewState: this.reduceState(state, calculation.patches)
     };
   }
 
