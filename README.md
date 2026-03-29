@@ -78,6 +78,7 @@ npm run patch:apply -- --input <zip|json>
 - Unknown actions are denied (`ACTION_NOT_REGISTERED`) with `auditId`
 - Registry + gates are verified by `governance:verify`
 - Browser UI cannot bypass terminal patch authority
+- Push safety: non-fast-forward/force/deletion pushes are blocked by `pre-push`
 
 ## Wiki
 

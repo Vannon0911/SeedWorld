@@ -17,6 +17,13 @@
 - Fehlender/unsauberer Stand in `docs/LLM/AKTUELLE_RED_ACTIONS.md`
 - Evidence-Lock-Verifikation fehlgeschlagen (manipulierte/fehlende Test-JSON-Outputs)
 
+## Push-Sicherheitsregeln (verbindlich)
+
+- `git push --force` und `git push --force-with-lease` sind verboten.
+- Non-fast-forward Pushes (History-Rewrite) sind verboten.
+- Remote-Ref-Löschungen via Push (`:<branch>`) sind verboten.
+- `pre-push` blockiert diese Fälle mechanisch vor allen weiteren Checks.
+
 ## Standardbefehle
 
 ```bash

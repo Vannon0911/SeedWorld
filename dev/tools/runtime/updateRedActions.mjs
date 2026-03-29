@@ -27,7 +27,8 @@ function parseNameStatus(raw) {
       const [status, ...rest] = line.split(/\s+/);
       return { status: status || "?", file: rest.join(" ") || "" };
     })
-    .filter((entry) => entry.file);
+    .filter((entry) => entry.file)
+    .filter((entry) => entry.file !== "docs/LLM/AKTUELLE_RED_ACTIONS.md");
 }
 
 function classifyRisk(filePath) {
