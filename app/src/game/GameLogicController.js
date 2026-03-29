@@ -152,6 +152,14 @@ function coercePositiveInteger(value, label) {
   return number;
 }
 
+/**
+ * Ensure a value is a non-empty string and return it trimmed.
+ *
+ * @param {*} value - Value to coerce into a trimmed string.
+ * @param {string} label - Name used in error messages when validation fails.
+ * @returns {string} The trimmed string.
+ * @throws {Error} If `value` is not a string or is empty after trimming.
+ */
 function coerceString(value, label) {
   if (typeof value !== "string") {
     throw new Error(`[GAME_LOGIC] ${label} muss String sein.`);
@@ -165,6 +173,14 @@ function coerceString(value, label) {
   return trimmed;
 }
 
+/**
+ * Convert a value to an integer and validate that it is an integer.
+ *
+ * @param {*} value - The value to convert.
+ * @param {string} label - Label used in the error message when validation fails.
+ * @returns {number} The converted integer.
+ * @throws {Error} If the value is not an integer.
+ */
 function coerceInteger(value, label) {
   const number = Number(value);
   if (!Number.isInteger(number)) {
@@ -174,6 +190,13 @@ function coerceInteger(value, label) {
   return number;
 }
 
+/**
+ * Normalize a kernel API object by selecting and binding compatible planning and applying methods.
+ * @param {object} kernelApi - An object that provides patch planning and application methods. Supported method names (in priority order) for planning: `planPatch`, `plan`, `execute`; for applying: `applyPatch`, `apply`, `execute`. Methods, if present, will be bound to the original `kernelApi`.
+ * @returns {{planPatch: Function, applyPatch: Function}} An object with two bound functions: `planPatch` for planning patches and `applyPatch` for applying patches.
+ * @throws {Error} If `kernelApi` is missing or not an object.
+ * @throws {Error} If neither planning nor applying methods can be resolved from the provided `kernelApi`.
+ */
 function normalizeKernelApi(kernelApi) {
   if (!kernelApi || typeof kernelApi !== "object") {
     throw new Error("[GAME_LOGIC] kernelApi fehlt.");
@@ -405,14 +428,34 @@ function buildRewardFeedback(beforeState, afterState, summary = null) {
   };
 }
 
+/**
+ * Create a patch that sets a value at a dot-separated path within the game domain.
+ * @param {string} path - Dot-separated path under the game domain (e.g., "resources.ore").
+ * @param {*} value - Value to assign at the specified path.
+ * @returns {{op: string, domain: string, path: string, value: *}} Patch object with `op: "set"`, `domain: DEFAULT_DOMAIN`, and the provided `path` and `value`.
+ */
 function setCountPatch(path, value) {
   return { op: "set", domain: DEFAULT_DOMAIN, path, value };
 }
 
+/**
+ * Determine whether a tile type identifier is recognized by the game.
+ * @param {string} tileType - Tile type identifier to check.
+ * @returns {boolean} `true` if `tileType` is a key in `TILE_OUTPUT_LABELS`, `false` otherwise.
+ */
 function isKnownTileType(tileType) {
   return Object.prototype.hasOwnProperty.call(TILE_OUTPUT_LABELS, tileType);
 }
 
+/**
+ * Produce a normalized world object suitable for game operations.
+ *
+ * If `state.world` contains a plain-object `size` and a non-empty `tiles` array, returns a deep clone of that world;
+ * otherwise constructs and returns a world produced from the provided state via `buildWorldFromState`.
+ *
+ * @param {object} state - The game state to normalize; may optionally contain a `world` property.
+ * @returns {object} A normalized world object with `size` and `tiles` suitable for use by world-related logic.
+ */
 function normalizeWorldState(state) {
   const world = isPlainObject(state.world) ? state.world : null;
   if (world && isPlainObject(world.size) && Array.isArray(world.tiles) && world.tiles.length > 0) {
@@ -422,6 +465,17 @@ function normalizeWorldState(state) {
   return buildWorldFromState(state);
 }
 
+/**
+ * Create a patch that replaces the world's tiles array with a copy where the tile at (x, y) is updated to the specified tile type.
+ * @param {object} state - Current game state used to read and normalize the world structure.
+ * @param {object} [payload={}] - Parameters describing which tile to update.
+ * @param {number} payload.x - X coordinate of the tile to update.
+ * @param {number} payload.y - Y coordinate of the tile to update.
+ * @param {string} payload.tileType - New tile type identifier.
+ * @returns {Array<object>} An array containing a single `set` patch for `world.tiles` with the updated tiles array.
+ * @throws {Error} If `tileType` is not a known tile type.
+ * @throws {Error} If the coordinates `(x,y)` are outside the normalized world's bounds.
+ */
 function updateTileTypeInWorld(state, payload = {}) {
   const world = normalizeWorldState(state);
   const x = coerceInteger(payload.x, "set_tile_type.x");
@@ -460,6 +514,20 @@ function updateTileTypeInWorld(state, payload = {}) {
   return [setCountPatch("world.tiles", nextTiles)];
 }
 
+/**
+ * Apply a single `set` patch into the provided state object at the dot-separated `path`.
+ *
+ * The function mutates `state` in place by creating any missing intermediate plain objects
+ * along the path and deep-cloning `patch.value` into the final key.
+ *
+ * @param {Object} state - Target state object to modify.
+ * @param {Object} patch - Patch to apply. Must be a plain object with `op`, `path`, and `value`.
+ * @param {string} patch.op - Operation type; only `"set"` is supported.
+ * @param {string} patch.path - Dot-separated non-empty path indicating where to set the value.
+ * @param {*} patch.value - Value to place at the target path; it will be deep-cloned.
+ * @throws {Error} If `patch.op` is not `"set"`.
+ * @throws {Error} If `patch.path` is empty or not a valid dot-separated path.
+ */
 function applyPatchToState(state, patch) {
   if (patch.op !== "set") {
     throw new Error(`[GAME_LOGIC] Unsupported patch operation: ${String(patch.op)}`);
@@ -482,6 +550,14 @@ function applyPatchToState(state, patch) {
   cursor[segments[segments.length - 1]] = deepClone(patch.value);
 }
 
+/**
+ * Apply a sequence of patches to a game state and return the resulting state.
+ * The input state is not mutated; patches are applied to a deep clone and the
+ * modified clone is returned.
+ * @param {Object} state - Base game state to which patches will be applied.
+ * @param {Array<Object>} patches - Array of patch objects (game mutation format).
+ * @return {Object} The new state produced by applying all patches in order.
+ */
 export function reduceGameState(state = {}, patches = []) {
   const safeState = isPlainObject(state) ? state : {};
   const nextState = deepClone(safeState);
@@ -493,6 +569,15 @@ export function reduceGameState(state = {}, patches = []) {
   return nextState;
 }
 
+/**
+ * Generate a set of patches that replace the game's world data using a deterministic world generator.
+ *
+ * @param {string} seed - Seed value used to generate the world.
+ * @param {Object} [payload] - Optional generation parameters.
+ * @param {number} [payload.width=16] - Desired world width in tiles.
+ * @param {number} [payload.height=12] - Desired world height in tiles.
+ * @returns {Array<Object>} An array of "set" patch objects for `world.seed`, `world.size`, `world.meta`, and `world.tiles`.
+ */
 function createWorldPatches(seed, payload = {}) {
   const width = Number.isInteger(payload.width) ? payload.width : 16;
   const height = Number.isInteger(payload.height) ? payload.height : 12;
@@ -510,6 +595,15 @@ function createWorldPatches(seed, payload = {}) {
   ];
 }
 
+/**
+ * Create state mutation patches for a given game action.
+ * Generates the set of patch objects required to apply the specified action to the provided game state.
+ * Supported action types: "produce", "consume", "transport", "build", "inspect", "set_tile_type", "generate_world", "regenerate_world".
+ * @param {Object} action - Action object containing `type` and `payload` fields used to derive patches.
+ * @param {Object} state - Current game state snapshot used to compute resulting values and validate bounds.
+ * @returns {Array<Object>} An array of patch objects describing mutations to apply to the game state.
+ * @throws {Error} If `action.type` is not one of the supported action types.
+ */
 function buildPatches(action, state) {
   switch (action.type) {
     case "produce": {

@@ -3,6 +3,18 @@ import { pathToFileURL } from "node:url";
 
 export const id = "09-game-logic-tile-action";
 
+/**
+ * Run a test that verifies placing and clearing a tile via GameLogicController.
+ *
+ * Verifies that applying a `set_tile_type` action with `tileType: "mine"` at (2,3)
+ * sets the tile's `type`, `isActive`, `isEmpty`, and `outputText` as expected, and
+ * that applying `tileType: "empty"` at the same coordinates restores the tile to
+ * an empty, inactive state.
+ *
+ * @param {Object} ctx - Test context.
+ * @param {Object} ctx.assert - Assertion utilities (e.g., from the test harness).
+ * @param {string} ctx.root - Filesystem root path of the project under test.
+ */
 export async function test({ assert, root }) {
   const gameLogicModule = await import(pathToFileURL(path.join(root, "app/src/game/GameLogicController.js")));
 

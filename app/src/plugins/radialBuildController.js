@@ -1,6 +1,14 @@
 const RESOURCE_TYPES = ["mine", "storage", "factory", "clear"];
 const DRAW_TYPES = new Set(["mine", "storage", "factory"]);
 
+/**
+ * Retrieve the tile object at the given coordinates from a world object.
+ *
+ * @param {Object} world - World container expected to have a `tiles` array and optional `size.width`.
+ * @param {number|string} x - X coordinate of the desired tile.
+ * @param {number|string} y - Y coordinate of the desired tile.
+ * @returns {Object|null} The matching tile object if found, otherwise `null`.
+ */
 export function getWorldTile(world, x, y) {
   if (!world || typeof world !== "object" || !Array.isArray(world.tiles)) {
     return null;
@@ -22,6 +30,11 @@ export function getWorldTile(world, x, y) {
   return world.tiles.find((tile) => Number(tile?.x) === tx && Number(tile?.y) === ty) || null;
 }
 
+/**
+ * Map a resource/build type to its single-character icon.
+ * @param {string} type - The resource or build type (e.g., "mine", "storage", "factory", "clear").
+ * @returns {string} The icon character for the given type; an empty string if the type is unrecognized.
+ */
 function iconLabel(type) {
   if (type === "mine") return "◆";
   if (type === "storage") return "▣";
@@ -34,6 +47,10 @@ function keyFor(x, y) {
   return `${x}:${y}`;
 }
 
+/**
+ * Waits until the tile grid DOM root and the `seedWorldUI` object are present on the page.
+ * @returns {{root: Element, ui: any}} An object containing the matched DOM root element (`#tile-grid-container .tile-grid`) as `root` and the `window.seedWorldUI` object as `ui`. The promise resolves once both are available.
+ */
 function waitForGridRoot() {
   return new Promise((resolve) => {
     const tick = () => {
@@ -51,16 +68,33 @@ function waitForGridRoot() {
   });
 }
 
+/**
+ * Retrieve the tiles array from the UI state or return an empty array if it is missing.
+ * @param {object} ui - Object expected to contain `displayState.world.tiles`.
+ * @returns {Array} The `tiles` array from `ui.displayState.world`, or an empty array when that value is not an array.
+ */
 function getTilesRef(ui) {
   const worldTiles = ui?.displayState?.world?.tiles;
   return Array.isArray(worldTiles) ? worldTiles : [];
 }
 
+/**
+ * Compare two tile-like objects by row (`y`) then column (`x`) for ascending grid order.
+ * @param {{x:number,y:number}} a - First tile with numeric `x` and `y` coordinates.
+ * @param {{x:number,y:number}} b - Second tile with numeric `x` and `y` coordinates.
+ * @returns {number} A negative value if `a` comes before `b`, a positive value if `a` comes after `b`, or `0` if they are equal.
+ */
 function sortByGrid(a, b) {
   if (a.y !== b.y) return a.y - b.y;
   return a.x - b.x;
 }
 
+/**
+ * Create nearest-neighbor link pairs between mines → storages and storages → factories.
+ * 
+ * @param {Array<{x: number, y: number, type: string}>} tiles - Array of tile objects (each with numeric `x`, `y` and `type`).
+ * @returns {Array<{from: {x: number, y: number, type: string}, to: {x: number, y: number, type: string}}>} An array of link objects with `from` and `to` tiles; each source is paired to the nearest remaining target. The returned array contains mine→storage pairs first, followed by storage→factory pairs.
+ */
 function buildLinks(tiles) {
   const mines = [];
   const storages = [];
@@ -116,6 +150,13 @@ function buildLinks(tiles) {
   return [...pairNearest(mines, storages), ...pairNearest(storages, factories)];
 }
 
+/**
+ * Compute the center coordinates of a tile element inside the provided root element.
+ *
+ * @param {Element} root - Container element that contains tile DOM nodes.
+ * @param {{x:number,y:number}} tile - Tile coordinates to locate (`x` and `y`).
+ * @returns {{x:number,y:number}|null} The tile's center `{ x, y }` relative to `root`, or `null` if the tile element is not found.
+ */
 function getTileCenter(root, tile) {
   const node = root.querySelector(`.tile[data-x="${tile.x}"][data-y="${tile.y}"]`);
   if (!node) {
@@ -130,6 +171,18 @@ function getTileCenter(root, tile) {
   };
 }
 
+/**
+ * Clear the SVG and draw connection lines between tile centers for drawable tile links.
+ * 
+ * For each nearest-link pair derived from the provided tiles (filtered to drawable types),
+ * creates an SVG <line> positioned at each tile's center and sets its stroke dash offset.
+ * Links whose tile elements cannot be located are skipped.
+ *
+ * @param {SVGElement} svg - The SVG element to render connection lines into; its children will be replaced.
+ * @param {Element} root - The root DOM element that contains tile elements used to compute center coordinates.
+ * @param {Array<Object>} tiles - Array of tile objects (each with at least `x`, `y`, and `type`) used to build links.
+ * @param {number} dashOffset - Value assigned to each line's `stroke-dashoffset` style.
+ */
 function drawConnections(svg, root, tiles, dashOffset) {
   svg.replaceChildren();
 
@@ -151,12 +204,28 @@ function drawConnections(svg, root, tiles, dashOffset) {
   }
 }
 
+/**
+ * Create a compact string signature that represents each tile's position and type.
+ *
+ * @param {Array<{x: number, y: number, type: string}>} tiles - Array of tile objects; each item must have `x`, `y`, and `type` properties.
+ * @returns {string} A single string of the form `"x,y,type|x,y,type|..."`, with entries in the same order as `tiles`.
+ */
 function buildTileSignature(tiles) {
   return tiles
     .map((tile) => `${tile.x},${tile.y},${tile.type}`)
     .join("|");
 }
 
+/**
+ * Create and append a hidden radial menu containing build option buttons.
+ *
+ * The menu contains one `.radial-option` button for each of: `"mine"`, `"storage"`, `"factory"`, and `"clear"`.
+ * Each button's `dataset.type` is set to the resource type, its CSS custom property `--a` is set to the placement angle,
+ * `title` is set to the type, and `textContent` is set via `iconLabel(type)`.
+ *
+ * @param {HTMLElement} root - The container element to which the radial menu will be appended.
+ * @returns {HTMLElement} The created `.radial-menu` element (initially `hidden = true`).
+ */
 function installRadialMenu(root) {
   const menu = document.createElement("div");
   menu.className = "radial-menu";
@@ -195,6 +264,12 @@ function updateDebug(selected, tile, linksCount) {
   }
 }
 
+/**
+ * Install an interactive radial build controller on the tile grid, providing a radial menu for placing or clearing resources, drawing animated connections, and responding to viewport changes.
+ *
+ * @param {Object} [options] - Optional configuration.
+ * @param {Object|null} [options.viewportManager=null] - Optional viewport manager with a `subscribe` function; when provided, its subscription is used to trigger SVG resize and connection redraws. If omitted, the controller falls back to window resize events.
+ */
 export function installRadialBuildController({ viewportManager = null } = {}) {
   waitForGridRoot().then(({ root, ui }) => {
     if (!ui || typeof ui.applyGameAction !== "function") {
