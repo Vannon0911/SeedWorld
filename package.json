@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "preflight": "node dev/tools/runtime/preflight.mjs",
+    "preflight:guard": "node dev/tools/runtime/preflight-mutation-guard.mjs",
     "server": "node start-server.js",
     "patch:server": "node app/server/patchServer.mjs",
     "patch:apply": "node dev/tools/patch/apply.mjs",
@@ -15,14 +16,21 @@
     "llm:ack": "npm run llm:entry",
     "llm:check": "node dev/tools/runtime/llm-read-guard.mjs",
     "llm:guard": "node dev/tools/runtime/llm-read-guard.mjs",
+    "llm:override": "node dev/tools/runtime/llm-override.mjs",
     "llm:update-lock": "node dev/tools/llm-preflight.mjs update-lock",
     "governance:verify": "node dev/tools/runtime/governance-verify.mjs",
     "signing:guard": "node dev/tools/runtime/signing-guard.mjs",
     "release:guard": "node dev/tools/runtime/release-guard.mjs",
     "hygiene:map": "node dev/tools/runtime/repo-hygiene-map.mjs",
     "hygiene:why": "node dev/tools/runtime/repo-hygiene-why.mjs",
+    "gate:testline:verify": "node dev/tools/runtime/verify-testline-integrity.mjs",
+    "gate:testline:update": "node dev/tools/runtime/update-testline-integrity.mjs",
+    "sync:red-actions": "node dev/tools/runtime/updateRedActions.mjs",
     "sync:function-sot": "node dev/tools/runtime/updateFunctionSot.mjs",
+    "sot:verify": "node dev/tools/runtime/updateFunctionSot.mjs",
+    "sot:apply": "node dev/tools/runtime/updateFunctionSot.mjs --write",
     "sync:docs": "node dev/tools/runtime/syncDocs.mjs",
+    "sync:docs:apply": "node dev/tools/runtime/syncDocs.mjs --write",
     "check:required": "npm run governance:verify && npm run sync:docs && npm run preflight && npm test",
     "test:playwright:fulltiles": "node dev/scripts/playwright-tiles-full.mjs",
     "test:full": "npm run check:required && npm run test:playwright:fulltiles",
@@ -33,6 +41,8 @@
     "patch:dispatch": "node dev/tools/patch/import-dispatch.mjs"
     ,
     "evidence:verify": "node dev/scripts/verify-evidence.mjs",
-    "evidence:bundle": "node dev/scripts/build-evidence-bundle.mjs --ensure-strict=10 --max-pull-runs=4"
+    "evidence:bundle": "node dev/scripts/build-evidence-bundle.mjs --ensure-strict=10 --max-pull-runs=4",
+    "evidence:lock:verify": "node dev/tools/runtime/evidence-lock.mjs",
+    "evidence:lock:update": "node dev/tools/runtime/evidence-lock.mjs --update"
   }
 }
