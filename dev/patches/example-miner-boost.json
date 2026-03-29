@@ -20,7 +20,7 @@
     "type": "gameplay",
     "compatibility": {
       "kernel": ">=1.0.0",
-      "game": ">=3.0.0"
+      "game": ">=0.0.2"
     }
   },
   "rollback": {

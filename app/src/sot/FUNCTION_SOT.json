@@ -5521,26 +5521,26 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#buildContent@47",
+      "id": "dev/tools/runtime/updateRedActions.mjs#buildContent@48",
       "name": "buildContent",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 47,
+      "line": 48,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#classifyRisk@31",
+      "id": "dev/tools/runtime/updateRedActions.mjs#classifyRisk@32",
       "name": "classifyRisk",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 31,
+      "line": 32,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#main@83",
+      "id": "dev/tools/runtime/updateRedActions.mjs#main@84",
       "name": "main",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 83,
+      "line": 84,
       "kind": "function",
       "category": "runtime-tooling"
     },

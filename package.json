@@ -1,6 +1,6 @@
 {
   "name": "seedworld",
-  "version": "2.7.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -35,11 +35,11 @@
     "test:playwright:fulltiles": "node dev/scripts/playwright-tiles-full.mjs",
     "test:full": "npm run check:required && npm run test:playwright:fulltiles",
     "hooks:install": "node dev/tools/runtime/installGitHooks.mjs",
+    "github:ruleset:apply": "node dev/tools/runtime/apply-github-ruleset.mjs",
     "test": "node dev/tests/MainTest.mjs",
     "test:all": "npm test",
     "start": "npm run preflight && npm run server",
-    "patch:dispatch": "node dev/tools/patch/import-dispatch.mjs"
-    ,
+    "patch:dispatch": "node dev/tools/patch/import-dispatch.mjs",
     "evidence:verify": "node dev/scripts/verify-evidence.mjs",
     "evidence:bundle": "node dev/scripts/build-evidence-bundle.mjs --ensure-strict=10 --max-pull-runs=4",
     "evidence:lock:verify": "node dev/tools/runtime/evidence-lock.mjs",
