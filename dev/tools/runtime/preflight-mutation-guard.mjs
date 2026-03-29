@@ -244,6 +244,13 @@ async function findActiveHiddenFault() {
   }
   return "";
 }
+/**
+ * Produce a deterministic SHA-256 proof that ties the vault seed, lock metadata, and the current content hash.
+ * @param {string} seed - Vault seed (hex string) used as entropy for the proof.
+ * @param {Object} lock - Normalized lock object containing at least `head`, `targetFile`, `faultKind`, `preStateHash`, `postInjectHash`, and optional `policyVersion`.
+ * @param {string} currentHash - Hex hash of the current target-file content being validated.
+ * @returns {string} SHA-256 hex digest computed over `seed|lock.head|lock.targetFile|lock.faultKind|lock.preStateHash|lock.postInjectHash|currentHash|policyVersion`.
+ */
 export function buildResolutionProof(seed, lock, currentHash) {
   return sha256([
     seed,
@@ -515,13 +522,13 @@ async function clearStaleHeadDriftIfSafe(lock, vault, head) {
 }
 
 /**
- * Arms a deterministic attestation by injecting a fault into a selected target file and recording the resulting lock and vault metadata.
+ * Arm a deterministic attestation by injecting a fault into a selected target file and recording lock and vault metadata.
  *
- * Persists the updated vault metadata and the attestation lock, then writes the injected content to the target file. The function updates the vault's seed and generation fields and resets resolution/failure counters.
+ * Ensures the vault has a seed (generating one if absent), selects a deterministic target based on the seed and HEAD, applies the configured fault mutation to that file, and persists updated vault and lock state.
  *
- * @param {string} head - The current git HEAD identifier associated with this attestation.
- * @param {Object} vault - Current vault metadata object; its `seed` may be used or replaced.
- * @returns {string} The relative path of the target file that was injected.
+ * @param {string} head - Current git HEAD identifier to associate with the attestation.
+ * @param {Object} vault - Vault metadata object; its `seed` may be used or replaced.
+ * @returns {string} The relative path of the file that was injected.
  */
 async function ensureInjectedLock(head, vault) {
   const seed = ensureVaultSeed(vault);

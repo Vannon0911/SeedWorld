@@ -17,12 +17,36 @@ const UNUSED_GATE_ALLOWLIST = new Set([
   "patcher.access"
 ]);
 
+/**
+ * Determine whether a value is a plain object.
+ *
+ * A plain object is a non-null, non-array object whose prototype is either
+ * `Object.prototype` or `null`.
+ *
+ * @param {*} value - The value to test.
+ * @returns {boolean} `true` if `value` is a plain object, `false` otherwise.
+ */
 function isPlainObject(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
   }
   const proto = Object.getPrototypeOf(value);
   return proto === Object.prototype || proto === null;
+}
+
+/**
+ * Derive a deterministic 8-character lowercase hexadecimal signature from a seed string.
+ * @param {string} seed - Seed string to derive the signature from.
+ * @returns {string} An 8-character, zero-padded lowercase hexadecimal signature derived from the seed.
+ */
+function deriveSeedSignature(seed) {
+  let hash = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
 class KernelGovernanceError extends Error {
@@ -433,12 +457,13 @@ export class KernelController {
   }
 
   #createInitialState() {
+    const seedSignature = deriveSeedSignature(this.deterministicSeed);
     return {
       worldMap: new Map(),
       clock: { tick: 0, msPerTick: 100 },
       resources: { ore: 1000, iron: 0 },
       structures: new Map(),
-      statistics: { totalTicks: 0, structuresBuilt: 0 }
+      statistics: { totalTicks: 0, structuresBuilt: 0, seedSignature }
     };
   }
 

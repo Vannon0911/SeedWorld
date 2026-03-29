@@ -88,10 +88,10 @@ try {
   // 1) identity and policy guards first
   await runNodeScript("dev/tools/runtime/signing-guard.mjs", ["--config-only"]);
   await runNodeScript("dev/tools/runtime/evidence-lock.mjs");
-  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", mutationGuardArgs());
   await runNodeScript("dev/tools/runtime/updateFunctionSot.mjs");
   await runNodeScript("dev/tools/runtime/syncDocs.mjs");
   await runNodeScript("dev/tools/runtime/governance-verify.mjs");
+  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", mutationGuardArgs());
 
   // 2) immutable integrity gate (pre)
   await runNodeScript("dev/tools/runtime/verify-testline-integrity.mjs");

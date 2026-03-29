@@ -1,4 +1,4 @@
-import { generateWorld } from "./worldGen.js";
+import { buildWorldFromState, generateWorld } from "./worldGen.js";
 import { buildTransportPatches } from "./actions/transportAction.js";
 import { buildBuildPatches } from "./actions/buildAction.js";
 
@@ -19,6 +19,9 @@ const DEFAULT_ACTION_SCHEMA = Object.freeze({
   },
   inspect: {
     required: []
+  },
+  set_tile_type: {
+    required: ["x", "y", "tileType"]
   },
   generate_world: {
     required: ["seed"]
@@ -52,6 +55,14 @@ const BUILD_COSTS = Object.freeze({
   miner: 5,
   conveyor: 2,
   assembler: 8
+});
+
+const TILE_OUTPUT_LABELS = Object.freeze({
+  empty: "",
+  mine: "Erz",
+  storage: "Lager",
+  factory: "Fabrik",
+  connector: "Verbindung"
 });
 
 const PROGRESSION_LEVELS = Object.freeze([
@@ -132,6 +143,13 @@ function deepFreeze(value) {
   return value;
 }
 
+/**
+ * Coerces a value into a positive integer.
+ * @param {*} value - The input to convert to an integer.
+ * @param {string} label - Human-readable name used in the error message when coercion fails.
+ * @returns {number} The coerced integer greater than zero.
+ * @throws {Error} If the input is not an integer greater than zero; the error message includes the provided `label`.
+ */
 function coercePositiveInteger(value, label) {
   const number = Number(value);
   if (!Number.isInteger(number) || number <= 0) {
@@ -141,6 +159,14 @@ function coercePositiveInteger(value, label) {
   return number;
 }
 
+/**
+ * Ensure a value is a non-empty string and return it trimmed.
+ *
+ * @param {*} value - Value to coerce into a trimmed string.
+ * @param {string} label - Name used in error messages when validation fails.
+ * @returns {string} The trimmed string.
+ * @throws {Error} If `value` is not a string or is empty after trimming.
+ */
 function coerceString(value, label) {
   if (typeof value !== "string") {
     throw new Error(`[GAME_LOGIC] ${label} muss String sein.`);
@@ -154,6 +180,30 @@ function coerceString(value, label) {
   return trimmed;
 }
 
+/**
+ * Convert a value to an integer and validate that it is an integer.
+ *
+ * @param {*} value - The value to convert.
+ * @param {string} label - Label used in the error message when validation fails.
+ * @returns {number} The converted integer.
+ * @throws {Error} If the value is not an integer.
+ */
+function coerceInteger(value, label) {
+  const number = Number(value);
+  if (!Number.isInteger(number)) {
+    throw new Error(`[GAME_LOGIC] ${label} muss eine ganze Zahl sein.`);
+  }
+
+  return number;
+}
+
+/**
+ * Normalize a kernel API object by selecting and binding compatible planning and applying methods.
+ * @param {object} kernelApi - An object that provides patch planning and application methods. Supported method names (in priority order) for planning: `planPatch`, `plan`, `execute`; for applying: `applyPatch`, `apply`, `execute`. Methods, if present, will be bound to the original `kernelApi`.
+ * @returns {{planPatch: Function, applyPatch: Function}} An object with two bound functions: `planPatch` for planning patches and `applyPatch` for applying patches.
+ * @throws {Error} If `kernelApi` is missing or not an object.
+ * @throws {Error} If neither planning nor applying methods can be resolved from the provided `kernelApi`.
+ */
 function normalizeKernelApi(kernelApi) {
   if (!kernelApi || typeof kernelApi !== "object") {
     throw new Error("[GAME_LOGIC] kernelApi fehlt.");
@@ -340,6 +390,24 @@ function buildProgressSnapshot(state) {
   };
 }
 
+/**
+ * Constructs feedback describing progression and rewards earned between two game states.
+ * @param {object} beforeState - Game state before the action.
+ * @param {object} afterState - Game state after the action.
+ * @param {object|null} [summary=null] - Optional operation summary to include in the details (may contain an `action` field).
+ * @returns {object} An object containing:
+ *  - `headline` (string): short summary line (e.g., milestone unlocked or progress),
+ *  - `details` (string[]): human-readable lines describing action, level and score changes, unlocked rewards, and focus,
+ *  - `scoreDelta` (number): difference in score (after - before),
+ *  - `levelDelta` (number): difference in progression level index (after - before),
+ *  - `level` (object): the current progression level from the after state,
+ *  - `nextLevel` (object|null): the next progression level or null if at max,
+ *  - `progressToNext` (number): fraction between 0 and 1 toward the next level,
+ *  - `earnedRewards` (object[]): rewards earned by the after state,
+ *  - `newlyEarnedRewards` (object[]): rewards present in afterState but not in beforeState,
+ *  - `focus` (string): suggested gameplay focus from the after state,
+ *  - `summary` (object|null): the provided summary object.
+ */
 function buildRewardFeedback(beforeState, afterState, summary = null) {
   const beforeSnapshot = buildProgressSnapshot(beforeState);
   const afterSnapshot = buildProgressSnapshot(afterState);
@@ -385,10 +453,157 @@ function buildRewardFeedback(beforeState, afterState, summary = null) {
   };
 }
 
+/**
+ * Create a patch that sets a value at a dot-separated path within the game domain.
+ * @param {string} path - Dot-separated path under the game domain (e.g., "resources.ore").
+ * @param {*} value - Value to assign at the specified path.
+ * @returns {{op: string, domain: string, path: string, value: *}} Patch object with `op: "set"`, `domain: DEFAULT_DOMAIN`, and the provided `path` and `value`.
+ */
 function setCountPatch(path, value) {
   return { op: "set", domain: DEFAULT_DOMAIN, path, value };
 }
 
+/**
+ * Determine whether a tile type identifier is recognized by the game.
+ * @param {string} tileType - Tile type identifier to check.
+ * @returns {boolean} `true` if `tileType` is a key in `TILE_OUTPUT_LABELS`, `false` otherwise.
+ */
+function isKnownTileType(tileType) {
+  return Object.prototype.hasOwnProperty.call(TILE_OUTPUT_LABELS, tileType);
+}
+
+/**
+ * Produce a normalized world object suitable for game operations.
+ *
+ * If `state.world` contains a plain-object `size` and a non-empty `tiles` array, returns a deep clone of that world;
+ * otherwise constructs and returns a world produced from the provided state via `buildWorldFromState`.
+ *
+ * @param {object} state - The game state to normalize; may optionally contain a `world` property.
+ * @returns {object} A normalized world object with `size` and `tiles` suitable for use by world-related logic.
+ */
+function normalizeWorldState(state) {
+  const world = isPlainObject(state.world) ? state.world : null;
+  if (world && isPlainObject(world.size) && Array.isArray(world.tiles) && world.tiles.length > 0) {
+    return deepClone(world);
+  }
+
+  return buildWorldFromState(state);
+}
+
+/**
+ * Produce a patch that replaces the world's tiles array with an updated copy where the tile at the given coordinates has the specified type.
+ * @param {object} state - Current game state used to read and normalize the world structure.
+ * @param {object} [payload={}] - Parameters describing which tile to update.
+ * @param {number} payload.x - X coordinate of the tile to update.
+ * @param {number} payload.y - Y coordinate of the tile to update.
+ * @param {string} payload.tileType - Identifier of the new tile type.
+ * @returns {Array<object>} `set` patch array targeting `world.tiles` containing the updated tiles array.
+ * @throws {Error} If `tileType` is not a known tile type.
+ * @throws {Error} If the coordinates `(x,y)` are outside the normalized world's bounds.
+ */
+function updateTileTypeInWorld(state, payload = {}) {
+  const world = normalizeWorldState(state);
+  const x = coerceInteger(payload.x, "set_tile_type.x");
+  const y = coerceInteger(payload.y, "set_tile_type.y");
+  const tileType = coerceString(payload.tileType, "set_tile_type.tileType");
+
+  if (!isKnownTileType(tileType)) {
+    throw new Error(`[GAME_LOGIC] Unbekannter Tile-Typ: ${tileType}`);
+  }
+
+  const width = Number.isInteger(world?.size?.width) ? world.size.width : 0;
+  const height = Number.isInteger(world?.size?.height) ? world.size.height : 0;
+  if (x < 0 || y < 0 || x >= width || y >= height) {
+    throw new Error(`[GAME_LOGIC] Tile ausserhalb der Welt: ${x},${y}`);
+  }
+
+  const nextTiles = world.tiles.map((tile, index) => {
+    const tileX = Number.isInteger(tile?.x) ? tile.x : index % width;
+    const tileY = Number.isInteger(tile?.y) ? tile.y : Math.floor(index / width);
+    if (tileX !== x || tileY !== y) {
+      return deepClone(tile);
+    }
+
+    const nextType = tileType;
+    return {
+      ...deepClone(tile),
+      x,
+      y,
+      type: nextType,
+      outputText: TILE_OUTPUT_LABELS[nextType],
+      isActive: nextType !== "empty",
+      isEmpty: nextType === "empty"
+    };
+  });
+
+  return [setCountPatch("world.tiles", nextTiles)];
+}
+
+/**
+ * Apply a single `set` patch into the provided state object at the dot-separated `path`.
+ *
+ * The function mutates `state` in place by creating any missing intermediate plain objects
+ * along the path and deep-cloning `patch.value` into the final key.
+ *
+ * @param {Object} state - Target state object to modify.
+ * @param {Object} patch - Patch to apply. Must be a plain object with `op`, `path`, and `value`.
+ * @param {string} patch.op - Operation type; only `"set"` is supported.
+ * @param {string} patch.path - Dot-separated non-empty path indicating where to set the value.
+ * @param {*} patch.value - Value to place at the target path; it will be deep-cloned.
+ * @throws {Error} If `patch.op` is not `"set"`.
+ * @throws {Error} If `patch.path` is empty or not a valid dot-separated path.
+ */
+function applyPatchToState(state, patch) {
+  if (patch.op !== "set") {
+    throw new Error(`[GAME_LOGIC] Unsupported patch operation: ${String(patch.op)}`);
+  }
+
+  const segments = patch.path.split(".");
+  if (segments.length === 0) {
+    throw new Error("[GAME_LOGIC] Patch path fehlt.");
+  }
+
+  let cursor = state;
+  for (let index = 0; index < segments.length - 1; index += 1) {
+    const key = segments[index];
+    if (!isPlainObject(cursor[key])) {
+      cursor[key] = {};
+    }
+    cursor = cursor[key];
+  }
+
+  cursor[segments[segments.length - 1]] = deepClone(patch.value);
+}
+
+/**
+ * Produce a new game state by applying a list of game-format patches in order.
+ *
+ * The input `state` is not mutated; patches are applied to a deep clone and the
+ * resulting modified clone is returned.
+ * @param {Object} state - Base game state to use as the starting point.
+ * @param {Array<Object>} patches - Array of patch objects in the game's mutation format; applied sequentially.
+ * @return {Object} The new state produced after applying all patches.
+ */
+export function reduceGameState(state = {}, patches = []) {
+  const safeState = isPlainObject(state) ? state : {};
+  const nextState = deepClone(safeState);
+
+  for (const patch of patches) {
+    applyPatchToState(nextState, patch);
+  }
+
+  return nextState;
+}
+
+/**
+ * Generate a set of patches that replace the game's world data using a deterministic world generator.
+ *
+ * @param {string} seed - Seed value used to generate the world.
+ * @param {Object} [payload] - Optional generation parameters.
+ * @param {number} [payload.width=16] - Desired world width in tiles.
+ * @param {number} [payload.height=12] - Desired world height in tiles.
+ * @returns {Array<Object>} An array of "set" patch objects for `world.seed`, `world.size`, `world.meta`, and `world.tiles`.
+ */
 function createWorldPatches(seed, payload = {}) {
   const width = Number.isInteger(payload.width) ? payload.width : 16;
   const height = Number.isInteger(payload.height) ? payload.height : 12;
@@ -406,6 +621,14 @@ function createWorldPatches(seed, payload = {}) {
   ];
 }
 
+/**
+ * Build mutation patches that apply a given game action to the provided state.
+ *
+ * @param {Object} action - Action object with `type` and `payload` fields used to derive patches.
+ * @param {Object} state - Current game state snapshot used to compute resulting values and validate bounds.
+ * @returns {Array<Object>} An array of patch objects describing mutations to apply to the game state.
+ * @throws {Error} If `action.type` is not supported or required payload fields are missing/invalid.
+ */
 function buildPatches(action, state) {
   switch (action.type) {
     case "produce": {
@@ -462,6 +685,9 @@ function buildPatches(action, state) {
 
     case "inspect":
       return [];
+
+    case "set_tile_type":
+      return updateTileTypeInWorld(state, action.payload);
 
     case "generate_world": {
       const seed = coerceString(action.payload.seed, "generate_world.seed");
@@ -574,6 +800,18 @@ export class GameLogicController {
       action,
       patches: deepClone(patches),
       summary: buildOperationSummary(action, patches)
+    };
+  }
+
+  reduceState(state = {}, patches = []) {
+    return reduceGameState(state, patches);
+  }
+
+  applyActionLocally(input = {}, state = {}) {
+    const calculation = this.calculateAction(input, state);
+    return {
+      ...calculation,
+      previewState: this.reduceState(state, calculation.patches)
     };
   }
 
