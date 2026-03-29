@@ -1,6 +1,6 @@
 import { randomBytes, createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -148,6 +148,48 @@ async function readText(absPath) {
   return readFile(absPath, "utf8");
 }
 
+async function renderLsOutput(absPath) {
+  try {
+    const entries = await readdir(absPath, { withFileTypes: true });
+    if (entries.length === 0) {
+      return [`[PREFLIGHT_LS] ${path.relative(root, absPath) || "."}: <empty>`];
+    }
+
+    const lines = [`[PREFLIGHT_LS] ${path.relative(root, absPath) || "."}:`];
+    const sorted = [...entries].sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of sorted) {
+      const entryPath = path.join(absPath, entry.name);
+      let sizeText = "-";
+      try {
+        const info = await stat(entryPath);
+        sizeText = String(info.size);
+      } catch {
+        sizeText = "?";
+      }
+      const kind = entry.isDirectory() ? "d" : entry.isSymbolicLink() ? "l" : "f";
+      lines.push(`[PREFLIGHT_LS]   ${kind} ${entry.name} (${sizeText}b)`);
+    }
+    return lines;
+  } catch (error) {
+    return [`[PREFLIGHT_LS] ${path.relative(root, absPath) || "."}: <unavailable: ${String(error?.message || error)}>`];
+  }
+}
+
+async function emitPreflightLsOutput() {
+  const pathsToList = [
+    root,
+    path.join(root, "runtime"),
+    path.join(root, "runtime", ".patch-manager"),
+    path.join(root, "dev", "tools", "runtime")
+  ];
+
+  for (const absPath of pathsToList) {
+    for (const line of await renderLsOutput(absPath)) {
+      console.error(line);
+    }
+  }
+}
+
 async function findLegacyMarker() {
   for (const relPath of TARGET_FILES) {
     try {
@@ -189,6 +231,19 @@ export function isFaultStillActive(relPath, content) {
   return strategyFor(relPath).isActive(content);
 }
 
+async function findActiveHiddenFault() {
+  for (const relPath of TARGET_FILES) {
+    try {
+      const content = await readText(path.join(root, relPath));
+      if (isFaultStillActive(relPath, content)) {
+        return relPath;
+      }
+    } catch {
+      // ignore missing targets and keep scanning
+    }
+  }
+  return "";
+}
 export function buildResolutionProof(seed, lock, currentHash) {
   return sha256([
     seed,
@@ -206,7 +261,7 @@ export function validateResolutionCandidate(lock, currentContent, seed) {
   const normalizedLock = normalizeLock(lock);
   const currentHash = sha256(currentContent);
 
-  if (!normalizedLock.targetFile || !normalizedLock.postInjectHash || !normalizedLock.preStateHash || !seed) {
+  if (!normalizedLock || !normalizedLock.targetFile || !normalizedLock.postInjectHash || !normalizedLock.preStateHash || !seed) {
     return { ok: false, code: "invalid-state", currentHash };
   }
 
@@ -380,6 +435,11 @@ async function runVerifyMode(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
   }
 
+  const activeFaultFile = await findActiveHiddenFault();
+  if (activeFaultFile) {
+    throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
+  }
+
   if (!lock) {
     if (vault.lastGeneratedHead === head && vault.lastResolvedHead !== head) {
       throw new Error(`[UNRESOLVED_ATTESTATION] missing lock state for unresolved HEAD ${head.slice(0, 12)}`);
@@ -398,6 +458,11 @@ async function runEnforceMode(lock, vault, head) {
   const legacyMarkerFile = await findLegacyMarker();
   if (legacyMarkerFile) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
+  }
+
+  const activeFaultFile = await findActiveHiddenFault();
+  if (activeFaultFile) {
+    throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
   }
 
   if (lock) {
@@ -446,6 +511,7 @@ async function main() {
     await runEnforceMode(lock, vault, head);
   } catch (error) {
     console.error(`[PREFLIGHT_GUARD] BLOCK: ${String(error?.message || error)}`);
+    await emitPreflightLsOutput();
     process.exit(1);
   }
 }

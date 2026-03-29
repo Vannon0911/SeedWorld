@@ -35,6 +35,7 @@
     "app/src/main.js",
     "app/server/appServer.mjs",
     "start-server.js",
+    "dev/tools/patch/apply.mjs",
     "dev/scripts/smoke-test.mjs",
     "dev/scripts/runtime-guards-test.mjs",
     "dev/tests/MainTest.mjs"
