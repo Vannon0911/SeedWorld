@@ -4601,18 +4601,18 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#buildResolutionProof@190",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#buildResolutionProof@204",
       "name": "buildResolutionProof",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 190,
+      "line": 204,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#clearLegacyStateIfSafe@259",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#clearLegacyStateIfSafe@273",
       "name": "clearLegacyStateIfSafe",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 259,
+      "line": 273,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4633,10 +4633,10 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@293",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@307",
       "name": "ensureInjectedLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 293,
+      "line": 307,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4645,6 +4645,14 @@
       "name": "ensureVaultSeed",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
       "line": 163,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findActiveHiddenFault@190",
+      "name": "findActiveHiddenFault",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 190,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4705,10 +4713,10 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@417",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@441",
       "name": "main",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 417,
+      "line": 441,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4753,34 +4761,34 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#recordPendingFailure@231",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#recordPendingFailure@245",
       "name": "recordPendingFailure",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 231,
+      "line": 245,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@335",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@349",
       "name": "resolveOrKeepLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 335,
+      "line": 349,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@395",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@414",
       "name": "runEnforceMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 395,
+      "line": 414,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@375",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@389",
       "name": "runVerifyMode",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 375,
+      "line": 389,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4809,10 +4817,10 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#validateResolutionCandidate@203",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#validateResolutionCandidate@217",
       "name": "validateResolutionCandidate",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 203,
+      "line": 217,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -4833,26 +4841,26 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#mutationGuardArgs@61",
+      "id": "dev/tools/runtime/preflight.mjs#mutationGuardArgs@74",
       "name": "mutationGuardArgs",
+      "file": "dev/tools/runtime/preflight.mjs",
+      "line": 74,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@61",
+      "name": "runNodeScript",
       "file": "dev/tools/runtime/preflight.mjs",
       "line": 61,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#runNodeScript@48",
-      "name": "runNodeScript",
-      "file": "dev/tools/runtime/preflight.mjs",
-      "line": 48,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@52",
+      "id": "dev/tools/runtime/preflight.mjs#runNpmScript@65",
       "name": "runNpmScript",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 52,
+      "line": 65,
       "kind": "function",
       "category": "runtime-tooling"
     },

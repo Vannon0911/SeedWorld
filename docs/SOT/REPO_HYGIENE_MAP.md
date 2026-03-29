@@ -18,6 +18,7 @@
 - app/src/main.js
 - app/server/appServer.mjs
 - start-server.js
+- dev/tools/patch/apply.mjs
 - dev/scripts/smoke-test.mjs
 - dev/scripts/runtime-guards-test.mjs
 - dev/tests/MainTest.mjs
@@ -37,7 +38,6 @@
 - app/src/SeedWorld_WorldGen.mjs
 - app/src/browser/BrowserPatchRunner.js
 - app/src/browser/LogBus.js
-- app/src/game/contracts/mutationMatrixConstraints.js
 - app/src/game/gameConstants.js
 - app/src/kernel/deterministicKernel.js
 - app/src/kernel/fingerprint.js
@@ -66,15 +66,7 @@
 - dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
-- dev/tools/patch/apply.mjs
 - dev/tools/patch/import-dispatch.mjs
-- dev/tools/patch/lib/backup.mjs
-- dev/tools/patch/lib/constants.mjs
-- dev/tools/patch/lib/intake.mjs
-- dev/tools/patch/lib/lock.mjs
-- dev/tools/patch/lib/normalize.mjs
-- dev/tools/patch/lib/orchestrator.mjs
-- dev/tools/patch/lib/session-store.mjs
 - dev/tools/patch/patchMatrix.js
 - dev/tools/patch/validate-patch-matrix.mjs
 - dev/tools/runtime/apply-github-ruleset.mjs
@@ -122,7 +114,6 @@
 - dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
-- dev/tools/patch/apply.mjs
 - dev/tools/patch/import-dispatch.mjs
 - dev/tools/patch/validate-patch-matrix.mjs
 - dev/tools/runtime/apply-github-ruleset.mjs

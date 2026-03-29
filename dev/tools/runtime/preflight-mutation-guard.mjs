@@ -189,6 +189,20 @@ export function isFaultStillActive(relPath, content) {
   return strategyFor(relPath).isActive(content);
 }
 
+async function findActiveHiddenFault() {
+  for (const relPath of TARGET_FILES) {
+    try {
+      const content = await readText(path.join(root, relPath));
+      if (isFaultStillActive(relPath, content)) {
+        return relPath;
+      }
+    } catch {
+      // ignore missing targets and keep scanning
+    }
+  }
+  return "";
+}
+
 export function buildResolutionProof(seed, lock, currentHash) {
   return sha256([
     seed,
@@ -206,7 +220,7 @@ export function validateResolutionCandidate(lock, currentContent, seed) {
   const normalizedLock = normalizeLock(lock);
   const currentHash = sha256(currentContent);
 
-  if (!normalizedLock.targetFile || !normalizedLock.postInjectHash || !normalizedLock.preStateHash || !seed) {
+  if (!normalizedLock || !normalizedLock.targetFile || !normalizedLock.postInjectHash || !normalizedLock.preStateHash || !seed) {
     return { ok: false, code: "invalid-state", currentHash };
   }
 
@@ -380,6 +394,11 @@ async function runVerifyMode(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
   }
 
+   const activeFaultFile = await findActiveHiddenFault();
+   if (activeFaultFile) {
+     throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
+   }
+
   if (!lock) {
     if (vault.lastGeneratedHead === head && vault.lastResolvedHead !== head) {
       throw new Error(`[UNRESOLVED_ATTESTATION] missing lock state for unresolved HEAD ${head.slice(0, 12)}`);
@@ -398,6 +417,11 @@ async function runEnforceMode(lock, vault, head) {
   const legacyMarkerFile = await findLegacyMarker();
   if (legacyMarkerFile) {
     throw new Error(`[PREFLIGHT_ESCALATION] legacy visible fault present in ${legacyMarkerFile}`);
+  }
+
+  const activeFaultFile = await findActiveHiddenFault();
+  if (activeFaultFile) {
+    throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
   }
 
   if (lock) {
