@@ -1,11 +1,19 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 const root = process.cwd();
 const targetPath = path.join(root, "docs", "LLM", "AKTUELLE_RED_ACTIONS.md");
 const writeMode = process.argv.includes("--write");
+const PREFLIGHT_LOCK_TARGETS = new Set([
+  "app/src/kernel/runtimeGuards.js",
+  "app/src/kernel/fingerprint.js",
+  "app/src/game/worldGen.js",
+  "app/server/patchUtils.js"
+]);
+const PREFLIGHT_LOCK_MARKER_RX = /\n\/\/ preflight-lock:[A-F0-9]{8}\nthrow new Error\("Runtime invariant mismatch: E[A-F0-9]{8}"\);\n?/m;
 
 function runGit(args) {
   const result = spawnSync("git", args, {
@@ -18,6 +26,51 @@ function runGit(args) {
   return String(result.stdout || "").trim();
 }
 
+function runGitRaw(args) {
+  const result = spawnSync("git", args, {
+    cwd: root,
+    encoding: "utf8"
+  });
+  if (result.status !== 0) {
+    return null;
+  }
+  return String(result.stdout || "");
+}
+
+function normalizeContent(text) {
+  return String(text || "").replace(/\r\n/g, "\n").trimEnd();
+}
+
+function stripPreflightMarker(text) {
+  return String(text || "").replace(PREFLIGHT_LOCK_MARKER_RX, "\n");
+}
+
+function isTransientPreflightLockEntry(filePath) {
+  if (!PREFLIGHT_LOCK_TARGETS.has(filePath)) {
+    return false;
+  }
+
+  let currentContent = "";
+  try {
+    currentContent = readFileSync(path.join(root, filePath), "utf8");
+  } catch {
+    return false;
+  }
+
+  if (!PREFLIGHT_LOCK_MARKER_RX.test(currentContent)) {
+    return false;
+  }
+
+  const headContent = runGitRaw(["show", `HEAD:${filePath}`]);
+  if (headContent == null) {
+    return false;
+  }
+
+  const normalizedCurrent = normalizeContent(stripPreflightMarker(currentContent));
+  const normalizedHead = normalizeContent(headContent);
+  return normalizedCurrent === normalizedHead;
+}
+
 function parseNameStatus(raw) {
   return raw
     .split(/\r?\n/)
@@ -28,7 +81,8 @@ function parseNameStatus(raw) {
       return { status: status || "?", file: rest.join(" ") || "" };
     })
     .filter((entry) => entry.file)
-    .filter((entry) => entry.file !== "docs/LLM/AKTUELLE_RED_ACTIONS.md");
+    .filter((entry) => entry.file !== "docs/LLM/AKTUELLE_RED_ACTIONS.md")
+    .filter((entry) => !isTransientPreflightLockEntry(entry.file));
 }
 
 function classifyRisk(filePath) {

@@ -5705,42 +5705,74 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#buildContent@48",
+      "id": "dev/tools/runtime/updateRedActions.mjs#buildContent@102",
       "name": "buildContent",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 48,
+      "line": 102,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#classifyRisk@32",
+      "id": "dev/tools/runtime/updateRedActions.mjs#classifyRisk@86",
       "name": "classifyRisk",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 32,
+      "line": 86,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#main@84",
+      "id": "dev/tools/runtime/updateRedActions.mjs#isTransientPreflightLockEntry@46",
+      "name": "isTransientPreflightLockEntry",
+      "file": "dev/tools/runtime/updateRedActions.mjs",
+      "line": 46,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/updateRedActions.mjs#main@138",
       "name": "main",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 84,
+      "line": 138,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#parseNameStatus@19",
+      "id": "dev/tools/runtime/updateRedActions.mjs#normalizeContent@38",
+      "name": "normalizeContent",
+      "file": "dev/tools/runtime/updateRedActions.mjs",
+      "line": 38,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/updateRedActions.mjs#parseNameStatus@72",
       "name": "parseNameStatus",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 19,
+      "line": 72,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/updateRedActions.mjs#runGit@8",
+      "id": "dev/tools/runtime/updateRedActions.mjs#runGit@16",
       "name": "runGit",
       "file": "dev/tools/runtime/updateRedActions.mjs",
-      "line": 8,
+      "line": 16,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/updateRedActions.mjs#runGitRaw@27",
+      "name": "runGitRaw",
+      "file": "dev/tools/runtime/updateRedActions.mjs",
+      "line": 27,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/updateRedActions.mjs#stripPreflightMarker@42",
+      "name": "stripPreflightMarker",
+      "file": "dev/tools/runtime/updateRedActions.mjs",
+      "line": 42,
       "kind": "function",
       "category": "runtime-tooling"
     },

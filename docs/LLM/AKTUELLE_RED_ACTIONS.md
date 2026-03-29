@@ -2,14 +2,15 @@
 
 Dieser Stand wird automatisch vor Preflight/Commit synchronisiert.
 
-- Snapshot: `2e1cfa82b035c26c`
-- Candidate Changes: `0`
+- Snapshot: `c6102c1f7ac4aa50`
+- Candidate Changes: `2`
 
 ## Commit-Kandidat (Name-Status)
-- Keine gestagten Aenderungen erkannt.
+- `M` app/src/sot/FUNCTION_SOT.json
+- `M` dev/tools/runtime/updateRedActions.mjs
 
 ## Red-Actions (risikoreiche Treffer)
-- Keine risikoreichen Treffer im aktuellen Commit-Kandidaten.
+- `runtime-guard` -> `M` dev/tools/runtime/updateRedActions.mjs
 
 ## Regel
 - Jeder Commit muss diesen Stand widerspruchsfrei spiegeln.
