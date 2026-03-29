@@ -24,15 +24,11 @@ only_preflight_injection_changes() {
 echo "[hook:pre-commit] signing guard + llm guard + guard challenge + verify preflight"
 npm run signing:guard -- --config-only
 if only_preflight_injection_changes; then
-  echo "[hook:pre-commit] injection-only commit detected; skipping docs/SoT sync and preflight runs"
+  echo "[hook:pre-commit] injection-only commit detected; skipping docs/SoT sync"
 else
   npm run sot:apply
   npm run sync:docs:apply
   git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/FUNCTION_SOT.json app/src/sot/REPO_HYGIENE_MAP.json
 fi
 npm run llm:guard -- --action commit
-if only_preflight_injection_changes; then
-  exit 0
-fi
-npm run preflight:guard
 PREFLIGHT_GUARD_MODE=verify npm run preflight
