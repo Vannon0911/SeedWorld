@@ -349,6 +349,7 @@ export function assessHeadDrift(lock, currentContent, currentHead) {
  * @param {string} [options.faultKind=""] - Fault kind identifier (used verbatim in the message).
  * @param {number} [options.pendingFailureCount=0] - Number of consecutive unresolved failures; influences escalation wording when >= 2.
  * @returns {string} The formatted challenge/block message.
+ */
 export function buildChallengeBlockMessage({
   phase,
   targetFile = "",
@@ -576,14 +577,20 @@ async function ensureInjectedLock(head, vault) {
 }
 
 /**
- * Validate an attestation lock against the current target file and either finalize its resolution or record a pending failure.
+ * Validate and either resolve an existing attestation lock or record a pending failure.
  *
- * @param {Object} lock - Attestation lock; must include `targetFile`, `preStateHash`, `postInjectHash`, and `head`.
- * @param {Object} vault - Vault metadata containing `seed` and failure counters; may be updated and persisted when the lock is resolved.
- * @param {string} head - Current repository HEAD identifier to validate against `lock.head`.
- * @returns {{resolved: boolean, pendingFailureCount: number, reasonCode: string}} An object describing the outcome: `resolved` is `true` if the lock was resolved, `false` otherwise; `pendingFailureCount` is the updated failure tally; `reasonCode` is `"resolved"` on success or a short failure code explaining why resolution did not occur.
- * @throws {Error} When `lock` is missing required fields (`targetFile`, `preStateHash`, or `postInjectHash`).
- * @throws {Error} When `lock.head` does not match the provided `head`.
+ * Validates required lock fields and that the lock's recorded head matches `head`.
+ * Compares the current target file state against the lock using `vault.seed`. If the
+ * candidate is resolved, removes the lock state, updates and persists the vault with
+ * resolution metadata; if not resolved, increments the pending failure counter and
+ * returns the failure reason.
+ *
+ * @param {Object} lock - Attestation lock object; must include `targetFile`, `preStateHash`, `postInjectHash`, and `head`.
+ * @param {Object} vault - Vault metadata object (contains `seed` and failure counters); this function may persist an updated vault on resolution.
+ * @param {string} head - Current repository HEAD identifier.
+ * @returns {{resolved: boolean, pendingFailureCount: number, reasonCode: string}} An object describing whether the lock was resolved, the updated pending failure count, and a short reason code (`"resolved"` on success or an error code from validation on failure).
+ * @throws {Error} When the lock payload is missing required fields.
+ * @throws {Error} When the lock's recorded head does not match the provided `head`.
  */
 async function resolveOrKeepLock(lock, vault, head) {
   if (!lock.targetFile || !lock.postInjectHash || !lock.preStateHash) {
@@ -738,11 +745,11 @@ async function runEnforceMode(lock, vault, head) {
 }
 
 /**
- * Coordinate the preflight mutation guard: choose mode, load and normalize state, run cleanup, and run the selected workflow.
+ * Orchestrates the preflight mutation guard: selects mode, loads and normalizes state, runs cleanup, and dispatches to verify or enforce flows.
  *
- * Determines mode from CLI flags, PREFLIGHT_GUARD_MODE, or CI defaults; loads and normalizes the persisted lock and vault, performs legacy and stale-head cleanup, then dispatches to the verify or enforce flow.
+ * Determines mode from CLI flags, environment (`PREFLIGHT_GUARD_MODE`) or CI defaults; loads `lock` and `vault`, runs legacy and stale-head cleanup steps, then executes the chosen mode's workflow.
  *
- * On error logs a blocking message, emits diagnostic directory listings, and exits the process with status code 1.
+ * On any error prints a blocking message, emits a directory listing for diagnostics, and exits the process with status code 1.
  */
 async function main() {
   const cliEnforce = process.argv.includes("--enforce");
