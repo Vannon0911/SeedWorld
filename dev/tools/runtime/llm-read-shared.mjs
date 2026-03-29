@@ -5,14 +5,16 @@ import path from "node:path";
 export const REQUIRED_READ_ORDER = Object.freeze([
   "docs/INDEX.md",
   "docs/LLM/ENTRY.md",
-  "docs/LLM/POLICY.md"
+  "docs/LLM/POLICY.md",
+  "docs/LLM/AKTUELLE_RED_ACTIONS.md"
 ]);
 
 export function getWorkspacePaths(rootDir = process.cwd()) {
   return {
     rootDir,
     docsDir: path.join(rootDir, "docs", "LLM"),
-    statePath: path.join(rootDir, "runtime", ".patch-manager", "llm-read-state.json")
+    statePath: path.join(rootDir, "runtime", ".patch-manager", "llm-read-state.json"),
+    overridePath: path.join(rootDir, "runtime", ".patch-manager", "llm-override.json")
   };
 }
 
