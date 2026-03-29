@@ -32,3 +32,21 @@ npm run patch:apply -- --input <zip|json> [--actor <name>]
 - `policy-gates` muessen mit `src/llm/llm-gate-policy.json` deterministisch auswerten.
 - Cancel braucht Session-Token (`X-Patch-Cancel-Token`) und ist idempotent + rate-limitiert.
 - Testlaeufe schreiben Evidence-Artefakte nach `.patch-manager/logs/test-run-<timestamp>.json`.
+
+## GitHub Enforcements (No-Bypass)
+
+1. Lokale Hooks sind nur Vorpruefung, nicht die finale Autoritaet.
+2. Harte Merge-Sperre laeuft ueber GitHub Ruleset + Required Checks.
+3. `main` darf nur per PR gemerged werden, nie per Direct Push.
+4. Force-Push, Ref-Delete, Non-FF und Unsigniertes Commit sind serverseitig blockiert.
+
+### Setup (einmalig pro Repo)
+
+```bash
+npm run github:ruleset:apply
+```
+
+### Pflicht-Check in GitHub Actions
+
+- Workflow: `.github/workflows/required-checks.yml`
+- Required Context: `preflight-and-governance`

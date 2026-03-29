@@ -4801,6 +4801,46 @@
       "category": "patch-tooling"
     },
     {
+      "id": "dev/tools/runtime/apply-github-ruleset.mjs#getRepoPath@20",
+      "name": "getRepoPath",
+      "file": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "line": 20,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/apply-github-ruleset.mjs#gh@16",
+      "name": "gh",
+      "file": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "line": 16,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/apply-github-ruleset.mjs#main@37",
+      "name": "main",
+      "file": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "line": 37,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/apply-github-ruleset.mjs#normalizePayload@29",
+      "name": "normalizePayload",
+      "file": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/apply-github-ruleset.mjs#run@5",
+      "name": "run",
+      "file": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "line": 5,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/evidence-lock.mjs#collectEvidenceFiles@37",
       "name": "collectEvidenceFiles",
       "file": "dev/tools/runtime/evidence-lock.mjs",
@@ -5073,58 +5113,106 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@34",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#currentHead@29",
+      "name": "currentHead",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#ensureInjectedLock@82",
       "name": "ensureInjectedLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 34,
+      "line": 82,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@81",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#findInjectedMarker@68",
+      "name": "findInjectedMarker",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 68,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#main@189",
       "name": "main",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 81,
+      "line": 189,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#markerFor@22",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#markerFor@25",
       "name": "markerFor",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 22,
+      "line": 25,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#pickTarget@17",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#normalizeVault@40",
+      "name": "normalizeVault",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 40,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#pickTarget@20",
       "name": "pickTarget",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 17,
+      "line": 20,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@26",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#readJsonOrNull@55",
       "name": "readJsonOrNull",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 26,
+      "line": 55,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@56",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#resolveOrKeepLock@114",
       "name": "resolveOrKeepLock",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 56,
+      "line": 114,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#sha256@13",
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runEnforceMode@167",
+      "name": "runEnforceMode",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 167,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#runVerifyMode@147",
+      "name": "runVerifyMode",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 147,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#sha256@16",
       "name": "sha256",
       "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
-      "line": 13,
+      "line": 16,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/preflight-mutation-guard.mjs#writeJson@63",
+      "name": "writeJson",
+      "file": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "line": 63,
       "kind": "function",
       "category": "runtime-tooling"
     },

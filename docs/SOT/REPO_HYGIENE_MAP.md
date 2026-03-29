@@ -71,6 +71,7 @@
 - dev/tools/patch/import-dispatch.mjs
 - dev/tools/patch/patchMatrix.js
 - dev/tools/patch/validate-patch-matrix.mjs
+- dev/tools/runtime/apply-github-ruleset.mjs
 - dev/tools/runtime/evidence-lock.mjs
 - dev/tools/runtime/function-sot-shared.mjs
 - dev/tools/runtime/governance-verify.mjs
@@ -118,6 +119,7 @@
 - dev/tools/patch/apply.mjs
 - dev/tools/patch/import-dispatch.mjs
 - dev/tools/patch/validate-patch-matrix.mjs
+- dev/tools/runtime/apply-github-ruleset.mjs
 - dev/tools/runtime/evidence-lock.mjs
 - dev/tools/runtime/governance-verify.mjs
 - dev/tools/runtime/installGitHooks.mjs

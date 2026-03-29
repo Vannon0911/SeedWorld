@@ -70,8 +70,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 107,
-    "codeFiles": 93
+    "allFiles": 108,
+    "codeFiles": 94
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
@@ -121,6 +121,7 @@
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/patchMatrix.js",
     "dev/tools/patch/validate-patch-matrix.mjs",
+    "dev/tools/runtime/apply-github-ruleset.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/function-sot-shared.mjs",
     "dev/tools/runtime/governance-verify.mjs",
@@ -168,6 +169,7 @@
     "dev/tools/patch/apply.mjs",
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/validate-patch-matrix.mjs",
+    "dev/tools/runtime/apply-github-ruleset.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/governance-verify.mjs",
     "dev/tools/runtime/installGitHooks.mjs",
@@ -412,6 +414,7 @@
     "dev/tools/patch/lib/session-store.mjs": 6,
     "dev/tools/patch/patchMatrix.js": 1,
     "dev/tools/patch/validate-patch-matrix.mjs": 0,
+    "dev/tools/runtime/apply-github-ruleset.mjs": 0,
     "dev/tools/runtime/evidence-lock.mjs": 0,
     "dev/tools/runtime/function-sot-shared.mjs": 1,
     "dev/tools/runtime/governance-verify.mjs": 0,
@@ -607,6 +610,7 @@
     "dev/tools/patch/validate-patch-matrix.mjs": [
       "dev/tools/patch/patchMatrix.js"
     ],
+    "dev/tools/runtime/apply-github-ruleset.mjs": [],
     "dev/tools/runtime/evidence-lock.mjs": [],
     "dev/tools/runtime/function-sot-shared.mjs": [],
     "dev/tools/runtime/governance-verify.mjs": [],
