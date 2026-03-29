@@ -36,7 +36,11 @@
 
       .game-shell {
         min-height: 100vh;
-        padding: 18px 18px 192px;
+        --shell-pad-top: 18px;
+        --shell-pad-right: 18px;
+        --shell-pad-bottom: 192px;
+        --shell-pad-left: 18px;
+        padding: var(--shell-pad-top) var(--shell-pad-right) var(--shell-pad-bottom) var(--shell-pad-left);
         display: grid;
         place-items: center;
         position: relative;
@@ -53,7 +57,7 @@
 
       #world-container {
         position: absolute;
-        inset: 0;
+        inset: var(--shell-pad-top) var(--shell-pad-right) var(--shell-pad-bottom) var(--shell-pad-left);
         display: grid;
         place-items: center;
         pointer-events: none;
@@ -72,6 +76,7 @@
         right: 14px;
         bottom: 14px;
         width: min(352px, calc(100vw - 28px));
+        pointer-events: none;
         border: 1px solid var(--panel-border);
         border-radius: 15px;
         background:
@@ -265,7 +270,11 @@
 
       @media (max-width: 720px) {
         .game-shell {
-          padding: 12px 10px 244px;
+          --shell-pad-top: 12px;
+          --shell-pad-right: 10px;
+          --shell-pad-bottom: 244px;
+          --shell-pad-left: 10px;
+          padding: var(--shell-pad-top) var(--shell-pad-right) var(--shell-pad-bottom) var(--shell-pad-left);
         }
 
         .debug-window {
@@ -299,137 +308,52 @@
       <div id="tile-grid-container"></div>
     </main>
 
-    <script type="module" src="./src/main.js?rev=20260328b"></script>
+    <script type="module" src="./src/main.js?rev=20260329c"></script>
     <script type="module">
-      import { IsometricWorldGen } from "./src/SeedWorld_WorldGen.mjs?rev=20260328b";
-      import { installRadialBuildController } from "./src/plugins/radialBuildController.js?rev=20260328b";
+      import { IsometricWorldGen } from "./src/SeedWorld_WorldGen.mjs?rev=20260329c";
+      import { installRadialBuildController } from "./src/plugins/radialBuildController.js?rev=20260329c";
+      import { WorldRenderManager } from "./src/ui/WorldRenderManager.js?rev=20260329c";
 
-      async function waitForUi(timeoutMs = 2500) {
+      function waitForRuntime(timeoutMs = 3500) {
+        if (window.controllerManager?.uiController) {
+          return Promise.resolve(window.controllerManager);
+        }
         const started = performance.now();
         return new Promise((resolve) => {
-          const tick = () => {
-            if (window.seedWorldUI) {
-              resolve(window.seedWorldUI);
-              return;
-            }
-            if (performance.now() - started > timeoutMs) {
-              resolve(null);
-              return;
-            }
-            window.setTimeout(tick, 25);
+          const onReady = (event) => {
+            window.removeEventListener("seedworld:runtime-ready", onReady);
+            resolve(event?.detail || window.controllerManager || null);
           };
-          tick();
+          window.addEventListener("seedworld:runtime-ready", onReady, { once: true });
+          const timeout = () => {
+            if (window.controllerManager?.uiController) {
+              window.removeEventListener("seedworld:runtime-ready", onReady);
+              resolve(window.controllerManager);
+              return;
+            }
+            if (performance.now() - started >= timeoutMs) {
+              window.removeEventListener("seedworld:runtime-ready", onReady);
+              resolve(window.controllerManager || null);
+              return;
+            }
+            window.setTimeout(timeout, 50);
+          };
+          timeout();
         });
       }
 
-      async function renderWorldTerrain({ viewportManager = null } = {}) {
-        const worldContainer = document.getElementById("world-container");
-        if (!worldContainer) {
-          return;
-        }
-
-        const ui = await waitForUi();
-        let activeWorker = null;
-        let resizeTimer = null;
-
-        const readTerrainParams = () => {
-          const width = Number(ui?.tileGridRenderer?.width) || 16;
-          const height = Number(ui?.tileGridRenderer?.height) || 12;
-          const tileSize = Number(ui?.tileGridRenderer?.tileSize) || 84;
-          const worldSeed =
-            typeof ui?.currentState?.world?.seed === "string" && ui.currentState.world.seed.trim()
-              ? ui.currentState.world.seed.trim()
-              : Date.now();
-
-          return {
-            width,
-            height,
-            tileSize,
-            options: {
-              biome: "mountain",
-              scale: 0.1,
-              octaves: 5,
-              seed: worldSeed
-            }
-          };
-        };
-
-        const mountBitmap = (bitmap) => {
-          const canvas = document.createElement("canvas");
-          canvas.width = bitmap.width;
-          canvas.height = bitmap.height;
-          canvas.style.width = `${bitmap.width}px`;
-          canvas.style.height = `${bitmap.height}px`;
-          canvas.style.maxWidth = "100%";
-          canvas.style.maxHeight = "100%";
-          canvas.style.imageRendering = "crisp-edges";
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(bitmap, 0, 0);
-          }
-          worldContainer.replaceChildren(canvas);
-        };
-
-        const renderOnce = () => {
-          const { width, height, tileSize, options } = readTerrainParams();
-
-          if (activeWorker) {
-            activeWorker.terminate();
-            activeWorker = null;
-          }
-
-          if (typeof Worker === "function" && typeof OffscreenCanvas === "function") {
-            const worker = new Worker("./src/workers/worldRenderWorker.js?rev=20260328b", { type: "module" });
-            activeWorker = worker;
-            worker.onmessage = (event) => {
-              const message = event?.data || {};
-              if (message.type === "world-ready" && message.bitmap) {
-                mountBitmap(message.bitmap);
-                worker.terminate();
-                if (activeWorker === worker) {
-                  activeWorker = null;
-                }
-                return;
-              }
-              if (message.type === "world-error") {
-                worker.terminate();
-                if (activeWorker === worker) {
-                  activeWorker = null;
-                }
-                const fallbackGen = new IsometricWorldGen(width, height, options);
-                worldContainer.replaceChildren(fallbackGen.render());
-              }
-            };
-            worker.postMessage({ type: "render-world", width, height, tileSize, options });
-            return;
-          }
-
-          const fallbackGen = new IsometricWorldGen(width, height, options);
-          worldContainer.replaceChildren(fallbackGen.render());
-        };
-
-        renderOnce();
-
-        if (viewportManager && typeof viewportManager.subscribe === "function") {
-          viewportManager.subscribe(
-            () => {
-              if (resizeTimer) {
-                window.clearTimeout(resizeTimer);
-              }
-              resizeTimer = window.setTimeout(() => {
-                resizeTimer = null;
-                renderOnce();
-              }, 120);
-            },
-            { immediate: false }
-          );
-        }
-      }
-
-      const viewportManager = window.seedWorldViewportManager || null;
-
-      await renderWorldTerrain({ viewportManager });
+      const runtime = await waitForRuntime();
+      const viewportManager = runtime?.viewportManager || window.seedWorldViewportManager || null;
+      const worldContainer = document.getElementById("world-container");
+      const worldRenderManager = new WorldRenderManager({
+        container: worldContainer,
+        getUi: () => runtime?.uiController || window.seedWorldUI || null,
+        viewportManager,
+        workerUrl: "./src/workers/worldRenderWorker.js?rev=20260329c",
+        fallbackFactory: (width, height, options) => new IsometricWorldGen(width, height, options).render()
+      });
+      await worldRenderManager.start();
+      window.seedWorldRenderManager = worldRenderManager;
       installRadialBuildController({ viewportManager });
     </script>
   </body>

@@ -569,42 +569,42 @@
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#handleStaticRequest@59",
+      "id": "app/server/staticHandler.mjs#handleStaticRequest@83",
       "name": "handleStaticRequest",
       "file": "app/server/staticHandler.mjs",
-      "line": 59,
+      "line": 83,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#hasHiddenSegment@24",
+      "id": "app/server/staticHandler.mjs#hasHiddenSegment@37",
       "name": "hasHiddenSegment",
       "file": "app/server/staticHandler.mjs",
-      "line": 24,
+      "line": 37,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#isPathInside@28",
+      "id": "app/server/staticHandler.mjs#isPathInside@41",
       "name": "isPathInside",
       "file": "app/server/staticHandler.mjs",
-      "line": 28,
+      "line": 41,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#resolveStaticPath@33",
+      "id": "app/server/staticHandler.mjs#resolveStaticPath@46",
       "name": "resolveStaticPath",
       "file": "app/server/staticHandler.mjs",
-      "line": 33,
+      "line": 46,
       "kind": "function",
       "category": "server"
     },
     {
-      "id": "app/server/staticHandler.mjs#serveFile@52",
+      "id": "app/server/staticHandler.mjs#serveFile@71",
       "name": "serveFile",
       "file": "app/server/staticHandler.mjs",
-      "line": 52,
+      "line": 71,
       "kind": "function",
       "category": "server"
     },
@@ -2033,67 +2033,115 @@
       "category": "ui"
     },
     {
-      "id": "app/src/SeedWorld_WorldGen.mjs#biomePalette@66",
+      "id": "app/src/render/isoTerrainCore.js#biomePalette@60",
       "name": "biomePalette",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 66,
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 60,
       "kind": "function",
       "category": "other"
     },
     {
-      "id": "app/src/SeedWorld_WorldGen.mjs#fbm@43",
-      "name": "fbm",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 43,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/SeedWorld_WorldGen.mjs#hash2@9",
-      "name": "hash2",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 9,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/SeedWorld_WorldGen.mjs#hashString@1",
-      "name": "hashString",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
+      "id": "app/src/render/isoTerrainCore.js#clamp@1",
+      "name": "clamp",
+      "file": "app/src/render/isoTerrainCore.js",
       "line": 1,
       "kind": "function",
       "category": "other"
     },
     {
-      "id": "app/src/SeedWorld_WorldGen.mjs#hsl@62",
-      "name": "hsl",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 62,
+      "id": "app/src/render/isoTerrainCore.js#computeIsoMetrics@120",
+      "name": "computeIsoMetrics",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 120,
       "kind": "function",
       "category": "other"
     },
     {
-      "id": "app/src/SeedWorld_WorldGen.mjs#render@93",
+      "id": "app/src/render/isoTerrainCore.js#computeLightIntensity@79",
+      "name": "computeLightIntensity",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 79,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#fbm@37",
+      "name": "fbm",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 37,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#hash2@3",
+      "name": "hash2",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 3,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#hashString@96",
+      "name": "hashString",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 96,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#hsl@56",
+      "name": "hsl",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 56,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#renderIsoTerrain@133",
+      "name": "renderIsoTerrain",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 133,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#resolveRenderOptions@106",
+      "name": "resolveRenderOptions",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 106,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#sampleHeight@73",
+      "name": "sampleHeight",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 73,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#unitFromHash@13",
+      "name": "unitFromHash",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 13,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/render/isoTerrainCore.js#valueNoise@17",
+      "name": "valueNoise",
+      "file": "app/src/render/isoTerrainCore.js",
+      "line": 17,
+      "kind": "function",
+      "category": "other"
+    },
+    {
+      "id": "app/src/SeedWorld_WorldGen.mjs#render@11",
       "name": "render",
       "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 93,
+      "line": 11,
       "kind": "method",
-      "category": "other"
-    },
-    {
-      "id": "app/src/SeedWorld_WorldGen.mjs#unitFromHash@19",
-      "name": "unitFromHash",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 19,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/SeedWorld_WorldGen.mjs#valueNoise@23",
-      "name": "valueNoise",
-      "file": "app/src/SeedWorld_WorldGen.mjs",
-      "line": 23,
-      "kind": "function",
       "category": "other"
     },
     {
@@ -3657,90 +3705,34 @@
       "category": "ui"
     },
     {
-      "id": "app/src/workers/worldRenderWorker.js#biomePalette@66",
-      "name": "biomePalette",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 66,
-      "kind": "function",
-      "category": "other"
+      "id": "app/src/ui/WorldRenderManager.js#renderNow@50",
+      "name": "renderNow",
+      "file": "app/src/ui/WorldRenderManager.js",
+      "line": 50,
+      "kind": "method",
+      "category": "ui"
     },
     {
-      "id": "app/src/workers/worldRenderWorker.js#drawIsoGrid@86",
-      "name": "drawIsoGrid",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 86,
-      "kind": "function",
-      "category": "other"
+      "id": "app/src/ui/WorldRenderManager.js#start@30",
+      "name": "start",
+      "file": "app/src/ui/WorldRenderManager.js",
+      "line": 30,
+      "kind": "method",
+      "category": "ui"
     },
     {
-      "id": "app/src/workers/worldRenderWorker.js#drawVoxels@107",
-      "name": "drawVoxels",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 107,
-      "kind": "function",
-      "category": "other"
+      "id": "app/src/ui/WorldRenderManager.js#stop@35",
+      "name": "stop",
+      "file": "app/src/ui/WorldRenderManager.js",
+      "line": 35,
+      "kind": "method",
+      "category": "ui"
     },
     {
-      "id": "app/src/workers/worldRenderWorker.js#fbm@43",
-      "name": "fbm",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 43,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#hash2@9",
-      "name": "hash2",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 9,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#hashString@1",
-      "name": "hashString",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 1,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#hsl@62",
-      "name": "hsl",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 62,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#isoTransform@79",
-      "name": "isoTransform",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 79,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#renderWorldBitmap@143",
+      "id": "app/src/workers/worldRenderWorker.js#renderWorldBitmap@1",
       "name": "renderWorldBitmap",
       "file": "app/src/workers/worldRenderWorker.js",
-      "line": 143,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#unitFromHash@19",
-      "name": "unitFromHash",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 19,
-      "kind": "function",
-      "category": "other"
-    },
-    {
-      "id": "app/src/workers/worldRenderWorker.js#valueNoise@23",
-      "name": "valueNoise",
-      "file": "app/src/workers/worldRenderWorker.js",
-      "line": 23,
+      "line": 1,
       "kind": "function",
       "category": "other"
     },

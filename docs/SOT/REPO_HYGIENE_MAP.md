@@ -25,6 +25,7 @@
 
 ## Unowned Files
 - app/src/llm/llm-gate-policy.json
+- app/src/render/isoTerrainCore.js
 - app/src/sot/FUNCTION_SOT.json
 - app/src/sot/REPO_HYGIENE_MAP.json
 - app/src/sot/patches.schema.json
@@ -44,11 +45,13 @@
 - app/src/kernel/fingerprint.js
 - app/src/kernel/seedGuard.js
 - app/src/plugins/radialBuildController.js
+- app/src/render/isoTerrainCore.js
 - app/src/ui/BaseUIController.js
 - app/src/ui/DevUIController.js
 - app/src/ui/GameUIController.js
 - app/src/ui/MainMenuController.js
 - app/src/ui/TileAnimationSDK.js
+- app/src/ui/WorldRenderManager.js
 - app/src/ui/events.js
 - app/src/ui/plugins/ExampleUIPlugin.js
 - app/src/workers/worldRenderWorker.js
@@ -101,6 +104,7 @@
 - app/src/game/gameConstants.js
 - app/src/ui/MainMenuController.js
 - app/src/ui/TileAnimationSDK.js
+- app/src/ui/WorldRenderManager.js
 - app/src/ui/plugins/ExampleUIPlugin.js
 - app/src/workers/worldRenderWorker.js
 - dev/scripts/build-evidence-bundle.mjs
@@ -152,7 +156,9 @@
 - app/src/main.js (UI Layer) -> app/src/game/GameLogicController.js (Game Logic)
 - app/src/main.js (UI Layer) -> app/src/kernel/interface.js (Kernel Core)
 - app/src/main.js (UI Layer) -> app/src/kernel/KernelController.js (Kernel Core)
+- app/src/SeedWorld_WorldGen.mjs (UI Layer) -> app/src/render/isoTerrainCore.js (UNOWNED)
 - app/src/ui/UIController.js (UI Layer) -> app/src/game/worldGen.js (Game Logic)
+- app/src/workers/worldRenderWorker.js (UI Layer) -> app/src/render/isoTerrainCore.js (UNOWNED)
 - dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> app/server/patchServer.mjs (Patch Runtime)
 - dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/constants.mjs (Patch Runtime)
 - dev/scripts/patch-flow-test.mjs (Runtime Tooling) -> dev/tools/patch/lib/intake.mjs (Patch Runtime)

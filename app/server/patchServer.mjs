@@ -1439,7 +1439,7 @@ export class PatchServer {
     }
 
     if (pathname.startsWith("/api/")) {
-      sendError(res, 404, "API endpoint not found");
+      await handleApi(req, res, urlObj);
       return;
     }
 

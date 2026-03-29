@@ -10,6 +10,7 @@ const CONTENT_TYPES = Object.freeze({
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
+  '.mjs': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
@@ -21,6 +22,18 @@ const CONTENT_TYPES = Object.freeze({
 const PATCH_SCHEMA_PATHS = new Set([
   '/patches/patch-schema.json',
   '/patches/patch-matrix.json'
+]);
+const PUBLIC_ALLOWED_EXTENSIONS = new Set([
+  '.html',
+  '.css',
+  '.js',
+  '.mjs',
+  '.json',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.svg',
+  '.txt'
 ]);
 
 function hasHiddenSegment(pathname) {
@@ -47,6 +60,12 @@ export function resolveStaticPath(pathname) {
     return candidate;
   }
 
+  const publicCandidate = resolve(PUBLIC_DIR, `.${pathname}`);
+  const publicExt = extname(publicCandidate).toLowerCase();
+  if (isPathInside(PUBLIC_DIR, publicCandidate) && PUBLIC_ALLOWED_EXTENSIONS.has(publicExt)) {
+    return publicCandidate;
+  }
+
   if (PATCH_SCHEMA_PATHS.has(pathname)) return resolve(PATCHES_DIR, pathname.split('/').pop());
   return null;
 }
@@ -54,7 +73,12 @@ export function resolveStaticPath(pathname) {
 export async function serveFile(res, filePath) {
   const ext = extname(filePath).toLowerCase();
   const body = await readFile(filePath);
-  res.writeHead(200, { 'Content-Type': CONTENT_TYPES[ext] || 'application/octet-stream' });
+  res.writeHead(200, {
+    'Content-Type': CONTENT_TYPES[ext] || 'application/octet-stream',
+    'Cache-Control': 'no-store, max-age=0',
+    Pragma: 'no-cache',
+    Expires: '0'
+  });
   res.end(body);
 }
 

@@ -31,9 +31,25 @@ const ui = new UIController({
   }
 });
 
+const runtimeControllers = {
+  uiController: ui,
+  gameLogicController: gameLogic,
+  viewportManager,
+  kernelController: kernel
+};
+
 if (typeof window !== "undefined") {
   window.seedWorldUI = ui;
   window.seedWorldViewportManager = viewportManager;
+  window.controllerManager = runtimeControllers;
 }
 
 ui.bootstrap();
+
+if (typeof window !== "undefined") {
+  window.dispatchEvent(
+    new CustomEvent("seedworld:runtime-ready", {
+      detail: runtimeControllers
+    })
+  );
+}

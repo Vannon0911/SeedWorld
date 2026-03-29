@@ -70,11 +70,12 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 109,
-    "codeFiles": 95
+    "allFiles": 111,
+    "codeFiles": 97
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
+    "app/src/render/isoTerrainCore.js",
     "app/src/sot/FUNCTION_SOT.json",
     "app/src/sot/REPO_HYGIENE_MAP.json",
     "app/src/sot/patches.schema.json",
@@ -94,11 +95,13 @@
     "app/src/kernel/fingerprint.js",
     "app/src/kernel/seedGuard.js",
     "app/src/plugins/radialBuildController.js",
+    "app/src/render/isoTerrainCore.js",
     "app/src/ui/BaseUIController.js",
     "app/src/ui/DevUIController.js",
     "app/src/ui/GameUIController.js",
     "app/src/ui/MainMenuController.js",
     "app/src/ui/TileAnimationSDK.js",
+    "app/src/ui/WorldRenderManager.js",
     "app/src/ui/events.js",
     "app/src/ui/plugins/ExampleUIPlugin.js",
     "app/src/workers/worldRenderWorker.js",
@@ -151,6 +154,7 @@
     "app/src/game/gameConstants.js",
     "app/src/ui/MainMenuController.js",
     "app/src/ui/TileAnimationSDK.js",
+    "app/src/ui/WorldRenderManager.js",
     "app/src/ui/plugins/ExampleUIPlugin.js",
     "app/src/workers/worldRenderWorker.js",
     "dev/scripts/build-evidence-bundle.mjs",
@@ -253,10 +257,22 @@
       "toOwner": "Kernel Core"
     },
     {
+      "from": "app/src/SeedWorld_WorldGen.mjs",
+      "to": "app/src/render/isoTerrainCore.js",
+      "fromOwner": "UI Layer",
+      "toOwner": "UNOWNED"
+    },
+    {
       "from": "app/src/ui/UIController.js",
       "to": "app/src/game/worldGen.js",
       "fromOwner": "UI Layer",
       "toOwner": "Game Logic"
+    },
+    {
+      "from": "app/src/workers/worldRenderWorker.js",
+      "to": "app/src/render/isoTerrainCore.js",
+      "fromOwner": "UI Layer",
+      "toOwner": "UNOWNED"
     },
     {
       "from": "dev/scripts/patch-flow-test.mjs",
@@ -372,6 +388,7 @@
     "app/src/kernel/seedGuard.js": 1,
     "app/src/main.js": 0,
     "app/src/plugins/radialBuildController.js": 1,
+    "app/src/render/isoTerrainCore.js": 2,
     "app/src/SeedWorld_WorldGen.mjs": 0,
     "app/src/ui/BaseUIController.js": 3,
     "app/src/ui/DevUIController.js": 1,
@@ -385,6 +402,7 @@
     "app/src/ui/UIController.js": 1,
     "app/src/ui/UIPluginController.js": 1,
     "app/src/ui/ViewportManager.js": 1,
+    "app/src/ui/WorldRenderManager.js": 0,
     "app/src/workers/worldRenderWorker.js": 0,
     "dev/scripts/build-evidence-bundle.mjs": 0,
     "dev/scripts/patch-flow-test.mjs": 0,
@@ -511,7 +529,10 @@
       "app/src/ui/ViewportManager.js"
     ],
     "app/src/plugins/radialBuildController.js": [],
-    "app/src/SeedWorld_WorldGen.mjs": [],
+    "app/src/render/isoTerrainCore.js": [],
+    "app/src/SeedWorld_WorldGen.mjs": [
+      "app/src/render/isoTerrainCore.js"
+    ],
     "app/src/ui/BaseUIController.js": [],
     "app/src/ui/DevUIController.js": [
       "app/src/ui/BaseUIController.js"
@@ -538,7 +559,10 @@
     ],
     "app/src/ui/UIPluginController.js": [],
     "app/src/ui/ViewportManager.js": [],
-    "app/src/workers/worldRenderWorker.js": [],
+    "app/src/ui/WorldRenderManager.js": [],
+    "app/src/workers/worldRenderWorker.js": [
+      "app/src/render/isoTerrainCore.js"
+    ],
     "dev/scripts/build-evidence-bundle.mjs": [],
     "dev/scripts/patch-flow-test.mjs": [
       "app/server/patchServer.mjs",
