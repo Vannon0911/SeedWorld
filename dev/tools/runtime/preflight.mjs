@@ -64,6 +64,17 @@ function runNpmScript(scriptName) {
   return runProcess(npmCmd, ["run", scriptName], `npm run ${scriptName}`);
 }
 
+function mutationGuardArgs() {
+  const envMode = String(process.env.PREFLIGHT_GUARD_MODE || "").trim().toLowerCase();
+  if (envMode === "0" || envMode === "verify") {
+    return ["--verify"];
+  }
+  if (envMode === "enforce") {
+    return ["--enforce"];
+  }
+  return ["--enforce"];
+}
+
 function currentHead() {
   const result = spawnSync("git", ["rev-parse", "HEAD"], {
     cwd: process.cwd(),
@@ -131,7 +142,7 @@ try {
   // 1) identity and policy guards first
   await runNodeScript("dev/tools/runtime/signing-guard.mjs", ["--config-only"]);
   await runNodeScript("dev/tools/runtime/evidence-lock.mjs");
-  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", ["--enforce"]);
+  await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", mutationGuardArgs());
   await runNodeScript("dev/tools/runtime/updateFunctionSot.mjs");
   await runNodeScript("dev/tools/runtime/syncDocs.mjs");
   await runNodeScript("dev/tools/runtime/governance-verify.mjs");
