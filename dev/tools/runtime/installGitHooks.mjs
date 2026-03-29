@@ -8,7 +8,7 @@ const hooksDir = resolve(root, ".githooks");
 const preCommit = `#!/bin/sh
 set -e
 
-echo "[hook:pre-commit] signing config + sync docs + preflight"
+echo "[hook:pre-commit] signing config + sync docs + commit-time preflight"
 npm run signing:guard -- --config-only
 npm run sync:docs
 git add docs/INDEX.md docs/SOT/ORIENTATION.md
@@ -18,9 +18,9 @@ npm run preflight
 const prePush = `#!/bin/sh
 set -e
 
-echo "[hook:pre-push] signing config + run tests"
+echo "[hook:pre-push] signing config + verify-only preflight"
 npm run signing:guard -- --config-only
-npm test
+PREFLIGHT_GUARD_MODE=0 npm run preflight
 `;
 
 await mkdir(hooksDir, { recursive: true });

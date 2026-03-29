@@ -29,6 +29,7 @@ do
   fi
 done
 
-echo "[hook:pre-push] signing guard + mandatory preflight"
+echo "[hook:pre-push] signing guard + verify-only preflight"
 npm run signing:guard -- --config-only
-PREFLIGHT_GUARD_MODE=verify npm run preflight
+# Push must never mint a new mutation challenge. Commit-time preflight owns that.
+PREFLIGHT_GUARD_MODE=0 npm run preflight
