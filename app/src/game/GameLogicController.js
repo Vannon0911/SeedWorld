@@ -143,6 +143,13 @@ function deepFreeze(value) {
   return value;
 }
 
+/**
+ * Coerces a value into a positive integer.
+ * @param {*} value - The input to convert to an integer.
+ * @param {string} label - Human-readable name used in the error message when coercion fails.
+ * @returns {number} The coerced integer greater than zero.
+ * @throws {Error} If the input is not an integer greater than zero; the error message includes the provided `label`.
+ */
 function coercePositiveInteger(value, label) {
   const number = Number(value);
   if (!Number.isInteger(number) || number <= 0) {
@@ -383,6 +390,24 @@ function buildProgressSnapshot(state) {
   };
 }
 
+/**
+ * Constructs feedback describing progression and rewards earned between two game states.
+ * @param {object} beforeState - Game state before the action.
+ * @param {object} afterState - Game state after the action.
+ * @param {object|null} [summary=null] - Optional operation summary to include in the details (may contain an `action` field).
+ * @returns {object} An object containing:
+ *  - `headline` (string): short summary line (e.g., milestone unlocked or progress),
+ *  - `details` (string[]): human-readable lines describing action, level and score changes, unlocked rewards, and focus,
+ *  - `scoreDelta` (number): difference in score (after - before),
+ *  - `levelDelta` (number): difference in progression level index (after - before),
+ *  - `level` (object): the current progression level from the after state,
+ *  - `nextLevel` (object|null): the next progression level or null if at max,
+ *  - `progressToNext` (number): fraction between 0 and 1 toward the next level,
+ *  - `earnedRewards` (object[]): rewards earned by the after state,
+ *  - `newlyEarnedRewards` (object[]): rewards present in afterState but not in beforeState,
+ *  - `focus` (string): suggested gameplay focus from the after state,
+ *  - `summary` (object|null): the provided summary object.
+ */
 function buildRewardFeedback(beforeState, afterState, summary = null) {
   const beforeSnapshot = buildProgressSnapshot(beforeState);
   const afterSnapshot = buildProgressSnapshot(afterState);
@@ -466,18 +491,18 @@ function normalizeWorldState(state) {
 }
 
 /**
- * Create a patch that replaces the world's tiles array with a copy where the tile at (x, y) is updated to the specified tile type.
+ * Produce a patch that replaces the world's tiles array with an updated copy where the tile at the given coordinates has the specified type.
  * @param {object} state - Current game state used to read and normalize the world structure.
  * @param {object} [payload={}] - Parameters describing which tile to update.
  * @param {number} payload.x - X coordinate of the tile to update.
  * @param {number} payload.y - Y coordinate of the tile to update.
- * @param {string} payload.tileType - New tile type identifier.
- * @returns {Array<object>} An array containing a single `set` patch for `world.tiles` with the updated tiles array.
+ * @param {string} payload.tileType - Identifier of the new tile type.
+ * @returns {Array<object>} `set` patch array targeting `world.tiles` containing the updated tiles array.
  * @throws {Error} If `tileType` is not a known tile type.
  * @throws {Error} If the coordinates `(x,y)` are outside the normalized world's bounds.
  */
 function updateTileTypeInWorld(state, payload = {}) {
-  const fullWorld = normalizeWorldState(state);
+  const world = normalizeWorldState(state);
   const x = coerceInteger(payload.x, "set_tile_type.x");
   const y = coerceInteger(payload.y, "set_tile_type.y");
   const tileType = coerceString(payload.tileType, "set_tile_type.tileType");
@@ -486,13 +511,13 @@ function updateTileTypeInWorld(state, payload = {}) {
     throw new Error(`[GAME_LOGIC] Unbekannter Tile-Typ: ${tileType}`);
   }
 
-  const width = Number.isInteger(fullWorld?.size?.width) ? fullWorld.size.width : 0;
-  const height = Number.isInteger(fullWorld?.size?.height) ? fullWorld.size.height : 0;
+  const width = Number.isInteger(world?.size?.width) ? world.size.width : 0;
+  const height = Number.isInteger(world?.size?.height) ? world.size.height : 0;
   if (x < 0 || y < 0 || x >= width || y >= height) {
     throw new Error(`[GAME_LOGIC] Tile ausserhalb der Welt: ${x},${y}`);
   }
 
-  const nextTiles = fullWorld.tiles.map((tile, index) => {
+  const nextTiles = world.tiles.map((tile, index) => {
     const tileX = Number.isInteger(tile?.x) ? tile.x : index % width;
     const tileY = Number.isInteger(tile?.y) ? tile.y : Math.floor(index / width);
     if (tileX !== x || tileY !== y) {
@@ -511,12 +536,7 @@ function updateTileTypeInWorld(state, payload = {}) {
     };
   });
 
-  const updatedWorld = {
-    ...fullWorld,
-    tiles: nextTiles
-  };
-
-  return [setCountPatch("world", updatedWorld)];
+  return [setCountPatch("world.tiles", nextTiles)];
 }
 
 /**
@@ -543,17 +563,11 @@ function applyPatchToState(state, patch) {
     throw new Error("[GAME_LOGIC] Patch path fehlt.");
   }
 
-  for (const segment of segments) {
-    if (segment === "__proto__" || segment === "prototype" || segment === "constructor") {
-      throw new Error("[GAME_LOGIC] Ungueltiger Patch-Pfad.");
-    }
-  }
-
   let cursor = state;
   for (let index = 0; index < segments.length - 1; index += 1) {
     const key = segments[index];
     if (!isPlainObject(cursor[key])) {
-      cursor[key] = Object.create(null);
+      cursor[key] = {};
     }
     cursor = cursor[key];
   }
@@ -562,12 +576,13 @@ function applyPatchToState(state, patch) {
 }
 
 /**
- * Apply a sequence of patches to a game state and return the resulting state.
- * The input state is not mutated; patches are applied to a deep clone and the
- * modified clone is returned.
- * @param {Object} state - Base game state to which patches will be applied.
- * @param {Array<Object>} patches - Array of patch objects (game mutation format).
- * @return {Object} The new state produced by applying all patches in order.
+ * Produce a new game state by applying a list of game-format patches in order.
+ *
+ * The input `state` is not mutated; patches are applied to a deep clone and the
+ * resulting modified clone is returned.
+ * @param {Object} state - Base game state to use as the starting point.
+ * @param {Array<Object>} patches - Array of patch objects in the game's mutation format; applied sequentially.
+ * @return {Object} The new state produced after applying all patches.
  */
 export function reduceGameState(state = {}, patches = []) {
   const safeState = isPlainObject(state) ? state : {};
@@ -607,13 +622,12 @@ function createWorldPatches(seed, payload = {}) {
 }
 
 /**
- * Create state mutation patches for a given game action.
- * Generates the set of patch objects required to apply the specified action to the provided game state.
- * Supported action types: "produce", "consume", "transport", "build", "inspect", "set_tile_type", "generate_world", "regenerate_world".
- * @param {Object} action - Action object containing `type` and `payload` fields used to derive patches.
+ * Build mutation patches that apply a given game action to the provided state.
+ *
+ * @param {Object} action - Action object with `type` and `payload` fields used to derive patches.
  * @param {Object} state - Current game state snapshot used to compute resulting values and validate bounds.
  * @returns {Array<Object>} An array of patch objects describing mutations to apply to the game state.
- * @throws {Error} If `action.type` is not one of the supported action types.
+ * @throws {Error} If `action.type` is not supported or required payload fields are missing/invalid.
  */
 function buildPatches(action, state) {
   switch (action.type) {

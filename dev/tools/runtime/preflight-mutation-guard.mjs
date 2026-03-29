@@ -148,31 +148,6 @@ async function readText(absPath) {
   return readFile(absPath, "utf8");
 }
 
-async function readStagedOrWorkingTree(relPath) {
-  const result = spawnSync("git", ["ls-files", "--stage", "--", relPath], {
-    cwd: root,
-    encoding: "utf8"
-  });
-  if (result.status === 0 && result.stdout && result.stdout.trim()) {
-    const showResult = spawnSync("git", ["show", `:${relPath}`], {
-      cwd: root,
-      encoding: "utf8"
-    });
-    if (showResult.status === 0 && showResult.stdout) {
-      return showResult.stdout;
-    }
-  }
-  return readFile(path.join(root, relPath), "utf8");
-}
-
-async function detectUnstagedChanges(relPath) {
-  const diffResult = spawnSync("git", ["diff", "--name-only", "--", relPath], {
-    cwd: root,
-    encoding: "utf8"
-  });
-  return diffResult.status === 0 && diffResult.stdout && diffResult.stdout.trim().length > 0;
-}
-
 async function renderLsOutput(absPath) {
   try {
     const entries = await readdir(absPath, { withFileTypes: true });
@@ -218,7 +193,7 @@ async function emitPreflightLsOutput() {
 async function findLegacyMarker() {
   for (const relPath of TARGET_FILES) {
     try {
-      const content = await readStagedOrWorkingTree(relPath);
+      const content = await readText(path.join(root, relPath));
       if (LEGACY_LOCK_MARKER_RX.test(content)) {
         return relPath;
       }
@@ -259,7 +234,7 @@ export function isFaultStillActive(relPath, content) {
 async function findActiveHiddenFault() {
   for (const relPath of TARGET_FILES) {
     try {
-      const content = await readStagedOrWorkingTree(relPath);
+      const content = await readText(path.join(root, relPath));
       if (isFaultStillActive(relPath, content)) {
         return relPath;
       }
@@ -269,6 +244,13 @@ async function findActiveHiddenFault() {
   }
   return "";
 }
+/**
+ * Produce a deterministic SHA-256 proof that ties the vault seed, lock metadata, and the current content hash.
+ * @param {string} seed - Vault seed (hex string) used as entropy for the proof.
+ * @param {Object} lock - Normalized lock object containing at least `head`, `targetFile`, `faultKind`, `preStateHash`, `postInjectHash`, and optional `policyVersion`.
+ * @param {string} currentHash - Hex hash of the current target-file content being validated.
+ * @returns {string} SHA-256 hex digest computed over `seed|lock.head|lock.targetFile|lock.faultKind|lock.preStateHash|lock.postInjectHash|currentHash|policyVersion`.
+ */
 export function buildResolutionProof(seed, lock, currentHash) {
   return sha256([
     seed,
@@ -503,7 +485,7 @@ async function clearStaleHeadDriftIfSafe(lock, vault, head) {
     return { lock, vault };
   }
 
-  const current = await readStagedOrWorkingTree(lock.targetFile);
+  const current = await readText(path.join(root, lock.targetFile));
   const drift = assessHeadDrift(lock, current, head);
   if (drift.action === "keep") {
     return { lock, vault };
@@ -539,20 +521,21 @@ async function clearStaleHeadDriftIfSafe(lock, vault, head) {
 }
 
 /**
- * Arms a deterministic attestation by injecting a fault into a selected target file and recording the resulting lock and vault metadata.
+ * Arm a deterministic attestation by injecting a fault into a selected target file and recording lock and vault metadata.
  *
- * Persists the updated vault metadata and the attestation lock, then writes the injected content to the target file. The function updates the vault's seed and generation fields and resets resolution/failure counters.
+ * Ensures the vault has a seed (generating one if absent), selects a deterministic target based on the seed and HEAD, applies the configured fault mutation to that file, and persists updated vault and lock state.
  *
- * @param {string} head - The current git HEAD identifier associated with this attestation.
- * @param {Object} vault - Current vault metadata object; its `seed` may be used or replaced.
- * @returns {string} The relative path of the target file that was injected.
+ * @param {string} head - Current git HEAD identifier to associate with the attestation.
+ * @param {Object} vault - Vault metadata object; its `seed` may be used or replaced.
+ * @returns {string} The relative path of the file that was injected.
  */
 async function ensureInjectedLock(head, vault) {
   const seed = ensureVaultSeed(vault);
   const relPath = pickTargetFile(seed, head);
   const absPath = path.join(root, relPath);
-  const before = await readStagedOrWorkingTree(relPath);
+  const before = await readText(absPath);
   const injection = injectFault(relPath, before, { seed, head });
+  await writeFile(absPath, injection.content, "utf8");
 
   const lock = {
     version: POLICY_VERSION,
@@ -587,26 +570,20 @@ async function ensureInjectedLock(head, vault) {
   // behind without the corresponding attestation record.
   await writeJson(vaultPath, nextVault);
   await writeJson(statePath, lock);
-  await writeFile(absPath, injection.content, "utf8");
   console.warn(`[PREFLIGHT_GUARD] attestation armed in ${relPath}`);
+  await writeFile(absPath, injection.content, "utf8");
   return relPath;
 }
 
 /**
- * Validate and either resolve an existing attestation lock or record a pending failure.
+ * Validate an attestation lock against the current target file and either finalize its resolution or record a pending failure.
  *
- * Validates required lock fields and that the lock's recorded head matches `head`.
- * Compares the current target file state against the lock using `vault.seed`. If the
- * candidate is resolved, removes the lock state, updates and persists the vault with
- * resolution metadata; if not resolved, increments the pending failure counter and
- * returns the failure reason.
- *
- * @param {Object} lock - Attestation lock object; must include `targetFile`, `preStateHash`, `postInjectHash`, and `head`.
- * @param {Object} vault - Vault metadata object (contains `seed` and failure counters); this function may persist an updated vault on resolution.
- * @param {string} head - Current repository HEAD identifier.
- * @returns {{resolved: boolean, pendingFailureCount: number, reasonCode: string}} An object describing whether the lock was resolved, the updated pending failure count, and a short reason code (`"resolved"` on success or an error code from validation on failure).
- * @throws {Error} When the lock payload is missing required fields.
- * @throws {Error} When the lock's recorded head does not match the provided `head`.
+ * @param {Object} lock - Attestation lock; must include `targetFile`, `preStateHash`, `postInjectHash`, and `head`.
+ * @param {Object} vault - Vault metadata containing `seed` and failure counters; may be updated and persisted when the lock is resolved.
+ * @param {string} head - Current repository HEAD identifier to validate against `lock.head`.
+ * @returns {{resolved: boolean, pendingFailureCount: number, reasonCode: string}} An object describing the outcome: `resolved` is `true` if the lock was resolved, `false` otherwise; `pendingFailureCount` is the updated failure tally; `reasonCode` is `"resolved"` on success or a short failure code explaining why resolution did not occur.
+ * @throws {Error} When `lock` is missing required fields (`targetFile`, `preStateHash`, or `postInjectHash`).
+ * @throws {Error} When `lock.head` does not match the provided `head`.
  */
 async function resolveOrKeepLock(lock, vault, head) {
   if (!lock.targetFile || !lock.postInjectHash || !lock.preStateHash) {
@@ -616,7 +593,7 @@ async function resolveOrKeepLock(lock, vault, head) {
     throw new Error(`[PREFLIGHT_ESCALATION] lock head drift (${lock.head.slice(0, 12)} -> ${head.slice(0, 12)})`);
   }
 
-  const current = await readStagedOrWorkingTree(lock.targetFile);
+  const current = await readText(path.join(root, lock.targetFile));
   const resolution = validateResolutionCandidate(lock, current, vault.seed);
   if (!resolution.ok) {
     const failureCount = await recordPendingFailure(vault, head, lock.targetFile);
@@ -761,11 +738,11 @@ async function runEnforceMode(lock, vault, head) {
 }
 
 /**
- * Orchestrates the preflight mutation guard: selects mode, loads and normalizes state, runs cleanup, and dispatches to verify or enforce flows.
+ * Coordinate the preflight mutation guard: choose mode, load and normalize state, run cleanup, and run the selected workflow.
  *
- * Determines mode from CLI flags, environment (`PREFLIGHT_GUARD_MODE`) or CI defaults; loads `lock` and `vault`, runs legacy and stale-head cleanup steps, then executes the chosen mode's workflow.
+ * Determines mode from CLI flags, PREFLIGHT_GUARD_MODE, or CI defaults; loads and normalizes the persisted lock and vault, performs legacy and stale-head cleanup, then dispatches to the verify or enforce flow.
  *
- * On any error prints a blocking message, emits a directory listing for diagnostics, and exits the process with status code 1.
+ * On error logs a blocking message, emits diagnostic directory listings, and exits the process with status code 1.
  */
 async function main() {
   const cliEnforce = process.argv.includes("--enforce");
