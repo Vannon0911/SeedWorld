@@ -2,12 +2,11 @@ const RESOURCE_TYPES = ["mine", "storage", "factory", "clear"];
 const DRAW_TYPES = new Set(["mine", "storage", "factory"]);
 
 /**
- * Retrieve the tile object at the given coordinates from a world object.
- *
- * @param {Object} world - World container expected to have a `tiles` array and optional `size.width`.
- * @param {number|string} x - X coordinate of the desired tile.
- * @param {number|string} y - Y coordinate of the desired tile.
- * @returns {Object|null} The matching tile object if found, otherwise `null`.
+ * Get the tile at the given grid coordinates from the world object.
+ * @param {Object} world - World object containing a `tiles` array and optional `size.width` used for indexing.
+ * @param {number|string} x - X coordinate (number or numeric string) of the desired tile.
+ * @param {number|string} y - Y coordinate (number or numeric string) of the desired tile.
+ * @returns {Object|null} The matching tile object if found, `null` otherwise.
  */
 export function getWorldTile(world, x, y) {
   if (!world || typeof world !== "object" || !Array.isArray(world.tiles)) {
@@ -43,13 +42,19 @@ function iconLabel(type) {
   return "";
 }
 
+/**
+ * Create a coordinate key string for a tile.
+ * @param {number|string} x - The x coordinate.
+ * @param {number|string} y - The y coordinate.
+ * @returns {string} The coordinate key in the format "x:y".
+ */
 function keyFor(x, y) {
   return `${x}:${y}`;
 }
 
 /**
- * Waits until the tile grid DOM root and the `seedWorldUI` object are present on the page.
- * @returns {{root: Element, ui: any}} An object containing the matched DOM root element (`#tile-grid-container .tile-grid`) as `root` and the `window.seedWorldUI` object as `ui`. The promise resolves once both are available.
+ * Waits until the tile grid DOM root and the global `seedWorldUI` object exist on the page.
+ * @returns {{root: Element, ui: any}} An object with `root` set to the element matching `#tile-grid-container .tile-grid` and `ui` set to `window.seedWorldUI`.
  */
 function waitForGridRoot() {
   return new Promise((resolve) => {
@@ -116,6 +121,12 @@ function buildLinks(tiles) {
     return dx * dx + dy * dy;
   }
 
+  /**
+   * For each source tile, selects the nearest available target tile and returns the formed pairs.
+   *
+   * @param {Array<Object>} sources - Array of source tile objects (each with numeric `x` and `y`).
+   * @param {Array<Object>} targets - Array of target tile objects (each with numeric `x` and `y`).
+   * @returns {Array<Object>} Array of pair objects in source iteration order; each pair has `from` (source tile) and `to` (matched target tile). Each target is matched at most once.
   function pairNearest(sources, targets) {
     const out = [];
     const remaining = new Set(targets.map((tile) => keyFor(tile.x, tile.y)));
@@ -151,11 +162,11 @@ function buildLinks(tiles) {
 }
 
 /**
- * Compute the center coordinates of a tile element inside the provided root element.
+ * Get the center point of the tile DOM element identified by its grid coordinates, relative to the root element.
  *
- * @param {Element} root - Container element that contains tile DOM nodes.
- * @param {{x:number,y:number}} tile - Tile coordinates to locate (`x` and `y`).
- * @returns {{x:number,y:number}|null} The tile's center `{ x, y }` relative to `root`, or `null` if the tile element is not found.
+ * @param {Element} root - Container element that contains tile elements.
+ * @param {{x:number,y:number}} tile - Tile coordinates to locate.
+ * @returns {{x:number,y:number}|null} The center `{ x, y }` in pixels relative to `root`, or `null` if no matching tile element exists.
  */
 function getTileCenter(root, tile) {
   const node = root.querySelector(`.tile[data-x="${tile.x}"][data-y="${tile.y}"]`);
@@ -172,14 +183,13 @@ function getTileCenter(root, tile) {
 }
 
 /**
- * Clear the SVG and draw connection lines between tile centers for drawable tile links.
- * 
- * For each nearest-link pair derived from the provided tiles (filtered to drawable types),
- * creates an SVG <line> positioned at each tile's center and sets its stroke dash offset.
- * Links whose tile elements cannot be located are skipped.
+ * Render connection lines in an SVG between the centers of drawable tile links.
  *
- * @param {SVGElement} svg - The SVG element to render connection lines into; its children will be replaced.
- * @param {Element} root - The root DOM element that contains tile elements used to compute center coordinates.
+ * Clears the SVG and draws one line for each nearest-link pair built from the provided tiles;
+ * links whose tile DOM elements cannot be located are skipped.
+ *
+ * @param {SVGElement} svg - SVG element whose children will be replaced with connection lines.
+ * @param {Element} root - Root DOM element containing tile elements used to compute center coordinates.
  * @param {Array<Object>} tiles - Array of tile objects (each with at least `x`, `y`, and `type`) used to build links.
  * @param {number} dashOffset - Value assigned to each line's `stroke-dashoffset` style.
  */
@@ -253,6 +263,12 @@ function installRadialMenu(root) {
   return menu;
 }
 
+/**
+ * Update the debug UI elements (#status-value and #summary-value) to reflect the current selection, target tile, and link count.
+ * @param {string|number|null} selected - The current selection (for example a resource type or other selector value) shown in the summary.
+ * @param {{x:number,y:number}|null} tile - The target tile coordinates; when provided the status displays "tile:x,y", otherwise it displays "bereit".
+ * @param {number} linksCount - The number of connection links to include in the summary output.
+ */
 function updateDebug(selected, tile, linksCount) {
   const status = document.getElementById("status-value");
   const summary = document.getElementById("summary-value");
@@ -288,12 +304,21 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
 
     const optionNodes = () => Array.from(menu.querySelectorAll(".radial-option"));
 
+    /**
+     * Set the SVG element's viewBox to match the root container's client width and height.
+     *
+     * Width and height are clamped to a minimum of 1 to avoid zero-sized viewBoxes.
+     */
     function resizeSvg() {
       const width = Math.max(1, root.clientWidth);
       const height = Math.max(1, root.clientHeight);
       svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     }
 
+    /**
+     * Set the active resource type for the radial menu and update option buttons to reflect the selection.
+     * @param {string} type - Desired resource type; if not included in RESOURCE_TYPES, defaults to `"mine"`.
+     */
     function setActive(type) {
       selectedType = RESOURCE_TYPES.includes(type) ? type : "mine";
       for (const node of optionNodes()) {
@@ -312,10 +337,17 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
       setActive(selectedType);
     }
 
+    /**
+     * Hide the radial menu.
+     */
     function closeMenu() {
       menu.hidden = true;
     }
 
+    /**
+     * Redraws the connection lines when the tile layout has changed or when forced.
+     * @param {boolean} force - If `true`, always redraw regardless of whether the tile signature changed.
+     */
     function redrawConnections(force = false) {
       const tiles = getTilesRef(ui);
       const signature = buildTileSignature(tiles);
@@ -327,6 +359,15 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
       drawConnections(svg, root, tiles, dashOffset);
     }
 
+    /**
+     * Apply the selected build action to the currently targeted tile.
+     *
+     * If `type` is `"clear"`, the tile is set to `"empty"`; otherwise the tile is set to `type`.
+     * Updates debug information, forces a connections redraw, and closes the radial menu.
+     *
+     * @param {string} type - The build action type (e.g. `"mine"`, `"storage"`, `"factory"`, or `"clear"`).
+     * @returns {*} The result returned by `ui.applyGameAction` for the `set_tile_type` action, or `undefined` if no target tile was selected.
+     */
     async function applyPlacement(type) {
       if (!targetTile) {
         return;

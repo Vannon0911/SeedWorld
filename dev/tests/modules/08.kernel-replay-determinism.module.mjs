@@ -2,11 +2,11 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 /**
- * Generate mutation fingerprints for each checkpoint state.
+ * Generate mutation fingerprints for each checkpoint state while preserving input order.
  *
- * @param {Array<Object>} states - Array of checkpoint state objects; each must include `tick`, `resources`, and `statistics`.
- * @param {Function} createMutFingerprint - Function called for each state with `{ tick, resources, statistics }` and returning a mutation fingerprint.
- * @returns {Array<string>} Array of mutation fingerprint values in the same order as `states`.
+ * @param {Array<Object>} states - Checkpoint states; each must include `tick`, `resources`, and `statistics`.
+ * @param {Function} createMutFingerprint - Function called with `{ tick, resources, statistics }` and returning a mutation fingerprint string or a promise that resolves to one.
+ * @returns {Promise<Array<string>>} Array of mutation fingerprint strings in the same order as `states`.
  */
 function buildCheckpointHashes(states, createMutFingerprint) {
   return Promise.all(
@@ -40,13 +40,13 @@ function findFirstDrift(a, b) {
 export const id = "08-kernel-replay-determinism";
 
 /**
- * Run deterministic-kernel replay tests that validate identical seeds produce identical kernel and checkpoint fingerprints and that a different seed produces a detectable drift.
+ * Validate deterministic kernel replay behavior by running replays and comparing fingerprints.
  *
- * Performs three replays (two with the same seed, one with a different seed), compares seed hashes and overall mutation fingerprints for equality on the identical replays, computes per-checkpoint mutation fingerprints and asserts exact equality for identical replays, and locates the first checkpoint index where the different-seed replay diverges.
+ * Runs three replays (two with the same seed, one with a different seed), verifies the identical-seed replays produce the same seed hash and overall mutation fingerprint, computes per-checkpoint mutation fingerprints for each replay, asserts the checkpoint-hash arrays match for the identical replays, and locates the first checkpoint index where the different-seed replay diverges.
  *
- * @param {{ assert: Object, root: string }} params
- * @param {Object} params.assert - Test assertion object (provides assert.equal, assert.deepEqual, assert.notEqual).
- * @param {string} params.root - Project root directory used to locate the kernel and fingerprint modules.
+ * @param {{ assert: Object, root: string }} params - Function parameters.
+ * @param {Object} params.assert - Assertion utilities (e.g., assert.equal, assert.deepEqual, assert.notEqual).
+ * @param {string} params.root - Project root directory used to import the kernel and fingerprint modules.
  */
 export async function test({ assert, root }) {
   const deterministicKernel = await import(

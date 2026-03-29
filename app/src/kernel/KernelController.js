@@ -35,9 +35,9 @@ function isPlainObject(value) {
 }
 
 /**
- * Produce an 8-character hexadecimal signature for a seed string.
- * @param {string} seed - Input seed string from which the signature is derived.
- * @returns {string} An 8-character, zero-padded lowercase hexadecimal signature derived from `seed`.
+ * Derive a deterministic 8-character lowercase hexadecimal signature from a seed string.
+ * @param {string} seed - Seed string to derive the signature from.
+ * @returns {string} An 8-character, zero-padded lowercase hexadecimal signature derived from the seed.
  */
 function deriveSeedSignature(seed) {
   let hash = 2166136261;
@@ -735,13 +735,6 @@ export class KernelController {
 
     this.deterministicSeed = seed;
     this.currentTick = 0;
-
-    if (this.state) {
-      if (!this.state.statistics) {
-        this.state.statistics = {};
-      }
-      this.state.statistics.seedSignature = deriveSeedSignature(seed);
-    }
 
     return { success: true, seed, tick: this.currentTick };
   }
