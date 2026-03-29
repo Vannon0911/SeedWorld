@@ -5273,10 +5273,10 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#hasTripleOverride@108",
+      "id": "dev/tools/runtime/preflight.mjs#hasTripleOverride@110",
       "name": "hasTripleOverride",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 108,
+      "line": 110,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5289,26 +5289,26 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#isLocalGuardChallengeFailure@94",
-      "name": "isLocalGuardChallengeFailure",
+      "id": "dev/tools/runtime/preflight.mjs#isDaemonLockFailure@91",
+      "name": "isDaemonLockFailure",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 94,
+      "line": 91,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#printTripleWarning@118",
+      "id": "dev/tools/runtime/preflight.mjs#printTripleWarning@120",
       "name": "printTripleWarning",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 118,
+      "line": 120,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/preflight.mjs#readOverrideState@99",
+      "id": "dev/tools/runtime/preflight.mjs#readOverrideState@101",
       "name": "readOverrideState",
       "file": "dev/tools/runtime/preflight.mjs",
-      "line": 99,
+      "line": 101,
       "kind": "function",
       "category": "runtime-tooling"
     },

@@ -163,7 +163,8 @@ if (!writeMode && drift.length > 0) {
   for (const item of drift) {
     console.error(` - ${item}`);
   }
-  console.error("[SYNC_DOCS] FIX: npm run sync:docs:apply");
+  console.error("[SYNC_DOCS] FIX: Manueller Sync erforderlich (Auto-Apply entfernt).");
+  console.error("[SYNC_DOCS] HINWEIS: Dateien gezielt aktualisieren oder Skript bewusst mit --write lokal ausfuehren.");
   process.exit(1);
 } else {
   console.log(`[SYNC_DOCS] OK (mode=${writeMode ? "write" : "check"})`);

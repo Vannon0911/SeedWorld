@@ -275,7 +275,8 @@ async function main() {
 
   if (!writeMode && drift) {
     console.error("[HYGIENE_MAP] DRIFT: REPO_HYGIENE_MAP ist nicht synchron.");
-    console.error("[HYGIENE_MAP] FIX: npm run sync:docs:apply");
+    console.error("[HYGIENE_MAP] FIX: Manueller Sync erforderlich (Auto-Apply entfernt).");
+    console.error("[HYGIENE_MAP] HINWEIS: Dateien gezielt aktualisieren oder Skript bewusst mit --write lokal ausfuehren.");
     process.exit(1);
     return;
   }

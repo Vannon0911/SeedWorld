@@ -114,7 +114,8 @@ async function main() {
 
   if (!writeMode && drift) {
     console.error("[RED_ACTIONS] DRIFT: docs/LLM/AKTUELLE_RED_ACTIONS.md ist nicht synchron.");
-    console.error("[RED_ACTIONS] FIX: npm run sync:docs:apply");
+    console.error("[RED_ACTIONS] FIX: Manueller Sync erforderlich (Auto-Apply entfernt).");
+    console.error("[RED_ACTIONS] HINWEIS: Datei gezielt aktualisieren oder Skript bewusst mit --write lokal ausfuehren.");
     process.exit(1);
     return;
   }

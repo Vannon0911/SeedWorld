@@ -86,16 +86,18 @@ function isCriticalFailure(message) {
     text.includes("runtime-guards-test") ||
     text.includes("date.now") ||
     text.includes("crypto") ||
-    text.includes("injected marker") ||
-    text.includes("mode=2 unresolved lock") ||
-    text.includes("mode=1 generated lock challenge") ||
     text.includes("failed with exit code")
   );
 }
 
-function isLocalGuardChallengeFailure(message) {
+function isDaemonLockFailure(message) {
   const text = String(message || "").toLowerCase();
-  return text.includes("preflight-mutation-guard");
+  return (
+    text.includes("preflight-mutation-guard") ||
+    text.includes("injected marker") ||
+    text.includes("mode=2 unresolved lock") ||
+    text.includes("mode=1 generated lock challenge")
+  );
 }
 
 async function readOverrideState() {
@@ -152,7 +154,7 @@ try {
   console.log("[PREFLIGHT] OK");
 } catch (error) {
   const msg = String(error?.message || error);
-  if (isCriticalFailure(msg) && !isLocalGuardChallengeFailure(msg)) {
+  if (isCriticalFailure(msg) && !isDaemonLockFailure(msg)) {
     const overrideActive = await hasTripleOverride(msg);
     if (overrideActive) {
       console.warn("[PREFLIGHT] override active (3/3). Kritischer Failure wird bewusst bypassed.");

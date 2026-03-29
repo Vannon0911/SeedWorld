@@ -18,7 +18,8 @@ async function main() {
 
   if (!writeMode && drift) {
     console.error("[FUNCTION_SOT] DRIFT: app/src/sot/FUNCTION_SOT.json ist nicht synchron.");
-    console.error("[FUNCTION_SOT] FIX: npm run sot:apply");
+    console.error("[FUNCTION_SOT] FIX: Manueller Sync erforderlich (Auto-Apply entfernt).");
+    console.error("[FUNCTION_SOT] HINWEIS: Datei gezielt aktualisieren oder Skript bewusst mit --write lokal ausfuehren.");
     process.exit(1);
     return;
   }
