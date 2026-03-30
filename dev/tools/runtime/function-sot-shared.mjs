@@ -1,9 +1,6 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
-
-function toPosix(relPath) {
-  return relPath.replace(/\\/g, "/");
-}
+import { compareAlpha, listFilesRecursive, toPosixPath } from "./runtime-shared.mjs";
 
 function categoryForFile(relPath) {
   if (relPath.startsWith("app/src/kernel/")) {
@@ -81,22 +78,6 @@ function parseFunctionsInFile(relPath, code) {
   return out;
 }
 
-async function listFilesRecursive(absDir) {
-  const out = [];
-  const entries = await readdir(absDir, { withFileTypes: true });
-  for (const entry of entries) {
-    const abs = path.join(absDir, entry.name);
-    if (entry.isDirectory()) {
-      out.push(...(await listFilesRecursive(abs)));
-      continue;
-    }
-    if (entry.isFile()) {
-      out.push(abs);
-    }
-  }
-  return out;
-}
-
 function isTargetFile(relPath) {
   return /\.(js|mjs|cjs)$/.test(relPath);
 }
@@ -115,7 +96,7 @@ export async function buildFunctionSot(rootDir = process.cwd()) {
       files = [];
     }
     for (const absFile of files) {
-      const relPath = toPosix(path.relative(rootDir, absFile));
+      const relPath = toPosixPath(path.relative(rootDir, absFile));
       if (!isTargetFile(relPath) || seenFiles.has(relPath)) {
         continue;
       }
@@ -125,7 +106,7 @@ export async function buildFunctionSot(rootDir = process.cwd()) {
     }
   }
 
-  functions.sort((a, b) => a.id.localeCompare(b.id));
+  functions.sort((a, b) => compareAlpha(a.id, b.id));
   return {
     version: "function-sot.v2",
     generatedFrom: ["app/src", "app/server", "dev/tools", "dev/scripts", "dev/tests"],

@@ -1,15 +1,12 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { compareAlpha, listFilesRecursive, toPosixPath } from "./runtime-shared.mjs";
 
 const root = process.cwd();
 const boundaryConfigPath = path.join(root, "app", "src", "sot", "repo-boundaries.json");
 const reportPath = path.join(root, "docs", "SOT", "REPO_HYGIENE_MAP.md");
 const reportJsonPath = path.join(root, "app", "src", "sot", "REPO_HYGIENE_MAP.json");
 const writeMode = process.argv.includes("--write");
-
-function normalize(relPath) {
-  return relPath.replace(/\\/g, "/");
-}
 
 function isCodeFile(relPath) {
   return /\.(js|mjs|cjs)$/.test(relPath);
@@ -22,22 +19,6 @@ async function exists(absPath) {
   } catch {
     return false;
   }
-}
-
-async function listFilesRecursive(absDir) {
-  const out = [];
-  const entries = await readdir(absDir, { withFileTypes: true });
-  for (const entry of entries) {
-    const abs = path.join(absDir, entry.name);
-    if (entry.isDirectory()) {
-      out.push(...(await listFilesRecursive(abs)));
-      continue;
-    }
-    if (entry.isFile()) {
-      out.push(abs);
-    }
-  }
-  return out;
 }
 
 function parseImports(code) {
@@ -62,13 +43,13 @@ function resolveRelativeImport(fromRel, specifier) {
   }
   const fromDir = path.dirname(fromRel);
   const candidates = [];
-  const raw = normalize(path.join(fromDir, specifier));
+  const raw = toPosixPath(path.join(fromDir, specifier));
   candidates.push(raw);
   candidates.push(`${raw}.js`);
   candidates.push(`${raw}.mjs`);
   candidates.push(`${raw}.cjs`);
-  candidates.push(normalize(path.join(raw, "index.js")));
-  candidates.push(normalize(path.join(raw, "index.mjs")));
+  candidates.push(toPosixPath(path.join(raw, "index.js")));
+  candidates.push(toPosixPath(path.join(raw, "index.mjs")));
   return candidates;
 }
 
@@ -166,7 +147,7 @@ function toMarkdown(report) {
 async function main() {
   const config = JSON.parse(await readFile(boundaryConfigPath, "utf8"));
   const owners = Array.isArray(config.owners) ? config.owners : [];
-  const entrypoints = Array.isArray(config.entrypoints) ? config.entrypoints.map(normalize) : [];
+  const entrypoints = Array.isArray(config.entrypoints) ? config.entrypoints.map(toPosixPath) : [];
   const scanRoots = Array.isArray(config.scanRoots) ? config.scanRoots : [];
 
   const allFiles = [];
@@ -176,7 +157,7 @@ async function main() {
     try {
       const files = await listFilesRecursive(absRoot);
       for (const abs of files) {
-        const rel = normalize(path.relative(root, abs));
+        const rel = toPosixPath(path.relative(root, abs));
         if (!seenFiles.has(rel)) {
           allFiles.push(rel);
           seenFiles.add(rel);
@@ -231,16 +212,16 @@ async function main() {
   }
 
   const reachable = walkReachable(entrypoints.filter((ep) => codeSet.has(ep)), graph);
-  const unreachableCode = codeFiles.filter((f) => !reachable.has(f)).sort();
+  const unreachableCode = codeFiles.filter((f) => !reachable.has(f)).sort(compareAlpha);
   const zeroInboundNonEntrypoints = codeFiles
     .filter((f) => !entrypoints.includes(f) && (inbound.get(f) || 0) === 0)
-    .sort();
-  const unownedFiles = allFiles.filter((f) => ownerFor(f, owners) === "UNOWNED").sort();
+    .sort(compareAlpha);
+  const unownedFiles = allFiles.filter((f) => ownerFor(f, owners) === "UNOWNED").sort(compareAlpha);
 
   crossOwnerImports.sort((a, b) => {
     const ka = `${a.from}->${a.to}`;
     const kb = `${b.from}->${b.to}`;
-    return ka.localeCompare(kb);
+    return compareAlpha(ka, kb);
   });
 
   const report = {
@@ -254,11 +235,11 @@ async function main() {
     unreachableCode,
     zeroInboundNonEntrypoints,
     crossOwnerImports,
-    inboundCounts: Object.fromEntries(Array.from(inbound.entries()).sort((a, b) => a[0].localeCompare(b[0]))),
+    inboundCounts: Object.fromEntries(Array.from(inbound.entries()).sort((a, b) => compareAlpha(a[0], b[0]))),
     imports: Object.fromEntries(
       Array.from(graph.entries())
-        .map(([k, v]) => [k, [...v].sort()])
-        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([k, v]) => [k, [...v].sort(compareAlpha)])
+        .sort((a, b) => compareAlpha(a[0], b[0]))
     )
   };
 

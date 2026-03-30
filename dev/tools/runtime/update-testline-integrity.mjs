@@ -1,46 +1,28 @@
-import { createHash } from "node:crypto";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { compareAlpha, listFilesRecursive, sha256Hex, toPosixPath } from "./runtime-shared.mjs";
 
 const root = process.cwd();
 const baselinePath = path.join(root, "app", "src", "sot", "testline-integrity.json");
 const monitoredRoots = ["dev/scripts", "dev/tests"];
 const monitoredExts = new Set([".js", ".mjs"]);
 
-function sha256(text) {
-  return createHash("sha256").update(text).digest("hex");
-}
-
-async function listFilesRecursive(absDir) {
-  const out = [];
-  const entries = await readdir(absDir, { withFileTypes: true });
-  for (const entry of entries) {
-    const abs = path.join(absDir, entry.name);
-    if (entry.isDirectory()) {
-      out.push(...(await listFilesRecursive(abs)));
-      continue;
-    }
-    if (entry.isFile() && monitoredExts.has(path.extname(entry.name).toLowerCase())) {
-      out.push(abs);
-    }
-  }
-  return out;
-}
-
 async function collect() {
   const relFiles = [];
   const hashes = {};
   for (const relRoot of monitoredRoots) {
     const absRoot = path.join(root, relRoot);
-    const listed = await listFilesRecursive(absRoot);
+    const listed = await listFilesRecursive(absRoot, {
+      filterFile: (_abs, entry) => monitoredExts.has(path.extname(entry.name).toLowerCase())
+    });
     for (const absPath of listed) {
-      const relPath = path.relative(root, absPath).replace(/\\/g, "/");
+      const relPath = toPosixPath(path.relative(root, absPath));
       const raw = await readFile(absPath, "utf8");
       relFiles.push(relPath);
-      hashes[relPath] = sha256(raw);
+      hashes[relPath] = sha256Hex(raw);
     }
   }
-  relFiles.sort((a, b) => a.localeCompare(b, "en"));
+  relFiles.sort(compareAlpha);
   return { relFiles, hashes };
 }
 

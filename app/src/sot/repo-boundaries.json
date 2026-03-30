@@ -22,7 +22,17 @@
     },
     {
       "name": "Runtime Tooling",
-      "prefixes": ["dev/tools/runtime/", "dev/scripts/", "dev/tests/", "app/server/appServer.mjs", "app/server/staticHandler.mjs", "start-server.js"],
+      "prefixes": [
+        "dev/tools/runtime/",
+        "dev/tools/llm-preflight.mjs",
+        "dev/scripts/",
+        "dev/tests/",
+        "app/src/sot/",
+        "app/src/llm/",
+        "app/server/appServer.mjs",
+        "app/server/staticHandler.mjs",
+        "start-server.js"
+      ],
       "purpose": "Verification, docs sync, runtime server entrypoints and regression harnesses"
     },
     {

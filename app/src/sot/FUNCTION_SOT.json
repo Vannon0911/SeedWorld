@@ -3457,66 +3457,74 @@
       "category": "other"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#argNumber@10",
+      "id": "dev/scripts/build-evidence-bundle.mjs#argNumber@11",
       "name": "argNumber",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 10,
+      "line": 11,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#buildBundle@100",
+      "id": "dev/scripts/build-evidence-bundle.mjs#buildBundle@106",
       "name": "buildBundle",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 100,
+      "line": 106,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#collectEvidence@46",
+      "id": "dev/scripts/build-evidence-bundle.mjs#collectEvidence@52",
       "name": "collectEvidence",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 46,
+      "line": 52,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#collectPlaywrightArtifacts@68",
+      "id": "dev/scripts/build-evidence-bundle.mjs#collectPlaywrightArtifacts@74",
       "name": "collectPlaywrightArtifacts",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 68,
+      "line": 74,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#ensureStrictCount@84",
+      "id": "dev/scripts/build-evidence-bundle.mjs#ensureStrictCount@90",
       "name": "ensureStrictCount",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 84,
+      "line": 90,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#isStrictEvidence@21",
+      "id": "dev/scripts/build-evidence-bundle.mjs#isStrictEvidence@27",
       "name": "isStrictEvidence",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 21,
+      "line": 27,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#runTestRunner@30",
+      "id": "dev/scripts/build-evidence-bundle.mjs#main@155",
+      "name": "main",
+      "file": "dev/scripts/build-evidence-bundle.mjs",
+      "line": 155,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/scripts/build-evidence-bundle.mjs#runTestRunner@36",
       "name": "runTestRunner",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 30,
+      "line": 36,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/scripts/build-evidence-bundle.mjs#sha256@17",
+      "id": "dev/scripts/build-evidence-bundle.mjs#sha256@18",
       "name": "sha256",
       "file": "dev/scripts/build-evidence-bundle.mjs",
-      "line": 17,
+      "line": 18,
       "kind": "function",
       "category": "testing"
     },
@@ -3753,146 +3761,114 @@
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/00.smoke-script.module.mjs#test@3",
+      "id": "dev/tests/modules/00.runtime-governance-suite.module.mjs#mkSeed@7",
+      "name": "mkSeed",
+      "file": "dev/tests/modules/00.runtime-governance-suite.module.mjs",
+      "line": 7,
+      "kind": "arrow",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/00.runtime-governance-suite.module.mjs#test@5",
       "name": "test",
-      "file": "dev/tests/modules/00.smoke-script.module.mjs",
-      "line": 3,
+      "file": "dev/tests/modules/00.runtime-governance-suite.module.mjs",
+      "line": 5,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/01.runtime-guards-script.module.mjs#test@3",
-      "name": "test",
-      "file": "dev/tests/modules/01.runtime-guards-script.module.mjs",
-      "line": 3,
+      "id": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs#checkpointHashes@11",
+      "name": "checkpointHashes",
+      "file": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "line": 11,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs#test@4",
-      "name": "test",
-      "file": "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
-      "line": 4,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/04.patch-utils.module.mjs#test@6",
-      "name": "test",
-      "file": "dev/tests/modules/04.patch-utils.module.mjs",
-      "line": 6,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/05.static-handler-security.module.mjs#test@8",
-      "name": "test",
-      "file": "dev/tests/modules/05.static-handler-security.module.mjs",
-      "line": 8,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/06.governance-enforcement.module.mjs#test@4",
-      "name": "test",
-      "file": "dev/tests/modules/06.governance-enforcement.module.mjs",
-      "line": 4,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/07.preflight-mutation-guard.module.mjs#createDigest@129",
-      "name": "createDigest",
-      "file": "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
-      "line": 129,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/07.preflight-mutation-guard.module.mjs#test@18",
-      "name": "test",
-      "file": "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
-      "line": 18,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/08.kernel-replay-determinism.module.mjs#buildCheckpointHashes@10",
-      "name": "buildCheckpointHashes",
-      "file": "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
-      "line": 10,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/08.kernel-replay-determinism.module.mjs#findFirstDrift@28",
-      "name": "findFirstDrift",
-      "file": "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
-      "line": 28,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/08.kernel-replay-determinism.module.mjs#test@50",
-      "name": "test",
-      "file": "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
-      "line": 50,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/09.game-logic-tile-action.module.mjs#test@17",
-      "name": "test",
-      "file": "dev/tests/modules/09.game-logic-tile-action.module.mjs",
-      "line": 17,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/10.reduce-game-state.module.mjs#test@13",
-      "name": "test",
-      "file": "dev/tests/modules/10.reduce-game-state.module.mjs",
-      "line": 13,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/11.radial-get-world-tile.module.mjs#test@14",
-      "name": "test",
-      "file": "dev/tests/modules/11.radial-get-world-tile.module.mjs",
-      "line": 14,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/12.challenge-block-messages.module.mjs#test@16",
-      "name": "test",
-      "file": "dev/tests/modules/12.challenge-block-messages.module.mjs",
-      "line": 16,
-      "kind": "function",
-      "category": "testing"
-    },
-    {
-      "id": "dev/tests/modules/13.kernel-seed-signature.module.mjs#expectedSeedSignature@12",
+      "id": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs#expectedSeedSignature@2",
       "name": "expectedSeedSignature",
-      "file": "dev/tests/modules/13.kernel-seed-signature.module.mjs",
-      "line": 12,
+      "file": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "line": 2,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/13.kernel-seed-signature.module.mjs#test@30",
-      "name": "test",
-      "file": "dev/tests/modules/13.kernel-seed-signature.module.mjs",
-      "line": 30,
+      "id": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs#firstDriftIndex@23",
+      "name": "firstDriftIndex",
+      "file": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "line": 23,
       "kind": "function",
       "category": "testing"
     },
     {
-      "id": "dev/tests/modules/15.worldgen-deterministic.module.mjs#test@4",
+      "id": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs#mkSeed@35",
+      "name": "mkSeed",
+      "file": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "line": 35,
+      "kind": "arrow",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs#test@33",
       "name": "test",
-      "file": "dev/tests/modules/15.worldgen-deterministic.module.mjs",
+      "file": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "line": 33,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/20.gameplay-state-suite.module.mjs#mkSeed@6",
+      "name": "mkSeed",
+      "file": "dev/tests/modules/20.gameplay-state-suite.module.mjs",
+      "line": 6,
+      "kind": "arrow",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/20.gameplay-state-suite.module.mjs#test@4",
+      "name": "test",
+      "file": "dev/tests/modules/20.gameplay-state-suite.module.mjs",
       "line": 4,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/30.tooling-evidence-suite.module.mjs#createDigest@5",
+      "name": "createDigest",
+      "file": "dev/tests/modules/30.tooling-evidence-suite.module.mjs",
+      "line": 5,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/30.tooling-evidence-suite.module.mjs#mkSeed@13",
+      "name": "mkSeed",
+      "file": "dev/tests/modules/30.tooling-evidence-suite.module.mjs",
+      "line": 13,
+      "kind": "arrow",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/30.tooling-evidence-suite.module.mjs#test@11",
+      "name": "test",
+      "file": "dev/tests/modules/30.tooling-evidence-suite.module.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/40.system-coverage-suite.module.mjs#checkSyntax@38",
+      "name": "checkSyntax",
+      "file": "dev/tests/modules/40.system-coverage-suite.module.mjs",
+      "line": 38,
+      "kind": "function",
+      "category": "testing"
+    },
+    {
+      "id": "dev/tests/modules/40.system-coverage-suite.module.mjs#test@50",
+      "name": "test",
+      "file": "dev/tests/modules/40.system-coverage-suite.module.mjs",
+      "line": 50,
       "kind": "function",
       "category": "testing"
     },
@@ -4545,6 +4521,70 @@
       "category": "runtime-tooling"
     },
     {
+      "id": "dev/tools/runtime/check-global-redundancy.mjs#assert@9",
+      "name": "assert",
+      "file": "dev/tools/runtime/check-global-redundancy.mjs",
+      "line": 9,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-global-redundancy.mjs#gatherRoots@46",
+      "name": "gatherRoots",
+      "file": "dev/tools/runtime/check-global-redundancy.mjs",
+      "line": 46,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-global-redundancy.mjs#loadAllowlist@26",
+      "name": "loadAllowlist",
+      "file": "dev/tools/runtime/check-global-redundancy.mjs",
+      "line": 26,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-global-redundancy.mjs#main@54",
+      "name": "main",
+      "file": "dev/tools/runtime/check-global-redundancy.mjs",
+      "line": 54,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-global-redundancy.mjs#shouldTrack@15",
+      "name": "shouldTrack",
+      "file": "dev/tools/runtime/check-global-redundancy.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-tem-structure.mjs#assert@17",
+      "name": "assert",
+      "file": "dev/tools/runtime/check-tem-structure.mjs",
+      "line": 17,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-tem-structure.mjs#isTrackedFile@23",
+      "name": "isTrackedFile",
+      "file": "dev/tools/runtime/check-tem-structure.mjs",
+      "line": 23,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/check-tem-structure.mjs#main@28",
+      "name": "main",
+      "file": "dev/tools/runtime/check-tem-structure.mjs",
+      "line": 28,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/check-wrapper-guardrails.mjs#ensureStringField@35",
       "name": "ensureStringField",
       "file": "dev/tools/runtime/check-wrapper-guardrails.mjs",
@@ -4665,58 +4705,42 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#buildFunctionSot@102",
+      "id": "dev/tools/runtime/function-sot-shared.mjs#buildFunctionSot@83",
       "name": "buildFunctionSot",
       "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 102,
+      "line": 83,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#categoryForFile@6",
+      "id": "dev/tools/runtime/function-sot-shared.mjs#categoryForFile@3",
       "name": "categoryForFile",
       "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 6,
+      "line": 3,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#isTargetFile@98",
+      "id": "dev/tools/runtime/function-sot-shared.mjs#isTargetFile@79",
       "name": "isTargetFile",
       "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 98,
+      "line": 79,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#lineForIndex@31",
+      "id": "dev/tools/runtime/function-sot-shared.mjs#lineForIndex@28",
       "name": "lineForIndex",
       "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 31,
+      "line": 28,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#listFilesRecursive@82",
-      "name": "listFilesRecursive",
-      "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 82,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#parseFunctionsInFile@41",
+      "id": "dev/tools/runtime/function-sot-shared.mjs#parseFunctionsInFile@38",
       "name": "parseFunctionsInFile",
       "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 41,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/function-sot-shared.mjs#toPosix@2",
-      "name": "toPosix",
-      "file": "dev/tools/runtime/function-sot-shared.mjs",
-      "line": 2,
+      "line": 38,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5321,90 +5345,74 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#exists@16",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#exists@13",
       "name": "exists",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 16,
+      "line": 13,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#isCodeFile@12",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#isCodeFile@9",
       "name": "isCodeFile",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 12,
+      "line": 9,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#listFilesRecursive@25",
-      "name": "listFilesRecursive",
-      "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 25,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#main@164",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#main@145",
       "name": "main",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 164,
+      "line": 145,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#normalize@8",
-      "name": "normalize",
-      "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 8,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#ownerFor@77",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#ownerFor@58",
       "name": "ownerFor",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 77,
+      "line": 58,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#parseImports@41",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#parseImports@22",
       "name": "parseImports",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 41,
+      "line": 22,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#resolveRelativeImport@57",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#resolveRelativeImport@38",
       "name": "resolveRelativeImport",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 57,
+      "line": 38,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#startsWithAny@73",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#startsWithAny@54",
       "name": "startsWithAny",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 73,
+      "line": 54,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#toMarkdown@105",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#toMarkdown@86",
       "name": "toMarkdown",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 105,
+      "line": 86,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/repo-hygiene-map.mjs#walkReachable@86",
+      "id": "dev/tools/runtime/repo-hygiene-map.mjs#walkReachable@67",
       "name": "walkReachable",
       "file": "dev/tools/runtime/repo-hygiene-map.mjs",
-      "line": 86,
+      "line": 67,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5437,6 +5445,118 @@
       "name": "startsWithAny",
       "file": "dev/tools/runtime/repo-hygiene-why.mjs",
       "line": 11,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#collectExplicitSystemRefs@44",
+      "name": "collectExplicitSystemRefs",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 44,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#collectReachable@71",
+      "name": "collectReachable",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 71,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#compareAlpha@18",
+      "name": "compareAlpha",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 18,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#extractSystemRefsFromText@34",
+      "name": "extractSystemRefsFromText",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 34,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#isCode@26",
+      "name": "isCode",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 26,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#isSystemFile@22",
+      "name": "isSystemFile",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 22,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#isTestInfrastructure@30",
+      "name": "isTestInfrastructure",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 30,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#main@131",
+      "name": "main",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 131,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#normalizeEol@127",
+      "name": "normalizeEol",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 127,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/report-untested-systems.mjs#renderReport@87",
+      "name": "renderReport",
+      "file": "dev/tools/runtime/report-untested-systems.mjs",
+      "line": 87,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/runtime-shared.mjs#compareAlpha@7",
+      "name": "compareAlpha",
+      "file": "dev/tools/runtime/runtime-shared.mjs",
+      "line": 7,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/runtime-shared.mjs#listFilesRecursive@15",
+      "name": "listFilesRecursive",
+      "file": "dev/tools/runtime/runtime-shared.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/runtime-shared.mjs#sha256Hex@11",
+      "name": "sha256Hex",
+      "file": "dev/tools/runtime/runtime-shared.mjs",
+      "line": 11,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/runtime-shared.mjs#toPosixPath@3",
+      "name": "toPosixPath",
+      "file": "dev/tools/runtime/runtime-shared.mjs",
+      "line": 3,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5521,6 +5641,62 @@
       "category": "runtime-tooling"
     },
     {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#classify@8",
+      "name": "classify",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 8,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#loadArtifacts@99",
+      "name": "loadArtifacts",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 99,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#main@137",
+      "name": "main",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 137,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderSchema@73",
+      "name": "renderSchema",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 73,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderTodo@18",
+      "name": "renderTodo",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 18,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderWorkflow@46",
+      "name": "renderWorkflow",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 46,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#syncOrVerifyFile@119",
+      "name": "syncOrVerifyFile",
+      "file": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "line": 119,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/syncDocs.mjs#runTool@10",
       "name": "runTool",
       "file": "dev/tools/runtime/syncDocs.mjs",
@@ -5529,34 +5705,18 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/update-testline-integrity.mjs#collect@28",
+      "id": "dev/tools/runtime/update-testline-integrity.mjs#collect@8",
       "name": "collect",
       "file": "dev/tools/runtime/update-testline-integrity.mjs",
-      "line": 28,
+      "line": 8,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/update-testline-integrity.mjs#listFilesRecursive@12",
-      "name": "listFilesRecursive",
-      "file": "dev/tools/runtime/update-testline-integrity.mjs",
-      "line": 12,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/update-testline-integrity.mjs#main@45",
+      "id": "dev/tools/runtime/update-testline-integrity.mjs#main@27",
       "name": "main",
       "file": "dev/tools/runtime/update-testline-integrity.mjs",
-      "line": 45,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/update-testline-integrity.mjs#sha256@8",
-      "name": "sha256",
-      "file": "dev/tools/runtime/update-testline-integrity.mjs",
-      "line": 8,
+      "line": 27,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -5609,48 +5769,32 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#collectMonitoredFiles@53",
+      "id": "dev/tools/runtime/verify-testline-integrity.mjs#collectMonitoredFiles@33",
       "name": "collectMonitoredFiles",
-      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
-      "line": 53,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#listFilesRecursive@37",
-      "name": "listFilesRecursive",
-      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
-      "line": 37,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#loadBaseline@65",
-      "name": "loadBaseline",
-      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
-      "line": 65,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#main@70",
-      "name": "main",
-      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
-      "line": 70,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#normalizeText@33",
-      "name": "normalizeText",
       "file": "dev/tools/runtime/verify-testline-integrity.mjs",
       "line": 33,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/verify-testline-integrity.mjs#sha256@29",
-      "name": "sha256",
+      "id": "dev/tools/runtime/verify-testline-integrity.mjs#loadBaseline@47",
+      "name": "loadBaseline",
+      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
+      "line": 47,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-testline-integrity.mjs#main@52",
+      "name": "main",
+      "file": "dev/tools/runtime/verify-testline-integrity.mjs",
+      "line": 52,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-testline-integrity.mjs#normalizeText@29",
+      "name": "normalizeText",
       "file": "dev/tools/runtime/verify-testline-integrity.mjs",
       "line": 29,
       "kind": "function",

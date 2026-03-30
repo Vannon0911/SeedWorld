@@ -1,6 +1,6 @@
-import { createHash } from "node:crypto";
-import { readdir, readFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { compareAlpha, listFilesRecursive, sha256Hex, toPosixPath } from "./runtime-shared.mjs";
 
 const root = process.cwd();
 const baselinePath = path.join(root, "app", "src", "sot", "testline-integrity.json");
@@ -28,40 +28,22 @@ const normForbiddenTokens = [
   "constructorconstructor"
 ];
 
-function sha256(text) {
-  return createHash("sha256").update(text).digest("hex");
-}
-
 function normalizeText(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "");
-}
-
-async function listFilesRecursive(absDir) {
-  const out = [];
-  const entries = await readdir(absDir, { withFileTypes: true });
-  for (const entry of entries) {
-    const abs = path.join(absDir, entry.name);
-    if (entry.isDirectory()) {
-      out.push(...(await listFilesRecursive(abs)));
-      continue;
-    }
-    if (entry.isFile() && monitoredExts.has(path.extname(entry.name).toLowerCase())) {
-      out.push(abs);
-    }
-  }
-  return out;
 }
 
 async function collectMonitoredFiles() {
   const files = [];
   for (const relRoot of monitoredRoots) {
     const absRoot = path.join(root, relRoot);
-    const listed = await listFilesRecursive(absRoot);
+    const listed = await listFilesRecursive(absRoot, {
+      filterFile: (_abs, entry) => monitoredExts.has(path.extname(entry.name).toLowerCase())
+    });
     for (const abs of listed) {
-      files.push(path.relative(root, abs).replace(/\\/g, "/"));
+      files.push(toPosixPath(path.relative(root, abs)));
     }
   }
-  return files.sort((a, b) => a.localeCompare(b, "en"));
+  return files.sort(compareAlpha);
 }
 
 async function loadBaseline() {
@@ -72,7 +54,7 @@ async function loadBaseline() {
 async function main() {
   const baseline = await loadBaseline();
   const monitored = await collectMonitoredFiles();
-  const baselineFiles = Array.isArray(baseline.monitoredFiles) ? [...baseline.monitoredFiles].sort((a, b) => a.localeCompare(b, "en")) : [];
+  const baselineFiles = Array.isArray(baseline.monitoredFiles) ? [...baseline.monitoredFiles].sort(compareAlpha) : [];
 
   const missingInBaseline = monitored.filter((f) => !baselineFiles.includes(f));
   const missingInRepo = baselineFiles.filter((f) => !monitored.includes(f));
@@ -82,7 +64,7 @@ async function main() {
   for (const relPath of monitored) {
     const absPath = path.join(root, ...relPath.split("/"));
     const raw = await readFile(absPath, "utf8");
-    const digest = sha256(raw);
+    const digest = sha256Hex(raw);
     const expected = baseline.fileHashes?.[relPath];
     if (expected && expected !== digest) {
       hashMismatches.push({ relPath, expected, actual: digest });

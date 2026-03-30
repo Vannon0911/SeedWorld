@@ -114,6 +114,9 @@ const llmIndexContent = `# LLM Index
 const toolModeArgs = writeMode ? ["--write"] : [];
 await runTool("dev/tools/runtime/updateRedActions.mjs", toolModeArgs);
 await runTool("dev/tools/runtime/repo-hygiene-map.mjs", toolModeArgs);
+await runTool("dev/tools/runtime/sync-tem-control-files.mjs", toolModeArgs);
+await runTool("dev/tools/runtime/check-global-redundancy.mjs");
+await runTool("dev/tools/runtime/report-untested-systems.mjs", toolModeArgs);
 
 let currentOrientation = "";
 try {

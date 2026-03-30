@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "ab4e7905c7a1697e1c52621cce0c4d1c15f9b95c6c341bce3ac1de3ddd1189c2",
+  "controlFiles": [
+    "TODO.md",
+    "WORKFLOW.md",
+    "SCHEMA.json"
+  ],
+  "artifactCount": 27,
+  "categories": {
+    "planung": [
+      "tem/beide-plaene.md",
+      "tem/cf-001-architektur-notiz.md",
+      "tem/t01-legacy-wrapper-inventur.md"
+    ],
+    "check-justification": [
+      "tem/check-justification/cf-002.md",
+      "tem/check-justification/summary.md"
+    ],
+    "operativ": [
+      "tem/gpg-signing-runbook.md",
+      "tem/md-worklog.md"
+    ],
+    "reports-findings": [
+      "tem/langfristiger-bug-plan.md",
+      "tem/nitpick-check-report.md",
+      "tem/repair-check-cf002.md",
+      "tem/reported-bugs.md",
+      "tem/sot-doc-validity-report.md",
+      "tem/test-evidence-report.md",
+      "tem/traceability-map.md"
+    ],
+    "rebuttals": [
+      "tem/rebuttals/cf-001-rebuttal.md",
+      "tem/rebuttals/cf-002-rebuttal.md",
+      "tem/rebuttals/t01-rebuttal.md",
+      "tem/rebuttals/t02-rebuttal.md",
+      "tem/rebuttals/t03-rebuttal.md"
+    ],
+    "implementierungs-slices": [
+      "tem/slices/cf-003-canvas-render-loop.md",
+      "tem/slices/cf-004-tile-dom-to-canvas.md",
+      "tem/slices/evidence-remediation-jszip.md",
+      "tem/slices/integration-summary.md",
+      "tem/slices/remaining-task-stubs.md",
+      "tem/slices/t02-kanonische-api-matrix.md",
+      "tem/slices/t03-guardrail-konzept.md"
+    ],
+    "sonstiges": [
+      "tem/testline-missing-systems.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "tem/beide-plaene.md",
+      "category": "planung",
+      "sha256": "18ddd8f022ba3fc7e2f857c8f5e7d09d653fe600fb97cbb8deed1b7b48451686"
+    },
+    {
+      "path": "tem/cf-001-architektur-notiz.md",
+      "category": "planung",
+      "sha256": "bef23efb98d2ac18f61e64e12e4beacf0a3881b0fdb397b516cfd252a31437c2"
+    },
+    {
+      "path": "tem/check-justification/cf-002.md",
+      "category": "check-justification",
+      "sha256": "e7636b053f46ae724892ab6e03a7af8aa319c6c91720bb83349fb25f1ef33c78"
+    },
+    {
+      "path": "tem/check-justification/summary.md",
+      "category": "check-justification",
+      "sha256": "1b58002120d80600d4bae6662f758b04d63911b5b4c8e4281f1ea6d6a83394c8"
+    },
+    {
+      "path": "tem/gpg-signing-runbook.md",
+      "category": "operativ",
+      "sha256": "60c8a9fbcc6495147ce4430ada9b807a4524332b4571dd60c703bc617cb91989"
+    },
+    {
+      "path": "tem/langfristiger-bug-plan.md",
+      "category": "reports-findings",
+      "sha256": "c74d1b39e3c7e8f0a11f625188d2a0f587eda500173ba68be81f8513a19226ce"
+    },
+    {
+      "path": "tem/md-worklog.md",
+      "category": "operativ",
+      "sha256": "f90ada016608ae6fc03b76db8209824770aa1948955874ca98eb5f3d0c756508"
+    },
+    {
+      "path": "tem/nitpick-check-report.md",
+      "category": "reports-findings",
+      "sha256": "ca1ee54f7e87e413715007ae9c5ecd7045c5e3925809a4e81280d507d363ea56"
+    },
+    {
+      "path": "tem/rebuttals/cf-001-rebuttal.md",
+      "category": "rebuttals",
+      "sha256": "72cbaed29c306d0ea395f2a238accb85c8bce34814b0559d60798feef487673c"
+    },
+    {
+      "path": "tem/rebuttals/cf-002-rebuttal.md",
+      "category": "rebuttals",
+      "sha256": "ee4624ce494b59fed5faa3d2efffe14ad76e40b0fae170488c1df2abb246634e"
+    },
+    {
+      "path": "tem/rebuttals/t01-rebuttal.md",
+      "category": "rebuttals",
+      "sha256": "25264bdd876c7e9e7620b53e71967a8c01253cb6a2ba9603533a1679ae20ddff"
+    },
+    {
+      "path": "tem/rebuttals/t02-rebuttal.md",
+      "category": "rebuttals",
+      "sha256": "5e052a0076ac5a5e46252b45aa15e27d75032c7a5f34316187815776b672c33f"
+    },
+    {
+      "path": "tem/rebuttals/t03-rebuttal.md",
+      "category": "rebuttals",
+      "sha256": "a0ed135a91f9f5e34e5936943b621fbed004a538353ab0585e07c19f883c7f06"
+    },
+    {
+      "path": "tem/repair-check-cf002.md",
+      "category": "reports-findings",
+      "sha256": "5451a74e7a545c8acd770d2e23621065839be5e563cc9de14e94e3e70a3810a6"
+    },
+    {
+      "path": "tem/reported-bugs.md",
+      "category": "reports-findings",
+      "sha256": "f94539bc4e8caa35114527ed9d162a4820f76f6b64053478c163c731346a61cf"
+    },
+    {
+      "path": "tem/slices/cf-003-canvas-render-loop.md",
+      "category": "implementierungs-slices",
+      "sha256": "85c146e607b5aedcef988d6d85623ebffdd15771127b59099dfb04d7f5367e3c"
+    },
+    {
+      "path": "tem/slices/cf-004-tile-dom-to-canvas.md",
+      "category": "implementierungs-slices",
+      "sha256": "d70378f9a23c4b0a47da5a58a89c5e58b51596817a77ca381956725ee646ce9e"
+    },
+    {
+      "path": "tem/slices/evidence-remediation-jszip.md",
+      "category": "implementierungs-slices",
+      "sha256": "24a884a29c242a8483a4f3c84596ea1fd86fdd7e08342fe42e3fff3b6ecd5296"
+    },
+    {
+      "path": "tem/slices/integration-summary.md",
+      "category": "implementierungs-slices",
+      "sha256": "929a9a814fb31577e62602b48cf0fae2fbd4936d03e6fa3a200c4a757d4c1b49"
+    },
+    {
+      "path": "tem/slices/remaining-task-stubs.md",
+      "category": "implementierungs-slices",
+      "sha256": "ea820da05de2fd661c1df38adbb2f1d77ff4fb6d5d5a77cc7ce5ad93ee19a5fc"
+    },
+    {
+      "path": "tem/slices/t02-kanonische-api-matrix.md",
+      "category": "implementierungs-slices",
+      "sha256": "b1c0d39d6be823281c2410dc73f0761471b88ad074eb33504298131508b72fe6"
+    },
+    {
+      "path": "tem/slices/t03-guardrail-konzept.md",
+      "category": "implementierungs-slices",
+      "sha256": "daaffba81bd789ac55c9b980a9ce599d3ab471bbdc908f625e8a81c0e008aab4"
+    },
+    {
+      "path": "tem/sot-doc-validity-report.md",
+      "category": "reports-findings",
+      "sha256": "a66de3cae78cb6abad48cbbdcb3393b3bdc9348908832f450f9ec38c3e403722"
+    },
+    {
+      "path": "tem/t01-legacy-wrapper-inventur.md",
+      "category": "planung",
+      "sha256": "cb0d1caf481647e8d5c853ae3d80af43b6ed046057da31f7bedcd044528b2217"
+    },
+    {
+      "path": "tem/test-evidence-report.md",
+      "category": "reports-findings",
+      "sha256": "77b815def0443fddfe9c1bf05b9d4f6d6612c3dd178684fb394406b626315ba2"
+    },
+    {
+      "path": "tem/testline-missing-systems.md",
+      "category": "sonstiges",
+      "sha256": "65dfc0258f1eb55ff5044a0f0587960cdc4f5e97c30dd956b3afb70c785dfa95"
+    },
+    {
+      "path": "tem/traceability-map.md",
+      "category": "reports-findings",
+      "sha256": "8af1b61b397614cfdbbd965689f31b11e80e57834f195ecfa711130264a43a9b"
+    }
+  ]
+}

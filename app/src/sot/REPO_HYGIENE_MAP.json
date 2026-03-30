@@ -50,8 +50,11 @@
       "name": "Runtime Tooling",
       "prefixes": [
         "dev/tools/runtime/",
+        "dev/tools/llm-preflight.mjs",
         "dev/scripts/",
         "dev/tests/",
+        "app/src/sot/",
+        "app/src/llm/",
         "app/server/appServer.mjs",
         "app/server/staticHandler.mjs",
         "start-server.js"
@@ -67,23 +70,12 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 119,
-    "codeFiles": 104
+    "allFiles": 116,
+    "codeFiles": 100
   },
-  "unownedFiles": [
-    "app/src/llm/llm-gate-policy.json",
-    "app/src/sot/FUNCTION_SOT.json",
-    "app/src/sot/REPO_HYGIENE_MAP.json",
-    "app/src/sot/patches.schema.json",
-    "app/src/sot/release-manifest.json",
-    "app/src/sot/repo-boundaries.json",
-    "app/src/sot/testline-integrity.json",
-    "app/src/sot/wrapper-guardrails.json",
-    "dev/tools/llm-preflight.mjs"
-  ],
+  "unownedFiles": [],
   "unreachableCode": [
     "app/server/patchUtils.js",
-    "app/src/SeedWorld_WorldGen.mjs",
     "app/src/browser/BrowserPatchRunner.js",
     "app/src/browser/LogBus.js",
     "app/src/game/gameConstants.js",
@@ -91,13 +83,14 @@
     "app/src/kernel/fingerprint.js",
     "app/src/kernel/seedGuard.js",
     "app/src/plugins/radialBuildController.js",
+    "app/src/SeedWorld_WorldGen.mjs",
     "app/src/ui/BaseUIController.js",
     "app/src/ui/DevUIController.js",
+    "app/src/ui/events.js",
     "app/src/ui/GameUIController.js",
     "app/src/ui/MainMenuController.js",
-    "app/src/ui/TileAnimationSDK.js",
-    "app/src/ui/events.js",
     "app/src/ui/plugins/ExampleUIPlugin.js",
+    "app/src/ui/TileAnimationSDK.js",
     "app/src/workers/worldRenderWorker.js",
     "dev/scripts/build-evidence-bundle.mjs",
     "dev/scripts/playwright-tiles-full.mjs",
@@ -105,25 +98,18 @@
     "dev/scripts/test-runner.mjs",
     "dev/scripts/verify-evidence.mjs",
     "dev/tests/helpers/runScriptTest.mjs",
-    "dev/tests/modules/00.smoke-script.module.mjs",
-    "dev/tests/modules/01.runtime-guards-script.module.mjs",
-    "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
-    "dev/tests/modules/04.patch-utils.module.mjs",
-    "dev/tests/modules/05.static-handler-security.module.mjs",
-    "dev/tests/modules/06.governance-enforcement.module.mjs",
-    "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
-    "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
-    "dev/tests/modules/09.game-logic-tile-action.module.mjs",
-    "dev/tests/modules/10.reduce-game-state.module.mjs",
-    "dev/tests/modules/11.radial-get-world-tile.module.mjs",
-    "dev/tests/modules/12.challenge-block-messages.module.mjs",
-    "dev/tests/modules/13.kernel-seed-signature.module.mjs",
-    "dev/tests/modules/15.worldgen-deterministic.module.mjs",
+    "dev/tests/modules/00.runtime-governance-suite.module.mjs",
+    "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+    "dev/tests/modules/20.gameplay-state-suite.module.mjs",
+    "dev/tests/modules/30.tooling-evidence-suite.module.mjs",
+    "dev/tests/modules/40.system-coverage-suite.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/patchMatrix.js",
     "dev/tools/patch/validate-patch-matrix.mjs",
     "dev/tools/runtime/apply-github-ruleset.mjs",
+    "dev/tools/runtime/check-global-redundancy.mjs",
+    "dev/tools/runtime/check-tem-structure.mjs",
     "dev/tools/runtime/check-wrapper-guardrails.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/function-sot-shared.mjs",
@@ -139,7 +125,10 @@
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
+    "dev/tools/runtime/report-untested-systems.mjs",
+    "dev/tools/runtime/runtime-shared.mjs",
     "dev/tools/runtime/signing-guard.mjs",
+    "dev/tools/runtime/sync-tem-control-files.mjs",
     "dev/tools/runtime/syncDocs.mjs",
     "dev/tools/runtime/update-testline-integrity.mjs",
     "dev/tools/runtime/updateFunctionSot.mjs",
@@ -148,36 +137,28 @@
   ],
   "zeroInboundNonEntrypoints": [
     "app/server/patchUtils.js",
-    "app/src/SeedWorld_WorldGen.mjs",
     "app/src/browser/BrowserPatchRunner.js",
     "app/src/game/gameConstants.js",
+    "app/src/SeedWorld_WorldGen.mjs",
     "app/src/ui/MainMenuController.js",
-    "app/src/ui/TileAnimationSDK.js",
     "app/src/ui/plugins/ExampleUIPlugin.js",
+    "app/src/ui/TileAnimationSDK.js",
     "app/src/workers/worldRenderWorker.js",
-    "dev/scripts/build-evidence-bundle.mjs",
     "dev/scripts/playwright-tiles-full.mjs",
     "dev/scripts/repo-cleanup-baseline.mjs",
     "dev/scripts/test-runner.mjs",
     "dev/scripts/verify-evidence.mjs",
-    "dev/tests/modules/00.smoke-script.module.mjs",
-    "dev/tests/modules/01.runtime-guards-script.module.mjs",
-    "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs",
-    "dev/tests/modules/04.patch-utils.module.mjs",
-    "dev/tests/modules/05.static-handler-security.module.mjs",
-    "dev/tests/modules/06.governance-enforcement.module.mjs",
-    "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
-    "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
-    "dev/tests/modules/09.game-logic-tile-action.module.mjs",
-    "dev/tests/modules/10.reduce-game-state.module.mjs",
-    "dev/tests/modules/11.radial-get-world-tile.module.mjs",
-    "dev/tests/modules/12.challenge-block-messages.module.mjs",
-    "dev/tests/modules/13.kernel-seed-signature.module.mjs",
-    "dev/tests/modules/15.worldgen-deterministic.module.mjs",
+    "dev/tests/modules/00.runtime-governance-suite.module.mjs",
+    "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+    "dev/tests/modules/20.gameplay-state-suite.module.mjs",
+    "dev/tests/modules/30.tooling-evidence-suite.module.mjs",
+    "dev/tests/modules/40.system-coverage-suite.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/import-dispatch.mjs",
     "dev/tools/patch/validate-patch-matrix.mjs",
     "dev/tools/runtime/apply-github-ruleset.mjs",
+    "dev/tools/runtime/check-global-redundancy.mjs",
+    "dev/tools/runtime/check-tem-structure.mjs",
     "dev/tools/runtime/check-wrapper-guardrails.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/governance-verify.mjs",
@@ -191,7 +172,9 @@
     "dev/tools/runtime/release-guard.mjs",
     "dev/tools/runtime/repo-hygiene-map.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
+    "dev/tools/runtime/report-untested-systems.mjs",
     "dev/tools/runtime/signing-guard.mjs",
+    "dev/tools/runtime/sync-tem-control-files.mjs",
     "dev/tools/runtime/syncDocs.mjs",
     "dev/tools/runtime/update-testline-integrity.mjs",
     "dev/tools/runtime/updateFunctionSot.mjs",
@@ -307,29 +290,20 @@
     "app/src/ui/UIPluginController.js": 1,
     "app/src/ui/ViewportManager.js": 1,
     "app/src/workers/worldRenderWorker.js": 0,
-    "dev/scripts/build-evidence-bundle.mjs": 0,
+    "dev/scripts/build-evidence-bundle.mjs": 1,
     "dev/scripts/playwright-tiles-full.mjs": 0,
     "dev/scripts/repo-cleanup-baseline.mjs": 0,
     "dev/scripts/runtime-guards-test.mjs": 0,
     "dev/scripts/smoke-test.mjs": 0,
     "dev/scripts/test-runner.mjs": 0,
     "dev/scripts/verify-evidence.mjs": 0,
-    "dev/tests/helpers/runScriptTest.mjs": 2,
+    "dev/tests/helpers/runScriptTest.mjs": 1,
     "dev/tests/MainTest.mjs": 0,
-    "dev/tests/modules/00.smoke-script.module.mjs": 0,
-    "dev/tests/modules/01.runtime-guards-script.module.mjs": 0,
-    "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs": 0,
-    "dev/tests/modules/04.patch-utils.module.mjs": 0,
-    "dev/tests/modules/05.static-handler-security.module.mjs": 0,
-    "dev/tests/modules/06.governance-enforcement.module.mjs": 0,
-    "dev/tests/modules/07.preflight-mutation-guard.module.mjs": 0,
-    "dev/tests/modules/08.kernel-replay-determinism.module.mjs": 0,
-    "dev/tests/modules/09.game-logic-tile-action.module.mjs": 0,
-    "dev/tests/modules/10.reduce-game-state.module.mjs": 0,
-    "dev/tests/modules/11.radial-get-world-tile.module.mjs": 0,
-    "dev/tests/modules/12.challenge-block-messages.module.mjs": 0,
-    "dev/tests/modules/13.kernel-seed-signature.module.mjs": 0,
-    "dev/tests/modules/15.worldgen-deterministic.module.mjs": 0,
+    "dev/tests/modules/00.runtime-governance-suite.module.mjs": 0,
+    "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs": 0,
+    "dev/tests/modules/20.gameplay-state-suite.module.mjs": 0,
+    "dev/tests/modules/30.tooling-evidence-suite.module.mjs": 0,
+    "dev/tests/modules/40.system-coverage-suite.module.mjs": 0,
     "dev/tools/llm-preflight.mjs": 0,
     "dev/tools/patch/apply.mjs": 0,
     "dev/tools/patch/import-dispatch.mjs": 0,
@@ -343,6 +317,8 @@
     "dev/tools/patch/patchMatrix.js": 1,
     "dev/tools/patch/validate-patch-matrix.mjs": 0,
     "dev/tools/runtime/apply-github-ruleset.mjs": 0,
+    "dev/tools/runtime/check-global-redundancy.mjs": 0,
+    "dev/tools/runtime/check-tem-structure.mjs": 0,
     "dev/tools/runtime/check-wrapper-guardrails.mjs": 0,
     "dev/tools/runtime/evidence-lock.mjs": 0,
     "dev/tools/runtime/function-sot-shared.mjs": 1,
@@ -358,7 +334,10 @@
     "dev/tools/runtime/release-guard.mjs": 0,
     "dev/tools/runtime/repo-hygiene-map.mjs": 0,
     "dev/tools/runtime/repo-hygiene-why.mjs": 0,
+    "dev/tools/runtime/report-untested-systems.mjs": 0,
+    "dev/tools/runtime/runtime-shared.mjs": 8,
     "dev/tools/runtime/signing-guard.mjs": 0,
+    "dev/tools/runtime/sync-tem-control-files.mjs": 0,
     "dev/tools/runtime/syncDocs.mjs": 0,
     "dev/tools/runtime/update-testline-integrity.mjs": 0,
     "dev/tools/runtime/updateFunctionSot.mjs": 0,
@@ -407,8 +386,8 @@
     "app/src/game/worldGen.js": [],
     "app/src/kernel/ActionRegistry.js": [],
     "app/src/kernel/deterministicKernel.js": [
-      "app/src/kernel/KernelController.js",
       "app/src/kernel/fingerprint.js",
+      "app/src/kernel/KernelController.js",
       "app/src/kernel/runtimeGuards.js",
       "app/src/kernel/seedGuard.js"
     ],
@@ -439,8 +418,8 @@
     ],
     "app/src/main.js": [
       "app/src/game/GameLogicController.js",
-      "app/src/kernel/KernelController.js",
       "app/src/kernel/interface.js",
+      "app/src/kernel/KernelController.js",
       "app/src/ui/RenderManager.js",
       "app/src/ui/UIController.js",
       "app/src/ui/ViewportManager.js"
@@ -454,9 +433,9 @@
     "app/src/ui/events.js": [],
     "app/src/ui/GameUIController.js": [
       "app/src/ui/BaseUIController.js",
+      "app/src/ui/events.js",
       "app/src/ui/RenderManager.js",
-      "app/src/ui/TileGridRenderer.js",
-      "app/src/ui/events.js"
+      "app/src/ui/TileGridRenderer.js"
     ],
     "app/src/ui/IconAnimations.js": [],
     "app/src/ui/MainMenuController.js": [
@@ -494,24 +473,15 @@
     "dev/scripts/verify-evidence.mjs": [],
     "dev/tests/helpers/runScriptTest.mjs": [],
     "dev/tests/MainTest.mjs": [],
-    "dev/tests/modules/00.smoke-script.module.mjs": [
+    "dev/tests/modules/00.runtime-governance-suite.module.mjs": [
       "dev/tests/helpers/runScriptTest.mjs"
     ],
-    "dev/tests/modules/01.runtime-guards-script.module.mjs": [
-      "dev/tests/helpers/runScriptTest.mjs"
+    "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs": [],
+    "dev/tests/modules/20.gameplay-state-suite.module.mjs": [],
+    "dev/tests/modules/30.tooling-evidence-suite.module.mjs": [
+      "dev/scripts/build-evidence-bundle.mjs"
     ],
-    "dev/tests/modules/03.kernel-same-action-same-tick.module.mjs": [],
-    "dev/tests/modules/04.patch-utils.module.mjs": [],
-    "dev/tests/modules/05.static-handler-security.module.mjs": [],
-    "dev/tests/modules/06.governance-enforcement.module.mjs": [],
-    "dev/tests/modules/07.preflight-mutation-guard.module.mjs": [],
-    "dev/tests/modules/08.kernel-replay-determinism.module.mjs": [],
-    "dev/tests/modules/09.game-logic-tile-action.module.mjs": [],
-    "dev/tests/modules/10.reduce-game-state.module.mjs": [],
-    "dev/tests/modules/11.radial-get-world-tile.module.mjs": [],
-    "dev/tests/modules/12.challenge-block-messages.module.mjs": [],
-    "dev/tests/modules/13.kernel-seed-signature.module.mjs": [],
-    "dev/tests/modules/15.worldgen-deterministic.module.mjs": [],
+    "dev/tests/modules/40.system-coverage-suite.module.mjs": [],
     "dev/tools/llm-preflight.mjs": [],
     "dev/tools/patch/apply.mjs": [
       "dev/tools/patch/lib/orchestrator.mjs",
@@ -547,9 +517,17 @@
       "dev/tools/patch/patchMatrix.js"
     ],
     "dev/tools/runtime/apply-github-ruleset.mjs": [],
+    "dev/tools/runtime/check-global-redundancy.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
+    "dev/tools/runtime/check-tem-structure.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "dev/tools/runtime/check-wrapper-guardrails.mjs": [],
     "dev/tools/runtime/evidence-lock.mjs": [],
-    "dev/tools/runtime/function-sot-shared.mjs": [],
+    "dev/tools/runtime/function-sot-shared.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "dev/tools/runtime/governance-verify.mjs": [],
     "dev/tools/runtime/installGitHooks.mjs": [],
     "dev/tools/runtime/llm-entry.mjs": [
@@ -566,16 +544,29 @@
     "dev/tools/runtime/preflight-mutation-guard.mjs": [],
     "dev/tools/runtime/preflight.mjs": [],
     "dev/tools/runtime/release-guard.mjs": [],
-    "dev/tools/runtime/repo-hygiene-map.mjs": [],
+    "dev/tools/runtime/repo-hygiene-map.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "dev/tools/runtime/repo-hygiene-why.mjs": [],
+    "dev/tools/runtime/report-untested-systems.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
+    "dev/tools/runtime/runtime-shared.mjs": [],
     "dev/tools/runtime/signing-guard.mjs": [],
+    "dev/tools/runtime/sync-tem-control-files.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "dev/tools/runtime/syncDocs.mjs": [],
-    "dev/tools/runtime/update-testline-integrity.mjs": [],
+    "dev/tools/runtime/update-testline-integrity.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "dev/tools/runtime/updateFunctionSot.mjs": [
       "dev/tools/runtime/function-sot-shared.mjs"
     ],
     "dev/tools/runtime/updateRedActions.mjs": [],
-    "dev/tools/runtime/verify-testline-integrity.mjs": [],
+    "dev/tools/runtime/verify-testline-integrity.mjs": [
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
     "start-server.js": [
       "app/server/appServer.mjs"
     ]

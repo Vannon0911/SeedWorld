@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { pathToFileURL } from "node:url";
 import JSZip from "jszip";
 
 const root = process.cwd();
@@ -20,11 +21,16 @@ function sha256(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
-function isStrictEvidence(evidence) {
+export const STRICT_GATE_DECISIONS = new Set([
+  "runtime_and_kernel_verified",
+  "pass_and_deny_paths_verified"
+]);
+
+export function isStrictEvidence(evidence) {
   return (
     evidence &&
     evidence.status === "passed" &&
-    evidence.gateDecision === "pass_and_deny_paths_verified" &&
+    STRICT_GATE_DECISIONS.has(evidence.gateDecision) &&
     evidence.determinism?.consistent === true
   );
 }
@@ -129,6 +135,7 @@ async function buildBundle(items, strictCount, targetStrict) {
     createdAt: new Date().toISOString(),
     targetStrictEvidence: targetStrict,
     strictEvidenceCount: strictCount,
+    strictGateDecisions: [...STRICT_GATE_DECISIONS],
     totalItems: manifestItems.length,
     items: manifestItems
   };
@@ -147,18 +154,25 @@ async function buildBundle(items, strictCount, targetStrict) {
 const targetStrict = argNumber("--ensure-strict", 10);
 const maxPullRuns = argNumber("--max-pull-runs", 3);
 
-const ensured = await ensureStrictCount(targetStrict, maxPullRuns);
-const evidenceItems = ensured.evidence;
-const playwrightItems = await collectPlaywrightArtifacts();
-const merged = [...evidenceItems, ...playwrightItems];
+async function main() {
+  const ensured = await ensureStrictCount(targetStrict, maxPullRuns);
+  const evidenceItems = ensured.evidence;
+  const playwrightItems = await collectPlaywrightArtifacts();
+  const merged = [...evidenceItems, ...playwrightItems];
 
-const bundle = await buildBundle(merged, ensured.strict, targetStrict);
-if (ensured.strict < targetStrict) {
-  throw new Error(
-    `Strict evidence target not met. strict=${ensured.strict}, target=${targetStrict}, bundle=${bundle.zipPath}`
-  );
+  const bundle = await buildBundle(merged, ensured.strict, targetStrict);
+  if (ensured.strict < targetStrict) {
+    throw new Error(
+      `Strict evidence target not met. strict=${ensured.strict}, target=${targetStrict}, bundle=${bundle.zipPath}`
+    );
+  }
+
+  console.log(`[EVIDENCE_BUNDLE] strict=${ensured.strict}/${targetStrict} items=${merged.length}`);
+  console.log(`[EVIDENCE_BUNDLE] manifest=${bundle.manifestPath}`);
+  console.log(`[EVIDENCE_BUNDLE] zip=${bundle.zipPath}`);
 }
 
-console.log(`[EVIDENCE_BUNDLE] strict=${ensured.strict}/${targetStrict} items=${merged.length}`);
-console.log(`[EVIDENCE_BUNDLE] manifest=${bundle.manifestPath}`);
-console.log(`[EVIDENCE_BUNDLE] zip=${bundle.zipPath}`);
+const invokedPath = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : "";
+if (import.meta.url === invokedPath) {
+  await main();
+}
