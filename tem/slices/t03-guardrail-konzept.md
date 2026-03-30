@@ -106,6 +106,15 @@ Der Check schreibt einen kompakten Report mit:
 - Owner
 - Offene Restarbeit
 
+## Praxisvoraussetzungen fuer echte Durchsetzung
+Diese Regeln sind nur dann belastbar, wenn sie eine technische Source of Truth haben. Ohne das bleibt es eine gut geschriebene Drohung.
+
+- Es braucht eine zentrale, maschinenlesbare Wrapper-Registry fuer alle Pflichtfelder: `wrapperId`, `owner`, `ticketRef`, `canonicalTarget`, `introducedAt`, `expiresAt`, `state`, `reason`, `lastObservedAt`.
+- `lastObservedAt` darf nur aus Runtime-Events oder Audit-Logs kommen. Manuelle Pflege ist kein belastbarer Prozess.
+- `today` im CI-Check wird auf UTC normalisiert, damit Ablaufdaten nicht von lokaler Maschinenzeit oder Zeitzone abhangen.
+- `check:wrapper-guardrails` muss als eigener npm-Check existieren und in `check:required`, den Required Checks und den Branch-Protection-Kontext eingebunden sein.
+- Owner- und Eskalationspfad muessen aus der Registry oder einer dedizierten Ownership-Matrix eindeutig aufloesbar sein.
+
 ## Eskalationspfad
 Wenn ein Wrapper am Ablauf kratzt oder drueber ist, wird nicht diskutiert wie in einer kaputten Ausschusssitzung. Dann greift ein klarer Pfad.
 
@@ -131,7 +140,10 @@ T03 ist abgeschlossen, wenn:
 - Wrapper-Metadaten verbindlich definiert sind,
 - Flag-Namespace und TTL-Regeln feststehen,
 - ein CI-Policy-Check beschrieben ist,
-- der Eskalationspfad fuer Warnung, Blockade und Ausnahme festgelegt ist.
+- der Eskalationspfad fuer Warnung, Blockade und Ausnahme festgelegt ist,
+- eine maschinenlesbare Registry existiert,
+- `check:wrapper-guardrails` im Required-Checks-Pfad laeuft,
+- Owner-Aufloesung und UTC-Ablaufgrenze technisch umgesetzt sind.
 
 ## Kurzfassung
 Wrapper sind nur noch mit Zeitstempel, Ticket und Exit-Plan geduldet. Ohne diese drei Dinge ist der Wrapper kein Uebergang, sondern technischer Muell mit Marketing-Label.

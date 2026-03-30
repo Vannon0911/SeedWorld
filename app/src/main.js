@@ -15,7 +15,6 @@ const renderManager = new RenderManager({ viewportManager }).start();
 const ui = new UIController({
   kernel,
   gameLogic,
-  viewportManager,
   renderManager,
   kernelCommand: executeKernelCommand,
   elements: {

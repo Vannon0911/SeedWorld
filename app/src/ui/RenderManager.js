@@ -9,6 +9,28 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
+export const DEFAULT_GRID_BOUNDS = Object.freeze({
+  width: 16,
+  height: 12
+});
+
+export const DEFAULT_TILE_SIZE = 84;
+
+export function normalizeRenderGrid(
+  { width, height, tileSize } = {},
+  fallback = {
+    width: DEFAULT_GRID_BOUNDS.width,
+    height: DEFAULT_GRID_BOUNDS.height,
+    tileSize: DEFAULT_TILE_SIZE
+  }
+) {
+  return {
+    width: Math.max(1, Math.round(toFiniteNumber(width, fallback.width))),
+    height: Math.max(1, Math.round(toFiniteNumber(height, fallback.height))),
+    tileSize: Math.max(1, Math.round(toFiniteNumber(tileSize, fallback.tileSize)))
+  };
+}
+
 export class RenderManager {
   constructor({ viewportManager = null } = {}) {
     this.viewportManager = viewportManager && typeof viewportManager.subscribe === "function" ? viewportManager : null;
@@ -21,11 +43,8 @@ export class RenderManager {
         height: 0,
         devicePixelRatio: 1
       },
-      tileSize: 84,
-      gridBounds: {
-        width: 16,
-        height: 12
-      }
+      tileSize: DEFAULT_TILE_SIZE,
+      gridBounds: { ...DEFAULT_GRID_BOUNDS }
     };
   }
 
@@ -75,11 +94,20 @@ export class RenderManager {
   }
 
   setGrid({ width, height, tileSize } = {}) {
+    const nextGrid = normalizeRenderGrid(
+      { width, height, tileSize },
+      {
+        width: this.state.gridBounds.width,
+        height: this.state.gridBounds.height,
+        tileSize: this.state.tileSize
+      }
+    );
+
     this.state.gridBounds = {
-      width: Math.max(1, Math.round(toFiniteNumber(width, this.state.gridBounds.width))),
-      height: Math.max(1, Math.round(toFiniteNumber(height, this.state.gridBounds.height)))
+      width: nextGrid.width,
+      height: nextGrid.height
     };
-    this.state.tileSize = Math.max(1, Math.round(toFiniteNumber(tileSize, this.state.tileSize)));
+    this.state.tileSize = nextGrid.tileSize;
     this.#emit();
   }
 

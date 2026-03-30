@@ -169,7 +169,11 @@ function buildLinks(tiles) {
  * @param {{x:number,y:number}} tile - Tile coordinates to locate.
  * @returns {{x:number,y:number}|null} The center `{ x, y }` in pixels relative to `root`, or `null` if no matching tile element exists.
  */
-function getTileCenter(root, tile) {
+function getTileCenter(root, tile, renderManager = null) {
+  if (renderManager && typeof renderManager.worldToScreen === "function") {
+    return renderManager.worldToScreen(tile.x, tile.y);
+  }
+
   const node = root.querySelector(`.tile[data-x="${tile.x}"][data-y="${tile.y}"]`);
   if (!node) {
     return null;
@@ -194,12 +198,12 @@ function getTileCenter(root, tile) {
  * @param {Array<Object>} tiles - Array of tile objects (each with at least `x`, `y`, and `type`) used to build links.
  * @param {number} dashOffset - Value assigned to each line's `stroke-dashoffset` style.
  */
-function drawConnections(svg, root, tiles, dashOffset) {
+function drawConnections(svg, root, tiles, dashOffset, renderManager = null) {
   svg.replaceChildren();
 
   for (const link of buildLinks(tiles.filter((tile) => DRAW_TYPES.has(tile.type)))) {
-    const from = getTileCenter(root, link.from);
-    const to = getTileCenter(root, link.to);
+    const from = getTileCenter(root, link.from, renderManager);
+    const to = getTileCenter(root, link.to, renderManager);
     if (!from || !to) {
       continue;
     }
@@ -287,7 +291,7 @@ function updateDebug(selected, tile, linksCount) {
  * @param {Object} [options] - Optional configuration.
  * @param {Object|null} [options.viewportManager=null] - Optional viewport manager with a `subscribe` function; when provided, its subscription is used to trigger SVG resize and connection redraws. If omitted, the controller falls back to window resize events.
  */
-export function installRadialBuildController({ viewportManager = null } = {}) {
+export function installRadialBuildController({ viewportManager = null, renderManager = null } = {}) {
   waitForGridRoot().then(({ root, ui }) => {
     if (!ui || typeof ui.applyGameAction !== "function") {
       throw new Error("[RADIAL_BUILD] seedWorldUI.applyGameAction fehlt.");
@@ -302,6 +306,12 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
     let targetTile = null;
     let dashOffset = 0;
     let lastSignature = "";
+    const geometryManager =
+      renderManager && typeof renderManager.worldToScreen === "function"
+        ? renderManager
+        : window.seedWorldRenderManager && typeof window.seedWorldRenderManager.worldToScreen === "function"
+          ? window.seedWorldRenderManager
+          : null;
 
     const optionNodes = () => Array.from(menu.querySelectorAll(".radial-option"));
 
@@ -327,13 +337,23 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
       }
     }
 
-    function openMenuAt(tileEl) {
-      const tileRect = tileEl.getBoundingClientRect();
-      const rootRect = root.getBoundingClientRect();
-      const cx = tileRect.left - rootRect.left + tileRect.width / 2;
-      const cy = tileRect.top - rootRect.top + tileRect.height / 2;
-      menu.style.left = `${cx}px`;
-      menu.style.top = `${cy}px`;
+    function openMenuAt(tileEl, tileCoords = null) {
+      let center = null;
+      if (tileCoords && geometryManager && typeof geometryManager.worldToScreen === "function") {
+        center = geometryManager.worldToScreen(tileCoords.x, tileCoords.y);
+      }
+
+      if (!center) {
+        const tileRect = tileEl.getBoundingClientRect();
+        const rootRect = root.getBoundingClientRect();
+        center = {
+          x: tileRect.left - rootRect.left + tileRect.width / 2,
+          y: tileRect.top - rootRect.top + tileRect.height / 2
+        };
+      }
+
+      menu.style.left = `${center.x}px`;
+      menu.style.top = `${center.y}px`;
       menu.hidden = false;
       setActive(selectedType);
     }
@@ -357,7 +377,22 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
       }
 
       lastSignature = signature;
-      drawConnections(svg, root, tiles, dashOffset);
+      drawConnections(svg, root, tiles, dashOffset, geometryManager);
+    }
+
+    function resolveTileFromPointer(event) {
+      const tileEl = event.target?.closest?.(".tile");
+      if (!tileEl || !root.contains(tileEl)) {
+        return null;
+      }
+
+      const x = Number(tileEl.dataset.x);
+      const y = Number(tileEl.dataset.y);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        return null;
+      }
+
+      return { x, y, el: tileEl };
     }
 
     /**
@@ -404,21 +439,15 @@ export function installRadialBuildController({ viewportManager = null } = {}) {
         return;
       }
 
-      const tileEl = event.target?.closest?.(".tile");
-      if (!tileEl || !root.contains(tileEl)) {
+      const tile = resolveTileFromPointer(event);
+      if (!tile) {
         closeMenu();
         return;
       }
 
-      const x = Number(tileEl.dataset.x);
-      const y = Number(tileEl.dataset.y);
-      if (!Number.isFinite(x) || !Number.isFinite(y)) {
-        return;
-      }
-
-      targetTile = { x, y, el: tileEl, key: keyFor(x, y) };
-      openMenuAt(tileEl);
-      updateDebug(selectedType, { x, y }, 0);
+      targetTile = { x: tile.x, y: tile.y, el: tile.el, key: keyFor(tile.x, tile.y) };
+      openMenuAt(tile.el, { x: tile.x, y: tile.y });
+      updateDebug(selectedType, { x: tile.x, y: tile.y }, 0);
     });
 
     const viewport = viewportManager || window.seedWorldViewportManager;

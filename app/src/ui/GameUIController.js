@@ -1,6 +1,7 @@
 import { BaseUIController } from './BaseUIController.js';
 import { TileGridRenderer } from './TileGridRenderer.js';
 import { ResourceBar } from './events.js';
+import { DEFAULT_TILE_SIZE } from './RenderManager.js';
 
 /**
  * Game UI Controller with Plugin Architecture
@@ -112,7 +113,7 @@ export class GameUIController extends BaseUIController {
     
     // Initialize tile grid renderer - pass the container element directly
     const world = this.currentState.world;
-    this.tileGridRenderer = new TileGridRenderer(gameWorld, world.width, world.height, 84);
+    this.tileGridRenderer = new TileGridRenderer(gameWorld, world.width, world.height, DEFAULT_TILE_SIZE);
     
     this.tileGridRenderer.onTileClick(({ x, y }) => {
       this.selectedTile = { x, y };

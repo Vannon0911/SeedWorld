@@ -322,7 +322,7 @@
         });
       }
 
-      async function renderWorldTerrain({ viewportManager = null } = {}) {
+      async function renderWorldTerrain({ viewportManager = null, renderManager = null } = {}) {
         const worldContainer = document.getElementById("world-container");
         if (!worldContainer) {
           return;
@@ -333,9 +333,13 @@
         let resizeTimer = null;
 
         const readTerrainParams = () => {
-          const width = Number(ui?.tileGridRenderer?.width) || 16;
-          const height = Number(ui?.tileGridRenderer?.height) || 12;
-          const tileSize = Number(ui?.tileGridRenderer?.tileSize) || 84;
+          const snapshot =
+            renderManager && typeof renderManager.getSnapshot === "function"
+              ? renderManager.getSnapshot()
+              : null;
+          const width = Number(snapshot?.gridBounds?.width) || Number(ui?.tileGridRenderer?.width) || 16;
+          const height = Number(snapshot?.gridBounds?.height) || Number(ui?.tileGridRenderer?.height) || 12;
+          const tileSize = Number(snapshot?.tileSize) || Number(ui?.tileGridRenderer?.tileSize) || 84;
           const worldSeed =
             typeof ui?.currentState?.world?.seed === "string" && ui.currentState.world.seed.trim()
               ? ui.currentState.world.seed.trim()
@@ -411,8 +415,11 @@
 
         renderOnce();
 
-        if (viewportManager && typeof viewportManager.subscribe === "function") {
-          viewportManager.subscribe(
+        const resizeSource =
+          renderManager && typeof renderManager.subscribe === "function" ? renderManager : viewportManager;
+
+        if (resizeSource && typeof resizeSource.subscribe === "function") {
+          resizeSource.subscribe(
             () => {
               if (resizeTimer) {
                 window.clearTimeout(resizeTimer);
@@ -428,9 +435,10 @@
       }
 
       const viewportManager = window.seedWorldViewportManager || null;
+      const renderManager = window.seedWorldRenderManager || null;
 
-      await renderWorldTerrain({ viewportManager });
-      installRadialBuildController({ viewportManager });
+      await renderWorldTerrain({ viewportManager, renderManager });
+      installRadialBuildController({ viewportManager, renderManager });
     </script>
   </body>
 </html>
