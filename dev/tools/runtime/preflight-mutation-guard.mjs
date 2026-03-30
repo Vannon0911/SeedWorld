@@ -67,9 +67,19 @@ function currentHead() {
     encoding: "utf8"
   });
   if (result.status !== 0) {
+    console.warn(
+      `[PREFLIGHT_GUARD] warning: could not resolve HEAD (status=${String(result.status)}, stderr=${String(
+        result.stderr || ""
+      ).trim() || "<empty>"})`
+    );
     return "NO_HEAD";
   }
-  return String(result.stdout || "").trim() || "NO_HEAD";
+  const head = String(result.stdout || "").trim();
+  if (!head) {
+    console.warn("[PREFLIGHT_GUARD] warning: git rev-parse HEAD returned empty stdout");
+    return "NO_HEAD";
+  }
+  return head;
 }
 
 function deriveToken(seed, head, label) {

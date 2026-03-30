@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
+// This payload uses the classic branch protection REST API even though the JSON
+// is stored under .github/rulesets for repo governance discoverability.
 const RULESET_PATH = ".github/rulesets/main-protection.json";
 const TARGET_BRANCH = "main";
 
@@ -28,7 +30,7 @@ function getRepoPath() {
   return repo;
 }
 
-function normalizePayload(rawJson) {
+function validatePayload(rawJson) {
   const payload = JSON.parse(rawJson);
   if (!payload || typeof payload !== "object") {
     throw new Error(`invalid ruleset payload in ${RULESET_PATH}`);
@@ -38,7 +40,7 @@ function normalizePayload(rawJson) {
 
 function main() {
   const repo = getRepoPath();
-  normalizePayload(readFileSync(RULESET_PATH, "utf8"));
+  validatePayload(readFileSync(RULESET_PATH, "utf8"));
 
   gh([
     "api",
