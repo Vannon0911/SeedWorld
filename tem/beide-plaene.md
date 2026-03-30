@@ -1,6 +1,10 @@
 # Canvas-First Implementierungsplan (atomare Tasks)
 
+<<<<<<< CodexLokal
 ## [REVIEW] CF-001
+=======
+## [CHECK] CF-001
+>>>>>>> main
 **Ziel:** Bestand aufnehmen und Zielarchitektur fuer `RenderManager` festziehen (Canvas-first, gemeinsamer Koordinatenraum).
 
 **Konkrete Dateien/Module:** `zu verifizieren` (vermutlich Rendering-Entry, Viewport-Logic, Input-Handler)
@@ -11,7 +15,11 @@
 
 **Abhaengigkeiten/Sequenz:** Starttask, keine Abhaengigkeit.
 
+<<<<<<< CodexLokal
 ## [REVIEW] CF-002
+=======
+## [CHECK] CF-002
+>>>>>>> main
 **Ziel:** `RenderManager` als Source of Truth einfuehren (nur State/Math, noch kein komplettes Rendering).
 
 **Konkrete Dateien/Module:** `zu verifizieren` (neues `RenderManager`-Modul + bestehende Viewport/Coord-Utilities)
@@ -141,8 +149,13 @@
 
 | Task-ID | Ziel | Konkrete Dateien/Module | Abnahmekriterium | Risiko/Blocker |
 |---|---|---|---|---|
+<<<<<<< CodexLokal
 | [REVIEW] T01 | Vollstaendige Inventur aller Legacy-/Wrapper-/Fallback-Stellen erstellen (inkl. Referenzgraph). | `BaseUIController.js`, `MainMenuController.js`, `UIController.js`, runtime `preflight-mutation-guard` (Pfad zu verifizieren), `app/public/game.html`, world-render-Pfad (zu verifizieren), `legacy/UNVERFID` | Inventur-Dokument mit Fundstellen + Callern + "Delete/Migrate/Keep"-Status liegt vor; `rg`-basierte Referenzliste vorhanden. | Versteckte dynamische Imports/indirekte Events werden uebersehen. |
 | [REVIEW] T02 | Fuer jedes Feature genau einen kanonischen Primaerpfad festlegen (Target-API-Matrix). | API-/Interface-Definitionen (zu verifizieren), Event-Wrapper-Module (zu verifizieren) | Mapping "Feature -> kanonische API -> zu migrierende Caller" freigegeben; keine offenen Mehrdeutigkeiten. | Unklare Ownership/fehlende Spezifikation der Ziel-API. |
+=======
+| [CHECK] T01 | Vollstaendige Inventur aller Legacy-/Wrapper-/Fallback-Stellen erstellen (inkl. Referenzgraph). | `BaseUIController.js`, `MainMenuController.js`, `UIController.js`, runtime `preflight-mutation-guard` (Pfad zu verifizieren), `app/public/game.html`, world-render-Pfad (zu verifizieren), `legacy/UNVERFID` | Inventur-Dokument mit Fundstellen + Callern + "Delete/Migrate/Keep"-Status liegt vor; `rg`-basierte Referenzliste vorhanden. | Versteckte dynamische Imports/indirekte Events werden uebersehen. |
+| [CHECK] T02 | Fuer jedes Feature genau einen kanonischen Primaerpfad festlegen (Target-API-Matrix). | API-/Interface-Definitionen (zu verifizieren), Event-Wrapper-Module (zu verifizieren) | Mapping "Feature -> kanonische API -> zu migrierende Caller" freigegeben; keine offenen Mehrdeutigkeiten. | Unklare Ownership/fehlende Spezifikation der Ziel-API. |
+>>>>>>> main
 | [CHECK] T03 | Guardrail-Mechanik einfuehren: Wrapper mit Ablaufdatum/Removal-Flag markieren, keine Big-Bang-Loeschung. | Wrapper/Adapter-Module (zu verifizieren), ggf. zentrale Konfig/Feature-Flags (zu verifizieren) | Jeder verbleibende Wrapper hat Expiry-Date + Ticket-Referenz; CI schlaegt bei abgelaufenem Wrapper an (oder klarer Report). | CI-Integration fehlt; organisatorische Disziplin noetig. |
 | T04 | Slice 1: Verbraucher von `BaseUIController` auf kanonische API migrieren (ein Feature-Cluster). | `BaseUIController.js` + konkrete Consumer-Module (zu verifizieren) | Fuer den gewaehlten Cluster keine Wrapper-Aufrufe mehr; Tests gruen (`check:required`, `npm test`, `test:playwright:fulltiles`). | Seiteneffekte in UI-Lifecycle/State-Sync. |
 | T05 | Slice 2: Verbraucher von `MainMenuController` migrieren (ein Feature-Cluster). | `MainMenuController.js` + Consumer (zu verifizieren) | Menue-Interaktionen laufen ohne Fallback-Branch im migrierten Cluster; Browser-Interaktionstest gruen. | Regressionen in Navigation/Hotkeys. |

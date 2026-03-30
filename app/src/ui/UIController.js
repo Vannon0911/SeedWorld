@@ -112,7 +112,11 @@ function resolveGridSpecFromState(state, fallback = {}) {
 }
 
 export class UIController {
+<<<<<<< CodexLokal
   constructor({ kernel, gameLogic, kernelCommand, renderManager = null, elements = {} } = {}) {
+=======
+  constructor({ kernel, gameLogic, kernelCommand, viewportManager = null, renderManager = null, elements = {} } = {}) {
+>>>>>>> main
     if (!kernel || typeof kernel.plan !== "function" || typeof kernel.apply !== "function") {
       throw new Error("[UI_CONTROLLER] kernel mit plan/apply erforderlich.");
     }
@@ -128,6 +132,10 @@ export class UIController {
     this.kernel = kernel;
     this.gameLogic = gameLogic;
     this.kernelCommand = kernelCommand;
+<<<<<<< CodexLokal
+=======
+    this.viewportManager = viewportManager && typeof viewportManager.subscribe === "function" ? viewportManager : null;
+>>>>>>> main
     this.renderManager = renderManager && typeof renderManager.subscribe === "function" ? renderManager : null;
     this.unsubscribeViewport = null;
     this.elements = elements;
@@ -311,6 +319,7 @@ export class UIController {
       return;
     }
 
+<<<<<<< CodexLokal
     const snapshot = this.#getRenderSnapshot();
     const shouldRebuild =
       !this.tileGridRenderer ||
@@ -335,6 +344,41 @@ export class UIController {
 
   #bindViewport() {
     if (this.unsubscribeViewport || !this.renderManager) {
+=======
+    this.tileGridRenderer = new TileGridRenderer(container, 16, 12, 84);
+    if (this.renderManager && typeof this.renderManager.setGrid === "function") {
+      this.renderManager.setGrid({
+        width: this.tileGridRenderer.width,
+        height: this.tileGridRenderer.height,
+        tileSize: this.tileGridRenderer.tileSize
+      });
+    }
+    this.tileGridRenderer.onTileClick(({ tile, x, y }) => {
+      this.#renderStatus(`tile:${x},${y}`);
+      this.#renderSummary({
+        mode: "tile-click",
+        tile
+      });
+    });
+  }
+
+  #bindViewport() {
+    if (this.unsubscribeViewport) {
+      return;
+    }
+
+    if (this.renderManager) {
+      this.unsubscribeViewport = this.renderManager.subscribe((snapshot) => {
+        if (this.tileGridRenderer && typeof this.tileGridRenderer.onViewportChange === "function") {
+          this.tileGridRenderer.onViewportChange(snapshot.viewport);
+        }
+        this.#renderGrid();
+      });
+      return;
+    }
+
+    if (!this.viewportManager) {
+>>>>>>> main
       return;
     }
 

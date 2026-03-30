@@ -15,6 +15,10 @@ const renderManager = new RenderManager({ viewportManager }).start();
 const ui = new UIController({
   kernel,
   gameLogic,
+<<<<<<< CodexLokal
+=======
+  viewportManager,
+>>>>>>> main
   renderManager,
   kernelCommand: executeKernelCommand,
   elements: {

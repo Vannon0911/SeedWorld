@@ -31,12 +31,16 @@ function getRepoPath() {
 }
 
 function validatePayload(rawJson) {
+<<<<<<< CodexLokal
   let payload;
   try {
     payload = JSON.parse(rawJson);
   } catch (error) {
     throw new Error(`Failed to parse ${RULESET_PATH}: ${String(error?.message || error)}`, { cause: error });
   }
+=======
+  const payload = JSON.parse(rawJson);
+>>>>>>> main
   if (!payload || typeof payload !== "object") {
     throw new Error(`invalid ruleset payload in ${RULESET_PATH}`);
   }
