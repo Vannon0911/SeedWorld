@@ -163,11 +163,14 @@ function buildLinks(tiles) {
 }
 
 /**
- * Get the center point of the tile DOM element identified by its grid coordinates, relative to the root element.
+ * Compute the tile's center point in pixels relative to the provided root element.
  *
- * @param {Element} root - Container element that contains tile elements.
- * @param {{x:number,y:number}} tile - Tile coordinates to locate.
- * @returns {{x:number,y:number}|null} The center `{ x, y }` in pixels relative to `root`, or `null` if no matching tile element exists.
+ * If a `renderManager` with a `worldToScreen` method is provided, that method is used to obtain the screen-space coordinates for the tile; otherwise the function locates the tile DOM node inside `root` and computes its center from layout.
+ *
+ * @param {Element} root - Container element that contains tile elements; used as the coordinate origin when falling back to DOM geometry.
+ * @param {{x:number,y:number}} tile - Grid coordinates of the tile to locate.
+ * @param {Object|null} [renderManager=null] - Optional object exposing `worldToScreen(x, y)` to convert world coordinates to screen coordinates.
+ * @returns {{x:number,y:number}|null} The center `{ x, y }` in pixels relative to `root`, or `null` if the tile cannot be resolved. 
  */
 function getTileCenter(root, tile, renderManager = null) {
   if (renderManager && typeof renderManager.worldToScreen === "function") {
@@ -188,15 +191,16 @@ function getTileCenter(root, tile, renderManager = null) {
 }
 
 /**
- * Render connection lines in an SVG between the centers of drawable tile links.
+ * Draw connection lines in the given SVG between the centers of linked drawable tiles.
  *
- * Clears the SVG and draws one line for each nearest-link pair built from the provided tiles;
- * links whose tile DOM elements cannot be located are skipped.
+ * Clears the SVG and appends one `<line>` per link produced from the provided tiles; links whose
+ * tile centers cannot be resolved are skipped.
  *
  * @param {SVGElement} svg - SVG element whose children will be replaced with connection lines.
  * @param {Element} root - Root DOM element containing tile elements used to compute center coordinates.
  * @param {Array<Object>} tiles - Array of tile objects (each with at least `x`, `y`, and `type`) used to build links.
  * @param {number} dashOffset - Value assigned to each line's `stroke-dashoffset` style.
+ * @param {Object|null} renderManager - Optional geometry manager exposing `worldToScreen(x,y)` to compute centers; if not provided, DOM geometry is used.
  */
 function drawConnections(svg, root, tiles, dashOffset, renderManager = null) {
   svg.replaceChildren();
@@ -286,10 +290,13 @@ function updateDebug(selected, tile, linksCount) {
 }
 
 /**
- * Install an interactive radial build controller on the tile grid, providing a radial menu for placing or clearing resources, drawing animated connections, and responding to viewport changes.
+ * Install an interactive radial build controller on the tile grid that provides a radial menu for placing or clearing tiles, draws animated connections between relevant tiles, and reacts to viewport and resize events.
+ *
+ * This function waits for the grid root and game UI to become available, adds an SVG connection layer and a radial menu to the grid root, and wires event handlers for pointer interaction, viewport changes, and an animation loop. It requires the game UI to expose `applyGameAction` to perform tile updates.
  *
  * @param {Object} [options] - Optional configuration.
- * @param {Object|null} [options.viewportManager=null] - Optional viewport manager with a `subscribe` function; when provided, its subscription is used to trigger SVG resize and connection redraws. If omitted, the controller falls back to window resize events.
+ * @param {Object|null} [options.viewportManager=null] - Optional viewport manager; when it exposes `subscribe`, that subscription is used to trigger SVG resize and connection redraws. If omitted, the controller falls back to window resize events.
+ * @param {Object|null} [options.renderManager=null] - Optional render/geometry manager that exposes `worldToScreen(x, y)`; when provided it is used to position the radial menu and compute connection endpoints in screen space.
  */
 export function installRadialBuildController({ viewportManager = null, renderManager = null } = {}) {
   waitForGridRoot().then(({ root, ui }) => {
@@ -337,6 +344,17 @@ export function installRadialBuildController({ viewportManager = null, renderMan
       }
     }
 
+    /**
+     * Position and show the radial menu centered on a tile.
+     *
+     * If a geometry manager exposing `worldToScreen(x, y)` is available, the provided
+     * `tileCoords` (world coordinates) will be used to compute the screen position;
+     * otherwise the DOM geometry of `tileEl` is used as a fallback. The menu is made
+     * visible and the current selection is applied.
+     *
+     * @param {Element} tileEl - The tile DOM element used for fallback positioning.
+     * @param {{x: number, y: number}|null} [tileCoords=null] - Optional world coordinates of the tile to use for positioning when available.
+     */
     function openMenuAt(tileEl, tileCoords = null) {
       let center = null;
       if (tileCoords && geometryManager && typeof geometryManager.worldToScreen === "function") {
@@ -366,8 +384,8 @@ export function installRadialBuildController({ viewportManager = null, renderMan
     }
 
     /**
-     * Redraws the connection lines when the tile layout has changed or when forced.
-     * @param {boolean} force - If `true`, always redraw regardless of whether the tile signature changed.
+     * Update connection lines for the current tiles, skipping work when the tile layout is unchanged unless forced.
+     * @param {boolean} force - If `true`, redraw even when the tile signature has not changed.
      */
     function redrawConnections(force = false) {
       const tiles = getTilesRef(ui);
@@ -380,6 +398,11 @@ export function installRadialBuildController({ viewportManager = null, renderMan
       drawConnections(svg, root, tiles, dashOffset, geometryManager);
     }
 
+    /**
+     * Finds the tile element and numeric coordinates associated with a pointer event.
+     * @param {Event} event - Pointer/mouse event whose target is searched for a parent `.tile` element.
+     * @returns {{x: number, y: number, el: Element}|null} An object containing numeric `x` and `y` coordinates and the tile element `el`, or `null` if no valid tile is found.
+     */
     function resolveTileFromPointer(event) {
       const tileEl = event.target?.closest?.(".tile");
       if (!tileEl || !root.contains(tileEl)) {

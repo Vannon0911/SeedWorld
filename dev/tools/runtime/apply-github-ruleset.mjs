@@ -21,6 +21,11 @@ function gh(args, opts) {
   return run("gh", args, opts);
 }
 
+/**
+ * Resolve the current GitHub repository identifier in owner/name format.
+ * @returns {string} The repository identifier in 'owner/name' format.
+ * @throws {Error} If the `gh` CLI does not return a non-empty `nameWithOwner` value containing '/'.
+ */
 function getRepoPath() {
   const out = gh(["repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner"]);
   const repo = String(out.stdout || "").trim();
@@ -30,6 +35,15 @@ function getRepoPath() {
   return repo;
 }
 
+/**
+ * Validate and parse the ruleset JSON read from RULESET_PATH.
+ *
+ * Attempts to parse the provided JSON string and ensures the result is a non-null object.
+ * @param {string} rawJson - The raw JSON string read from RULESET_PATH.
+ * @returns {Object} The parsed ruleset payload object.
+ * @throws {Error} If JSON parsing fails (error message includes RULESET_PATH and original error as `cause`).
+ * @throws {Error} If the parsed value is null or not an object.
+ */
 function validatePayload(rawJson) {
   let payload;
   try {
@@ -43,6 +57,12 @@ function validatePayload(rawJson) {
   return payload;
 }
 
+/**
+ * Apply branch protection and require signed commits on the repository's main branch.
+ *
+ * Reads and validates the ruleset JSON at RULESET_PATH, updates branch protection for TARGET_BRANCH
+ * via the GitHub API using that ruleset, enables required commit signatures, and logs the result.
+ */
 function main() {
   const repo = getRepoPath();
   validatePayload(readFileSync(RULESET_PATH, "utf8"));

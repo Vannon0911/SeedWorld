@@ -59,6 +59,11 @@ function setTextContent(element, value) {
   }
 }
 
+/**
+ * Toggle the disabled state on a list of DOM elements.
+ * @param {Iterable<HTMLElement|null|undefined>} elements - Iterable of elements; null/undefined entries are ignored.
+ * @param {boolean} disabled - Whether to disable (`true`) or enable (`false`) the provided elements.
+ */
 function setDisabled(elements, disabled) {
   for (const element of elements) {
     if (element) {
@@ -67,6 +72,12 @@ function setDisabled(elements, disabled) {
   }
 }
 
+/**
+ * Convert a numeric value to a positive integer or return a fallback.
+ * @param {number} value - The value to normalize into a positive integer.
+ * @param {?number} [fallback=null] - The value to return when `value` is not a finite number or not greater than zero.
+ * @returns {?number} The truncated integer greater than zero if `value` is finite and > 0, otherwise `fallback`.
+ */
 function toPositiveInteger(value, fallback = null) {
   if (!Number.isFinite(value)) {
     return fallback;
@@ -76,6 +87,15 @@ function toPositiveInteger(value, fallback = null) {
   return normalized > 0 ? normalized : fallback;
 }
 
+/**
+ * Derives a renderable grid specification (width, height, tileSize) from the provided state, using fallback values when the state does not supply valid dimensions.
+ * @param {Object} state - Game/UI state that may contain `world.size` (with `width`/`height`) or `world.tiles` (array of tiles with numeric `x`/`y`).
+ * @param {Object} [fallback={}] - Fallback values used when the state does not provide valid numbers.
+ * @param {number} [fallback.width] - Fallback width to use when width cannot be derived from state.
+ * @param {number} [fallback.height] - Fallback height to use when height cannot be derived from state.
+ * @param {number} [fallback.tileSize] - Fallback tile size to use when not specified.
+ * @returns {{width: number, height: number, tileSize: number}} An object containing positive integer `width` and `height` (derived from `state.world.size`, inferred from `state.world.tiles` as max coordinate + 1, or the provided fallbacks) and `tileSize` (from fallback or default).
+ */
 function resolveGridSpecFromState(state, fallback = {}) {
   const fallbackWidth = toPositiveInteger(fallback.width, DEFAULT_GRID_BOUNDS.width);
   const fallbackHeight = toPositiveInteger(fallback.height, DEFAULT_GRID_BOUNDS.height);

@@ -1,7 +1,20 @@
+/**
+ * Coerces a value to a finite number, using a fallback when it is not finite.
+ * @param {*} value - The value to check for finiteness.
+ * @param {number} [fallback=0] - The number to return when `value` is not finite.
+ * @returns {number} The original `value` if it is a finite number, otherwise `fallback`.
+ */
 function toFiniteNumber(value, fallback = 0) {
   return Number.isFinite(value) ? value : fallback;
 }
 
+/**
+ * Constrain a finite number to the inclusive range [min, max].
+ * @param {number} value - The number to constrain.
+ * @param {number} min - Lower bound of the range.
+ * @param {number} max - Upper bound of the range.
+ * @returns {number} `min` if `value` is not finite; otherwise `value` constrained to be between `min` and `max` (inclusive).
+ */
 function clamp(value, min, max) {
   if (!Number.isFinite(value)) {
     return min;
@@ -16,6 +29,13 @@ export const DEFAULT_GRID_BOUNDS = Object.freeze({
 
 export const DEFAULT_TILE_SIZE = 84;
 
+/**
+ * Normalize grid width, height, and tile size into integers at least 1.
+ *
+ * @param {{width?: number, height?: number, tileSize?: number}=} params - Input grid values to normalize.
+ * @param {{width: number, height: number, tileSize: number}=} fallback - Fallback values used when inputs are missing or not finite.
+ * @returns {{width: number, height: number, tileSize: number}} An object with `width`, `height`, and `tileSize` rounded to integers and constrained to be at least 1.
+ */
 export function normalizeRenderGrid(
   { width, height, tileSize } = {},
   fallback = {

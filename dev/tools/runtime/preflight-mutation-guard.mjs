@@ -61,6 +61,12 @@ function sha256(text) {
   return createHash("sha256").update(text).digest("hex");
 }
 
+/**
+ * Determine the current Git HEAD commit hash for the repository root.
+ *
+ * Logs a warning to stderr if the git command fails or produces no stdout.
+ * @returns {string} The trimmed HEAD commit hash, or the literal string `"NO_HEAD"` when the HEAD cannot be resolved.
+ */
 function currentHead() {
   const result = spawnSync("git", ["rev-parse", "HEAD"], {
     cwd: root,
@@ -82,6 +88,13 @@ function currentHead() {
   return head;
 }
 
+/**
+ * Derives a deterministic token that ties a seed, repository head, and label to the current policy version.
+ * @param {string} seed - Vault seed or secret material used as the entropy source.
+ * @param {string} head - Git commit identifier (HEAD) used to bind the token to a repository state.
+ * @param {string} label - Label to distinguish token purposes (e.g., "target" or a file-specific label).
+ * @returns {string} Hex-encoded SHA-256 digest of the concatenation `seed|head|label|policy:<POLICY_VERSION>`.
+ */
 function deriveToken(seed, head, label) {
   return sha256(`${seed}|${head}|${label}|policy:${POLICY_VERSION}`);
 }
