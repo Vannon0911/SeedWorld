@@ -74,12 +74,20 @@ function runNpmScript(scriptName) {
 }
 
 function mutationGuardArgs() {
+  const cliEnforce = process.argv.includes("--enforce");
+  const cliVerify = process.argv.includes("--verify");
   const envMode = String(process.env.PREFLIGHT_GUARD_MODE || "").trim().toLowerCase();
   if (envMode === "0" || envMode === "verify") {
     return ["--verify"];
   }
   if (envMode === "enforce") {
     return ["--enforce"];
+  }
+  if (cliEnforce) {
+    return ["--enforce"];
+  }
+  if (cliVerify) {
+    return ["--verify"];
   }
   return [];
 }

@@ -17,6 +17,10 @@ npm test
 npm run check:required
 ```
 
+## Rendering contract
+
+- World rendering should follow the Canvas-first contract from [Architecture](Architecture): Canvas for the game surface, SVG only for overlay effects, DOM only for HUD and panels.
+
 ## Daily commands
 
 - `npm run governance:verify`

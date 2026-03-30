@@ -13,7 +13,7 @@
     {
       "name": "UI Layer",
       "prefixes": ["app/src/ui/", "app/src/plugins/", "app/src/workers/", "app/src/browser/", "app/src/main.js", "app/src/styles.css", "app/src/patch-control.css", "app/src/SeedWorld_WorldGen.mjs", "app/public/"],
-      "purpose": "Rendering, input and browser-side orchestration"
+      "purpose": "Canvas-first rendering, optional SVG overlays, HUD/panel input and browser-side orchestration"
     },
     {
       "name": "Patch Tooling",

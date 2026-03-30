@@ -111,10 +111,19 @@ export function normalizeLock(lock) {
 
 export function normalizeVault(vault) {
   const raw = vault && typeof vault === "object" ? vault : {};
+  const inferredChallengeState =
+    raw.challengeState === "idle" || raw.challengeState === "armed" || raw.challengeState === "resolved"
+      ? raw.challengeState
+      : raw.lastGeneratedHead && raw.lastGeneratedHead !== raw.lastResolvedHead
+        ? "armed"
+        : raw.lastResolvedHead
+          ? "resolved"
+          : "idle";
   return {
     version: Number.isInteger(raw.version) ? raw.version : POLICY_VERSION,
     policyVersion: Number.isInteger(raw.policyVersion) ? raw.policyVersion : POLICY_VERSION,
     seed: String(raw.seed || ""),
+    challengeState: inferredChallengeState,
     lastGeneratedHead: String(raw.lastGeneratedHead || ""),
     lastGeneratedAt: String(raw.lastGeneratedAt || ""),
     lastGeneratedTarget: String(raw.lastGeneratedTarget || ""),
@@ -405,6 +414,7 @@ async function recordPendingFailure(vault, head, relPath) {
     ...vault,
     version: POLICY_VERSION,
     policyVersion: POLICY_VERSION,
+    challengeState: "armed",
     pendingFailureCount,
     lastFailureHead: head,
     lastFailureAt: nowIso,
@@ -454,6 +464,7 @@ async function clearLegacyStateIfSafe(lock, vault) {
     ...vault,
     version: POLICY_VERSION,
     policyVersion: POLICY_VERSION,
+    challengeState: "resolved",
     lastResolvedHead: lock.head || vault.lastResolvedHead,
     lastResolvedAt: new Date().toISOString(),
     lastResolvedTarget: lock.targetFile || vault.lastResolvedTarget,
@@ -508,6 +519,7 @@ async function clearStaleHeadDriftIfSafe(lock, vault, head) {
     ...vault,
     version: POLICY_VERSION,
     policyVersion: POLICY_VERSION,
+    challengeState: "resolved",
     pendingFailureCount: 0,
     lastFailureHead: "",
     lastFailureAt: "",
@@ -555,6 +567,7 @@ async function ensureInjectedLock(head, vault) {
     version: POLICY_VERSION,
     policyVersion: POLICY_VERSION,
     seed,
+    challengeState: "armed",
     lastGeneratedHead: head,
     lastGeneratedAt: lock.createdAt,
     lastGeneratedTarget: relPath,
@@ -620,6 +633,7 @@ async function resolveOrKeepLock(lock, vault, head) {
     ...vault,
     version: POLICY_VERSION,
     policyVersion: POLICY_VERSION,
+    challengeState: "resolved",
     lastResolvedHead: head,
     lastResolvedAt: new Date().toISOString(),
     lastResolvedTarget: lock.targetFile,
@@ -668,7 +682,7 @@ async function runVerifyMode(lock, vault, head) {
       throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
     }
 
-    if (vault.lastGeneratedHead === head && vault.lastResolvedHead !== head) {
+    if (vault.challengeState === "armed") {
       throw new Error(buildChallengeBlockMessage({ phase: "missing-lock" }));
     }
     console.log("[PREFLIGHT_GUARD] verify mode: no active attestation");
@@ -727,12 +741,8 @@ async function runEnforceMode(lock, vault, head) {
     throw new Error(`[UNRESOLVED_ATTESTATION] hidden fault signature present in ${activeFaultFile}`);
   }
 
-  if (vault.lastGeneratedHead === head) {
-    if (vault.lastResolvedHead === head) {
-      console.log(`[PREFLIGHT_GUARD] HEAD ${head.slice(0, 12)} bereits sauber attestiert; keine neue Injektion.`);
-      return;
-    }
-    throw new Error(buildChallengeBlockMessage({ phase: "metadata-drift" }));
+  if (vault.challengeState === "armed") {
+    throw new Error(buildChallengeBlockMessage({ phase: "missing-lock" }));
   }
 
   const armedTarget = await ensureInjectedLock(head, vault);

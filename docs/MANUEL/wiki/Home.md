@@ -11,6 +11,7 @@ SeedWorld LLM combines:
 - deterministic simulation behavior
 - fail-closed patch governance
 - strict separation between browser control-plane and execution authority
+- canvas-first world rendering with optional SVG overlays for effects
 
 ## Start Here
 

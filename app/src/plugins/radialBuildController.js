@@ -127,6 +127,7 @@ function buildLinks(tiles) {
    * @param {Array<Object>} sources - Array of source tile objects (each with numeric `x` and `y`).
    * @param {Array<Object>} targets - Array of target tile objects (each with numeric `x` and `y`).
    * @returns {Array<Object>} Array of pair objects in source iteration order; each pair has `from` (source tile) and `to` (matched target tile). Each target is matched at most once.
+   */
   function pairNearest(sources, targets) {
     const out = [];
     const remaining = new Set(targets.map((tile) => keyFor(tile.x, tile.y)));

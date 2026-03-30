@@ -5,7 +5,7 @@
   prefixes: app/src/kernel/
 - **Game Logic**: Action schema, mutation matrix, world/domain calculations
   prefixes: app/src/game/
-- **UI Layer**: Rendering, input and browser-side orchestration
+- **UI Layer**: Canvas-first rendering, optional SVG overlays, HUD/panel input and browser-side orchestration
   prefixes: app/src/ui/, app/src/plugins/, app/src/workers/, app/src/browser/, app/src/main.js, app/src/styles.css, app/src/patch-control.css, app/src/SeedWorld_WorldGen.mjs, app/public/
 - **Patch Tooling**: Terminal patch flow helpers, validation and manifest utilities
   prefixes: dev/tools/patch/, app/server/patchUtils.js
@@ -66,6 +66,10 @@
 - dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/08.kernel-replay-determinism.module.mjs
 - dev/tests/modules/09.game-logic-tile-action.module.mjs
+- dev/tests/modules/10.reduce-game-state.module.mjs
+- dev/tests/modules/11.radial-get-world-tile.module.mjs
+- dev/tests/modules/12.challenge-block-messages.module.mjs
+- dev/tests/modules/13.kernel-seed-signature.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
 - dev/tools/patch/import-dispatch.mjs
@@ -116,6 +120,10 @@
 - dev/tests/modules/07.preflight-mutation-guard.module.mjs
 - dev/tests/modules/08.kernel-replay-determinism.module.mjs
 - dev/tests/modules/09.game-logic-tile-action.module.mjs
+- dev/tests/modules/10.reduce-game-state.module.mjs
+- dev/tests/modules/11.radial-get-world-tile.module.mjs
+- dev/tests/modules/12.challenge-block-messages.module.mjs
+- dev/tests/modules/13.kernel-seed-signature.module.mjs
 - dev/tests/modules/15.worldgen-deterministic.module.mjs
 - dev/tools/llm-preflight.mjs
 - dev/tools/patch/import-dispatch.mjs

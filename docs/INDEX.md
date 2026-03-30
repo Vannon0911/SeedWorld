@@ -1,4 +1,4 @@
-# SeedWorld Docs Index (Synced: 2026-03-29)
+# SeedWorld Docs Index (Synced: 2026-03-30)
 
 Dieser Ordner enthaelt nur dieses Mapping plus Bereichsordner.
 

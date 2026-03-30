@@ -6,10 +6,11 @@ Dieser Stand wird automatisch vor Preflight/Commit synchronisiert.
 - Candidate Changes: `0`
 
 ## Commit-Kandidat (Name-Status)
-- Keine gestagten Änderungen erkannt.
+- Keine gestagten Aenderungen erkannt.
 
 ## Red-Actions (risikoreiche Treffer)
 - Keine risikoreichen Treffer im aktuellen Commit-Kandidaten.
 
 ## Regel
 - Jeder Commit muss diesen Stand widerspruchsfrei spiegeln.
+

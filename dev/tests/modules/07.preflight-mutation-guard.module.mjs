@@ -58,7 +58,10 @@ export async function test({ assert, root }) {
     postInjectHash: createDigest(injection.content),
     seedRef: "seed-ref"
   });
-  const vault = normalizeVault({ seed });
+  const idleVault = normalizeVault({ seed });
+  assert.equal(idleVault.challengeState, "idle", "fresh vault state must start idle");
+  const vault = normalizeVault({ seed, challengeState: "armed" });
+  assert.equal(vault.challengeState, "armed", "armed vault state must stay explicit for the verification pass");
 
   const unresolved = validateResolutionCandidate(lock, injection.content, vault.seed);
   assert.equal(unresolved.ok, false, "unchanged injected state must stay blocked");
@@ -89,6 +92,28 @@ export async function test({ assert, root }) {
     resolved.resolutionProof,
     buildResolutionProof(vault.seed, lock, resolved.currentHash),
     "resolution proof must be derived deterministically from the vault seed and state hashes"
+  );
+
+  const inferredArmedVault = normalizeVault({
+    seed,
+    lastGeneratedHead: head,
+    lastResolvedHead: ""
+  });
+  assert.equal(
+    inferredArmedVault.challengeState,
+    "armed",
+    "legacy vault metadata with unresolved generation must infer armed challenge state"
+  );
+
+  const inferredResolvedVault = normalizeVault({
+    seed,
+    lastGeneratedHead: head,
+    lastResolvedHead: head
+  });
+  assert.equal(
+    inferredResolvedVault.challengeState,
+    "resolved",
+    "legacy vault metadata with matching generation and resolution must infer resolved state"
   );
 
   const escalatedMessage = buildChallengeBlockMessage({

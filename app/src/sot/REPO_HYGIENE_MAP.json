@@ -36,7 +36,7 @@
         "app/src/SeedWorld_WorldGen.mjs",
         "app/public/"
       ],
-      "purpose": "Rendering, input and browser-side orchestration"
+      "purpose": "Canvas-first rendering, optional SVG overlays, HUD/panel input and browser-side orchestration"
     },
     {
       "name": "Patch Tooling",
@@ -67,8 +67,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 107,
-    "codeFiles": 93
+    "allFiles": 111,
+    "codeFiles": 97
   },
   "unownedFiles": [
     "app/src/llm/llm-gate-policy.json",
@@ -113,6 +113,10 @@
     "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
     "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
     "dev/tests/modules/09.game-logic-tile-action.module.mjs",
+    "dev/tests/modules/10.reduce-game-state.module.mjs",
+    "dev/tests/modules/11.radial-get-world-tile.module.mjs",
+    "dev/tests/modules/12.challenge-block-messages.module.mjs",
+    "dev/tests/modules/13.kernel-seed-signature.module.mjs",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/import-dispatch.mjs",
@@ -163,6 +167,10 @@
     "dev/tests/modules/07.preflight-mutation-guard.module.mjs",
     "dev/tests/modules/08.kernel-replay-determinism.module.mjs",
     "dev/tests/modules/09.game-logic-tile-action.module.mjs",
+    "dev/tests/modules/10.reduce-game-state.module.mjs",
+    "dev/tests/modules/11.radial-get-world-tile.module.mjs",
+    "dev/tests/modules/12.challenge-block-messages.module.mjs",
+    "dev/tests/modules/13.kernel-seed-signature.module.mjs",
     "dev/tests/modules/15.worldgen-deterministic.module.mjs",
     "dev/tools/llm-preflight.mjs",
     "dev/tools/patch/import-dispatch.mjs",
@@ -308,6 +316,10 @@
     "dev/tests/modules/07.preflight-mutation-guard.module.mjs": 0,
     "dev/tests/modules/08.kernel-replay-determinism.module.mjs": 0,
     "dev/tests/modules/09.game-logic-tile-action.module.mjs": 0,
+    "dev/tests/modules/10.reduce-game-state.module.mjs": 0,
+    "dev/tests/modules/11.radial-get-world-tile.module.mjs": 0,
+    "dev/tests/modules/12.challenge-block-messages.module.mjs": 0,
+    "dev/tests/modules/13.kernel-seed-signature.module.mjs": 0,
     "dev/tests/modules/15.worldgen-deterministic.module.mjs": 0,
     "dev/tools/llm-preflight.mjs": 0,
     "dev/tools/patch/apply.mjs": 0,
@@ -464,6 +476,10 @@
     "dev/tests/modules/07.preflight-mutation-guard.module.mjs": [],
     "dev/tests/modules/08.kernel-replay-determinism.module.mjs": [],
     "dev/tests/modules/09.game-logic-tile-action.module.mjs": [],
+    "dev/tests/modules/10.reduce-game-state.module.mjs": [],
+    "dev/tests/modules/11.radial-get-world-tile.module.mjs": [],
+    "dev/tests/modules/12.challenge-block-messages.module.mjs": [],
+    "dev/tests/modules/13.kernel-seed-signature.module.mjs": [],
     "dev/tests/modules/15.worldgen-deterministic.module.mjs": [],
     "dev/tools/llm-preflight.mjs": [],
     "dev/tools/patch/apply.mjs": [

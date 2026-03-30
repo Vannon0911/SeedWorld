@@ -19,7 +19,7 @@ export async function test({ assert, root }) {
     pathToFileURL(path.join(root, "dev/tools/runtime/preflight-mutation-guard.mjs")).href
   );
 
-  const { buildChallengeBlockMessage, assessHeadDrift, normalizeLock } = guardModule;
+  const { buildChallengeBlockMessage, assessHeadDrift, normalizeLock, normalizeVault } = guardModule;
 
   // === buildChallengeBlockMessage ===
 
@@ -59,6 +59,20 @@ export async function test({ assert, root }) {
   });
   assert.match(driftMsg, /STATE_DRIFT/, "metadata-drift phase must include STATE_DRIFT prefix");
   assert.match(driftMsg, /unresolved attestation metadata/i, "metadata-drift must mention 'unresolved attestation metadata'");
+
+  const inferredArmed = normalizeVault({
+    seed: "abc",
+    lastGeneratedHead: "head-a",
+    lastResolvedHead: ""
+  });
+  assert.equal(inferredArmed.challengeState, "armed", "unresolved legacy vault data must infer armed state");
+
+  const inferredResolved = normalizeVault({
+    seed: "abc",
+    lastGeneratedHead: "head-a",
+    lastResolvedHead: "head-a"
+  });
+  assert.equal(inferredResolved.challengeState, "resolved", "resolved legacy vault data must infer resolved state");
 
   // --- phase: "unresolved" without escalation ---
   const unresolvedMsg = buildChallengeBlockMessage({
