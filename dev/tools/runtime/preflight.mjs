@@ -84,12 +84,18 @@ function mutationGuardArgs() {
   return [];
 }
 
+function shouldSkipSyncChecks() {
+  return String(process.env.PREFLIGHT_ASSUME_SYNCED || "").trim() === "1";
+}
+
 try {
   // 1) identity and policy guards first
   await runNodeScript("dev/tools/runtime/signing-guard.mjs", ["--config-only"]);
   await runNodeScript("dev/tools/runtime/evidence-lock.mjs");
-  await runNodeScript("dev/tools/runtime/updateFunctionSot.mjs");
-  await runNodeScript("dev/tools/runtime/syncDocs.mjs");
+  if (!shouldSkipSyncChecks()) {
+    await runNodeScript("dev/tools/runtime/updateFunctionSot.mjs");
+    await runNodeScript("dev/tools/runtime/syncDocs.mjs");
+  }
   await runNodeScript("dev/tools/runtime/governance-verify.mjs");
   await runNodeScript("dev/tools/runtime/preflight-mutation-guard.mjs", mutationGuardArgs());
 
@@ -113,7 +119,7 @@ try {
   const detail = String(error?.stderr || error?.message || error);
   const msg = String(error?.message || error);
   if (detail.includes("[SYNC_DOCS_DRIFT]")) {
-    console.error("[PREFLIGHT] BLOCK: Docs-/SoT-Sync ist Pflicht vor der Testline. Nicht halbgar 'fixen' - erst `npm run sync:docs:apply` bzw. den Pre-Commit-Hook sauber durchlaufen lassen.");
+    console.error("[PREFLIGHT] BLOCK: Docs-/SoT-Sync ist Pflicht vor der Testline. Erst `npm run sot:apply` und `npm run sync:docs:apply`, dann erneut laufen lassen.");
   }
   console.error(`[PREFLIGHT] BLOCK: ${msg}`);
   console.error("[PREFLIGHT] BLOCK: Testline bleibt policy-gebunden. Erst Synchronitaet und Absicht sauber halten, dann weiter.");

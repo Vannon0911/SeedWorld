@@ -38,7 +38,7 @@ else
   git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/FUNCTION_SOT.json app/src/sot/REPO_HYGIENE_MAP.json
 fi
 npm run llm:guard -- --action commit
-PREFLIGHT_GUARD_MODE=enforce npm run preflight
+PREFLIGHT_ASSUME_SYNCED=1 PREFLIGHT_GUARD_MODE=enforce npm run preflight
 `;
 
 const prePush = `#!/bin/sh
