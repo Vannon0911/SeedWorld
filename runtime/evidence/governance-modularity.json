@@ -229,8 +229,8 @@
     },
     {
       "path": "dev/tools/runtime/check-global-redundancy.mjs",
-      "lines": 129,
-      "bytes": 4137,
+      "lines": 151,
+      "bytes": 4997,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -733,5 +733,5 @@
     }
   ],
   "issues": [],
-  "generated_at": "2026-03-31T13:04:39.798Z"
+  "generated_at": "2026-03-31T13:12:06.660Z"
 }

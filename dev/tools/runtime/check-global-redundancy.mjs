@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { compareAlpha, listFilesRecursive, sha256Hex, toPosixPath } from "./runtime-shared.mjs";
 
 const root = process.cwd();
@@ -8,6 +9,7 @@ const allowlistPath = path.join(root, "app", "src", "sot", "redundancy-allowlist
 const evidencePath = path.join(root, "runtime", "evidence", "redundancy-report.json");
 const staticRoots = ["docs", "tem"];
 const trackedExtensions = new Set([".md", ".json", ".js", ".mjs", ".cjs"]);
+const readOnlyVerify = process.env.RUNTIME_VERIFY_READ_ONLY === "1";
 
 function assert(condition, message) {
   if (!condition) {
@@ -101,20 +103,40 @@ async function main() {
     }
   }
 
-  await mkdir(path.dirname(evidencePath), { recursive: true });
-  await writeFile(
-    evidencePath,
-    `${JSON.stringify(
-      {
-        generated_at: new Date().toISOString(),
-        scanned_files: files.length,
-        duplicates
-      },
-      null,
-      2
-    )}\n`,
-    "utf8"
-  );
+  const expectedEvidence = {
+    scanned_files: files.length,
+    duplicates
+  };
+
+  if (readOnlyVerify) {
+    let existing;
+    try {
+      existing = JSON.parse(await readFile(evidencePath, "utf8"));
+    } catch (error) {
+      throw new Error(`[REDUNDANCY_GUARD] evidence missing/unreadable: ${String(error?.message || error)}`);
+    }
+    if (!existing?.generated_at || Number.isNaN(Date.parse(existing.generated_at))) {
+      throw new Error("[REDUNDANCY_GUARD] evidence missing valid generated_at");
+    }
+    const { generated_at: _generatedAt, ...stableExisting } = existing;
+    if (!isDeepStrictEqual(stableExisting, expectedEvidence)) {
+      throw new Error("[REDUNDANCY_GUARD] evidence drift: runtime/evidence/redundancy-report.json");
+    }
+  } else {
+    await mkdir(path.dirname(evidencePath), { recursive: true });
+    await writeFile(
+      evidencePath,
+      `${JSON.stringify(
+        {
+          generated_at: new Date().toISOString(),
+          ...expectedEvidence
+        },
+        null,
+        2
+      )}\n`,
+      "utf8"
+    );
+  }
 
   assert(duplicates.length === 0, `duplicate content detected: ${duplicates.map((d) => d.files.join(", ")).join(" | ")}`);
   console.log(`[REDUNDANCY_GUARD] OK files=${files.length} duplicates=0`);

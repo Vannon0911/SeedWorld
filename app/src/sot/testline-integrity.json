@@ -23,7 +23,7 @@
       "dev/tools/runtime/preflight.mjs"
     ]
   },
-  "generatedAt": "2026-03-31T13:05:46.517Z",
+  "generatedAt": "2026-03-31T13:12:35.999Z",
   "monitoredRoots": [
     "dev/scripts",
     "dev/tests",
@@ -112,7 +112,7 @@
     "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs": "3b06935ed1df8d44586e07a4f9a57e0b48f4ae4d408b78b1313e85f847fe978b",
     "dev/tests/modules/20.gameplay-state-suite.module.mjs": "c3cbcf82a31cd5ede50e8c8a89c874002a910300c5ad2cd8d785df15376d3e70",
     "dev/tools/runtime/apply-github-ruleset.mjs": "d9fb5a96aa3d27790b6943e0c3397e82e848a65ac103f562e976d864fbc6a8a3",
-    "dev/tools/runtime/check-global-redundancy.mjs": "033ce7b2e1425842a6b7493346c19abbdd9d5fffa2f70917bd21b604507cc0da",
+    "dev/tools/runtime/check-global-redundancy.mjs": "35e20e868e6c776656beec879b6da9c7a095da7748fb94d42dd153c2885017b1",
     "dev/tools/runtime/check-tem-structure.mjs": "6bf90ac88e057d6da99e62aed6b0d6d57e4c71a18f97ec2b5e6837d92569f5d4",
     "dev/tools/runtime/check-wrapper-guardrails.mjs": "a05a7264d0778147a28a6d95ae5156291b972047d2fc11683750478b26920849",
     "dev/tools/runtime/docs-v2-shared.mjs": "ae512180a73170bc3ea8c418f0f66a12b6a518012bc3ef1cde50383e4d99b65e",
