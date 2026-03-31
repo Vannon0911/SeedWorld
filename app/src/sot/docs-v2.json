@@ -38,9 +38,11 @@
     "dev/tools/runtime/verify-docs-v2-coverage.mjs",
     "dev/tools/runtime/sync-string-matrix.mjs",
     "dev/tools/runtime/probe-docs-v2-adversarial.mjs",
+    "dev/tools/runtime/repo-hygiene-map.mjs",
     "dev/tools/runtime/scan-doc-tasks.mjs",
     "dev/tools/runtime/sync-docs-v2.mjs",
-    "dev/tools/runtime/sync-tem-control-files.mjs"
+    "dev/tools/runtime/sync-tem-control-files.mjs",
+    "dev/tools/runtime/updateRedActions.mjs"
   ],
   "humanPlanViews": [
     "docs/V2/HOME.md",
@@ -57,6 +59,11 @@
     "docs/V2/RULES.md",
     "docs/V2/PLAN.md",
     "docs/V2/ARCHIVE.md"
+  ],
+  "contractDocs": [
+    "docs/V2/TRUTH.md",
+    "docs/V2/SYSTEM_PLAN.md",
+    "docs/V2/RULES.md"
   ],
   "fullRepoCoverage": {
     "scanRoots": [

@@ -8,12 +8,11 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 - `app/src/kernel`
 - `app/src/ui`
 - `app/public`
-- `docs/V2`
 
 ## Summary
 
-- Files: 42
-- Unique Strings: 960
+- Files: 33
+- Unique Strings: 567
 
 ## Files
 
@@ -124,8 +123,8 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 
 ### app/src/kernel/KernelController.js
 
-- Strings: 66
-- Fingerprint: `fa2fa070ffa3e889f1f2cd660c3e137eff4a138179f2a60ca8f5e9b6322a26ec`
+- Strings: 78
+- Fingerprint: `04315d090cbdc650d65d5c6b18441af35223f720893c33138bb65a6d98377fbf`
 
 ### app/src/kernel/KernelGates.js
 
@@ -181,49 +180,4 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 
 - Strings: 7
 - Fingerprint: `dbe70e14909952c9ad88126c3fa8135a995f68cce8d4d71e71ad54463c028c88`
-
-### docs/V2/ARCHITECTURE_MAP.md
-
-- Strings: 81
-- Fingerprint: `d59ab266d849dd3ec9d4cc1ec26731ff918c3043c4cd4a0c4b2c349c35b78df7`
-
-### docs/V2/ARCHIVE.md
-
-- Strings: 32
-- Fingerprint: `160db2f1a032e605056f2b742890f2c15b2be2b5fd192c670cd1b8aa49936234`
-
-### docs/V2/HOME.md
-
-- Strings: 15
-- Fingerprint: `856def86411d25442d690cfc9293cfa1e7a45697bcb090a96520cc666cbe80cd`
-
-### docs/V2/LAST_20_COMMITS.md
-
-- Strings: 78
-- Fingerprint: `4019c8fdabec4fb5eb18c725280c5f0005b857d35d1bdb382887921f9d37124b`
-
-### docs/V2/PLAN.md
-
-- Strings: 46
-- Fingerprint: `f48d79099a21ee2cecdfa15cb81454d931810ec6d120660f977676bd30cc4f34`
-
-### docs/V2/RELEASE_0.3.1a.md
-
-- Strings: 37
-- Fingerprint: `2cf1768590d1cd7147b71b1ee303841a7f0896ef86dc36ccc4de48c4f5439071`
-
-### docs/V2/RULES.md
-
-- Strings: 22
-- Fingerprint: `a1fe8d2facdebcc27472a42478d2914ee8ed653b2daf4798de390b8c9e0752ae`
-
-### docs/V2/SYSTEM_PLAN.md
-
-- Strings: 45
-- Fingerprint: `5a56532b9756ab84cee12c2f6155f42dabe10e0e447a9b1d969bbbed7a5011be`
-
-### docs/V2/TRUTH.md
-
-- Strings: 69
-- Fingerprint: `b51f48c72e7c16fd00e3a77901e84c4806f5cb61923bd48ea31968c5d6f228fe`
 

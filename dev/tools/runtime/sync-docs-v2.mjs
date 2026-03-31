@@ -21,7 +21,7 @@ function relLink(relPath) {
 function renderHome(openTasks, archivedTasks, sot) {
   return `# Documentation 2.0
 
-Documentation 2.0 verbindet drei Dinge in einem System: menschenlesbare Wahrheit, maschinenlesbare Planung und ein Archiv der abgeschlossenen Slices. Fuehrend sind weiter Kernel-Wahrheit, Reproduktionsbeweis und autoritative Inhalte. Neu ist nur, dass Plan und Archiv jetzt als atomare JSON-Tasks mit dem Codepfad gekoppelt sind.
+Documentation 2.0 verbindet drei Dinge in einem System: menschenlesbare Wahrheit, maschinenlesbare Planung und ein Archiv der abgeschlossenen Slices. Fuehrend sind weiter Kernel-Wahrheit, Reproduktionsbeweis und autoritative Inhalte. Documentation 2.0 ersetzt konzeptionell das alte \`doc sync\`-Denken: Wahrheit wird nicht mehr ueber einen separaten Sync-Schritt behauptet, sondern ueber registrierte Dateien, atomare Tasks, Scanner, Coverage und Archivierung erzwungen.
 
 ## Einstieg
 
@@ -47,7 +47,7 @@ function renderTruth(sourceOfTruth, repoBoundaries, docsV2) {
   const lines = [
     "# Human Truth",
     "",
-    "Diese Seite macht die fuehrende SoT menschenlesbar. Sie ersetzt die JSON-Dateien nicht, sondern erklaert sie knapp.",
+    "Diese Seite macht die fuehrende SoT menschenlesbar. Sie ersetzt die JSON-Dateien nicht, sondern erklaert sie knapp. Documentation 2.0 ersetzt dabei das alte `doc sync`-Modell: Fuehrung entsteht ueber registrierte Wahrheit, nicht ueber nachtraegliche kosmetische Synchronisation.",
     "",
     "## Fuehrende Quellen",
     "",
@@ -150,7 +150,7 @@ function renderRules(docsV2) {
   const lines = [
     "# Rules",
     "",
-    "Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung.",
+    "Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung. Es ersetzt konzeptionell das fruehere `doc sync`-Modell durch registrierte Fuehrungsdateien, Scanner und blockierende Guards.",
     "",
     "## Harte Regeln",
     "",
@@ -253,6 +253,23 @@ async function syncOrVerify(absPath, expected) {
   }
 }
 
+async function syncWithContractMode(absPath, expected, docsV2) {
+  const relPath = path.relative(root, absPath).split(path.sep).join("/");
+  if (writeMode || (docsV2.contractDocs || []).includes(relPath)) {
+    await syncOrVerify(absPath, expected);
+    return;
+  }
+  let current = "";
+  try {
+    current = await readFile(absPath, "utf8");
+  } catch {
+    current = "";
+  }
+  if (current !== expected && writeMode) {
+    await writeFile(absPath, expected, "utf8");
+  }
+}
+
 async function main() {
   await mkdir(docsV2Root(root), { recursive: true });
   await mkdir(archiveTasksRoot(root), { recursive: true });
@@ -271,12 +288,12 @@ async function main() {
   const plan = renderPlan(openTasks);
   const archive = `${renderArchiveBuckets(docsV2)}\n${renderArchive(archivedTasks)}`;
 
-  await syncOrVerify(path.join(docsV2Root(root), "HOME.md"), home);
-  await syncOrVerify(path.join(docsV2Root(root), "TRUTH.md"), truth);
-  await syncOrVerify(path.join(docsV2Root(root), "SYSTEM_PLAN.md"), systemPlan);
-  await syncOrVerify(path.join(docsV2Root(root), "RULES.md"), rules);
-  await syncOrVerify(path.join(docsV2Root(root), "PLAN.md"), plan);
-  await syncOrVerify(path.join(docsV2Root(root), "ARCHIVE.md"), archive);
+  await syncWithContractMode(path.join(docsV2Root(root), "HOME.md"), home, docsV2);
+  await syncWithContractMode(path.join(docsV2Root(root), "TRUTH.md"), truth, docsV2);
+  await syncWithContractMode(path.join(docsV2Root(root), "SYSTEM_PLAN.md"), systemPlan, docsV2);
+  await syncWithContractMode(path.join(docsV2Root(root), "RULES.md"), rules, docsV2);
+  await syncWithContractMode(path.join(docsV2Root(root), "PLAN.md"), plan, docsV2);
+  await syncWithContractMode(path.join(docsV2Root(root), "ARCHIVE.md"), archive, docsV2);
 
   console.log(`[DOCS_V2] ${writeMode ? "WRITTEN" : "VERIFIED"} open=${openTasks.length} archived=${archivedTasks.length} digest=${taskDigest([...openTasks, ...archivedTasks])}`);
 }

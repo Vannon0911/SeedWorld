@@ -256,7 +256,7 @@ async function main() {
 
   if (!writeMode && drift) {
     console.error("[HYGIENE_MAP] DRIFT: REPO_HYGIENE_MAP ist nicht synchron.");
-    console.error("[HYGIENE_MAP] FIX: npm run sync:docs:apply");
+    console.error("[HYGIENE_MAP] FIX: Documentation V2 ersetzt konzeptionell doc sync. Regeneriere die Hygiene-SoT explizit und pruefe danach docs:v2.");
     process.exit(1);
     return;
   }

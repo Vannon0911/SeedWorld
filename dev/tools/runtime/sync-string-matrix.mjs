@@ -6,7 +6,7 @@ const root = process.cwd();
 const writeMode = process.argv.includes("--write");
 const matrixPath = path.join(root, "app", "src", "sot", "STRING_MATRIX.json");
 const reportPath = path.join(root, "docs", "SOT", "STRING_MATRIX.md");
-const scanRoots = ["app/src/game", "app/src/kernel", "app/src/ui", "app/public", "docs/V2"];
+const scanRoots = ["app/src/game", "app/src/kernel", "app/src/ui", "app/public"];
 const supportedExtensions = new Set([".js", ".mjs", ".cjs", ".json", ".html", ".md", ".css"]);
 
 function shouldKeepString(value) {

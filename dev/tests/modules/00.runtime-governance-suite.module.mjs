@@ -32,6 +32,9 @@ export async function runEvidence({ root, assert, seed: explicitSeed }) {
   const kernel = new KernelController({ seed: explicitSeed, governanceMode: "enforce" });
   const initial = await kernel.execute({ domain: "game", action: { type: "createInitialState" } });
   const status = await kernel.execute({ domain: "kernel", action: { type: "status" } });
+  const gateMetrics = kernel.kernelGates.getGateStatus("game.action");
+
+  assert.equal(gateMetrics?.metrics.executions, 1);
 
   await assert.rejects(
     () => kernel.execute({ domain: "game", action: { type: "activateNewFeature" } }),
@@ -50,6 +53,7 @@ export async function runEvidence({ root, assert, seed: explicitSeed }) {
       .list()
       .map((entry) => `${entry.domain}.${entry.actionType}`)
       .sort((a, b) => a.localeCompare(b, "en")),
-    routerHistory: kernel.router.callHistory.map((entry) => `${entry.to}:${entry.actionType}`)
+    routerHistory: kernel.router.callHistory.map((entry) => `${entry.to}:${entry.actionType}`),
+    gateHistory: kernel.kernelGates.gateHistory.map((entry) => `${entry.gateName}:${entry.decision}`)
   };
 }

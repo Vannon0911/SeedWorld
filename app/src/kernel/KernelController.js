@@ -1,6 +1,8 @@
 import { withDeterminismGuards } from "./runtimeGuards.js";
 import { KernelRouter } from "./KernelRouter.js";
 import { ActionRegistry } from "./ActionRegistry.js";
+import { GateManager } from "./GateManager.js";
+import { KernelGates } from "./KernelGates.js";
 import { generateWorld } from "../game/worldGen.js";
 
 const DEFAULT_CONFIRMATION_PREFIX = "KERNEL-CONFIRM";
@@ -57,6 +59,12 @@ export class KernelController {
     this.router.registerHandler("kernel", (action) => this.#handleRegisteredAction("kernel", action));
 
     this.actionRegistry = new ActionRegistry();
+    this.kernelGates = new KernelGates((query, payload) => this.#kernelInterface(query, payload));
+    this.gateManager = new GateManager({
+      kernelGates: this.kernelGates,
+      mode: this.governanceMode,
+      onAudit: (event) => this.#recordGovernanceAudit(event)
+    });
     this.#registerActions();
   }
 
@@ -109,6 +117,21 @@ export class KernelController {
       throw this.#denyAction({
         code: "ACTION_VALIDATION_FAILED",
         reason: validation.reason || `Action-Validation fehlgeschlagen: ${domain}.${actionType}`,
+        domain,
+        actionType
+      });
+    }
+
+    const gateDecision = await this.gateManager.enforce({
+      domain,
+      actionType,
+      requiredGate: definition.requiredGate,
+      context: this.#buildGateContext({ domain, actionType, action, input })
+    });
+    if (!gateDecision.allowed) {
+      throw this.#denyAction({
+        code: "ACTION_GATE_DENIED",
+        reason: gateDecision.event?.reason || `Action-Gate abgelehnt: ${domain}.${actionType}`,
         domain,
         actionType
       });
@@ -213,6 +236,38 @@ export class KernelController {
       return { valid: false, reason: "Pflichtfeld fehlt oder ungueltig: x/y" };
     }
     return this.#validateHasString(action, "structureId");
+  }
+
+  #buildGateContext({ domain, actionType, action, input }) {
+    return {
+      domain,
+      actionType,
+      action,
+      sourceDomain: input?.sourceDomain || null,
+      gameLogic: domain === "game",
+      devEnabled: this.governanceMode === "shadow",
+      kernelInterface: true
+    };
+  }
+
+  #kernelInterface(query, payload) {
+    switch (query) {
+      case "game.exists":
+      case "system.ready":
+      case "tick.can_advance":
+      case "system.can_reset":
+      case "system.can_shutdown":
+      case "patch.system.available":
+      case "user.can_patch":
+      case "dev.available":
+        return true;
+      case "state.can_modify":
+        return Boolean(payload && typeof payload === "object");
+      case "patch.get":
+        return null;
+      default:
+        return false;
+    }
   }
 
   #recordGovernanceAudit(event) {

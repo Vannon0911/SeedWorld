@@ -1,10 +1,11 @@
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { compareAlpha, listFilesRecursive, sha256Hex, toPosixPath } from "./runtime-shared.mjs";
 
 const root = process.cwd();
 const boundariesPath = path.join(root, "app", "src", "sot", "repo-boundaries.json");
 const allowlistPath = path.join(root, "app", "src", "sot", "redundancy-allowlist.json");
+const evidencePath = path.join(root, "runtime", "evidence", "redundancy-report.json");
 const staticRoots = ["docs", "tem"];
 const trackedExtensions = new Set([".md", ".json", ".js", ".mjs", ".cjs"]);
 
@@ -99,6 +100,21 @@ async function main() {
       duplicates.push({ files: sorted, unresolved });
     }
   }
+
+  await mkdir(path.dirname(evidencePath), { recursive: true });
+  await writeFile(
+    evidencePath,
+    `${JSON.stringify(
+      {
+        generated_at: new Date().toISOString(),
+        scanned_files: files.length,
+        duplicates
+      },
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
 
   assert(duplicates.length === 0, `duplicate content detected: ${duplicates.map((d) => d.files.join(", ")).join(" | ")}`);
   console.log(`[REDUNDANCY_GUARD] OK files=${files.length} duplicates=0`);

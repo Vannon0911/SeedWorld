@@ -1,6 +1,6 @@
 # Documentation 2.0
 
-Documentation 2.0 verbindet drei Dinge in einem System: menschenlesbare Wahrheit, maschinenlesbare Planung und ein Archiv der abgeschlossenen Slices. Fuehrend sind weiter Kernel-Wahrheit, Reproduktionsbeweis und autoritative Inhalte. Neu ist nur, dass Plan und Archiv jetzt als atomare JSON-Tasks mit dem Codepfad gekoppelt sind.
+Documentation 2.0 verbindet drei Dinge in einem System: menschenlesbare Wahrheit, maschinenlesbare Planung und ein Archiv der abgeschlossenen Slices. Fuehrend sind weiter Kernel-Wahrheit, Reproduktionsbeweis und autoritative Inhalte. Documentation 2.0 ersetzt konzeptionell das alte `doc sync`-Denken: Wahrheit wird nicht mehr ueber einen separaten Sync-Schritt behauptet, sondern ueber registrierte Dateien, atomare Tasks, Scanner, Coverage und Archivierung erzwungen.
 
 ## Einstieg
 
@@ -12,7 +12,7 @@ Documentation 2.0 verbindet drei Dinge in einem System: menschenlesbare Wahrheit
 ## Status
 
 - Offene Tasks: 10
-- Archivierte Tasks: 2
+- Archivierte Tasks: 3
 - Task-Schema: `2.0.0`
 - SoT-Review: `2026-03-31`
 - Harte Guards: rohe Plan-Dateien blocken, unregistrierte neue Dateien blocken

@@ -1,6 +1,6 @@
 # Rules
 
-Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung.
+Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung. Es ersetzt konzeptionell das fruehere `doc sync`-Modell durch registrierte Fuehrungsdateien, Scanner und blockierende Guards.
 
 ## Harte Regeln
 

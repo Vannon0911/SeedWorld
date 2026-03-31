@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "48109e6066753043a63f9b44557a135e08a6dce687dace02458f19444bb7538d",
+  "snapshotId": "b03eac8986f3aa215ca540c513977549441d4b1d58e6949d2ad38dc5d63b8053",
   "controlFiles": [
     "TODO.md",
     "WORKFLOW.md",
     "SCHEMA.json"
   ],
-  "artifactCount": 39,
+  "artifactCount": 40,
   "categories": {
     "planung": [
       "tem/beide-plaene.md",
@@ -47,6 +47,7 @@
       "tem/slices/t03-guardrail-konzept.md"
     ],
     "task-archive": [
+      "tem/tasks/archive/CF-013.json",
       "tem/tasks/archive/DOC-001.json",
       "tem/tasks/archive/DOC-002.json"
     ],
@@ -186,6 +187,11 @@
       "path": "tem/t01-legacy-wrapper-inventur.md",
       "category": "planung",
       "sha256": "653c786eca69c5b967d86e155813d01e3fab04b8f26ec58b193dcfc4c8f9a41d"
+    },
+    {
+      "path": "tem/tasks/archive/CF-013.json",
+      "category": "task-archive",
+      "sha256": "c6231608ffbc4d2d420b1d8b4403e3e3b8ad7dd2118a115f4381d0311fa828f8"
     },
     {
       "path": "tem/tasks/archive/DOC-001.json",

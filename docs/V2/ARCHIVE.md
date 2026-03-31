@@ -36,6 +36,13 @@ Archivierte Tasks wurden vom Scanner aus dem offenen Planungspfad entfernt, weil
 
 ## Archived Tasks
 
+### CF-013 Repo-Hygiene hart und reproduzierbar erzwingen
+
+- JSON: `tem/tasks/archive/CF-013.json`
+- Archived At: `2026-03-31T08:00:04.033Z`
+- Reason: scope matched current change set
+- Changed Files: `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/STRING_MATRIX.json`, `app/src/sot/testline-integrity.json`, `dev/tests/modules/00.runtime-governance-suite.module.mjs`, `dev/tools/runtime/check-global-redundancy.mjs`, `dev/tools/runtime/repo-hygiene-map.mjs`, `dev/tools/runtime/repo-hygiene-verify.mjs`, `dev/tools/runtime/sync-docs-v2.mjs`, `dev/tools/runtime/sync-string-matrix.mjs`, `dev/tools/runtime/updateRedActions.mjs`, `docs/LLM/ENTRY.md`, `docs/LLM/POLICY.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RULES.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `tem/tasks/open/CF-013.json`
+
 ### DOC-002 String matrix and adversarial probe enforce Documentation V2 hygiene
 
 - JSON: `tem/tasks/archive/DOC-002.json`
