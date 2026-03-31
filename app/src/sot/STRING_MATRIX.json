@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "matrix_fingerprint": "2cbe01ac5a935d52e1a7fba080212c0ab31182a83e7df3006c465c14779fb565",
+  "matrix_fingerprint": "89b11f7ec1166a5e63ebfd4c11a48fbbb2b29c49af2d516fd86dae022f591a6d",
   "scan_roots": [
     "app/src/game",
     "app/src/kernel",
@@ -8,7 +8,7 @@
     "app/public"
   ],
   "file_count": 34,
-  "unique_string_count": 597,
+  "unique_string_count": 559,
   "files": [
     {
       "path": "app/public/game.html",
@@ -1474,8 +1474,8 @@
     },
     {
       "path": "app/src/game/worldGen.js",
-      "string_count": 30,
-      "fingerprint": "6f8142a8d9b9b4067ce52555a4f1a90244ddb2675fe06c887d4798788ed0cf0a",
+      "string_count": 21,
+      "fingerprint": "02a0c70c2ce08c6516cc50b95691d8183bc2bbaeed61627a56aa2537c4267802",
       "strings": [
         {
           "value": "[WORLD_GEN] world muss Objekt sein.",
@@ -1526,28 +1526,12 @@
           "hash": "cd5a0297a71ef1af5d2e21df6fa3ad95eedbf5c654dabe3ed5753e28c28d3bfe"
         },
         {
-          "value": "dry",
-          "hash": "b755cb248c3c4a7d94f835b4421809336e7015850342064be4dfa23349dcdcaa"
-        },
-        {
-          "value": "dust",
-          "hash": "abb32701117d50a93f8ffb60e801097d8a18d0a75ba7f7a327d50103cb50278e"
-        },
-        {
           "value": "empty",
           "hash": "2e1cfa82b035c26cbbbdae632cea070514eb8b773f616aaeaf668e2f0be8f10d"
         },
         {
-          "value": "forest",
-          "hash": "619a2ccf126ce837dc7cd3bdb4d7f44280a0ea4f721e5a738f859aa19d52a78f"
-        },
-        {
-          "value": "meadow",
-          "hash": "6d02f7d61e02d070944a9a37856f43d78fb89f8adea6150cd2fdcb53d2a4cc4a"
-        },
-        {
-          "value": "meadow-clear-a",
-          "hash": "902122b23c5619e538fbf3940d458ad329a2f43cfdcff7f71be8c5d50fa8814f"
+          "value": "mine",
+          "hash": "3fd30542fe3f61b14bd4a4b2dc0b6fb30fa6f63ebce52dd1778aaa8c4dc02cff"
         },
         {
           "value": "none",
@@ -1566,36 +1550,16 @@
           "hash": "d28e0c5f073b0b7ac141245cf64b9a7f1a58afd803668bb6a89456f2475962a9"
         },
         {
-          "value": "rock",
-          "hash": "350a770c0ec9f353e1a5629895f374fdaa299876c3870c03feb60eb4a3769d94"
-        },
-        {
-          "value": "scrub",
-          "hash": "e8927b61deaf6863a3006b9a100f01d4962374aa9dea9516949e817cecca3b97"
-        },
-        {
           "value": "seedworld-default",
           "hash": "a7ce4d344265bd09765e82801c53caf4b1f6aae48e4cb074214a6bbe7cf3e3e8"
-        },
-        {
-          "value": "steppe",
-          "hash": "891a17dd29f0f5726ddf3df373fb1b4a40bfe61a13d75df3efa126856c2ab629"
         },
         {
           "value": "string",
           "hash": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
         },
         {
-          "value": "trees",
-          "hash": "29d807300a961b0cbdb4f22cc5db866a43d20d87b1e17b7f50c91bab25089940"
-        },
-        {
-          "value": "water",
-          "hash": "0f4168490e38b8447e11ba4bd656aa11b925bd22af30bac464bc153fdb608501"
-        },
-        {
-          "value": "worldgen.v1.voronoi-noise",
-          "hash": "b14a2800b433b2ccf718db3aa07b119a7103a91470d7c3648342dad723c3f3c7"
+          "value": "worldgen.v2.minimalist",
+          "hash": "7cb60ca8b7a1c62b60677f0043239b8b38d7ba2d4ce194280458a7493fa6d068"
         }
       ]
     },
@@ -2158,8 +2122,8 @@
     },
     {
       "path": "app/src/kernel/KernelController.js",
-      "string_count": 73,
-      "fingerprint": "a5972965c4f0f0f33d9954ae95175dc477b0a7844df5d4383e25d55bf125107a",
+      "string_count": 65,
+      "fingerprint": "fab95514f1e059a503dde6d06112073b16176a035e19f1341d1ad83e109a67f7",
       "strings": [
         {
           "value": "[${domain.toUpperCase()}] type fehlt.",
@@ -2208,22 +2172,6 @@
         {
           "value": "[KERNEL_CONTROLLER] domain fehlt.",
           "hash": "07a0cdf346b47485d42bbafcb85bfe30e2da2d87ad28220acbc586b553ab8e7c"
-        },
-        {
-          "value": "[PLACE_STRUCTURE] Nicht genug ore: benoetigt ${cost.ore}, vorhanden ${ore}",
-          "hash": "49ea1b0d8fc131db842af1a15f29437eddf6bf11181fa0140107ed58a72b61c3"
-        },
-        {
-          "value": "[PLACE_STRUCTURE] state fehlt.",
-          "hash": "166cf7acfee57e2c9a36a8614eae640e228c3dcc78501b9d224b44966128877f"
-        },
-        {
-          "value": "[PLACE_STRUCTURE] Struktur auf water unzulaessig: ${x},${y}",
-          "hash": "7173f06dddb4f3e93dcfabc5568e3447de1cff908f2fd4ee767dab1004b9cb4b"
-        },
-        {
-          "value": "[PLACE_STRUCTURE] Tile nicht gefunden: ${x},${y}",
-          "hash": "35f76419e3a832e454554c1c19b61bd9a74c66b14d606f6809df06090032868e"
         },
         {
           "value": "[SET_SEED] seed fehlt.",
@@ -2338,10 +2286,6 @@
           "hash": "3fd30542fe3f61b14bd4a4b2dc0b6fb30fa6f63ebce52dd1778aaa8c4dc02cff"
         },
         {
-          "value": "Mine",
-          "hash": "f57afb7d275a26df0de0e933b28c16f2462e84c09ad605945a4c6163f2be3baa"
-        },
-        {
           "value": "object",
           "hash": "2958d416d08aa5a472d7b509036cb7eafd542add84527e66a145ea64cb4cdc75"
         },
@@ -2380,14 +2324,6 @@
         {
           "value": "shadow",
           "hash": "0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4"
-        },
-        {
-          "value": "smelter",
-          "hash": "4e82d2b592679b26752a4816f6e099f1393b6302380349fe7a1fa2642f641756"
-        },
-        {
-          "value": "Smelter",
-          "hash": "4c85ecaec998a3fc5f2c6546c3982c833cf252b763efb8464700fc4a640c6c84"
         },
         {
           "value": "state",
@@ -2448,10 +2384,6 @@
         {
           "value": "user.can_patch",
           "hash": "0cedd415c6bfe28f55b09b6cae77dd75caf6c9bde4c62b9b34234c981f4fd5dc"
-        },
-        {
-          "value": "water",
-          "hash": "0f4168490e38b8447e11ba4bd656aa11b925bd22af30bac464bc153fdb608501"
         }
       ]
     },
@@ -2949,192 +2881,56 @@
     },
     {
       "path": "app/src/ui/TileGridRenderer.js",
-      "string_count": 85,
-      "fingerprint": "92ea1251203b013f178512ae1cc915d17044be7d5ff7e86f0aef82326e9c6aad",
+      "string_count": 54,
+      "fingerprint": "b779d8af226810f3597232f1f7971e5cd44f1fba4fff1a098767d0dc818b6d38",
       "strings": [
-        {
-          "value": "--ao-bl",
-          "hash": "0b35a0d40d73fc76729e00264e4174ef2a61b2557e3d73b3cfea338b487216b6"
-        },
-        {
-          "value": "--ao-br",
-          "hash": "c9f323293b6364b2828ff0da511457233522302708f0735eab2e04bb119df7b6"
-        },
-        {
-          "value": "--ao-tl",
-          "hash": "44724c0628b0d907931e0ee3890f9c6b55454352a63675546c814427368f40f3"
-        },
-        {
-          "value": "--ao-tr",
-          "hash": "f2e346416da26b10d4854eaae71a9ee994c135986a4bb290bc5f5f40f125baf1"
-        },
-        {
-          "value": "--d1x",
-          "hash": "00715b42f7a84c976090cc9d4ac415cd21646fca5556ebccb377547dc02c40ec"
-        },
-        {
-          "value": "--d1y",
-          "hash": "41e6d71ee431ec200200563d92ef544a261a70631b9dcdb3afbc625b7c92ba5a"
-        },
-        {
-          "value": "--d2x",
-          "hash": "69b1fb5a3e2973d6512d6ab5c0c8f73d277f5b731458f1070c51d33fd30d1274"
-        },
-        {
-          "value": "--d2y",
-          "hash": "7d910f559401ff0663a9adadd3e75cea1ae15e86184e3b280f372a63f72b6712"
-        },
-        {
-          "value": "--d3x",
-          "hash": "6a148dc21b6ec89a726ddc8a542c19f49442d6283af1b88e05d71cdce1754e1a"
-        },
-        {
-          "value": "--d3y",
-          "hash": "664d4e54170bf897c436a543c686fb9243b7a550ee96cded15cdf156faff9127"
-        },
-        {
-          "value": "--edge-bottom-alpha",
-          "hash": "99984c79bba65058507e0ab6836323e7c19243c503e32d6db235ba91cff83b82"
-        },
-        {
-          "value": "--edge-bottom-color",
-          "hash": "6181c7ec4ba2f575b5c7d0cf4d65e600d913cab567fddeb6c467a411a8ce03bb"
-        },
-        {
-          "value": "--edge-left-alpha",
-          "hash": "eb1428f859ff4d0745c6377ebb44490d7d23ca175131dfd356b3989cb1a1f1ce"
-        },
-        {
-          "value": "--edge-left-color",
-          "hash": "423900b97f1a6086f009adaa5a2310fbe493909a75fcbbc2f183a89d9f958e29"
-        },
-        {
-          "value": "--edge-right-alpha",
-          "hash": "b765ecad398f85796c3f784af2684ce76cbbb8c86c769db28a50317f7ab15be5"
-        },
-        {
-          "value": "--edge-right-color",
-          "hash": "bd2a4ff98c5ca12571875f5d3102dde9a678e8257e1014e631c4c8d4083de3c4"
-        },
-        {
-          "value": "--edge-top-alpha",
-          "hash": "fd630649320960b612ec55b74c56252f31412f8c7441c8a4fe1d7a573ed8d8ad"
-        },
-        {
-          "value": "--edge-top-color",
-          "hash": "4e9e041753210e16b48acc8c14f16ce34b8a907301ddee46f65427d982ce8060"
-        },
-        {
-          "value": "--grid-height",
-          "hash": "e84ea2224f562d9dca620e842b17aeeda2956244e5f6ec25999b3e004e13c035"
-        },
-        {
-          "value": "--grid-width",
-          "hash": "803c814ad946eed8faf43db9c83f36deec9cda5b4e4f98a35449797acfddbeff"
-        },
-        {
-          "value": "--tile-base",
-          "hash": "c710dc5a797d2debe0ba658faf6e5d552ae992ef217f2a98abcd2b4443b06569"
-        },
-        {
-          "value": "--tile-detail",
-          "hash": "87e20f6aa24095754bf3740e62d13cdde868fd4a5d0bf4a5bd22e834b16bdfd2"
-        },
-        {
-          "value": "--tile-grain-alpha",
-          "hash": "4086a7d5d9c197544fc08a061c8512a927491276388a2afc2e3e1189f33ed191"
-        },
-        {
-          "value": "--tile-grass",
-          "hash": "925b6ca1f8be6b10b5016283ce2045a5c29d06ca86c477218dac7bcaa496a79e"
-        },
-        {
-          "value": "--tile-noise",
-          "hash": "d89de2f58513c1e8db88345441dea5de8030e5a6baea6fb6b5ec447d09d3949b"
-        },
-        {
-          "value": "--tile-size",
-          "hash": "e34d236598e946b98c21ae25151a469e2048fa646f63fdc13ec3e5bfe70adb7c"
-        },
-        {
-          "value": "--tile-stone",
-          "hash": "b7df637131999c90a2ccb70385a92656568b15b91ef7d4b1ba30e79fd3677d9c"
-        },
-        {
-          "value": "--viewport-height",
-          "hash": "fee661b2733795707b31ff06d04c48eb9879a6fc2a41a4920821a4048dc25579"
-        },
-        {
-          "value": "--viewport-width",
-          "hash": "287a1ce2b0d29c0eedc19731484a18b2c0b250c1bc3b6efa702593d186668081"
-        },
-        {
-          "value": ".tile",
-          "hash": "ebc4ef7a66acaa4feeff83e938484e623d48bf928b9ac2102e60055ecd14ec11"
-        },
         {
           "value": "[TILE_GRID] Container not found.",
           "hash": "1aafebbd502c5bf589f2f394bbe94361e4d32d45c4f38d45d16f51d7a38df17a"
         },
         {
-          "value": "${d1x}%",
-          "hash": "6c4a8fd5f533ee494b2c435449275a0fc5e1d2b4db2e5a29ec111b0e0b956027"
-        },
-        {
-          "value": "${d1y}%",
-          "hash": "99c5e921f73e035f92cf605faddda7c8386aa3158dd5ef2ac8a6df0f5ee8cb1b"
-        },
-        {
-          "value": "${d2x}%",
-          "hash": "f0faa38088151d915457d3252b678cb5cbe80aaf5d4afa5d9d871b83bab6fb4d"
-        },
-        {
-          "value": "${d2y}%",
-          "hash": "eefbc228e682690f55dda143580ba7a45352f8814002827392279c31087754df"
-        },
-        {
-          "value": "${d3x}%",
-          "hash": "3b33526cfed526a00bd2894dec73ae771245eb39b3ea4263e903309631fb36bf"
-        },
-        {
-          "value": "${d3y}%",
-          "hash": "bf1ddde06733fc58b785508b710eb1a1ceb4023ec75e262b36a1951289df416f"
-        },
-        {
-          "value": "${Math.max(0, Math.round(height))}px",
-          "hash": "4ae6c9e11d8dfb9768e3ec94da46e5bd58181cc617c250bcccf4f6fd61f192f9"
-        },
-        {
-          "value": "${Math.max(0, Math.round(width))}px",
-          "hash": "30c1f12f32f955894c4f2aa8b0f617a89e0d92c26b52f6b18d161a955a97fcbf"
+          "value": "${heightPx}px",
+          "hash": "f193816f3b60b25c4c62e225f0e7ab7e7fafe113243b91c7e41b95a6f7742eaf"
         },
         {
           "value": "${Math.trunc(x)}:${Math.trunc(y)}",
           "hash": "6ff059617bb4b0076dffa0c15d5fbd030756cd757f0698a265ca9e9ce9ccfccc"
         },
         {
-          "value": "${this.tileSize}px",
-          "hash": "3e5aa89f20acb66707a1bfde7950b63f63ffb851a905d2fbea9e679941649098"
+          "value": "${textSize}px \"Space Grotesk\", \"IBM Plex Sans\", sans-serif",
+          "hash": "b85f5263a1085f196e7ef00576dfb36614fc72716d79379594bec7ef3926fa8f"
         },
         {
           "value": "${tile.rate} ${tile.unit.trim()}",
           "hash": "b73ee594ae73fba4168f901fe1986b5cba25f284b5eb83fdccae306218e2c5e5"
         },
         {
-          "value": "aria-hidden",
-          "hash": "66eaf9abadcdda6c5ff024d2f1833abdfb52156072d292fd20282726a4c915e8"
+          "value": "${widthPx}px",
+          "hash": "6d87b8eecdcfb912865f3bfb649ba140df5daa589a022e22c2d24159fd32a7c5"
         },
         {
-          "value": "brightness(${brightness.toFixed(3)})",
-          "hash": "e97bf97889ea9c34dae37c7171d55b1b16e2f638a45aa67ee536c118a00aeff7"
+          "value": "2d",
+          "hash": "f86b4d3007fdc5613ee00f8c1609018729705ec43596566fed698b647f3d5a68"
+        },
+        {
+          "value": "aria-label",
+          "hash": "66ba2129a90d4a5810ec62bcf19ac63372c4ca9f44becbd2cf588b101cc8228d"
+        },
+        {
+          "value": "bold ${fontSize}px \"Space Grotesk\", \"IBM Plex Sans\", sans-serif",
+          "hash": "682ee4fcf0800090bd2e312b88f2b8bf84eba8a659ed1783064dfa9fa2214d98"
+        },
+        {
+          "value": "canvas",
+          "hash": "a457e8f04aa796dc50770f109d184aaa9b389b8429eda73d49bd7dfdb199aa9c"
+        },
+        {
+          "value": "center",
+          "hash": "f179a509d32bd92c923f236324daef85551c03a761bf0188be286a585281b4ac"
         },
         {
           "value": "click",
           "hash": "e5c7ffac26fed654fe62045898f55b551a0dc120badf3d116bcd364418f3ec16"
-        },
-        {
-          "value": "coal",
-          "hash": "6d114c95fbf5208dd6cf5133f5f89db623bf20ee6f6e68f48f0bbfa4a21a843c"
         },
         {
           "value": "connector",
@@ -3153,40 +2949,100 @@
           "hash": "06c8aaa93d80a768829b6005973fa92e34612849b79910c8be8e3b006cf91c61"
         },
         {
-          "value": "forest",
-          "hash": "619a2ccf126ce837dc7cd3bdb4d7f44280a0ea4f721e5a738f859aa19d52a78f"
-        },
-        {
           "value": "function",
           "hash": "78f9ac018e554365069108352dacabb7fbd15246edf19400677e3b54fe24e126"
         },
         {
-          "value": "grid",
-          "hash": "0f2a693e93e2ed7008feb5b7714bbab236e3907e64188199e3be1ae367f49c40"
+          "value": "hsl(150, 22%, 40%)",
+          "hash": "29194b174b97c295e8f1da48ec284b764e32a8d9d61a815b1360eb9dca80ea76"
         },
         {
-          "value": "gridcell",
-          "hash": "2648ac479a631e03ae9c6e2d78023aff6a88dfd7d36ef1b9fb7bbe4dfe993bca"
+          "value": "hsl(150, 24%, 28%)",
+          "hash": "a11a1bfac0e0f15346d7c0455cafc8dcba0719f0a880fad51d07cc61016a1c24"
         },
         {
-          "value": "hsl(${hue.toFixed(1)} ${sat.toFixed(1)}% ${light.toFixed(1)}%)",
-          "hash": "1b089ce00ec889b667775450163a5017e38a28dc61e88bcfaec1e8c43acf4766"
+          "value": "hsl(150, 26%, 20%)",
+          "hash": "f85e3a2165816746608260361e83afe01d45a5888918753da8165e901cfdde5b"
         },
         {
-          "value": "icon",
-          "hash": "c2d4b446a44ce54fab8e01150e24dd24f3d850c7c14dcfe31f6321341dd86874"
+          "value": "hsl(150, 28%, 14%)",
+          "hash": "527fcdb4d13f543fc41e9167d5b479df604f3881ffa0123950eab49ca5658ac4"
         },
         {
-          "value": "meadow",
-          "hash": "6d02f7d61e02d070944a9a37856f43d78fb89f8adea6150cd2fdcb53d2a4cc4a"
+          "value": "hsl(155, 24%, 26%)",
+          "hash": "af4f3779ce1b95addbe0eb565bd994ede2e7fe07ba51bd7140bf7787eebf9ac3"
+        },
+        {
+          "value": "hsl(155, 26%, 16%)",
+          "hash": "b0818cc85e515117865e80104a40faefdd8d7e6fbaac39a19826e87c40fe4162"
+        },
+        {
+          "value": "hsl(155, 28%, 12%)",
+          "hash": "9420daa881caf09f83a386299399f7fd82f67e7f5e1b5ef4319a31169af6fbef"
+        },
+        {
+          "value": "hsl(155, 30%, 8%)",
+          "hash": "f4293e5401470e2bedc4a1ba14f73d1d8049688e582c80dc5717a376c8db155e"
+        },
+        {
+          "value": "hsl(195, 32%, 42%)",
+          "hash": "301122a205201fe548fbbeb508c1f61a8605c5e602743dcdd4f3444290018db6"
+        },
+        {
+          "value": "hsl(195, 34%, 28%)",
+          "hash": "b0ca6d63abb6fcf88428e4e82d8e620bf667044624de4552d06d181b2f99fe3c"
+        },
+        {
+          "value": "hsl(195, 36%, 20%)",
+          "hash": "e1f4633b40a3f1208a075b16827c0ee147b735d1166adc03cd31daf2d063d628"
+        },
+        {
+          "value": "hsl(195, 38%, 14%)",
+          "hash": "7a9706e8ccd94c09696dad258965e778916e0d872fe104d7b6771f29b88f1a16"
+        },
+        {
+          "value": "hsl(215, 18%, 52%)",
+          "hash": "1f23ad7eb6b6c77fce929c23fdef21f96c90942798e4b27d973a6cc33898b1b0"
+        },
+        {
+          "value": "hsl(215, 20%, 36%)",
+          "hash": "5580c4c5740eca534da41ac757879f2f2ec4b139ca73cdd8f5e498930c4b225d"
+        },
+        {
+          "value": "hsl(215, 22%, 26%)",
+          "hash": "0aa8bf24506a2f54c3cb438c4936c8505559566e9e52eafc43b6b810b4294d7d"
+        },
+        {
+          "value": "hsl(215, 24%, 18%)",
+          "hash": "a3ac463b0c028f1d1504b28221faff385beaa20769235866a28f9067fe9cde82"
+        },
+        {
+          "value": "hsl(272, 30%, 46%)",
+          "hash": "03a0005d9b06b71f16c3e345c8f5b393bdc60e3dc9bacd8db5e8ddf0a52036fe"
+        },
+        {
+          "value": "hsl(272, 32%, 32%)",
+          "hash": "b9e905ec2d446b04bded1338f5ae4f3146e22b8a18fed5d8140aadba085d5e25"
+        },
+        {
+          "value": "hsl(272, 34%, 22%)",
+          "hash": "49b6dcf05f0ca4d4bdde48e03d441bc4c8badc237d25c58fe62d707f4a9801b3"
+        },
+        {
+          "value": "hsl(272, 36%, 16%)",
+          "hash": "dab68869adecc5aa4163e208b073af2d1b36e08a547963ed379e9df6c3ccdd55"
+        },
+        {
+          "value": "img",
+          "hash": "b29814cf5792e684cd75d6a7fce7a67a11887e312f87ca2ac2496d81f365ff72"
+        },
+        {
+          "value": "middle",
+          "hash": "a4888af4e46c129c695ee32775a8c233f113c82e7cd4e6fd3cbb1fda5659f36a"
         },
         {
           "value": "mine",
           "hash": "3fd30542fe3f61b14bd4a4b2dc0b6fb30fa6f63ebce52dd1778aaa8c4dc02cff"
-        },
-        {
-          "value": "none",
-          "hash": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe"
         },
         {
           "value": "number",
@@ -3197,36 +3053,28 @@
           "hash": "2958d416d08aa5a472d7b509036cb7eafd542add84527e66a145ea64cb4cdc75"
         },
         {
-          "value": "off",
-          "hash": "b4dc66dde806261bdda8607d8707aa727d308cd80272381a5583f63899918467"
+          "value": "rgba(0, 0, 0, 0.06)",
+          "hash": "042f23b97014e767d893a5040e9d6a304bc5186d53b205d4419510da86e5d97d"
         },
         {
-          "value": "ore",
-          "hash": "f8bd17bea0e948bb644ee10b36ba44e1627d6ab0f0deaebbadc600303d24b6ad"
+          "value": "rgba(240, 245, 242, 0.78)",
+          "hash": "4b0e94768c997103e09ad6f17288190de09bdc567cf8a95f9402b7376d120ebe"
         },
         {
-          "value": "repeat(${this.height}, ${this.tileSize}px)",
-          "hash": "5b4f36813564b6a33083ee09749eef51abe60bb329fdae75f2036a688ff89d5b"
+          "value": "rgba(240, 245, 242, 0.92)",
+          "hash": "f3a873baef926486ec3b3d555c62445e374ad12c02cc34f1cd20175abc6355ac"
         },
         {
-          "value": "repeat(${this.width}, ${this.tileSize}px)",
-          "hash": "574377caa46d4b8dc49f84bdb826de443f107c13da17600627e5712f71d0be1c"
+          "value": "rgba(255, 255, 255, 0.04)",
+          "hash": "3c645f796b71e1f0b33c097b963b779c19041d58dc416060775b89dc1c1ac21f"
+        },
+        {
+          "value": "rgba(255, 255, 255, 0.12)",
+          "hash": "208292b733c9a76e2d36d23fd3018e83bd1d65bdf25c21a07108188fa2ca88f4"
         },
         {
           "value": "role",
           "hash": "4b168d88dc872a7753c2bc35b36a2d4249487af55baf78f247f38cae2fe962da"
-        },
-        {
-          "value": "scrub",
-          "hash": "e8927b61deaf6863a3006b9a100f01d4962374aa9dea9516949e817cecca3b97"
-        },
-        {
-          "value": "span",
-          "hash": "37a0025aa1f2e29f9f88f59f961e44a320849dfc79a85ef3c02654d50d2e7480"
-        },
-        {
-          "value": "steppe",
-          "hash": "891a17dd29f0f5726ddf3df373fb1b4a40bfe61a13d75df3efa126856c2ab629"
         },
         {
           "value": "storage",
@@ -3237,60 +3085,20 @@
           "hash": "473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8"
         },
         {
-          "value": "tile tile--${tile.type}",
-          "hash": "af853823b47f307b83a6f70e5f5a1ed66b5ed4afd030378ea636d49af548965f"
+          "value": "Tile Grid Canvas",
+          "hash": "92a684853de89b8720eeb66911e11d28e809b5d20142442e7d6c2f30525366d2"
         },
         {
-          "value": "tile tile--empty",
-          "hash": "ed39f15bd9b584d78391bb3db68508332ab264b843a3f2fbb245345a6f0d0e9f"
+          "value": "tile-grid-canvas",
+          "hash": "613c49a4b4c065d1571798b92581fe91b4d4022a01aa7f0b2bc753c3f3e4c9d3"
         },
         {
-          "value": "tile--active",
-          "hash": "ec8e0893dc0cfd62f0c70be73426d4719c488d36f1caf535093a9af65d1ec7c0"
+          "value": "tile-grid-canvas-root",
+          "hash": "0c760b3d74e9e26855cac21ba314688738cf167b2e669c7b7c973c77f860172f"
         },
         {
-          "value": "tile--empty",
-          "hash": "0e581f9548341b51cdf44983750324b4cd40cad2744e35490b374c2c60bc97ba"
-        },
-        {
-          "value": "tile-fx",
-          "hash": "47fbbc2f813a35874fdc69769a75ba92f86ccfe08d6e373d0bc7afcf930610b6"
-        },
-        {
-          "value": "tile-grid",
-          "hash": "dbe7fb45a42da1696ecce8b9166085586baa2e3d5335a68d0e821c2ce8f4ae27"
-        },
-        {
-          "value": "tile-output",
-          "hash": "74c66f432b7089f20705cf445e7c933c535ef00908eb62fac91c3ca9df5c7e3b"
-        },
-        {
-          "value": "translate(-50%, -50%)",
-          "hash": "569bd25dce87a68e236eead6f6df69579acd12bf7d179bc1ec334bb6d4a3a209"
-        },
-        {
-          "value": "translate(-50%, -50%) rotate(${rotation.toFixed(2)}deg)",
-          "hash": "5f8a2d6fbf1379329d9ceb4a1d077fcd8ce9da6b390f4606adbfbc2d148c0700"
-        },
-        {
-          "value": "translate(-50%, -50%) rotate(${swing.toFixed(2)}deg) ${pickaxe}",
-          "hash": "bef49bf5464fee22b98a6d3e43228f45889137f8f3e912d59d2057cac5f9fd87"
-        },
-        {
-          "value": "translate(-50%, -50%) scale(${pulse.toFixed(3)})",
-          "hash": "506815975b5ceba931c5cabd90421bd38f4a45887c27a8a14cc3fddd740fe692"
-        },
-        {
-          "value": "translate(-50%, -50%) translateX(${(pulse / 20).toFixed(2)}px)",
-          "hash": "5df52d944e2e181fd2068720f16c16c914262d90c3557ff74c284e629ff5f51a"
-        },
-        {
-          "value": "true",
-          "hash": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
-        },
-        {
-          "value": "water",
-          "hash": "0f4168490e38b8447e11ba4bd656aa11b925bd22af30bac464bc153fdb608501"
+          "value": "top",
+          "hash": "28720365c5e7476a011e4f43ac003ee5f16247a263b9d623aa85ed311d73bf39"
         }
       ]
     },

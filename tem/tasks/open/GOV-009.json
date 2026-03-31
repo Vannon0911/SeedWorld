@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "GOV-009",
+  "title": "Preset-Registry fuer Renderpfad kanonisieren",
+  "status": "open",
+  "track": "governance-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Erlaubt in Produktion nur versionierte Kamera-/Licht-/Material-/Schatten-Presets.",
+  "scope_paths": [
+    "app/src/render/renderPresets.js",
+    "app/src/kernel/gates/render-plan-gate.js",
+    "docs/V2/TRUTH.md"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

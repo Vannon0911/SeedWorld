@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "RT-019",
+  "title": "Chunk-Offscreen-Worker als Executor einfuehren",
+  "status": "open",
+  "track": "red-team-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Fuehrt deterministisches Chunk-Offscreen-Rendering ueber freigegebenen Render-Plan ein.",
+  "scope_paths": [
+    "app/src/workers/chunkRenderWorker.js",
+    "app/src/workers/worldRenderWorker.js",
+    "app/src/render/renderPlan.js"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

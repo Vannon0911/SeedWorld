@@ -130,15 +130,6 @@ Offene Planung liegt nur noch als atomare Einzel-Tasks vor. Ein Task bleibt offe
 - Scope: `dev/tools/runtime/sync-docs-v2.mjs`, `dev/tools/runtime/repo-hygiene-map.mjs`, `dev/tools/runtime/docs-v2-shared.mjs`
 - Description: sync-docs-v2 und repo-hygiene-map sollen in klar getrennte Phasen zerlegt werden, damit Ausnahmen in der Modularity-Regel entfallen.
 
-### GOV-005 Signed-Commit Policy auf Push-Range verallgemeinern
-
-- JSON: `tem/tasks/open/GOV-005.json`
-- Track: `governance-hardening`
-- Match: `all_scope_paths_touched`
-- Source: `docs/V2/SYSTEM_PLAN.md`
-- Scope: `dev/tools/runtime/governance-policy-verify.mjs`, `dev/tools/runtime/signing-guard.mjs`, `.github/workflows/required-checks.yml`
-- Description: Signaturprüfung soll lokal und in CI denselben Range-Contract nutzen, inklusive robuster Upstream-Range-Resolution statt fixer origin/main-Annahme.
-
 ### GOV-006 Governance-Prozedur Security Threat Model fest verankern
 
 - JSON: `tem/tasks/open/GOV-006.json`
@@ -148,6 +139,33 @@ Offene Planung liegt nur noch als atomare Einzel-Tasks vor. Ein Task bleibt offe
 - Scope: `docs/LLM/POLICY.md`, `docs/MANUEL/WORKFLOW.md`, `docs/V2/TRUTH.md`
 - Description: Bedrohungsmodell fuer Governance-Artefakte, Hooks und Claim-Proofs soll als kontrolliertes Dokument mit Verify-Referenz eingebunden werden.
 
+### GOV-008 Render-Plan-Gate als Pflichtvertrag erzwingen
+
+- JSON: `tem/tasks/open/GOV-008.json`
+- Track: `governance-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/render/renderPlan.js`, `app/src/kernel/KernelGates.js`, `app/src/kernel/gates/render-plan-gate.js`
+- Description: Validiert Render-Payloads fail-closed ueber expectedWorldHash, Chunk-Liste und Preset-Whitelist.
+
+### GOV-009 Preset-Registry fuer Renderpfad kanonisieren
+
+- JSON: `tem/tasks/open/GOV-009.json`
+- Track: `governance-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/render/renderPresets.js`, `app/src/kernel/gates/render-plan-gate.js`, `docs/V2/TRUTH.md`
+- Description: Erlaubt in Produktion nur versionierte Kamera-/Licht-/Material-/Schatten-Presets.
+
+### GOV-010 Render-Evidence-Manifest als Pflichtartefakt aufnehmen
+
+- JSON: `tem/tasks/open/GOV-010.json`
+- Track: `governance-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `runtime/evidence/render-manifest.json`, `dev/scripts/verify-evidence.mjs`, `dev/tools/runtime/run-required-checks.mjs`
+- Description: Verankert ein render-manifest mit Hash-/Preset-/Chunk-Referenzen als zwingende Verify-Basis.
+
 ### LEG-001 Legacy-Archivpfad UNVERFID vollstaendig abbauen
 
 - JSON: `tem/tasks/open/LEG-001.json`
@@ -156,6 +174,15 @@ Offene Planung liegt nur noch als atomare Einzel-Tasks vor. Ein Task bleibt offe
 - Source: `docs/V2/SYSTEM_PLAN.md`
 - Scope: `legacy/UNVERFID/`, `app/src/sot/docs-v2.json`, `app/src/sot/source-of-truth.json`, `docs/INDEX.md`, `docs/V2/ARCHIVE.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`
 - Description: Entfernt das Verzeichnis legacy/UNVERFID und bereinigt alle aktiven SoT-/Docs-Referenzen auf diesen Pfad.
+
+### LEG-003 TileGridRenderer auf Debug-/Inspection-Rolle reduzieren
+
+- JSON: `tem/tasks/open/LEG-003.json`
+- Track: `legacy-cleanup`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/ui/TileGridRenderer.js`, `app/src/ui/UIController.js`, `app/public/game.html`
+- Description: Entkoppelt den TileGridRenderer vom Produktionspfad und behaelt ihn nur als Debug-Overlay.
 
 ### RT-001 Kernel validator unter Determinism-Guards erzwingen
 
@@ -183,4 +210,67 @@ Offene Planung liegt nur noch als atomare Einzel-Tasks vor. Ein Task bleibt offe
 - Source: `docs/V2/SYSTEM_PLAN.md`
 - Scope: `dev/tools/runtime/docs-v2-shared.mjs`, `dev/tools/runtime/governance-findings-shared.mjs`, `dev/tools/runtime/governance-llm-verify.mjs`, `dev/tools/runtime/governance-subagent-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/governance-modularity-verify.mjs`, `runtime/evidence/governance-modularity.json`
 - Description: Uebergrosse Governance-Dateien muessen in stabile Teilmodule aufgeteilt werden; verify darf weder Ausnahmen noch Size-Bypass akzeptieren.
+
+### RT-014 Kanonisches Weltmodell fuer Volume/Block/Chunk einfuehren
+
+- JSON: `tem/tasks/open/RT-014.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/game/worldGen.js`, `app/src/game/worldState.js`, `app/src/ui/UIController.js`
+- Description: Fuehrt volume/blocks/chunks als kanonische Weltstruktur ein und markiert world.tiles explizit als Legacy-/Debug-Projektion.
+
+### RT-015 Hash- und Versionsvertrag fuer World/Render fixieren
+
+- JSON: `tem/tasks/open/RT-015.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/render/renderFingerprint.js`, `app/src/game/worldHash.js`, `docs/V2/TRUTH.md`
+- Description: Definiert deterministische worldHash/renderHash-Vertraege ohne implizite Inputs.
+
+### RT-016 WorldGen auf Sampler-Schnittstellen ausrichten
+
+- JSON: `tem/tasks/open/RT-016.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/game/worldSampler.js`, `app/src/game/worldGen.js`
+- Description: Fuehrt deterministische Sampler-Schnittstellen ein und entkoppelt Full-Scan-Logik.
+
+### RT-017 Block- und Chunk-Compiler einfuehren
+
+- JSON: `tem/tasks/open/RT-017.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/game/blockCompiler.js`, `app/src/game/chunkCompiler.js`, `app/src/game/worldGen.js`
+- Description: Normalisiert Weltaufbau ueber compileBlock/compileChunk statt impliziter Tile-Kopplung.
+
+### RT-018 Biome-/Materiallogik auf Blockebene verankern
+
+- JSON: `tem/tasks/open/RT-018.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/game/blockCompiler.js`, `app/src/game/chunkCompiler.js`, `app/src/render/renderState.js`
+- Description: Macht Biome-/Transition-/Materialentscheidungen auf Block-/Chunk-Daten fuer den Renderpfad nutzbar.
+
+### RT-019 Chunk-Offscreen-Worker als Executor einfuehren
+
+- JSON: `tem/tasks/open/RT-019.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/workers/chunkRenderWorker.js`, `app/src/workers/worldRenderWorker.js`, `app/src/render/renderPlan.js`
+- Description: Fuehrt deterministisches Chunk-Offscreen-Rendering ueber freigegebenen Render-Plan ein.
+
+### RT-020 Dirty-Chunk-ReRender deterministisch steuern
+
+- JSON: `tem/tasks/open/RT-020.json`
+- Track: `red-team-hardening`
+- Match: `all_scope_paths_touched`
+- Source: `docs/V2/SYSTEM_PLAN.md`
+- Scope: `app/src/game/chunkState.js`, `app/src/game/mutationQueue.js`, `app/src/workers/chunkRenderWorker.js`
+- Description: Markiert und rendert nur betroffene Chunks inkl. notwendiger Nachbarn fuer Schatten/Occlusion neu.
 

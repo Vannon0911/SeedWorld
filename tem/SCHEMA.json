@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "080de26fcd43a67c49184195e6a9ba04a5e38ae12219f0587aaff59e6a2da404",
+  "snapshotId": "46f83111d018d4b974e44b3220f57d56be63c3688bf061d04c11221536290146",
   "controlFiles": [
     "TODO.md",
     "WORKFLOW.md",
     "SCHEMA.json"
   ],
-  "artifactCount": 73,
+  "artifactCount": 95,
   "categories": {
     "planung": [
       "tem/beide-plaene.md",
@@ -41,8 +41,19 @@
       "tem/slices/cf-003-canvas-render-loop.md",
       "tem/slices/cf-004-tile-dom-to-canvas.md",
       "tem/slices/evidence-remediation-jszip.md",
+      "tem/slices/gov-008-render-plan-gate.md",
+      "tem/slices/gov-009-preset-registry.md",
+      "tem/slices/gov-010-render-evidence-manifest.md",
       "tem/slices/integration-summary.md",
+      "tem/slices/leg-003-tilegrid-debug-only.md",
       "tem/slices/remaining-task-stubs.md",
+      "tem/slices/rt-014-canonical-world-model.md",
+      "tem/slices/rt-015-world-render-hash-contract.md",
+      "tem/slices/rt-016-world-sampler-contract.md",
+      "tem/slices/rt-017-block-chunk-compiler.md",
+      "tem/slices/rt-018-biome-on-block-layer.md",
+      "tem/slices/rt-019-chunk-offscreen-worker.md",
+      "tem/slices/rt-020-dirty-chunk-rerender.md",
       "tem/slices/t02-kanonische-api-matrix.md",
       "tem/slices/t03-guardrail-konzept.md"
     ],
@@ -57,6 +68,7 @@
       "tem/tasks/archive/GOV-005.json",
       "tem/tasks/archive/GOV-006.json",
       "tem/tasks/archive/GOV-007.json",
+      "tem/tasks/archive/LEG-002.json",
       "tem/tasks/archive/LLM-001.json",
       "tem/tasks/archive/LLM-002.json",
       "tem/tasks/archive/LLM-003.json",
@@ -89,12 +101,22 @@
       "tem/tasks/open/GOV-002.json",
       "tem/tasks/open/GOV-003.json",
       "tem/tasks/open/GOV-004.json",
-      "tem/tasks/open/GOV-005.json",
       "tem/tasks/open/GOV-006.json",
+      "tem/tasks/open/GOV-008.json",
+      "tem/tasks/open/GOV-009.json",
+      "tem/tasks/open/GOV-010.json",
       "tem/tasks/open/LEG-001.json",
+      "tem/tasks/open/LEG-003.json",
       "tem/tasks/open/RT-001.json",
       "tem/tasks/open/RT-004.json",
-      "tem/tasks/open/RT-013.json"
+      "tem/tasks/open/RT-013.json",
+      "tem/tasks/open/RT-014.json",
+      "tem/tasks/open/RT-015.json",
+      "tem/tasks/open/RT-016.json",
+      "tem/tasks/open/RT-017.json",
+      "tem/tasks/open/RT-018.json",
+      "tem/tasks/open/RT-019.json",
+      "tem/tasks/open/RT-020.json"
     ],
     "sonstiges": [
       "tem/testline-missing-systems.md"
@@ -192,14 +214,69 @@
       "sha256": "1a52810b42bc88579e571a61336adfcc577ad0aee25b09cd3a3d632e8da3155a"
     },
     {
+      "path": "tem/slices/gov-008-render-plan-gate.md",
+      "category": "implementierungs-slices",
+      "sha256": "16ec726f22008a3ae50027023a0deec714ed9f53e2f3e192b2f382c57d805a86"
+    },
+    {
+      "path": "tem/slices/gov-009-preset-registry.md",
+      "category": "implementierungs-slices",
+      "sha256": "61e51c2cdbe7dd12d304d0de1d2ddf20de69c1fd6985b95c22e0a0debd286157"
+    },
+    {
+      "path": "tem/slices/gov-010-render-evidence-manifest.md",
+      "category": "implementierungs-slices",
+      "sha256": "1574cfc91d9e6da1c766b3dd1c054be6c147ffc812bcee748f52f6e01dc5e55d"
+    },
+    {
       "path": "tem/slices/integration-summary.md",
       "category": "implementierungs-slices",
       "sha256": "0c4beb37058a590c892cac06b0b840d9276fbd6e36bcc0d03a46f7febbd54590"
     },
     {
+      "path": "tem/slices/leg-003-tilegrid-debug-only.md",
+      "category": "implementierungs-slices",
+      "sha256": "301395a358497d92bab65a7b0149100f32d8a468d59bb95674d39c58eaa2ed08"
+    },
+    {
       "path": "tem/slices/remaining-task-stubs.md",
       "category": "implementierungs-slices",
       "sha256": "40437e5e709aa4da42aa9f16335475d19cafe1704d3b4870d233756b8733e3b8"
+    },
+    {
+      "path": "tem/slices/rt-014-canonical-world-model.md",
+      "category": "implementierungs-slices",
+      "sha256": "b258b883f46d3e1ba6ae0d4aadd2b03459e3237909e75d2a54be3bcf358711ec"
+    },
+    {
+      "path": "tem/slices/rt-015-world-render-hash-contract.md",
+      "category": "implementierungs-slices",
+      "sha256": "7020409d805177dbb67e1ba4531fd6fa4284aeb18d6c226bf29e1f2a74285a3b"
+    },
+    {
+      "path": "tem/slices/rt-016-world-sampler-contract.md",
+      "category": "implementierungs-slices",
+      "sha256": "e93c813f66786485142bf49b0e6ef219ebef471a9c31caf27df08ad551e8cb9e"
+    },
+    {
+      "path": "tem/slices/rt-017-block-chunk-compiler.md",
+      "category": "implementierungs-slices",
+      "sha256": "a442af6ef3b2d35d6ca7418b0537fdcf3e2738e933f77ad7679ca947eb40a18f"
+    },
+    {
+      "path": "tem/slices/rt-018-biome-on-block-layer.md",
+      "category": "implementierungs-slices",
+      "sha256": "7f38d543f695231efd5c67024b254469ce786530ae0424fa8114618c35b9569d"
+    },
+    {
+      "path": "tem/slices/rt-019-chunk-offscreen-worker.md",
+      "category": "implementierungs-slices",
+      "sha256": "7ff3dd5762d54f07aa61433b54a48a258a01d3b704d3a9d61eda0a35f3a2367b"
+    },
+    {
+      "path": "tem/slices/rt-020-dirty-chunk-rerender.md",
+      "category": "implementierungs-slices",
+      "sha256": "98cd423e1208daf6e7223f58c96d33cec435408973c552ba10d7bd0ae6eb7779"
     },
     {
       "path": "tem/slices/t02-kanonische-api-matrix.md",
@@ -259,7 +336,7 @@
     {
       "path": "tem/tasks/archive/GOV-005.json",
       "category": "task-archive",
-      "sha256": "50d07aa4be1ad6b93de2e8b13998067ddac13444a13f7f4019f58f01240f4c25"
+      "sha256": "2243ac2d472abbe6ee4f12fa35f597739bf63549387957fa323c320c748f923b"
     },
     {
       "path": "tem/tasks/archive/GOV-006.json",
@@ -269,7 +346,12 @@
     {
       "path": "tem/tasks/archive/GOV-007.json",
       "category": "task-archive",
-      "sha256": "c673388d27e615be980bd48539600a6602f14ae2fe2ff554c8579ab2478f2d56"
+      "sha256": "09a573162aebac6ef01865a540379b5d8178d59d3a925a20f7c4e754617a4354"
+    },
+    {
+      "path": "tem/tasks/archive/LEG-002.json",
+      "category": "task-archive",
+      "sha256": "079e01c1511d784c79573fa2c18b358127ad965c8387782320daf2aad7490466"
     },
     {
       "path": "tem/tasks/archive/LLM-001.json",
@@ -404,37 +486,52 @@
     {
       "path": "tem/tasks/open/GOV-001.json",
       "category": "task-open",
-      "sha256": "6a2cf2ee0a60120f0bb2a3023589ca4479ae56bc0472b09d8dcf9c0c8661984d"
+      "sha256": "ab27400cf5a27ce684a0c8e4597f8a2413a88cdfa1c927361e2e51e48e3b7e61"
     },
     {
       "path": "tem/tasks/open/GOV-002.json",
       "category": "task-open",
-      "sha256": "72d219c97bb109924380a4db8bb332ecbc91e34452a313a52d8a43ceae35085f"
+      "sha256": "852c460ae3b6dacdb56820b1e51ab354ad932122b9946c05edb2729d98a410a3"
     },
     {
       "path": "tem/tasks/open/GOV-003.json",
       "category": "task-open",
-      "sha256": "0425c83b3c2d9b6085496cdf0c8660ca4e5ab79b41d35e32ffba5db65f20f243"
+      "sha256": "5b3ced4ae671825fb34ac6d52a2fe4b34f11a2f48a02479b774bccfd256fae9a"
     },
     {
       "path": "tem/tasks/open/GOV-004.json",
       "category": "task-open",
-      "sha256": "447b9b2540435e9e2d1e10a06d979f94701fe4cdb839a41669147c9797e814d1"
-    },
-    {
-      "path": "tem/tasks/open/GOV-005.json",
-      "category": "task-open",
-      "sha256": "a2cbdeeeb4fb7b520bae6bcc52611e211fe23c23d74ad42aba006625747db6e1"
+      "sha256": "f7d04e88b02d1e028d11b9b709d1024d556cea930a6bd19793d27965a0f5fbd9"
     },
     {
       "path": "tem/tasks/open/GOV-006.json",
       "category": "task-open",
-      "sha256": "ea01778c13be477f494e5771d95bd044e200fd113f5a75acc32aa84c69d3d582"
+      "sha256": "999d5202712fe7f05f3fede6e02743cb15a600e9ed076f0bc1bf63c87c412c75"
+    },
+    {
+      "path": "tem/tasks/open/GOV-008.json",
+      "category": "task-open",
+      "sha256": "f935af15cc142abc66fe59350069ff31172862e1f080bdb96f057dcdfbb48241"
+    },
+    {
+      "path": "tem/tasks/open/GOV-009.json",
+      "category": "task-open",
+      "sha256": "49a2edbef9c5e3c4d3b3585bd75f84477a0c9bce54355be014f209588fad22d9"
+    },
+    {
+      "path": "tem/tasks/open/GOV-010.json",
+      "category": "task-open",
+      "sha256": "30b1164af044a66a0bf7c9bd9f06fabac17a55c925d3615520ecc5ab64e6fabe"
     },
     {
       "path": "tem/tasks/open/LEG-001.json",
       "category": "task-open",
-      "sha256": "8875f1219b7c965a6af272ea5cf450b3b8600c415a2e2407fb7c923410aa04a4"
+      "sha256": "905429acbfd17b533fe61e493b29512d1e0b4157ee64690b2daa886843782a3d"
+    },
+    {
+      "path": "tem/tasks/open/LEG-003.json",
+      "category": "task-open",
+      "sha256": "e5cbbd6c78b1f25a61b72b7368c46a2c88da991ae7a9a035198bf7bd396358f2"
     },
     {
       "path": "tem/tasks/open/RT-001.json",
@@ -452,6 +549,41 @@
       "sha256": "410553b153784699e126cb142a726856ce595645a9796db4ad92bdb0734438ec"
     },
     {
+      "path": "tem/tasks/open/RT-014.json",
+      "category": "task-open",
+      "sha256": "84666f33372c9ed9a45b25aab69da114dd0c5b5b53cda1d40978e717da94e2e6"
+    },
+    {
+      "path": "tem/tasks/open/RT-015.json",
+      "category": "task-open",
+      "sha256": "39b452d9fe6792546b6d208c008a1e8e0fe87a66812bcb52d15e2928c691f7e7"
+    },
+    {
+      "path": "tem/tasks/open/RT-016.json",
+      "category": "task-open",
+      "sha256": "1cb6285fee600fac1687b492d341aab4d0d290cd64da44a194d65846e78c8fc9"
+    },
+    {
+      "path": "tem/tasks/open/RT-017.json",
+      "category": "task-open",
+      "sha256": "0ac84c85bac9e9bbccedd3671d1147a9514bb0d27bcebc71c3bf729f8750ee48"
+    },
+    {
+      "path": "tem/tasks/open/RT-018.json",
+      "category": "task-open",
+      "sha256": "4e210d698b996b2086db38409100270ef0ae2a7818902d92f457a3bafdcd1d3e"
+    },
+    {
+      "path": "tem/tasks/open/RT-019.json",
+      "category": "task-open",
+      "sha256": "b9565c5bf31db90738e89874b93654e3063e0f7e16abed2f5b7e627d50007c90"
+    },
+    {
+      "path": "tem/tasks/open/RT-020.json",
+      "category": "task-open",
+      "sha256": "27f8d7ecb8cd974ddc34b89057da82caec3f666cef375ad9def4471433c48b0c"
+    },
+    {
       "path": "tem/test-evidence-report.md",
       "category": "reports-findings",
       "sha256": "acc0daf669aa9e4d887a7a967d44c3985e78327bb5db7502d5f06c8cdf52d6f3"
@@ -464,7 +596,7 @@
     {
       "path": "tem/traceability-map.md",
       "category": "reports-findings",
-      "sha256": "473f2cdfc6b00746be938430cb2f03d4eeb0b1c8d1596269f1e4cc868e7825da"
+      "sha256": "059a3d49dbf01cdf04ad109cfbdecd21f1372c57e8e8142f70afed6caa6421da"
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "RT-016",
+  "title": "WorldGen auf Sampler-Schnittstellen ausrichten",
+  "status": "open",
+  "track": "red-team-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Fuehrt deterministische Sampler-Schnittstellen ein und entkoppelt Full-Scan-Logik.",
+  "scope_paths": [
+    "app/src/game/worldSampler.js",
+    "app/src/game/worldGen.js"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

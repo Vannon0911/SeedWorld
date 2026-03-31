@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "RT-015",
+  "title": "Hash- und Versionsvertrag fuer World/Render fixieren",
+  "status": "open",
+  "track": "red-team-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Definiert deterministische worldHash/renderHash-Vertraege ohne implizite Inputs.",
+  "scope_paths": [
+    "app/src/render/renderFingerprint.js",
+    "app/src/game/worldHash.js",
+    "docs/V2/TRUTH.md"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

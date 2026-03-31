@@ -26,6 +26,20 @@ Archivierte Tasks wurden vom Scanner aus dem offenen Planungspfad entfernt, weil
 
 ## Archived Tasks
 
+### GOV-005 Signed-Commit Policy auf Push-Range verallgemeinern
+
+- JSON: `tem/tasks/archive/GOV-005.json`
+- Archived At: `2026-03-31T19:08:45.104Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/game/worldGen.js`, `app/src/kernel/KernelController.js`, `app/src/sot/llm-read-contract.v1.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/STRING_MATRIX.json`, `app/src/sot/sub-agent-manifest.v1.json`, `app/src/ui/RenderManager.js`, `app/src/ui/TileGridRenderer.js`, `dev/tests/modules/10.determinism-seed-proof-suite.module.mjs`, `dev/tools/runtime/governance-policy-verify.mjs`, `dev/tools/runtime/preflight-mutation-guard.mjs`, `dev/tools/runtime/signing-guard.mjs`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/ARCHIVE.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/SYSTEM_PLAN.md`, `package.json`, `tem/SCHEMA.json`, `tem/tasks/archive/LEG-002.json`, `tem/TODO.md`
+
+### LEG-002 Vollstaendiger Biome-Cut (Migration zu flachem Tile-System)
+
+- JSON: `tem/tasks/archive/LEG-002.json`
+- Archived At: `2026-03-31T17:31:55.025Z`
+- Reason: scope matched current change set
+- Changed Files: `app/src/game/worldGen.js`, `app/src/kernel/KernelController.js`, `app/src/ui/RenderManager.js`, `app/src/ui/TileGridRenderer.js`, `dev/tests/modules/10.determinism-seed-proof-suite.module.mjs`, `dev/tools/runtime/preflight-mutation-guard.mjs`, `tem/tasks/open/LEG-002.json`
+
 ### RT-012 Findings-Materialize atomar und race-safe machen
 
 - JSON: `tem/tasks/archive/RT-012.json`
@@ -149,13 +163,6 @@ Archivierte Tasks wurden vom Scanner aus dem offenen Planungspfad entfernt, weil
 
 - JSON: `tem/tasks/archive/GOV-006.json`
 - Archived At: `2026-03-31T09:02:10.331Z`
-- Reason: scope matched current change set
-- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
-
-### GOV-005 Release-Dokumentquelle eindeutig und fail-closed machen
-
-- JSON: `tem/tasks/archive/GOV-005.json`
-- Archived At: `2026-03-31T09:02:10.330Z`
 - Reason: scope matched current change set
 - Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
 

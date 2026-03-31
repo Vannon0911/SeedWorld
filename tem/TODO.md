@@ -17,8 +17,19 @@ Diese Datei wird automatisch aus `tem/` erzeugt. Keine manuelle Pflege.
 - [ ] tem/slices/cf-003-canvas-render-loop.md
 - [ ] tem/slices/cf-004-tile-dom-to-canvas.md
 - [ ] tem/slices/evidence-remediation-jszip.md
+- [ ] tem/slices/gov-008-render-plan-gate.md
+- [ ] tem/slices/gov-009-preset-registry.md
+- [ ] tem/slices/gov-010-render-evidence-manifest.md
 - [ ] tem/slices/integration-summary.md
+- [ ] tem/slices/leg-003-tilegrid-debug-only.md
 - [ ] tem/slices/remaining-task-stubs.md
+- [ ] tem/slices/rt-014-canonical-world-model.md
+- [ ] tem/slices/rt-015-world-render-hash-contract.md
+- [ ] tem/slices/rt-016-world-sampler-contract.md
+- [ ] tem/slices/rt-017-block-chunk-compiler.md
+- [ ] tem/slices/rt-018-biome-on-block-layer.md
+- [ ] tem/slices/rt-019-chunk-offscreen-worker.md
+- [ ] tem/slices/rt-020-dirty-chunk-rerender.md
 - [ ] tem/slices/t02-kanonische-api-matrix.md
 - [ ] tem/slices/t03-guardrail-konzept.md
 
@@ -61,6 +72,7 @@ Diese Datei wird automatisch aus `tem/` erzeugt. Keine manuelle Pflege.
 - [ ] tem/tasks/archive/GOV-005.json
 - [ ] tem/tasks/archive/GOV-006.json
 - [ ] tem/tasks/archive/GOV-007.json
+- [ ] tem/tasks/archive/LEG-002.json
 - [ ] tem/tasks/archive/LLM-001.json
 - [ ] tem/tasks/archive/LLM-002.json
 - [ ] tem/tasks/archive/LLM-003.json
@@ -93,12 +105,22 @@ Diese Datei wird automatisch aus `tem/` erzeugt. Keine manuelle Pflege.
 - [ ] tem/tasks/open/GOV-002.json
 - [ ] tem/tasks/open/GOV-003.json
 - [ ] tem/tasks/open/GOV-004.json
-- [ ] tem/tasks/open/GOV-005.json
 - [ ] tem/tasks/open/GOV-006.json
+- [ ] tem/tasks/open/GOV-008.json
+- [ ] tem/tasks/open/GOV-009.json
+- [ ] tem/tasks/open/GOV-010.json
 - [ ] tem/tasks/open/LEG-001.json
+- [ ] tem/tasks/open/LEG-003.json
 - [ ] tem/tasks/open/RT-001.json
 - [ ] tem/tasks/open/RT-004.json
 - [ ] tem/tasks/open/RT-013.json
+- [ ] tem/tasks/open/RT-014.json
+- [ ] tem/tasks/open/RT-015.json
+- [ ] tem/tasks/open/RT-016.json
+- [ ] tem/tasks/open/RT-017.json
+- [ ] tem/tasks/open/RT-018.json
+- [ ] tem/tasks/open/RT-019.json
+- [ ] tem/tasks/open/RT-020.json
 
 ## Umfang
-- Gesamtartefakte: 73
+- Gesamtartefakte: 95

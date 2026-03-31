@@ -12,7 +12,7 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 ## Summary
 
 - Files: 34
-- Unique Strings: 597
+- Unique Strings: 559
 
 ## Files
 
@@ -88,8 +88,8 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 
 ### app/src/game/worldGen.js
 
-- Strings: 30
-- Fingerprint: `6f8142a8d9b9b4067ce52555a4f1a90244ddb2675fe06c887d4798788ed0cf0a`
+- Strings: 21
+- Fingerprint: `02a0c70c2ce08c6516cc50b95691d8183bc2bbaeed61627a56aa2537c4267802`
 
 ### app/src/kernel/ActionRegistry.js
 
@@ -128,8 +128,8 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 
 ### app/src/kernel/KernelController.js
 
-- Strings: 73
-- Fingerprint: `a5972965c4f0f0f33d9954ae95175dc477b0a7844df5d4383e25d55bf125107a`
+- Strings: 65
+- Fingerprint: `fab95514f1e059a503dde6d06112073b16176a035e19f1341d1ad83e109a67f7`
 
 ### app/src/kernel/KernelGates.js
 
@@ -173,8 +173,8 @@ Diese Matrix erzwingt, dass die aktiven Spiel- und Doku-Strings maschinenlesbar 
 
 ### app/src/ui/TileGridRenderer.js
 
-- Strings: 85
-- Fingerprint: `92ea1251203b013f178512ae1cc915d17044be7d5ff7e86f0aef82326e9c6aad`
+- Strings: 54
+- Fingerprint: `b779d8af226810f3597232f1f7971e5cd44f1fba4fff1a098767d0dc818b6d38`
 
 ### app/src/ui/UIController.js
 

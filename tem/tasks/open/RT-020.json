@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "RT-020",
+  "title": "Dirty-Chunk-ReRender deterministisch steuern",
+  "status": "open",
+  "track": "red-team-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Markiert und rendert nur betroffene Chunks inkl. notwendiger Nachbarn fuer Schatten/Occlusion neu.",
+  "scope_paths": [
+    "app/src/game/chunkState.js",
+    "app/src/game/mutationQueue.js",
+    "app/src/workers/chunkRenderWorker.js"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

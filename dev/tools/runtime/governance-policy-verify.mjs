@@ -69,7 +69,9 @@ function main() {
   const args = parseArgs(process.argv.slice(2));
   const isCi = String(process.env.CI || "").toLowerCase() === "true" || !!process.env.GITHUB_ACTIONS;
   const explicitRanges = args.ranges.length > 0;
+  const runtimeReadOnly = String(process.env.RUNTIME_VERIFY_READ_ONLY || "").trim() === "1";
   const signingArgs = ["dev/tools/runtime/signing-guard.mjs", "--allow-empty-range"];
+  const defaultRange = "origin/main..HEAD";
   ensureSafeExecHint();
   if (isCi || args.skipConfig) {
     signingArgs.push("--skip-config");
@@ -78,7 +80,7 @@ function main() {
     throw new Error("[GOVERNANCE_POLICY] use either --head-only or --range, not both");
   }
 
-  if (args.headOnly) {
+  if (args.headOnly && !runtimeReadOnly) {
     if (!isCi) {
       ensureHooksPath();
     }
@@ -93,20 +95,22 @@ function main() {
     }
     run(process.execPath, signingArgs, `node ${signingArgs.join(" ")}`);
   } else {
-    throw new Error("[GOVERNANCE_POLICY] explicit --head-only or --range required");
+    if (!isCi) {
+      ensureHooksPath();
+    }
+    signingArgs.push("--range", defaultRange);
+    run(process.execPath, signingArgs, `node ${signingArgs.join(" ")}`);
   }
 
   const headSubject = readGitValue(["show", "-s", "--format=%s", "HEAD"]);
   if (/^Revert\b/i.test(headSubject)) {
     console.log("[GOVERNANCE_POLICY] rollback parity enforced: revert commits use full required-gate contract");
   }
-  const mode = args.headOnly
+  const mode = args.headOnly && !runtimeReadOnly
     ? "head-only-contract"
     : explicitRanges
       ? "explicit-range-contract"
-      : isCi
-        ? "ci-signature-range"
-        : "local-signature-range+hooks-config";
+      : "origin-main-range-contract";
   console.log(`[GOVERNANCE_POLICY] OK mode=${mode}`);
 }
 

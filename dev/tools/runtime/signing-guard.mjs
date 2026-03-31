@@ -64,6 +64,19 @@ function rangeLooksExplicit(value) {
   return /(\.\.|\.{3}|\^!|\^@|\^|\~|--not)/.test(String(value || ""));
 }
 
+function resolveDefaultRange() {
+  const baseRef = "origin/main";
+  const baseExists = git(["rev-parse", "--verify", baseRef], { allowFailure: true });
+  if (baseExists.status !== 0) {
+    throw new Error(`[SIGNING_GUARD] missing required base ref '${baseRef}'`);
+  }
+  const headExists = git(["rev-parse", "--verify", "HEAD"], { allowFailure: true });
+  if (headExists.status !== 0) {
+    throw new Error("[SIGNING_GUARD] missing HEAD commit");
+  }
+  return `${baseRef}..HEAD`;
+}
+
 function ensureConfig() {
   const commitSign = readGitConfig("commit.gpgsign").toLowerCase();
   const tagSign = readGitConfig("tag.gpgsign").toLowerCase();
@@ -92,10 +105,11 @@ function resolveCommits(args) {
     return head ? [head] : [];
   }
 
-  if (args.ranges.length > 0) {
+  const resolvedRanges = args.ranges.length > 0 ? [...args.ranges] : [resolveDefaultRange()];
+  if (resolvedRanges.length > 0) {
     const commits = [];
     const seen = new Set();
-    for (const range of args.ranges) {
+    for (const range of resolvedRanges) {
       const rangeCommits = rangeLooksExplicit(range)
         ? (() => {
             const list = git(["rev-list", range], { allowFailure: true });
@@ -124,7 +138,7 @@ function resolveCommits(args) {
   if (args.allowEmptyRange) {
     return [];
   }
-  throw new Error("explicit --range or --head-only required");
+  throw new Error("unable to resolve commit range");
 }
 
 function verifyCommitSignature(commit) {

@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "GOV-010",
+  "title": "Render-Evidence-Manifest als Pflichtartefakt aufnehmen",
+  "status": "open",
+  "track": "governance-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Verankert ein render-manifest mit Hash-/Preset-/Chunk-Referenzen als zwingende Verify-Basis.",
+  "scope_paths": [
+    "runtime/evidence/render-manifest.json",
+    "dev/scripts/verify-evidence.mjs",
+    "dev/tools/runtime/run-required-checks.mjs"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

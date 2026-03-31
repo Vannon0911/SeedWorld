@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "LEG-003",
+  "title": "TileGridRenderer auf Debug-/Inspection-Rolle reduzieren",
+  "status": "open",
+  "track": "legacy-cleanup",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Entkoppelt den TileGridRenderer vom Produktionspfad und behaelt ihn nur als Debug-Overlay.",
+  "scope_paths": [
+    "app/src/ui/TileGridRenderer.js",
+    "app/src/ui/UIController.js",
+    "app/public/game.html"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

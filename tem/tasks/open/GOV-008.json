@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "GOV-008",
+  "title": "Render-Plan-Gate als Pflichtvertrag erzwingen",
+  "status": "open",
+  "track": "governance-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Validiert Render-Payloads fail-closed ueber expectedWorldHash, Chunk-Liste und Preset-Whitelist.",
+  "scope_paths": [
+    "app/src/render/renderPlan.js",
+    "app/src/kernel/KernelGates.js",
+    "app/src/kernel/gates/render-plan-gate.js"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}

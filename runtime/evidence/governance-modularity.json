@@ -1,4 +1,5 @@
 {
+  "generated_at": "2026-03-31T19:07:25.007Z",
   "schema_version": 1,
   "scanned_count": 81,
   "scanned_files": [
@@ -94,8 +95,8 @@
     },
     {
       "path": "app/src/game/worldGen.js",
-      "lines": 371,
-      "bytes": 11112,
+      "lines": 198,
+      "bytes": 5746,
       "limit_lines": 500,
       "limit_bytes": 20000,
       "allowlisted": true,
@@ -158,7 +159,7 @@
     {
       "path": "app/src/kernel/GovernanceEngine.js",
       "lines": 127,
-      "bytes": 5587,
+      "bytes": 5713,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -166,8 +167,8 @@
     },
     {
       "path": "app/src/kernel/KernelController.js",
-      "lines": 436,
-      "bytes": 14529,
+      "lines": 410,
+      "bytes": 13331,
       "limit_lines": 500,
       "limit_bytes": 18000,
       "allowlisted": true,
@@ -257,7 +258,7 @@
     {
       "path": "dev/tools/runtime/docs-v2-shared.mjs",
       "lines": 179,
-      "bytes": 9262,
+      "bytes": 9440,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -275,7 +276,7 @@
     {
       "path": "dev/tools/runtime/findings-shared/catalog.mjs",
       "lines": 91,
-      "bytes": 2600,
+      "bytes": 2690,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -302,7 +303,7 @@
     {
       "path": "dev/tools/runtime/findings-shared/lock.mjs",
       "lines": 253,
-      "bytes": 7994,
+      "bytes": 8246,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -311,7 +312,7 @@
     {
       "path": "dev/tools/runtime/findings-shared/plan.mjs",
       "lines": 238,
-      "bytes": 8459,
+      "bytes": 8696,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -338,7 +339,7 @@
     {
       "path": "dev/tools/runtime/governance-findings-materialize.mjs",
       "lines": 229,
-      "bytes": 7963,
+      "bytes": 8191,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -382,8 +383,8 @@
     },
     {
       "path": "dev/tools/runtime/governance-policy-verify.mjs",
-      "lines": 114,
-      "bytes": 3315,
+      "lines": 118,
+      "bytes": 3601,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -473,7 +474,7 @@
     {
       "path": "dev/tools/runtime/preflight-mutation-guard.mjs",
       "lines": 815,
-      "bytes": 32897,
+      "bytes": 32899,
       "limit_lines": 900,
       "limit_bytes": 36000,
       "allowlisted": true,
@@ -536,7 +537,7 @@
     {
       "path": "dev/tools/runtime/required-checks/runtime-execution.mjs",
       "lines": 213,
-      "bytes": 6316,
+      "bytes": 6528,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -545,7 +546,7 @@
     {
       "path": "dev/tools/runtime/required-checks/runtime-metadata.mjs",
       "lines": 105,
-      "bytes": 3540,
+      "bytes": 3644,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -581,7 +582,7 @@
     {
       "path": "dev/tools/runtime/scan-doc-tasks-verify.mjs",
       "lines": 34,
-      "bytes": 1023,
+      "bytes": 1024,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -598,8 +599,8 @@
     },
     {
       "path": "dev/tools/runtime/signing-guard.mjs",
-      "lines": 174,
-      "bytes": 5461,
+      "lines": 188,
+      "bytes": 6032,
       "limit_lines": 260,
       "limit_bytes": 20000,
       "allowlisted": false,
@@ -732,6 +733,5 @@
       "sunset_date": null
     }
   ],
-  "issues": [],
-  "generated_at": "2026-03-31T13:12:06.660Z"
+  "issues": []
 }

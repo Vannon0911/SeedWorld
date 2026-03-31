@@ -46,3 +46,18 @@ Task -> Datei -> Test/Check. Diese Map deckt die Aufgaben aus `tem/beide-plaene.
 | P1-3 | `tem/slices/remaining-task-stubs.md` | Resize-, Zoom- und Edge-Hit-Tests in CI stabil. |
 | P2-1 | `tem/slices/remaining-task-stubs.md` | Browser-Smoke fuer Primarpfad und reduzierte Fallbacks. |
 | P2-2 | `tem/slices/remaining-task-stubs.md` | `npm test`, `npm run evidence:verify`, Integrity-Checks als Pflichtgates. |
+
+## Volume/Chunk Migration Plan
+| Task | Datei | Test/Check |
+|---|---|---|
+| RT-014 | `tem/slices/rt-014-canonical-world-model.md` | `npm test`, Welt-State-Snapshot, Determinismus fuer worldHash-Basis. |
+| RT-015 | `tem/slices/rt-015-world-render-hash-contract.md` | `same-seed-same-worldHash`, `same-worldHash-same-renderHash`, `check:required`. |
+| RT-016 | `tem/slices/rt-016-world-sampler-contract.md` | `npm test`, Sampler-Unit-Tests, Seed-Replay. |
+| RT-017 | `tem/slices/rt-017-block-chunk-compiler.md` | `chunk-compile-same-seed-same-hash`, Snapshot fuer Chunk-Struktur. |
+| RT-018 | `tem/slices/rt-018-biome-on-block-layer.md` | Biome-Mischkanten-Test, Material-/Transition-Snapshot. |
+| GOV-008 | `tem/slices/gov-008-render-plan-gate.md` | `render-gate-denies-free-camera`, `render-gate-denies-unknown-preset`, `check:required`. |
+| GOV-009 | `tem/slices/gov-009-preset-registry.md` | Preset-Whitelist-Test, Snapshot gegen Registry-Version. |
+| RT-019 | `tem/slices/rt-019-chunk-offscreen-worker.md` | `chunk-halo-no-seams`, `same-worldHash-same-renderHash`. |
+| RT-020 | `tem/slices/rt-020-dirty-chunk-rerender.md` | Dirty-Chunk-Smoke, Neighbor-Propagation-Test. |
+| LEG-003 | `tem/slices/leg-003-tilegrid-debug-only.md` | Browser-Smoke, Debug-Umschaltung, keine Tile-Kanten im Produktionsmodus. |
+| GOV-010 | `tem/slices/gov-010-render-evidence-manifest.md` | Manifest-Schema-Check, Hash-Querverweise, `check:required:verify-only`. |

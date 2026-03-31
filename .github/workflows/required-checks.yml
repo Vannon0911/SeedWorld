@@ -35,6 +35,9 @@ jobs:
           gpg --batch --keyserver keyserver.ubuntu.com --recv-keys F14A6FC849CF906ED7518584D7EA78B1F7778AFD
           gpg --batch --list-keys F14A6FC849CF906ED7518584D7EA78B1F7778AFD
 
+      - name: Verify signed-commit range contract (origin/main..HEAD)
+        run: npm run governance:policy:verify -- --range origin/main..HEAD --skip-config
+
       - name: Prove deterministic reproduction (verify-only)
         run: npm run check:required:verify-only
 

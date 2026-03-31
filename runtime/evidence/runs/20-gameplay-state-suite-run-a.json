@@ -5,7 +5,7 @@
   "seed": "suite-20-gameplay-state-seed",
   "seed_source": "test-vector",
   "content_revision": {
-    "fingerprint": "2604791d9a0bc8b793aa35192b62b170f09c1ef879f427835e83a2f812debe5a",
+    "fingerprint": "54324e1158e974c7a1446cc95e040031a2cfef081448da1514841932f5dde10a",
     "files": [
       {
         "path": "app/src/game/contracts/ActionSchema.md",
@@ -21,7 +21,7 @@
       },
       {
         "path": "app/src/game/worldGen.js",
-        "hash": "25619e6dd829919f61bdd8936535aad96dbdabf741b4d8a36e23d7540fc89d40"
+        "hash": "8fad9fc6b771c7c03b2fbf9c479c3232d2d99421799f1e4a74015425812bd805"
       }
     ]
   },
@@ -42,10 +42,10 @@
       }
     ]
   },
-  "timestamp": "2026-03-31T13:19:28.658Z",
-  "deterministic_fingerprint": "56ee425826c4ce2d991f3f6921daac7a1c291c66b3a8c28cf6d255cf87b0bc55",
+  "timestamp": "2026-03-31T19:15:42.567Z",
+  "deterministic_fingerprint": "853614f194099fa8f29b100a7fe38fa06575940e5bce7856424c2e7b118fd1d9",
   "output_hashes": {
-    "payload": "56ee425826c4ce2d991f3f6921daac7a1c291c66b3a8c28cf6d255cf87b0bc55"
+    "payload": "853614f194099fa8f29b100a7fe38fa06575940e5bce7856424c2e7b118fd1d9"
   },
   "output_snapshots": {
     "worldSeed": "suite-20-gameplay-state-seed",
@@ -55,25 +55,29 @@
     },
     "tileSummary": [
       "0,0:factory:Fabrik",
+      "1,0:mine:",
       "1,1:storage:Lager",
       "2,3:mine:Erz",
-      "4,2:connector:Verbindung"
+      "4,2:connector:Verbindung",
+      "6,1:mine:",
+      "6,2:mine:",
+      "7,2:mine:",
+      "7,3:mine:"
     ],
     "worldMeta": {
-      "version": 1,
-      "generatorId": "worldgen.v1.voronoi-noise",
+      "version": 2,
+      "generatorId": "worldgen.v2.minimalist",
       "chunkSize": 16,
-      "siteCount": 5,
       "stampPlacements": [
         {
-          "stampId": "coal-pocket-b",
-          "anchorX": 6,
-          "anchorY": 1
+          "stampId": "ore-pocket-a",
+          "anchorX": 0,
+          "anchorY": 0
         },
         {
           "stampId": "coal-pocket-b",
           "anchorX": 6,
-          "anchorY": 2
+          "anchorY": 1
         }
       ]
     }

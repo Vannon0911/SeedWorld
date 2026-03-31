@@ -8,31 +8,31 @@ Dies ist der laufende Systemplan fuer Documentation 2.0. Er deckt die aktiven Be
 
 - Truth: Deterministic kernel execution and state transitions.
 - Roots: `app/src/kernel`
-- Open Tasks: `GOV-001`, `GOV-002`, `RT-001`
+- Open Tasks: `GOV-001`, `GOV-002`, `GOV-008`, `GOV-009`, `RT-001`
 
 ### gameplay-content
 
 - Truth: Authoritative content, rules and world interpretation.
 - Roots: `app/src/game`
-- Open Tasks: keine
+- Open Tasks: `RT-014`, `RT-015`, `RT-016`, `RT-017`, `RT-018`, `RT-020`
 
 ### reproduction-evidence
 
 - Truth: Double-run proof, evidence validation and final testline consistency.
 - Roots: `dev/scripts`, `dev/tests/modules`, `dev/tools/runtime/verify-testline-integrity.mjs`
-- Open Tasks: `CF-011`, `CF-012`, `RT-001`
+- Open Tasks: `CF-011`, `CF-012`, `GOV-010`, `RT-001`
 
 ### browser-adapter
 
 - Truth: Remaining browser path as adapter, not as competing domain truth.
 - Roots: `app/src/main.js`, `app/src/ui`, `app/public`
-- Open Tasks: `CF-003`, `CF-004`, `CF-005`, `CF-006`, `CF-007`, `CF-008`, `CF-009`, `CF-010`, `CF-012`
+- Open Tasks: `CF-003`, `CF-004`, `CF-005`, `CF-006`, `CF-007`, `CF-008`, `CF-009`, `CF-010`, `CF-012`, `LEG-003`, `RT-014`
 
 ### documentation-v2
 
 - Truth: Human-readable truth, atomic planning and archive automation.
 - Roots: `docs/V2`, `tem/tasks`, `app/src/sot/docs-v2.json`
-- Open Tasks: `GOV-006`, `LEG-001`
+- Open Tasks: `GOV-006`, `GOV-009`, `LEG-001`, `RT-015`
 
 ### governance-procedure
 

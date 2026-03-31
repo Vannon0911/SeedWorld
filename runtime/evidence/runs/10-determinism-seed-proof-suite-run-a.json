@@ -5,16 +5,16 @@
   "seed": "suite-10-determinism-seed-proof-seed",
   "seed_source": "test-vector",
   "content_revision": {
-    "fingerprint": "18e8dd4a0d7c6f3c296205fc1c2799308814e5257d376bb3d594eb5dc11e58b0",
+    "fingerprint": "e902928aebaf43b14748de47adda86a561cee7bc4b6492b87815eb66867988dd",
     "files": [
       {
         "path": "app/src/game/worldGen.js",
-        "hash": "25619e6dd829919f61bdd8936535aad96dbdabf741b4d8a36e23d7540fc89d40"
+        "hash": "8fad9fc6b771c7c03b2fbf9c479c3232d2d99421799f1e4a74015425812bd805"
       }
     ]
   },
   "kernel_revision": {
-    "fingerprint": "491aa46bc8c78b48fa37d3e7d2a57d564ac1d162cbf05af64f4d784c27547f15",
+    "fingerprint": "1373f8e3ac2e985a65592481b4401153fdf9735686950480bfa69fcd69841a04",
     "files": [
       {
         "path": "app/src/kernel/deterministicKernel.js",
@@ -26,7 +26,7 @@
       },
       {
         "path": "app/src/kernel/KernelController.js",
-        "hash": "591cd2ba8287465f331f5931d74a912f8df44249b3bd8748e1c50d1231d60285"
+        "hash": "dc21e68e0c17d2cf137681c95a0e4aa786f700b1bc60756bf2ab7585cccd4ad9"
       },
       {
         "path": "app/src/kernel/runtimeGuards.js",
@@ -38,16 +38,16 @@
       }
     ]
   },
-  "timestamp": "2026-03-31T13:19:28.607Z",
-  "deterministic_fingerprint": "ec13a36d2d8f0835ea8efbadfea999711657c382bb5e16e9bd93ff34e0e53b84",
+  "timestamp": "2026-03-31T19:15:42.418Z",
+  "deterministic_fingerprint": "f1909fce3387de5caa944741ea069bc9652ff599af81bfdd71252bcab43244f1",
   "output_hashes": {
-    "payload": "ec13a36d2d8f0835ea8efbadfea999711657c382bb5e16e9bd93ff34e0e53b84"
+    "payload": "f1909fce3387de5caa944741ea069bc9652ff599af81bfdd71252bcab43244f1"
   },
   "output_snapshots": {
-    "error": "[KERNEL_GUARD] `Date.now()` ist im deterministischen Kernel verboten."
+    "error": "Private field '#assertPlainObject' must be declared in an enclosing class"
   },
   "status": "FAIL_INTERNAL",
-  "reason_code": "[KERNEL_GUARD] `Date.now()` ist im deterministischen Kernel verboten.",
+  "reason_code": "Private field '#assertPlainObject' must be declared in an enclosing class",
   "environment_summary": {
     "node": "v25.8.2",
     "platform": "win32",

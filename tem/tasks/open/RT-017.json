@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "task_id": "RT-017",
+  "title": "Block- und Chunk-Compiler einfuehren",
+  "status": "open",
+  "track": "red-team-hardening",
+  "source_docs": [
+    "docs/V2/SYSTEM_PLAN.md"
+  ],
+  "description": "Normalisiert Weltaufbau ueber compileBlock/compileChunk statt impliziter Tile-Kopplung.",
+  "scope_paths": [
+    "app/src/game/blockCompiler.js",
+    "app/src/game/chunkCompiler.js",
+    "app/src/game/worldGen.js"
+  ],
+  "match_policy": "all_scope_paths_touched"
+}
