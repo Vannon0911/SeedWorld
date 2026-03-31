@@ -88,7 +88,6 @@
 - dev/tools/runtime/sync-string-matrix.mjs
 - dev/tools/runtime/sync-sub-agent-manifest.mjs
 - dev/tools/runtime/sync-tem-control-files.mjs
-- dev/tools/runtime/testline-integrity-shared.mjs
 - dev/tools/runtime/update-testline-integrity.mjs
 - dev/tools/runtime/updateFunctionSot.mjs
 - dev/tools/runtime/updateRedActions.mjs

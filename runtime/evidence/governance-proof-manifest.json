@@ -2,10 +2,10 @@
   "schema_version": 1,
   "policy": "kernel-governance-engine.v2",
   "contract_hash": "069f4fcaa18db8b7f51ae717359b0a2ee0dfdccbbc5f3cd6be9768cebb3e00e4",
-  "generated_at": "2026-03-31T11:32:19.390Z",
+  "generated_at": "2026-03-31T11:44:43.474Z",
   "run_mode": "auto-sync-and-verify",
   "repo": {
-    "head": "70d7f8082f7c8611883770beff5dea21461454b8",
+    "head": "61e2bffa09760ca0aea1d81c3cadd74a649055ac",
     "branch": "main"
   },
   "gate_results": [
@@ -32,12 +32,12 @@
     {
       "id": "test:sync",
       "status": "PASSED",
-      "output_sha256": "1a607ad15172ee0d153e78ae6fa69b17f4c36b36e46149e0ab9a76716107e4cf"
+      "output_sha256": "c9338c58b3f24d3b245af2c89ae530a3f62303ea4295fc244e2e5e7350373a26"
     },
     {
       "id": "repo:hygiene:sync",
       "status": "PASSED",
-      "output_sha256": "fd31dc0357129df3cb8e81893a415f0635cc4e82a36f07da23c2a6f93f198b69"
+      "output_sha256": "334056382680c6e9903f6020f9e9d32ff78fae3ecd31105cce1d73c9ae67dd22"
     },
     {
       "id": "versioning:verify",
@@ -67,7 +67,7 @@
     {
       "id": "tests",
       "status": "PASSED",
-      "output_sha256": "9e0bde4b9364a4c7184f0d0916a861f149f028015f0a5d1680a891b9067ae325"
+      "output_sha256": "0705b8070a1bfb2dd166e29e3a64c9994e0654487eb102abb6af5fc0282e21ef"
     },
     {
       "id": "evidence:verify",
@@ -82,7 +82,7 @@
     {
       "id": "repo:hygiene:verify",
       "status": "PASSED",
-      "output_sha256": "2391fa80e9bae0071ac816a2bb1f3639ce2a5f0dce17d46c757caa2e25b9ff74"
+      "output_sha256": "6e2491e7a7c16693dc600bf269a38d621cd61f6827b964c484c8154f271807cd"
     },
     {
       "id": "docs:v2:verify",
@@ -97,7 +97,7 @@
     {
       "id": "docs:tasks:verify",
       "status": "PASSED",
-      "output_sha256": "ee02cb137e511b9fcb924804d6f790277ba1c908b8fb5ecda3b2dfbfe2090aea"
+      "output_sha256": "3a9b962f361d8856e33b9e7aeb900d36a7cd982801eec7c6e49887b1444e3869"
     },
     {
       "id": "governance:coverage:verify",
@@ -114,11 +114,11 @@
     "evidence": {
       "evidence_summary": {
         "path": "runtime/evidence/summary.json",
-        "sha256": "9882e3bdfe8941d3fba5b19a8736d02ba51aa737b07dbc52a9e0af5f312a3722"
+        "sha256": "5db5114c4b11e798808c2073047c46b754558d510b1a0bd371954e969253b512"
       },
       "final_testline_summary": {
         "path": "runtime/evidence/final/testline-summary.json",
-        "sha256": "1ef05583735a438c0ef88220d3655992e84eadf652afd0025a52f3f48b953fa7"
+        "sha256": "dfe376c45f2a7080879f3c11d1fc1bb8cb08d11b9f03ee5a87944bcf98878898"
       }
     },
     "sot": [
@@ -144,28 +144,28 @@
       },
       {
         "path": "app/src/sot/llm-read-contract.v1.json",
-        "sha256": "95ecbbd4750ce529ff2f71fee9655618a80b60a2a9ff68dc233b8eab7f50f1a7"
+        "sha256": "5c203947bec2bf71cb57ca7d102c401b0b7912451ccddecdf453212937eecd4b"
       },
       {
         "path": "app/src/sot/sub-agent-manifest.v1.json",
-        "sha256": "f4a489c5a27b99ffe482bd856613e6cbb33b918459855809f94ba0100a8d0edc"
+        "sha256": "1f18be4e1137c40b48f0780799eb900f04103c12942f489409870b1521404912"
       },
       {
         "path": "app/src/sot/testline-integrity.json",
-        "sha256": "af3f5d725e5dedfdf0f2b9880e88b2900383a75636ac6fbee3cad231ee149584"
+        "sha256": "4e1f6e9533d3d5a3bcf847763efee20a4defd5924c8cddff50c8182eacd2b731"
       }
     ],
     "governance_findings": {
       "path": "runtime/evidence/governance-findings.json",
-      "sha256": "03f85bd053874bf00030b0abe9a2ab3c3fdb43c013d98cdd619ebb32e5ec69aa"
+      "sha256": "4a8ab6c2eae31bf11b0fc9c91c8b9f32aebe366646df6666e2ad71fa436cd46e"
     },
     "governance_coverage": {
       "path": "runtime/evidence/governance-coverage.json",
-      "sha256": "3b01c1f8c989caba00d9a223c6c13a5ac87a1cdc1d4fa5979e3e33a9724e3b7d"
+      "sha256": "d3bb0ca186027f4c09abe98d5f43e5e5cb72dd91e1082be46e01ecd34539eb8b"
     },
     "governance_modularity": {
       "path": "runtime/evidence/governance-modularity.json",
-      "sha256": "3156222c73bb930dafa9978115205c9ca92f65fd424842d9d4362582eea101c2"
+      "sha256": "d445150a30abf9e5deeb674c4dac5456148cdd1f6d34477e569f84c9658c7b77"
     }
   },
   "zero_trust": {

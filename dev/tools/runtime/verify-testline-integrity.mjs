@@ -8,6 +8,7 @@ import {
   validateRunEvidence,
   validateSummaryEvidence
 } from "../../scripts/evidence-shared.mjs";
+import { buildTestlineHashes, collectTestlineFiles } from "./testline-integrity-shared.mjs";
 
 async function readJson(absPath) {
   return JSON.parse(await readFile(absPath, "utf8"));
@@ -24,6 +25,30 @@ async function newestMtime(root, relPaths = []) {
 
 async function main() {
   const root = process.cwd();
+  const baseline = await readJson(path.join(root, "app", "src", "sot", "testline-integrity.json"));
+  const actualMonitoredFiles = await collectTestlineFiles(root);
+  const actualHashes = await buildTestlineHashes(root, actualMonitoredFiles);
+
+  const baselineRequired = [...(baseline.requiredTests || [])].sort((a, b) => a.localeCompare(b, "en"));
+  const runtimeRequired = [...REQUIRED_TEST_IDS].sort((a, b) => a.localeCompare(b, "en"));
+  if (JSON.stringify(baselineRequired) !== JSON.stringify(runtimeRequired)) {
+    throw new Error("testline baseline drift: requiredTests mismatch. Run node dev/tools/runtime/update-testline-integrity.mjs");
+  }
+
+  const baselineFiles = [...(baseline.monitoredFiles || [])].sort((a, b) => a.localeCompare(b, "en"));
+  const actualFiles = [...actualMonitoredFiles].sort((a, b) => a.localeCompare(b, "en"));
+  if (JSON.stringify(baselineFiles) !== JSON.stringify(actualFiles)) {
+    throw new Error("testline baseline drift: monitoredFiles mismatch. Run node dev/tools/runtime/update-testline-integrity.mjs");
+  }
+
+  for (const relPath of actualFiles) {
+    const expectedHash = String((baseline.fileHashes || {})[relPath] || "");
+    const actualHash = String(actualHashes[relPath] || "");
+    if (!expectedHash || expectedHash !== actualHash) {
+      throw new Error(`testline baseline drift: hash mismatch (${relPath}). Run node dev/tools/runtime/update-testline-integrity.mjs`);
+    }
+  }
+
   const summary = await readJson(summaryPath(root));
   validateSummaryEvidence(summary);
 

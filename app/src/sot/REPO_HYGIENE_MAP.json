@@ -179,7 +179,6 @@
     "dev/tools/runtime/sync-string-matrix.mjs",
     "dev/tools/runtime/sync-sub-agent-manifest.mjs",
     "dev/tools/runtime/sync-tem-control-files.mjs",
-    "dev/tools/runtime/testline-integrity-shared.mjs",
     "dev/tools/runtime/update-testline-integrity.mjs",
     "dev/tools/runtime/updateFunctionSot.mjs",
     "dev/tools/runtime/updateRedActions.mjs",
@@ -334,7 +333,7 @@
     "dev/tools/runtime/sync-sub-agent-manifest.mjs": 0,
     "dev/tools/runtime/sync-tem-control-files.mjs": 0,
     "dev/tools/runtime/sync-versioning.mjs": 0,
-    "dev/tools/runtime/testline-integrity-shared.mjs": 1,
+    "dev/tools/runtime/testline-integrity-shared.mjs": 2,
     "dev/tools/runtime/update-testline-integrity.mjs": 0,
     "dev/tools/runtime/updateFunctionSot.mjs": 0,
     "dev/tools/runtime/updateRedActions.mjs": 0,
@@ -531,7 +530,8 @@
       "dev/tools/runtime/installGitHooks.mjs"
     ],
     "dev/tools/runtime/verify-testline-integrity.mjs": [
-      "dev/scripts/evidence-shared.mjs"
+      "dev/scripts/evidence-shared.mjs",
+      "dev/tools/runtime/testline-integrity-shared.mjs"
     ]
   }
 }

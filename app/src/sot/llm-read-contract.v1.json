@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "policy_id": "governance-llm-read.v1",
-  "generated_at": "2026-03-31T11:32:01.435Z",
+  "generated_at": "2026-03-31T11:44:26.617Z",
   "required_read_order": [
     "docs/INDEX.md",
     "docs/LLM/ENTRY.md",

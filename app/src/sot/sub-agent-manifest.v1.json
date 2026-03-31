@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "policy_id": "governance-sub-agent.v1",
-  "generated_at": "2026-03-31T11:32:02.022Z",
+  "generated_at": "2026-03-31T11:44:27.163Z",
   "required_roles": [
     "Sub_Agent/01_code_reviewer.md",
     "Sub_Agent/02_playwright_debugger.md",
