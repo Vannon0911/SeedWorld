@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SeedWorld Launcher</title>
-    <link rel="stylesheet" href="./src/ui/common.css" />
+    <title>SeedWorld</title>
     <style>
       :root {
         --bg: #030704;
@@ -16,16 +15,24 @@
       }
 
       body {
+        margin: 0;
         min-height: 100vh;
         display: grid;
         place-items: center;
         background: radial-gradient(circle at top, #0a1a10, var(--bg) 58%);
+        color: var(--ink);
+        font-family: "Space Grotesk", "IBM Plex Sans", "Trebuchet MS", sans-serif;
       }
 
       .shell {
         width: min(980px, 96vw);
+        border: 1px solid var(--border);
         border-radius: 18px;
         padding: 1.4rem;
+        background: linear-gradient(180deg, rgb(10 45 24 / 72%), rgb(6 20 11 / 92%));
+        box-shadow:
+          inset 0 1px 0 rgb(255 255 255 / 6%),
+          0 18px 48px rgb(0 0 0 / 38%);
       }
 
       h1 {
@@ -34,65 +41,42 @@
         letter-spacing: 0.04em;
       }
 
-      .menu {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .menu button {
+      .launch {
+        display: inline-block;
         background: linear-gradient(180deg, #0a2d18, #06140b);
-        padding: 1.2rem;
+        color: var(--ink);
+        text-decoration: none;
+        padding: 1rem 1.2rem;
         border-radius: 14px;
         font-size: clamp(1rem, 2.8vw, 1.25rem);
         font-weight: 700;
+        border: 1px solid var(--border);
       }
 
-      .menu button strong {
+      .launch strong {
         display: block;
         font-size: 1.15em;
         margin-bottom: 0.35rem;
         color: var(--accent);
       }
 
-      .menu button:active { transform: translateY(1px); }
-      .menu button:hover { border-color: var(--accent-2); }
+      .launch:hover { border-color: var(--accent-2); }
 
       .hint {
         margin: 1rem 0 0;
         font-size: 0.92rem;
         opacity: 0.88;
       }
-
-      @media (max-width: 680px) {
-        .menu { grid-template-columns: 1fr; }
-      }
     </style>
   </head>
   <body>
-    <main class="shell surface-panel">
+    <main class="shell">
       <h1>SeedWorld</h1>
-      <section class="menu" aria-label="Startmenue">
-        <button id="start-game" type="button">
-          <strong>🎮 START GAME</strong>
-          Spieloberflaeche oeffnen
-        </button>
-        <button id="open-menu" type="button">
-          <strong>🧭 OPEN MENU</strong>
-          Runtime-Menue und Hinweise anzeigen
-        </button>
-      </section>
-      <p class="hint">Der Browser startet nur noch App-Ansichten. Patch-Workflows bleiben isoliert im Terminal-Tooling.</p>
+      <a class="launch" href="./game.html">
+        <strong>🎮 DIRECT GAME</strong>
+        Direkt in die einzige verbleibende Browser-Ansicht.
+      </a>
+      <p class="hint">Kein Browser-Menue, keine Patch-Oberflaeche, kein zweiter Navigationspfad.</p>
     </main>
-
-    <script>
-      document.getElementById("start-game").addEventListener("click", () => {
-        window.location.href = "./game.html";
-      });
-
-      document.getElementById("open-menu").addEventListener("click", () => {
-        window.location.href = "./menu";
-      });
-    </script>
   </body>
 </html>
