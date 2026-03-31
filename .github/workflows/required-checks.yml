@@ -30,6 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Bootstrap signing verification key
+        run: |
+          gpg --batch --keyserver keyserver.ubuntu.com --recv-keys F14A6FC849CF906ED7518584D7EA78B1F7778AFD
+          gpg --batch --list-keys F14A6FC849CF906ED7518584D7EA78B1F7778AFD
+
       - name: Prove deterministic reproduction (verify-only)
         run: npm run check:required:verify-only
 
@@ -37,5 +42,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: required-check-report
-          path: runtime/evidence/required-check-report.json
+          name: governance-proof-artifacts
+          path: |
+            runtime/evidence/required-check-report.json
+            runtime/evidence/governance-proof-manifest.json
+            runtime/evidence/governance-coverage.json
+            runtime/evidence/summary.json
+            runtime/evidence/final/testline-summary.json

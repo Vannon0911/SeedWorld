@@ -1,0 +1,88 @@
+{
+  "schema_version": "2.0.0",
+  "test_id": "20-gameplay-state-suite",
+  "run_id": "20-gameplay-state-suite-run-b",
+  "seed": "suite-20-gameplay-state-seed",
+  "seed_source": "test-vector",
+  "content_revision": {
+    "fingerprint": "2604791d9a0bc8b793aa35192b62b170f09c1ef879f427835e83a2f812debe5a",
+    "files": [
+      {
+        "path": "app/src/game/contracts/ActionSchema.md",
+        "hash": "37668e063ee89277470b59ec8bb90163e142b755bab248eac563d9799574d151"
+      },
+      {
+        "path": "app/src/game/contracts/MutationMatrix.md",
+        "hash": "de0b3bd642a4500afb19c685151c15727f5a31d6d2934496b555e0d898cc370e"
+      },
+      {
+        "path": "app/src/game/gameConfig.js",
+        "hash": "e9d6d85447022fd89e3b6d8b32cc3dcfa379b73eac037ad534870ad61de6aa9e"
+      },
+      {
+        "path": "app/src/game/worldGen.js",
+        "hash": "25619e6dd829919f61bdd8936535aad96dbdabf741b4d8a36e23d7540fc89d40"
+      }
+    ]
+  },
+  "kernel_revision": {
+    "fingerprint": "2d22cdec51bbfb16c70986c0dcfb103c7a7a175d54944aef30e8e310f9b3ed3b",
+    "files": [
+      {
+        "path": "app/src/game/GameLogicController.js",
+        "hash": "5a40a7a3b3e3f4357d7ac38d98671b0606124e01c4ddf0bf0f2f2d98d00f745e"
+      },
+      {
+        "path": "app/src/game/gamePatchBuilders.js",
+        "hash": "1b16e6939c13a7ab03aafd37541dd33977a9986db1f6ee1b4011d3babf12be73"
+      },
+      {
+        "path": "app/src/game/gameStateReducer.js",
+        "hash": "8545bd57b465eb85e94bb527aeb8c303ea53065eb1d703ea1a1ca8a02fa70243"
+      }
+    ]
+  },
+  "timestamp": "2026-03-31T09:19:33.289Z",
+  "deterministic_fingerprint": "56ee425826c4ce2d991f3f6921daac7a1c291c66b3a8c28cf6d255cf87b0bc55",
+  "output_hashes": {
+    "payload": "56ee425826c4ce2d991f3f6921daac7a1c291c66b3a8c28cf6d255cf87b0bc55"
+  },
+  "output_snapshots": {
+    "worldSeed": "suite-20-gameplay-state-seed",
+    "worldSize": {
+      "width": 8,
+      "height": 6
+    },
+    "tileSummary": [
+      "0,0:factory:Fabrik",
+      "1,1:storage:Lager",
+      "2,3:mine:Erz",
+      "4,2:connector:Verbindung"
+    ],
+    "worldMeta": {
+      "version": 1,
+      "generatorId": "worldgen.v1.voronoi-noise",
+      "chunkSize": 16,
+      "siteCount": 5,
+      "stampPlacements": [
+        {
+          "stampId": "coal-pocket-b",
+          "anchorX": 6,
+          "anchorY": 1
+        },
+        {
+          "stampId": "coal-pocket-b",
+          "anchorX": 6,
+          "anchorY": 2
+        }
+      ]
+    }
+  },
+  "status": "PASS_REPRODUCED",
+  "reason_code": null,
+  "environment_summary": {
+    "node": "v25.8.2",
+    "platform": "win32",
+    "arch": "x64"
+  }
+}

@@ -1,6 +1,6 @@
 # Release 0.3.1a
 
-Release 0.3.1a schliesst die Reduktion von SeedWorld auf den deterministischen Kern nicht nur technisch, sondern auch dokumentarisch und hygienisch ab.
+Release 0.3.1a
 
 ## Release-Fokus
 

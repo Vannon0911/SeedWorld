@@ -1,0 +1,71 @@
+{
+  "schema_version": "2.0.0",
+  "test_id": "00-runtime-governance-suite",
+  "run_id": "00-runtime-governance-suite-run-b",
+  "seed": "suite-00-runtime-governance-seed",
+  "seed_source": "test-vector",
+  "content_revision": {
+    "fingerprint": "cacfbce70da73870349c7ef69f0e0c34945be9434cb183889dde950c751be84d",
+    "files": [
+      {
+        "path": "app/src/game/worldGen.js",
+        "hash": "25619e6dd829919f61bdd8936535aad96dbdabf741b4d8a36e23d7540fc89d40"
+      },
+      {
+        "path": "app/src/sot/source-of-truth.json",
+        "hash": "0e4241a48e073412c173cf8b199edbfc61d0a6b235fefc59db343f07d2afe8f9"
+      }
+    ]
+  },
+  "kernel_revision": {
+    "fingerprint": "33fa4da1167c6b7e451272a23df9d51bd802d2f4b42720ad25948f09efca8f0e",
+    "files": [
+      {
+        "path": "app/src/kernel/ActionRegistry.js",
+        "hash": "a8ac42bd67b4d0e550067e5577541f77eb25afed9fe7128d3e1ae6cad3f92545"
+      },
+      {
+        "path": "app/src/kernel/KernelController.js",
+        "hash": "175ef996738347b54d7236d40b8680add0d3dba25d186043a5917937797a51c5"
+      },
+      {
+        "path": "app/src/kernel/KernelRouter.js",
+        "hash": "4153bbbc0f91fedd9ad281caf1dac92dc87efb7a7b4d0eac21b4d543cf28ca2a"
+      }
+    ]
+  },
+  "timestamp": "2026-03-31T09:19:33.147Z",
+  "deterministic_fingerprint": "7607599dc8de1939c414158bc19f3d0dc132b43a3eb7b370d508a679a7dc94ce",
+  "output_hashes": {
+    "payload": "7607599dc8de1939c414158bc19f3d0dc132b43a3eb7b370d508a679a7dc94ce"
+  },
+  "output_snapshots": {
+    "seedSignature": "003efc48",
+    "worldVersion": 1,
+    "kernelStatus": "deterministic",
+    "registeredActions": [
+      "game.advanceTick",
+      "game.createInitialState",
+      "game.getBuildOptions",
+      "game.inspectTile",
+      "game.placeStructure",
+      "kernel.setDeterministicSeed",
+      "kernel.status"
+    ],
+    "routerHistory": [
+      "game:createInitialState",
+      "kernel:status"
+    ],
+    "gateHistory": [
+      "game.action:allow",
+      "kernel.action:allow"
+    ]
+  },
+  "status": "PASS_REPRODUCED",
+  "reason_code": null,
+  "environment_summary": {
+    "node": "v25.8.2",
+    "platform": "win32",
+    "arch": "x64"
+  }
+}

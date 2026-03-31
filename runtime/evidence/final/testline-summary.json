@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-03-31T08:52:16.932Z",
+  "required_tests": [
+    "00-runtime-governance-suite",
+    "10-determinism-seed-proof-suite",
+    "20-gameplay-state-suite"
+  ],
+  "checked_pairs": 3,
+  "overall_status": "PASS_REPRODUCED"
+}

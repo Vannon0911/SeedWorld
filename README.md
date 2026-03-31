@@ -20,7 +20,7 @@ npm run check:advisory
 
 `check:required` ist der kanonische Green-Path mit teilautomatischem Sync fuer deterministische Artefakte.
 `check:required:verify-only` ist fail-closed (kein Auto-Write) fuer pre-push/CI/release.
-Ein gueltiger Erfolg ist nur `PASS_REPRODUCED` plus belegbare Evidence-Artefakte.
+Ein gueltiger Erfolg ist nur `PASS_REPRODUCED` plus belegbare Evidence-Artefakte + Proof-Manifest.
 
 ## Repo-Kern
 
@@ -30,6 +30,10 @@ Ein gueltiger Erfolg ist nur `PASS_REPRODUCED` plus belegbare Evidence-Artefakte
 - `dev/scripts/` Run-/Pair-Evidence und Comparator
 - `dev/tools/runtime/verify-testline-integrity.mjs` finaler Schlusstest
 - `dev/tools/runtime/run-required-checks.mjs` kanonischer Gate-Runner + Proof-Report
+- `dev/tools/runtime/sync-versioning.mjs` mechanische Versionssynchronisation ueber Repo-Daten
+- `app/src/kernel/GovernanceEngine.js` einheitliche Governance-Engine fuer Kernel + Pflichtpipeline
+- `app/src/sot/governance-engine.sot.v2.json` SoT-2.0-Vertrag fuer Governance Engine
+- `runtime/evidence/governance-proof-manifest.json` zero-trust Manifest fuer Gate/SOT/Evidence-Hashes
 - `docs/V2/` fuehrende Doku-, Plan- und Archivschicht
 - `app/src/sot/STRING_MATRIX.json` maschinenlesbare String-Disziplin fuer aktive Spiel- und Doku-Pfade
 

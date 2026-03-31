@@ -36,6 +36,48 @@ Archivierte Tasks wurden vom Scanner aus dem offenen Planungspfad entfernt, weil
 
 ## Archived Tasks
 
+### GOV-006 Proof-Manifest und Report fail-closed absichern
+
+- JSON: `tem/tasks/archive/GOV-006.json`
+- Archived At: `2026-03-31T09:02:10.331Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
+### GOV-005 Release-Dokumentquelle eindeutig und fail-closed machen
+
+- JSON: `tem/tasks/archive/GOV-005.json`
+- Archived At: `2026-03-31T09:02:10.330Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
+### GOV-004 Mechanische Versionierung auf alle Daten erweitern
+
+- JSON: `tem/tasks/archive/GOV-004.json`
+- Archived At: `2026-03-31T09:02:10.328Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
+### GOV-003 Projektweite Governance-Coverage einfuehren
+
+- JSON: `tem/tasks/archive/GOV-003.json`
+- Archived At: `2026-03-31T09:02:10.326Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
+### GOV-002 Signatur-Gate auf Commit-Beweis haerten
+
+- JSON: `tem/tasks/archive/GOV-002.json`
+- Archived At: `2026-03-31T09:02:10.324Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
+### GOV-001 Verify-only Gate strikt write-frei machen
+
+- JSON: `tem/tasks/archive/GOV-001.json`
+- Archived At: `2026-03-31T09:02:10.300Z`
+- Reason: scope matched current change set
+- Changed Files: `.github/workflows/required-checks.yml`, `app/src/kernel/GovernanceEngine.js`, `app/src/kernel/KernelController.js`, `app/src/sot/docs-v2.json`, `app/src/sot/governance-engine.sot.v2.json`, `app/src/sot/REPO_HYGIENE_MAP.json`, `app/src/sot/repo-boundaries.json`, `app/src/sot/source-of-truth.json`, `app/src/sot/STRING_MATRIX.json`, `dev/tools/runtime/governance-coverage-verify.mjs`, `dev/tools/runtime/run-required-checks.mjs`, `dev/tools/runtime/signing-guard.mjs`, `dev/tools/runtime/sync-versioning.mjs`, `docs/LLM/POLICY.md`, `docs/MANUEL/wiki/Home.md`, `docs/MANUEL/WORKFLOW.md`, `docs/SOT/ORIENTATION.md`, `docs/SOT/REPO_HYGIENE_MAP.md`, `docs/SOT/STRING_MATRIX.md`, `docs/V2/HOME.md`, `docs/V2/PLAN.md`, `docs/V2/RELEASE_0.3.1a.md`, `docs/V2/SYSTEM_PLAN.md`, `docs/V2/TRUTH.md`, `package.json`, `README.md`, `tem/tasks/open/GOV-001.json`, `tem/tasks/open/GOV-002.json`, `tem/tasks/open/GOV-003.json`, `tem/tasks/open/GOV-004.json`, `tem/tasks/open/GOV-005.json`, `tem/tasks/open/GOV-006.json`
+
 ### CF-013 Repo-Hygiene hart und reproduzierbar erzwingen
 
 - JSON: `tem/tasks/archive/CF-013.json`

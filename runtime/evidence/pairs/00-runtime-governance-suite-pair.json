@@ -1,0 +1,12 @@
+{
+  "schema_version": "2.0.0",
+  "pair_id": "00-runtime-governance-suite-pair",
+  "test_id": "00-runtime-governance-suite",
+  "run_a_ref": "runtime\\evidence\\runs\\00-runtime-governance-suite-run-a.json",
+  "run_b_ref": "runtime\\evidence\\runs\\00-runtime-governance-suite-run-b.json",
+  "seed_match": true,
+  "fingerprint_match": true,
+  "content_match": true,
+  "comparator_result": "PASS_REPRODUCED",
+  "comparator_reason": "run A and run B reproduced exactly"
+}

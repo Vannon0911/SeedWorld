@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "policy": "kernel-governance-engine.v2",
+  "run_mode": "verify-only",
+  "repo": {
+    "head": "39f1aee891d10f995c41012086c7a8f18bed04d2",
+    "branch": "main"
+  },
+  "environment": {
+    "node": "v25.8.2",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "started_at": "2026-03-31T09:06:27.978Z",
+  "steps": [
+    {
+      "id": "versioning:verify",
+      "script": "versioning:verify",
+      "type": "verify",
+      "command": "node C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js run versioning:verify",
+      "started_at": "2026-03-31T09:06:28.162Z",
+      "ended_at": "2026-03-31T09:06:28.666Z",
+      "duration_ms": 504,
+      "status": "PASSED",
+      "exit_code": 0,
+      "output_sha256": "2d17f0cf067a73aed1b49afae1227c4fb7ea6f3b94cd331b3aca236c1de78870"
+    },
+    {
+      "id": "governance:policy:verify",
+      "script": "governance:policy:verify",
+      "type": "verify",
+      "command": "node C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js run governance:policy:verify",
+      "started_at": "2026-03-31T09:06:28.667Z",
+      "ended_at": "2026-03-31T09:06:30.183Z",
+      "duration_ms": 1516,
+      "status": "FAILED",
+      "exit_code": 1,
+      "output_sha256": "49fa14f7552da827c4fce5e25dee11dbbcc796a944537cfa1ba00ed6d1eab5d4"
+    }
+  ],
+  "overall_status": "FAILED",
+  "failure_step": "governance:policy:verify",
+  "execution": {
+    "total_steps": 9,
+    "sync_steps": [],
+    "verify_steps": [
+      "versioning:verify",
+      "governance:policy:verify",
+      "tests",
+      "evidence:verify",
+      "testline:verify",
+      "repo:hygiene:verify",
+      "docs:v2:verify",
+      "docs:v2:coverage",
+      "governance:coverage:verify"
+    ],
+    "run_mode": "verify-only",
+    "step_contract": "sync (optional) -> verify (mandatory)"
+  },
+  "contract_hash": "c6d97f5708ffcbfac8f84469dd659579aac74f3eb4698ade414a128e834dcd53",
+  "finished_at": "2026-03-31T09:06:30.183Z"
+}

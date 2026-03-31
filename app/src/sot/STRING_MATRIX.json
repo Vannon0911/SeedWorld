@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "matrix_fingerprint": "97134b0bcd5223863a835a50ec8f563ee6390158ebae7f02d3da9647da11229d",
+  "matrix_fingerprint": "c9aafd2895694007bccc0c1c6954c71bde2e74451facba156f4c2a51665a1e4a",
   "scan_roots": [
     "app/src/game",
     "app/src/kernel",
     "app/src/ui",
     "app/public"
   ],
-  "file_count": 33,
-  "unique_string_count": 567,
+  "file_count": 34,
+  "unique_string_count": 588,
   "files": [
     {
       "path": "app/public/game.html",
@@ -2002,9 +2002,128 @@
       ]
     },
     {
+      "path": "app/src/kernel/GovernanceEngine.js",
+      "string_count": 28,
+      "fingerprint": "9e38d980b1eec4e3b474795e5292f11da49dc128b6e4e1d65566af9e2b303345",
+      "strings": [
+        {
+          "value": "Claims are valid only if all verify gates passed and proof artifacts were hashed and cross-checked.",
+          "hash": "6f9522d6849e43f587efbeb074035179acabc651a0c69bdcbf5af2b0bb9c32c1"
+        },
+        {
+          "value": "deny",
+          "hash": "3026a0ca485e5831657ba0120fa8dd66b3425427bfb0a2be0db743e2305cc7c5"
+        },
+        {
+          "value": "deny-${String(this.denyCounter).padStart(6, \"0\")}",
+          "hash": "d312f87d46d2efb8966f724b5738d6f62fbd9fbdd79c00db86ac4ca562ceb0a1"
+        },
+        {
+          "value": "docs:tasks:verify",
+          "hash": "cdca1397af5d7b629068e8fbb88820093987d9dc5898a5a9b89fdf09470047c0"
+        },
+        {
+          "value": "docs:v2:coverage",
+          "hash": "4e4d394b387ce55b584aa521b587f2d80350f62ac9f3c6caec16f581c8d55a46"
+        },
+        {
+          "value": "docs:v2:sync",
+          "hash": "819de3dec4eb399d005259c150d2dbf50d785dc840b54c335c076e62d14415f9"
+        },
+        {
+          "value": "docs:v2:verify",
+          "hash": "34e33b9b91699befa25559336f34e15003b24efc7fa72830d5eeaf386ef690a6"
+        },
+        {
+          "value": "enforce",
+          "hash": "c1f1005e99318bf634290d9d518d9bf9ba14bf9a46eaa78abfbc9f99647ca2d9"
+        },
+        {
+          "value": "evidence:verify",
+          "hash": "af8da14f57987adccb03b73c1bc08e9eb9acd1c024cabecd472572599f917923"
+        },
+        {
+          "value": "FAILED",
+          "hash": "02bd349299173f7fdf2dbc983d70961b26d74e6260c3755a058e25f5ee172f98"
+        },
+        {
+          "value": "governance:coverage:verify",
+          "hash": "bc9a6178af11d5622f5637c3079977da31f72eb49ec72db57a9177c06ea37403"
+        },
+        {
+          "value": "governance:policy:verify",
+          "hash": "85b12077e27072311ab2f60efe64a8e486f8a4f5ba1854c0005e5f46b37aa57a"
+        },
+        {
+          "value": "KERNEL_GOVERNANCE_ERROR",
+          "hash": "8c7c1d50836db0d9eb30945527404eec4d8663363aaed6880f2d92e6c0cc12b5"
+        },
+        {
+          "value": "kernel-governance-engine.v2",
+          "hash": "4f1ed61a069cb7f989fe5ff55bca85305d38818b797149a5f51781d673f09eb1"
+        },
+        {
+          "value": "KernelGovernanceError",
+          "hash": "5274053c8a04d4603bee352097420fc07ab10f6e7e3e5527ad72eeed47c30bdf"
+        },
+        {
+          "value": "repo:hygiene:sync",
+          "hash": "37b5363b966cbd31c90b4b5edead3dbf961a53c15ce62e2a3af56edcd34ae500"
+        },
+        {
+          "value": "repo:hygiene:verify",
+          "hash": "5ec05953afbac8947a79d1dfc53ae6f973e8133934b05873cf3c877d54798704"
+        },
+        {
+          "value": "shadow",
+          "hash": "0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4"
+        },
+        {
+          "value": "shadow_deny",
+          "hash": "94eda682da43a16bcde96c2100c61ee5abf0bb355c39bd1b5757beedb820ff5e"
+        },
+        {
+          "value": "sync",
+          "hash": "75c75efe327a8ef35a072f25117961f5b99e35035dc9bd86493dd29fd7bc07eb"
+        },
+        {
+          "value": "test:sync",
+          "hash": "f312e57ec53ea662d5c0959cfc6cc3feb448a03c622be4242b914353334cc5cc"
+        },
+        {
+          "value": "test:verify",
+          "hash": "b90995f02de2cad0c4e6741dbe9ee6bb1326b37cb12acecdf3d894fc845617e4"
+        },
+        {
+          "value": "testline:verify",
+          "hash": "cb0c54c80d9bfc4241cdf30f50a8ef9749106ff1f4d9cd35f5490554f697f4e5"
+        },
+        {
+          "value": "tests",
+          "hash": "59830ebc3a4184110566bf1a290d08473dfdcbd492ce498b14cd1a5e2fa2e441"
+        },
+        {
+          "value": "verify",
+          "hash": "a12dd3a7fd3203a452eb34d91a9be20569d5e337a3384347068895c07f3e0c5a"
+        },
+        {
+          "value": "VERSION",
+          "hash": "7b60b8e351cbb80c47459ffe2c79f1a26404871f49294780fe47ad0e58c09350"
+        },
+        {
+          "value": "versioning:sync",
+          "hash": "9f8af79ff67c31b27cf4a3a77624ddc41f23df73ae91bd0af7f58e57febb9d10"
+        },
+        {
+          "value": "versioning:verify",
+          "hash": "a9d0de0157ec754e6988896cfda9b9b36c605f418256de58f09792110eb13972"
+        }
+      ]
+    },
+    {
       "path": "app/src/kernel/KernelController.js",
-      "string_count": 78,
-      "fingerprint": "04315d090cbdc650d65d5c6b18441af35223f720893c33138bb65a6d98377fbf",
+      "string_count": 73,
+      "fingerprint": "a5972965c4f0f0f33d9954ae95175dc477b0a7844df5d4383e25d55bf125107a",
       "strings": [
         {
           "value": "[${domain.toUpperCase()}] type fehlt.",
@@ -2127,14 +2246,6 @@
           "hash": "5eea53b5f2b2e864e55245390da1716f1c9cee640e22e53aa7e8fb6a7e0338d5"
         },
         {
-          "value": "deny",
-          "hash": "3026a0ca485e5831657ba0120fa8dd66b3425427bfb0a2be0db743e2305cc7c5"
-        },
-        {
-          "value": "deny-${String(denyCounter).padStart(6, \"0\")}",
-          "hash": "d971f8f915b8f52742c75b88b8421eecdbbc43f15fe477ccd5e795e246a94765"
-        },
-        {
           "value": "deterministic",
           "hash": "0badac3c6df445ad3aea62da1350683923aba37c685978afed96a515d12921a3"
         },
@@ -2179,20 +2290,12 @@
           "hash": "6923dd1bc0460082c5d55a831908c24a282860b7f1cd6c2b79cf1bc8857c639c"
         },
         {
-          "value": "KERNEL_GOVERNANCE_ERROR",
-          "hash": "8c7c1d50836db0d9eb30945527404eec4d8663363aaed6880f2d92e6c0cc12b5"
-        },
-        {
           "value": "KERNEL-CONFIRM",
           "hash": "98109c6017ffa413c35ebd90e77ab29000bc1d818a8c6d5cca84e860d67cd1b4"
         },
         {
           "value": "kernel.action",
           "hash": "7d20c922832534b513975313f06225bfb15acba942e7666cec462f65b887a4b2"
-        },
-        {
-          "value": "KernelGovernanceError",
-          "hash": "5274053c8a04d4603bee352097420fc07ab10f6e7e3e5527ad72eeed47c30bdf"
         },
         {
           "value": "mine",
@@ -2241,10 +2344,6 @@
         {
           "value": "shadow",
           "hash": "0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4"
-        },
-        {
-          "value": "shadow_deny",
-          "hash": "94eda682da43a16bcde96c2100c61ee5abf0bb355c39bd1b5757beedb820ff5e"
         },
         {
           "value": "smelter",

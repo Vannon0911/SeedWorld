@@ -6,7 +6,8 @@
 2. Nur atomare Arbeitspakete umsetzen.
 3. Vor Commit lokal `npm run check:required` ausfuehren (teilautomatischer Sync + fail-closed Verify).
 4. Vor Push `npm run check:required:verify-only` bestehen (kein Auto-Write).
-5. Claims ueber Qualitaetsstatus nur aus Gate-Output + `runtime/evidence/required-check-report.json` ableiten.
+5. Zero-Trust: Claims nur aus Gate-Output + `runtime/evidence/required-check-report.json` + `runtime/evidence/governance-proof-manifest.json` ableiten.
+6. Governance-Vertrag kommt aus `app/src/kernel/GovernanceEngine.js`; SoT-2.0-Mapping aus `app/src/sot/governance-engine.sot.v2.json`.
 
 ## Commit-Blocker
 
@@ -16,7 +17,8 @@
 - Fehlende oder invalide Test-Evidence
 - Testline-Integritaetsverletzung (Hash-Drift, Injection-Muster, Anti-Determinismus/BYPASS-Spuren)
 - Fehlender oder invalider `runtime/evidence/required-check-report.json`
-- Verify-Gate nicht komplett gruen (`tests -> evidence -> testline -> hygiene -> docs:v2`)
+- Fehlender oder invalider `runtime/evidence/governance-proof-manifest.json`
+- Verify-Gate nicht komplett gruen (`policy -> tests -> evidence -> testline -> hygiene -> docs:v2 -> coverage`)
 
 ## Push-Sicherheitsregeln (verbindlich)
 
@@ -30,4 +32,6 @@
 ```bash
 npm run check:required
 npm run check:required:verify-only
+npm run governance:policy:verify
+npm run versioning:verify
 ```

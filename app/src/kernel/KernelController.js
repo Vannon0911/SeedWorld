@@ -3,6 +3,7 @@ import { KernelRouter } from "./KernelRouter.js";
 import { ActionRegistry } from "./ActionRegistry.js";
 import { GateManager } from "./GateManager.js";
 import { KernelGates } from "./KernelGates.js";
+import { KernelGovernanceEngine } from "./GovernanceEngine.js";
 import { generateWorld } from "../game/worldGen.js";
 
 const DEFAULT_CONFIRMATION_PREFIX = "KERNEL-CONFIRM";
@@ -30,18 +31,6 @@ function deriveSeedSignature(seed) {
   return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
-let denyCounter = 0;
-
-class KernelGovernanceError extends Error {
-  constructor(message, { code, auditId, details } = {}) {
-    super(message);
-    this.name = "KernelGovernanceError";
-    this.code = code || "KERNEL_GOVERNANCE_ERROR";
-    this.auditId = auditId || null;
-    this.details = details || null;
-  }
-}
-
 export class KernelController {
   constructor(options = {}) {
     this.confirmationPrefix =
@@ -57,6 +46,12 @@ export class KernelController {
     this.router = new KernelRouter();
     this.router.registerHandler("game", (action) => this.#handleRegisteredAction("game", action));
     this.router.registerHandler("kernel", (action) => this.#handleRegisteredAction("kernel", action));
+
+    this.governanceEngine = new KernelGovernanceEngine({
+      mode: this.governanceMode,
+      maxAuditTrail: 1024
+    });
+    this.governanceAuditTrail = this.governanceEngine.auditTrail;
 
     this.actionRegistry = new ActionRegistry();
     this.kernelGates = new KernelGates((query, payload) => this.#kernelInterface(query, payload));
@@ -271,25 +266,12 @@ export class KernelController {
   }
 
   #recordGovernanceAudit(event) {
-    this.governanceAuditTrail.push(event);
-    if (this.governanceAuditTrail.length > 1024) {
-      this.governanceAuditTrail = this.governanceAuditTrail.slice(-1024);
-    }
+    this.governanceEngine.recordAudit(event);
+    this.governanceAuditTrail = this.governanceEngine.auditTrail;
   }
 
   #denyAction({ code, reason, domain, actionType }) {
-    denyCounter += 1;
-    const assignedAuditId = `deny-${String(denyCounter).padStart(6, "0")}`;
-    const event = {
-      auditId: assignedAuditId,
-      decision: this.governanceMode === "shadow" ? "shadow_deny" : "deny",
-      code,
-      reason,
-      domain,
-      actionType
-    };
-    this.#recordGovernanceAudit(event);
-    return new KernelGovernanceError(reason, { code, auditId: assignedAuditId, details: event });
+    return this.governanceEngine.deny({ code, reason, domain, actionType });
   }
 
   #createInitialState() {

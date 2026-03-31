@@ -4,12 +4,13 @@ const REQUIRED_FINGERPRINT = "F14A6FC849CF906ED7518584D7EA78B1F7778AFD";
 const REQUIRED_SHORT = REQUIRED_FINGERPRINT.slice(-16);
 
 function parseArgs(argv) {
-  const args = { configOnly: false, headOnly: false, range: null, allowEmptyRange: false };
+  const args = { configOnly: false, headOnly: false, range: null, allowEmptyRange: false, skipConfig: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === "--config-only") args.configOnly = true;
     else if (arg === "--head-only") args.headOnly = true;
     else if (arg === "--allow-empty-range") args.allowEmptyRange = true;
+    else if (arg === "--skip-config") args.skipConfig = true;
     else if (arg === "--range") args.range = argv[++i] || null;
   }
   return args;
@@ -20,6 +21,12 @@ function run(command, args, { allowFailure = false } = {}) {
     cwd: process.cwd(),
     encoding: "utf8"
   });
+  if (result.error) {
+    if (allowFailure) {
+      return result;
+    }
+    throw new Error(`${command} ${args.join(" ")} failed: ${String(result.error?.message || result.error)}`);
+  }
   if (result.status !== 0 && !allowFailure) {
     throw new Error(`${command} ${args.join(" ")} failed: ${result.stderr || result.stdout}`.trim());
   }
@@ -32,6 +39,9 @@ function git(args, opts) {
 
 function readGitConfig(key) {
   const out = git(["config", "--get", key], { allowFailure: true });
+  if (out.error) {
+    throw new Error(`cannot read git config '${key}': ${String(out.error?.message || out.error)}`);
+  }
   return out.status === 0 ? String(out.stdout || "").trim() : "";
 }
 
@@ -105,7 +115,9 @@ function verifyCommitSignature(commit) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  ensureConfig();
+  if (!args.skipConfig) {
+    ensureConfig();
+  }
   if (args.configOnly) {
     console.log("[SIGNING_GUARD] config OK");
     return;

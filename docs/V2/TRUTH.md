@@ -25,6 +25,7 @@ Diese Seite macht die fuehrende SoT menschenlesbar. Sie ersetzt die JSON-Dateien
 - `Kernel Core`: Deterministic execution and seed-bound kernel state transitions
 - `Authoritative Content`: Canonical gameplay content and deterministic interpretation rules
 - `Reproduction Evidence`: Double-run orchestration, evidence generation, comparison and final proof
+- `Governance Control Plane`: Zero-trust governance contract, policy gates, proof manifest and enforcement wiring
 - `Documentation V2`: Human-readable truth, atomic planning tasks, string matrix discipline and archive automation
 - `Deprecated Runtime`: No longer part of mandatory truth or gates
 

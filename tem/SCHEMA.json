@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "6adc96adaff0cff1ce8fbe2f9b2dbe959df466b7eb3517469757816602b6d52f",
+  "snapshotId": "6b5ed1482303f73daadbe85b9111499c3d428db973556facf5f82ec39b9cbb52",
   "controlFiles": [
     "TODO.md",
     "WORKFLOW.md",
     "SCHEMA.json"
   ],
-  "artifactCount": 40,
+  "artifactCount": 46,
   "categories": {
     "planung": [
       "tem/beide-plaene.md",
@@ -49,7 +49,13 @@
     "task-archive": [
       "tem/tasks/archive/CF-013.json",
       "tem/tasks/archive/DOC-001.json",
-      "tem/tasks/archive/DOC-002.json"
+      "tem/tasks/archive/DOC-002.json",
+      "tem/tasks/archive/GOV-001.json",
+      "tem/tasks/archive/GOV-002.json",
+      "tem/tasks/archive/GOV-003.json",
+      "tem/tasks/archive/GOV-004.json",
+      "tem/tasks/archive/GOV-005.json",
+      "tem/tasks/archive/GOV-006.json"
     ],
     "task-open": [
       "tem/tasks/open/CF-003.json",
@@ -202,6 +208,36 @@
       "path": "tem/tasks/archive/DOC-002.json",
       "category": "task-archive",
       "sha256": "a5f0eb759baf22e0bcc66dc7f09185218923c9a9a22d2edb4c2c914be9be463e"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-001.json",
+      "category": "task-archive",
+      "sha256": "35d2c72a264caf0baea6712979736c8742481bd527be2a78ca175da997d5879e"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-002.json",
+      "category": "task-archive",
+      "sha256": "90c3904d95f36d7a793a973b06c908bc2466bb51860ff491ca3294d2a17dedff"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-003.json",
+      "category": "task-archive",
+      "sha256": "c807bcfdb0c39883fa983513e23a5c888b819d1148333df627fcf6cd79a160d5"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-004.json",
+      "category": "task-archive",
+      "sha256": "188f01baa4d8224b592768676d50a177b5e29f01cbc5dade6878076ddab79e1f"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-005.json",
+      "category": "task-archive",
+      "sha256": "50d07aa4be1ad6b93de2e8b13998067ddac13444a13f7f4019f58f01240f4c25"
+    },
+    {
+      "path": "tem/tasks/archive/GOV-006.json",
+      "category": "task-archive",
+      "sha256": "89df7fe2e93a92da83b893455c5dce2b2ef2052acb2fd9c23331871c728e9da1"
     },
     {
       "path": "tem/tasks/open/CF-003.json",

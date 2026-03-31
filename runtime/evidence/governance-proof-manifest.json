@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "policy": "kernel-governance-engine.v2",
+  "generated_at": "2026-03-31T08:52:19.014Z",
+  "run_mode": "verify-only",
+  "repo": {
+    "head": "39f1aee891d10f995c41012086c7a8f18bed04d2",
+    "branch": "main"
+  },
+  "gate_results": [
+    {
+      "id": "versioning:verify",
+      "status": "PASSED",
+      "output_sha256": "f6e9e93c51208305a90b077bd81b722a788d7ff008b0ba038184dbcf36f6ed1d"
+    },
+    {
+      "id": "governance:policy:verify",
+      "status": "PASSED",
+      "output_sha256": "ac67ea3d47a9be596c8cbd4c71dd04f266927b92b698903508544355e966704d"
+    },
+    {
+      "id": "tests",
+      "status": "PASSED",
+      "output_sha256": "edac27123384feaaa989995ac88221bc34bc2f0e3dbf0aa721db6f660978508a"
+    },
+    {
+      "id": "evidence:verify",
+      "status": "PASSED",
+      "output_sha256": "3f8496c62e86c442d6c25fc380ade181c1b69ec61b2447a904374213c277aade"
+    },
+    {
+      "id": "testline:verify",
+      "status": "PASSED",
+      "output_sha256": "1fbdf2d5e7948101078405e33cb8fc426c6f9d058f53ea59a18e2adcd22d7617"
+    },
+    {
+      "id": "repo:hygiene:verify",
+      "status": "PASSED",
+      "output_sha256": "d807ef39cec883370462bf73181cf58fdc5d265df36740352056861135973cf1"
+    },
+    {
+      "id": "docs:v2:verify",
+      "status": "PASSED",
+      "output_sha256": "55181c8b0e515809ba2a47c6aeb1b0ef9da5488cb264865b0f30d065260fd872"
+    },
+    {
+      "id": "docs:v2:coverage",
+      "status": "PASSED",
+      "output_sha256": "2e4ccac3a3dc0c655d0a92abe70f5f9e5e845ae7f30e46db10faed9be4c684cc"
+    }
+  ],
+  "proof": {
+    "evidence": {
+      "evidence_summary": {
+        "path": "runtime/evidence/summary.json",
+        "sha256": "c2dee4651f763a50138cf5741ceaeb8ee8dab02c8f7f536afc76621b5570e8d3"
+      },
+      "final_testline_summary": {
+        "path": "runtime/evidence/final/testline-summary.json",
+        "sha256": "91419e86f62b978753b6baf47c55aac07b63527a23a9a7109a4ba5072ac02324"
+      }
+    },
+    "sot": [
+      {
+        "path": "VERSION",
+        "sha256": "7f5b24c6b647e06bc8c57beb3975e0baea40f00d9af8fbca41cd30d32d1ca266"
+      },
+      {
+        "path": "app/src/sot/source-of-truth.json",
+        "sha256": "8298e8da4df7580ff77ee08a060dc42407161fc7ae63ee6577a637c099fe3035"
+      },
+      {
+        "path": "app/src/sot/repo-boundaries.json",
+        "sha256": "a10dd4f35073af56c4737fd9f95e4627b0cc8d92c8e05c28f0b67e1bd375bdfa"
+      },
+      {
+        "path": "app/src/sot/docs-v2.json",
+        "sha256": "ac29e76df46068378edde7c78bda9370227c951fc14e96758b0a25ca099ec5ae"
+      },
+      {
+        "path": "app/src/sot/governance-engine.sot.v2.json",
+        "sha256": "926fe71f5603de76ae166f632dcf817509f80698b6db4fd66a0cd870d5f33794"
+      },
+      {
+        "path": "app/src/sot/testline-integrity.json",
+        "sha256": "af3f5d725e5dedfdf0f2b9880e88b2900383a75636ac6fbee3cad231ee149584"
+      }
+    ]
+  },
+  "zero_trust": {
+    "all_verify_steps_passed": true,
+    "claim_rule": "Claims are valid only if all verify gates passed and proof artifacts were hashed and cross-checked."
+  }
+}

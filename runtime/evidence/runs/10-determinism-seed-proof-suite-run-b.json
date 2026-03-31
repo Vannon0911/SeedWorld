@@ -1,0 +1,86 @@
+{
+  "schema_version": "2.0.0",
+  "test_id": "10-determinism-seed-proof-suite",
+  "run_id": "10-determinism-seed-proof-suite-run-b",
+  "seed": "suite-10-determinism-seed-proof-seed",
+  "seed_source": "test-vector",
+  "content_revision": {
+    "fingerprint": "18e8dd4a0d7c6f3c296205fc1c2799308814e5257d376bb3d594eb5dc11e58b0",
+    "files": [
+      {
+        "path": "app/src/game/worldGen.js",
+        "hash": "25619e6dd829919f61bdd8936535aad96dbdabf741b4d8a36e23d7540fc89d40"
+      }
+    ]
+  },
+  "kernel_revision": {
+    "fingerprint": "360db0288ef380c19d0da76d4f8b64d26e1afbbfb0a05ce3456e43a609705b83",
+    "files": [
+      {
+        "path": "app/src/kernel/deterministicKernel.js",
+        "hash": "7cbb748833caf1e0736bb7001d84564b2825f6411021a33f2e2801ced9f2949b"
+      },
+      {
+        "path": "app/src/kernel/fingerprint.js",
+        "hash": "ef35e61f1579f423dc774410115b2ca842a5cb62b23e9de101f6a29433b7a2ff"
+      },
+      {
+        "path": "app/src/kernel/KernelController.js",
+        "hash": "175ef996738347b54d7236d40b8680add0d3dba25d186043a5917937797a51c5"
+      },
+      {
+        "path": "app/src/kernel/runtimeGuards.js",
+        "hash": "133d8afc67ab7de3016585d3e83aa4a90b5af1879fb072d9b29f2f4ddea8c2ac"
+      },
+      {
+        "path": "app/src/kernel/seedGuard.js",
+        "hash": "d61ec174ce4ebc237fdf190879b1efd54d098c283a4ca6c55a5cb0f292941141"
+      }
+    ]
+  },
+  "timestamp": "2026-03-31T09:19:33.239Z",
+  "deterministic_fingerprint": "4da4872b566eec9622ec45bfdc31f3a8855991f9bfc80006850dd3e2c59e06bd",
+  "output_hashes": {
+    "payload": "4da4872b566eec9622ec45bfdc31f3a8855991f9bfc80006850dd3e2c59e06bd"
+  },
+  "output_snapshots": {
+    "worldFingerprint": "d5d729fc8ac5655640b66cec18df939cac9258733e17b2dbdaef1d0874a95e62",
+    "alternateWorldFingerprint": "3702b4b5f35c3f4cbbbb27662278017ecc13f657579eec565d8f071334c8b844",
+    "kernelSeedHash": "e1a6bfe5ea34b9bdae7bfc9185552f522af08cb0cf69ed21cb3ed7c7007beac5",
+    "kernelFingerprint": "06e6330676ec53c3578ab90e39e728a36378401a4a05723468b0a9ab154ad777",
+    "checkpointFingerprints": [
+      "723d8dce40a12fae26ab5bfd900b7b6036d9bc95eee1042d04f32224d073cd2c",
+      "e1e4489b972ee01bab8bcf0203c0c3a0cda533d65c16a7a77dc2cbff0a6ef70a",
+      "d1ea93b5230e7e8937581f86305f0b4d192860011f6229901ea04c20b221db36",
+      "4765d67843eeaf3798b7e1ea09ce3da40de5c9e1fb6afe6d3c41591dd30a49f1",
+      "43f00e14fd6430c6e7bb27fadded98de7f34cc79c2c77552dc3f0f0510e387ff",
+      "3ebb11542918cc28efcdb1a28f33ff1ed0a3ea04ba67e3126272f61ce6e8d1a1",
+      "0bee655c0e127e31dcbfcf552694ec6c7986ab12e5f10b503e2766e7fc3f642e",
+      "d034df0a3e5d4a9d91642b861669a1a2258acd71a84b1fa5798674aed3b977db",
+      "935dc122b2f55f0a69ace44762219ac9f110444a4980938d285bcd55a19edaab",
+      "5326115438d1708237df99bbf262c413c1325c75c8edb54bf9609a52c8404ee6",
+      "29fc2fc264b631a00c5d9c23f9385200fd5b469bfbf93576765657e6e86257ab",
+      "cdb5d40a3d2162f521effd0be84cffbde3ba46f0ba8749e8fe3be609c9cb9e3c",
+      "30bc7fe8f2888f145a34bf68fb9d0d459cea94aba1bb0be477f7b24cccd09f92",
+      "7724a457e216ff721b55acab9649740c05dc4bb69a74c816d99a6633ef05b764",
+      "5563ee5aea05ae457e7e036d3e5fc5d6087cb0bc8d67ee0ef33488f48c462be0",
+      "fbd0078ff6f523cfde2d4c02456f17554e36c8b148be284ffb1d027b1d7e148f",
+      "d98293fb0bd4bc3667acec022d3ff42561cf0c43b655066f6e44a18a264671e4",
+      "5f5a890dc3d64b10b73e1d2328b96aa796aa11130f4ca2c60b24a1bbe04a7f11",
+      "cbc755a7844e018cb0b4b3b414d5b94e5e20daef6441a920b10809165a8f8e12",
+      "39cfec310a91c2c9501e82b9df998d4e34ecd316cb1793dbedc5b7f4d4a1c1e3",
+      "d7d5bc20fdf7c560ade4ddf74de90947171dead48ede9ba285681fb12ed04b69",
+      "a425a8f5bd5e72fbe63fd4773e4c7663b542a48fe1635b24a495a2f52bb2d27c",
+      "dd69ad2ad35a003d7e3efb54418739d038f3041560a9cad493f37da553be2f4a",
+      "12a535e080bf9ee9a5f3f77a71b8559d901c2d6fb3ded388cfba3b92c145ef85"
+    ],
+    "seedSignature": "c227802a"
+  },
+  "status": "PASS_REPRODUCED",
+  "reason_code": null,
+  "environment_summary": {
+    "node": "v25.8.2",
+    "platform": "win32",
+    "arch": "x64"
+  }
+}

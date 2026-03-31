@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-03-31T08:52:18.967Z",
+  "scanned_files": 97,
+  "classified_files": 97,
+  "unclassified_files": [],
+  "buckets": [
+    {
+      "id": "v2-primary",
+      "class": "Documentation-V2",
+      "count": 9
+    },
+    {
+      "id": "sot-primary",
+      "class": "Source-of-Truth",
+      "count": 4
+    },
+    {
+      "id": "manual-active",
+      "class": "Manual-Active",
+      "count": 10
+    },
+    {
+      "id": "task-control",
+      "class": "Task-Control",
+      "count": 16
+    },
+    {
+      "id": "tem-legacy-reference",
+      "class": "Archive",
+      "count": 27
+    },
+    {
+      "id": "docs-planning-archive",
+      "class": "Archive",
+      "count": 2
+    },
+    {
+      "id": "docs-llm-out-of-scope",
+      "class": "Out-of-Scope",
+      "count": 4
+    },
+    {
+      "id": "manual-legacy-archive",
+      "class": "Archive",
+      "count": 3
+    },
+    {
+      "id": "legacy-unverfid-archive",
+      "class": "Archive",
+      "count": 22
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "2.0.0",
+  "id": "governance-engine",
+  "kernelModule": "app/src/kernel/GovernanceEngine.js",
+  "runtimeEntry": "dev/tools/runtime/run-required-checks.mjs",
+  "policy": "kernel-governance-engine.v2",
+  "runModes": [
+    "auto-sync-and-verify",
+    "verify-only"
+  ],
+  "pipeline": {
+    "sync": [
+      "versioning:sync",
+      "docs:v2:sync",
+      "test:sync",
+      "repo:hygiene:sync"
+    ],
+    "verify": [
+      "versioning:verify",
+      "governance:policy:verify",
+      "test:verify",
+      "evidence:verify",
+      "testline:verify",
+      "repo:hygiene:verify",
+      "docs:v2:verify",
+      "docs:v2:coverage",
+      "governance:coverage:verify"
+    ],
+    "contract": "sync steps are optional by run mode, verify steps are always mandatory and fail-closed"
+  },
+  "proofArtifacts": [
+    "runtime/evidence/required-check-report.json",
+    "runtime/evidence/governance-proof-manifest.json",
+    "runtime/evidence/governance-coverage.json",
+    "VERSION",
+    "runtime/evidence/summary.json",
+    "runtime/evidence/final/testline-summary.json"
+  ],
+  "kernelIntegration": {
+    "controller": "app/src/kernel/KernelController.js",
+    "gateManager": "app/src/kernel/GateManager.js",
+    "engineResponsibilities": [
+      "single source for pipeline contract",
+      "single source for claim rule",
+      "single source for governance report schema",
+      "single source for kernel deny/audit behavior",
+      "single source for zero-trust proof manifest contract"
+    ]
+  },
+  "docsIntegration": {
+    "docsV2Sot": "app/src/sot/docs-v2.json",
+    "truthDocs": [
+      "docs/SOT/ORIENTATION.md",
+      "docs/MANUEL/WORKFLOW.md",
+      "docs/LLM/POLICY.md"
+    ]
+  }
+}

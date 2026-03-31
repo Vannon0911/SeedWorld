@@ -23,6 +23,9 @@ npm run check:required:verify-only
 - `node dev/scripts/verify-evidence.mjs`
 - `node dev/tools/runtime/verify-testline-integrity.mjs`
 - `node dev/tools/runtime/run-required-checks.mjs`
+- `app/src/kernel/GovernanceEngine.js` ist der zentrale Governance-Vertrag fuer Pipeline/Policy/Claim-Rule.
+- `app/src/sot/governance-engine.sot.v2.json` ist die SoT-2.0-Fuehrung fuer Engine-Verkabelung und Proof-Artefakte.
+- `runtime/evidence/governance-proof-manifest.json` manifestiert Zero-Trust-Beweise fuer SoT + Evidence + Gate-Outputs.
 
 ## 4) Hinweise
 

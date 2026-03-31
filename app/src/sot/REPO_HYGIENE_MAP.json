@@ -2,6 +2,11 @@
   "entrypoints": [
     "dev/scripts/test-runner.mjs",
     "dev/scripts/verify-evidence.mjs",
+    "dev/tools/runtime/run-required-checks.mjs",
+    "dev/tools/runtime/sync-versioning.mjs",
+    "dev/tools/runtime/governance-coverage-verify.mjs",
+    "dev/tools/runtime/signing-guard.mjs",
+    "dev/tools/runtime/verify-docs-v2-coverage.mjs",
     "dev/tools/runtime/verify-testline-integrity.mjs"
   ],
   "owners": [
@@ -13,6 +18,7 @@
         "app/src/kernel/fingerprint.js",
         "app/src/kernel/runtimeGuards.js",
         "app/src/kernel/seedGuard.js",
+        "app/src/kernel/GovernanceEngine.js",
         "app/src/kernel/KernelController.js",
         "app/src/kernel/ActionRegistry.js",
         "app/src/kernel/KernelRouter.js"
@@ -36,10 +42,31 @@
         "dev/scripts/test-runner.mjs",
         "dev/scripts/verify-evidence.mjs",
         "dev/tools/runtime/",
+        "dev/tools/runtime/run-required-checks.mjs",
         "dev/tools/runtime/verify-testline-integrity.mjs",
-        "dev/tests/modules/"
+        "dev/tests/modules/",
+        "app/src/sot/governance-engine.sot.v2.json"
       ],
       "purpose": "Double-run orchestration, evidence generation, comparison and final proof"
+    },
+    {
+      "name": "Governance Control Plane",
+      "prefixes": [
+        "app/src/kernel/GovernanceEngine.js",
+        "app/src/sot/governance-engine.sot.v2.json",
+        "package.json",
+        "README.md",
+        "VERSION",
+        "dev/tools/runtime/run-required-checks.mjs",
+        "dev/tools/runtime/signing-guard.mjs",
+        "dev/tools/runtime/sync-versioning.mjs",
+        "dev/tools/runtime/governance-coverage-verify.mjs",
+        "dev/tools/runtime/verify-docs-v2-coverage.mjs",
+        ".githooks/",
+        ".github/workflows/",
+        ".github/rulesets/"
+      ],
+      "purpose": "Zero-trust governance contract, policy gates, proof manifest and enforcement wiring"
     },
     {
       "name": "Documentation V2",
@@ -77,8 +104,8 @@
     }
   ],
   "fileCounts": {
-    "allFiles": 70,
-    "codeFiles": 68
+    "allFiles": 75,
+    "codeFiles": 73
   },
   "unownedFiles": [],
   "unreachableCode": [
@@ -114,9 +141,9 @@
     "dev/tools/runtime/check-global-redundancy.mjs",
     "dev/tools/runtime/check-tem-structure.mjs",
     "dev/tools/runtime/check-wrapper-guardrails.mjs",
-    "dev/tools/runtime/docs-v2-shared.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
     "dev/tools/runtime/function-sot-shared.mjs",
+    "dev/tools/runtime/governance-policy-verify.mjs",
     "dev/tools/runtime/governance-verify.mjs",
     "dev/tools/runtime/installGitHooks.mjs",
     "dev/tools/runtime/llm-entry.mjs",
@@ -131,10 +158,8 @@
     "dev/tools/runtime/repo-hygiene-verify.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
     "dev/tools/runtime/report-untested-systems.mjs",
-    "dev/tools/runtime/run-required-checks.mjs",
-    "dev/tools/runtime/runtime-shared.mjs",
+    "dev/tools/runtime/scan-doc-tasks-verify.mjs",
     "dev/tools/runtime/scan-doc-tasks.mjs",
-    "dev/tools/runtime/signing-guard.mjs",
     "dev/tools/runtime/sync-docs-v2.mjs",
     "dev/tools/runtime/sync-string-matrix.mjs",
     "dev/tools/runtime/sync-tem-control-files.mjs",
@@ -142,7 +167,6 @@
     "dev/tools/runtime/update-testline-integrity.mjs",
     "dev/tools/runtime/updateFunctionSot.mjs",
     "dev/tools/runtime/updateRedActions.mjs",
-    "dev/tools/runtime/verify-docs-v2-coverage.mjs",
     "dev/tools/runtime/verify-docs-v2-guards.mjs",
     "dev/tools/runtime/verify-git-hooks.mjs"
   ],
@@ -163,6 +187,7 @@
     "dev/tools/runtime/check-tem-structure.mjs",
     "dev/tools/runtime/check-wrapper-guardrails.mjs",
     "dev/tools/runtime/evidence-lock.mjs",
+    "dev/tools/runtime/governance-policy-verify.mjs",
     "dev/tools/runtime/governance-verify.mjs",
     "dev/tools/runtime/llm-entry.mjs",
     "dev/tools/runtime/llm-override.mjs",
@@ -175,16 +200,14 @@
     "dev/tools/runtime/repo-hygiene-verify.mjs",
     "dev/tools/runtime/repo-hygiene-why.mjs",
     "dev/tools/runtime/report-untested-systems.mjs",
-    "dev/tools/runtime/run-required-checks.mjs",
+    "dev/tools/runtime/scan-doc-tasks-verify.mjs",
     "dev/tools/runtime/scan-doc-tasks.mjs",
-    "dev/tools/runtime/signing-guard.mjs",
     "dev/tools/runtime/sync-docs-v2.mjs",
     "dev/tools/runtime/sync-string-matrix.mjs",
     "dev/tools/runtime/sync-tem-control-files.mjs",
     "dev/tools/runtime/update-testline-integrity.mjs",
     "dev/tools/runtime/updateFunctionSot.mjs",
     "dev/tools/runtime/updateRedActions.mjs",
-    "dev/tools/runtime/verify-docs-v2-coverage.mjs",
     "dev/tools/runtime/verify-docs-v2-guards.mjs",
     "dev/tools/runtime/verify-git-hooks.mjs"
   ],
@@ -212,6 +235,12 @@
       "to": "app/src/kernel/fingerprint.js",
       "fromOwner": "Reproduction Evidence",
       "toOwner": "Kernel Core"
+    },
+    {
+      "from": "dev/tools/runtime/run-required-checks.mjs",
+      "to": "app/src/kernel/GovernanceEngine.js",
+      "fromOwner": "Reproduction Evidence",
+      "toOwner": "Kernel Core"
     }
   ],
   "inboundCounts": {
@@ -232,6 +261,7 @@
     "app/src/kernel/GateManager.js": 1,
     "app/src/kernel/gates/accessGates.js": 1,
     "app/src/kernel/gates/operationGates.js": 1,
+    "app/src/kernel/GovernanceEngine.js": 2,
     "app/src/kernel/KernelController.js": 1,
     "app/src/kernel/KernelGates.js": 1,
     "app/src/kernel/KernelRouter.js": 1,
@@ -251,9 +281,11 @@
     "dev/tools/runtime/check-global-redundancy.mjs": 0,
     "dev/tools/runtime/check-tem-structure.mjs": 0,
     "dev/tools/runtime/check-wrapper-guardrails.mjs": 0,
-    "dev/tools/runtime/docs-v2-shared.mjs": 4,
+    "dev/tools/runtime/docs-v2-shared.mjs": 6,
     "dev/tools/runtime/evidence-lock.mjs": 0,
     "dev/tools/runtime/function-sot-shared.mjs": 1,
+    "dev/tools/runtime/governance-coverage-verify.mjs": 0,
+    "dev/tools/runtime/governance-policy-verify.mjs": 0,
     "dev/tools/runtime/governance-verify.mjs": 0,
     "dev/tools/runtime/installGitHooks.mjs": 1,
     "dev/tools/runtime/llm-entry.mjs": 0,
@@ -269,12 +301,14 @@
     "dev/tools/runtime/repo-hygiene-why.mjs": 0,
     "dev/tools/runtime/report-untested-systems.mjs": 0,
     "dev/tools/runtime/run-required-checks.mjs": 0,
-    "dev/tools/runtime/runtime-shared.mjs": 12,
+    "dev/tools/runtime/runtime-shared.mjs": 13,
+    "dev/tools/runtime/scan-doc-tasks-verify.mjs": 0,
     "dev/tools/runtime/scan-doc-tasks.mjs": 0,
     "dev/tools/runtime/signing-guard.mjs": 0,
     "dev/tools/runtime/sync-docs-v2.mjs": 0,
     "dev/tools/runtime/sync-string-matrix.mjs": 0,
     "dev/tools/runtime/sync-tem-control-files.mjs": 0,
+    "dev/tools/runtime/sync-versioning.mjs": 0,
     "dev/tools/runtime/testline-integrity-shared.mjs": 1,
     "dev/tools/runtime/update-testline-integrity.mjs": 0,
     "dev/tools/runtime/updateFunctionSot.mjs": 0,
@@ -323,10 +357,12 @@
     "app/src/kernel/GateManager.js": [],
     "app/src/kernel/gates/accessGates.js": [],
     "app/src/kernel/gates/operationGates.js": [],
+    "app/src/kernel/GovernanceEngine.js": [],
     "app/src/kernel/KernelController.js": [
       "app/src/game/worldGen.js",
       "app/src/kernel/ActionRegistry.js",
       "app/src/kernel/GateManager.js",
+      "app/src/kernel/GovernanceEngine.js",
       "app/src/kernel/KernelGates.js",
       "app/src/kernel/KernelRouter.js",
       "app/src/kernel/runtimeGuards.js"
@@ -374,6 +410,11 @@
     "dev/tools/runtime/function-sot-shared.mjs": [
       "dev/tools/runtime/runtime-shared.mjs"
     ],
+    "dev/tools/runtime/governance-coverage-verify.mjs": [
+      "dev/tools/runtime/docs-v2-shared.mjs",
+      "dev/tools/runtime/runtime-shared.mjs"
+    ],
+    "dev/tools/runtime/governance-policy-verify.mjs": [],
     "dev/tools/runtime/governance-verify.mjs": [],
     "dev/tools/runtime/installGitHooks.mjs": [],
     "dev/tools/runtime/llm-entry.mjs": [
@@ -400,8 +441,13 @@
     "dev/tools/runtime/report-untested-systems.mjs": [
       "dev/tools/runtime/runtime-shared.mjs"
     ],
-    "dev/tools/runtime/run-required-checks.mjs": [],
+    "dev/tools/runtime/run-required-checks.mjs": [
+      "app/src/kernel/GovernanceEngine.js"
+    ],
     "dev/tools/runtime/runtime-shared.mjs": [],
+    "dev/tools/runtime/scan-doc-tasks-verify.mjs": [
+      "dev/tools/runtime/docs-v2-shared.mjs"
+    ],
     "dev/tools/runtime/scan-doc-tasks.mjs": [
       "dev/tools/runtime/docs-v2-shared.mjs"
     ],
@@ -416,6 +462,7 @@
     "dev/tools/runtime/sync-tem-control-files.mjs": [
       "dev/tools/runtime/runtime-shared.mjs"
     ],
+    "dev/tools/runtime/sync-versioning.mjs": [],
     "dev/tools/runtime/testline-integrity-shared.mjs": [
       "dev/tools/runtime/runtime-shared.mjs"
     ],

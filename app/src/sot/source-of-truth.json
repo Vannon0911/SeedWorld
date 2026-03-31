@@ -20,6 +20,7 @@
         "app/src/kernel/fingerprint.js",
         "app/src/kernel/runtimeGuards.js",
         "app/src/kernel/seedGuard.js",
+        "app/src/kernel/GovernanceEngine.js",
         "app/src/kernel/KernelController.js",
         "app/src/kernel/ActionRegistry.js",
         "app/src/kernel/KernelRouter.js"
@@ -42,8 +43,10 @@
         "dev/scripts/evidence-shared.mjs",
         "dev/scripts/test-runner.mjs",
         "dev/scripts/verify-evidence.mjs",
+        "dev/tools/runtime/run-required-checks.mjs",
         "dev/tools/runtime/verify-testline-integrity.mjs",
-        "app/src/sot/testline-integrity.json"
+        "app/src/sot/testline-integrity.json",
+        "app/src/sot/governance-engine.sot.v2.json"
       ],
       "why": "These files define and verify the machine-readable reproduction proof chain."
     },
@@ -55,7 +58,14 @@
         "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
         "dev/tests/modules/20.gameplay-state-suite.module.mjs",
         "package.json",
-        ".github/workflows/required-checks.yml"
+        ".github/workflows/required-checks.yml",
+        ".github/workflows/release.yml",
+        ".githooks/pre-commit",
+        ".githooks/pre-push",
+        "dev/tools/runtime/signing-guard.mjs",
+        "dev/tools/runtime/sync-versioning.mjs",
+        "dev/tools/runtime/governance-coverage-verify.mjs",
+        "dev/tools/runtime/verify-docs-v2-coverage.mjs"
       ],
       "why": "Only double-run tests that prove kernel or content reproduction remain mandatory."
     },
@@ -105,11 +115,9 @@
       "id": "out_of_scope",
       "class": "Out-of-Scope",
       "authoritative": [
-        "docs/LLM/",
-        ".githooks/",
-        ".github/rulesets/"
+        "docs/LLM/"
       ],
-      "why": "Repository operations or process artifacts, not kernel truth."
+      "why": "Narrative policy notes, not executable kernel truth."
     }
   ]
 }

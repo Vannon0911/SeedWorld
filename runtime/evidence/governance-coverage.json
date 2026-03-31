@@ -1,0 +1,448 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-03-31T09:22:21.228Z",
+  "scanned_count": 83,
+  "scanned_files": 83,
+  "classified_count": 83,
+  "classified_items": [
+    {
+      "path": ".githooks/pre-commit",
+      "owner": "Governance Control Plane",
+      "matched_prefix": ".githooks/"
+    },
+    {
+      "path": ".githooks/pre-push",
+      "owner": "Governance Control Plane",
+      "matched_prefix": ".githooks/"
+    },
+    {
+      "path": ".github/rulesets/main-protection.json",
+      "owner": "Governance Control Plane",
+      "matched_prefix": ".github/rulesets/"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "owner": "Governance Control Plane",
+      "matched_prefix": ".github/workflows/"
+    },
+    {
+      "path": ".github/workflows/required-checks.yml",
+      "owner": "Governance Control Plane",
+      "matched_prefix": ".github/workflows/"
+    },
+    {
+      "path": "app/src/game/actions/buildAction.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/actions/transportAction.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/contracts/ActionSchema.md",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/contracts/MutationMatrix.md",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/contracts/mutationMatrixConstraints.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gameConfig.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gameConstants.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gameInput.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/GameLogicController.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gamePatchBuilders.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gameProgress.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/gameStateReducer.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/game/worldGen.js",
+      "owner": "Authoritative Content",
+      "matched_prefix": "app/src/game/"
+    },
+    {
+      "path": "app/src/kernel/ActionRegistry.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/ActionRegistry.js"
+    },
+    {
+      "path": "app/src/kernel/deterministicKernel.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/deterministicKernel.js"
+    },
+    {
+      "path": "app/src/kernel/fingerprint.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/fingerprint.js"
+    },
+    {
+      "path": "app/src/kernel/GateManager.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/"
+    },
+    {
+      "path": "app/src/kernel/gates/accessGates.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/"
+    },
+    {
+      "path": "app/src/kernel/gates/operationGates.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/"
+    },
+    {
+      "path": "app/src/kernel/GovernanceEngine.js",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "app/src/kernel/GovernanceEngine.js"
+    },
+    {
+      "path": "app/src/kernel/KernelController.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/KernelController.js"
+    },
+    {
+      "path": "app/src/kernel/KernelGates.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/"
+    },
+    {
+      "path": "app/src/kernel/KernelRouter.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/KernelRouter.js"
+    },
+    {
+      "path": "app/src/kernel/PatchOrchestrator.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/"
+    },
+    {
+      "path": "app/src/kernel/runtimeGuards.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/runtimeGuards.js"
+    },
+    {
+      "path": "app/src/kernel/seedGuard.js",
+      "owner": "Kernel Core",
+      "matched_prefix": "app/src/kernel/seedGuard.js"
+    },
+    {
+      "path": "dev/scripts/build-evidence-bundle.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/build-evidence-bundle.mjs"
+    },
+    {
+      "path": "dev/scripts/evidence-shared.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/evidence-shared.mjs"
+    },
+    {
+      "path": "dev/scripts/repo-cleanup-baseline.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/repo-cleanup-baseline.mjs"
+    },
+    {
+      "path": "dev/scripts/runtime-guards-test.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/runtime-guards-test.mjs"
+    },
+    {
+      "path": "dev/scripts/test-runner.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/test-runner.mjs"
+    },
+    {
+      "path": "dev/scripts/verify-evidence.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/scripts/verify-evidence.mjs"
+    },
+    {
+      "path": "dev/tests/modules/00.runtime-governance-suite.module.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tests/modules/"
+    },
+    {
+      "path": "dev/tests/modules/10.determinism-seed-proof-suite.module.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tests/modules/"
+    },
+    {
+      "path": "dev/tests/modules/20.gameplay-state-suite.module.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tests/modules/"
+    },
+    {
+      "path": "dev/tools/runtime/apply-github-ruleset.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/check-global-redundancy.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/check-tem-structure.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/check-wrapper-guardrails.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/docs-v2-shared.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/docs-v2-shared.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/evidence-lock.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/function-sot-shared.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/governance-coverage-verify.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/governance-coverage-verify.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/governance-policy-verify.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/governance-policy-verify.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/governance-verify.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/installGitHooks.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/llm-entry.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/llm-override.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/llm-read-guard.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/llm-read-shared.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/new-action-template.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/preflight-mutation-guard.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/probe-docs-v2-adversarial.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/probe-docs-v2-adversarial.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/release-guard.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/repo-hygiene-map.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/repo-hygiene-verify.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/repo-hygiene-why.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/report-untested-systems.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/run-required-checks.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/run-required-checks.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/runtime-shared.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/scan-doc-tasks-verify.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/scan-doc-tasks-verify.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/scan-doc-tasks.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/scan-doc-tasks.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/signing-guard.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/signing-guard.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/sync-docs-v2.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/sync-docs-v2.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/sync-string-matrix.mjs",
+      "owner": "Documentation V2",
+      "matched_prefix": "dev/tools/runtime/sync-string-matrix.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/sync-tem-control-files.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/sync-versioning.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/sync-versioning.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/testline-integrity-shared.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/update-testline-integrity.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/updateFunctionSot.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/updateRedActions.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/verify-docs-v2-coverage.mjs",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "dev/tools/runtime/verify-docs-v2-coverage.mjs"
+    },
+    {
+      "path": "dev/tools/runtime/verify-docs-v2-guards.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/verify-git-hooks.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/"
+    },
+    {
+      "path": "dev/tools/runtime/verify-testline-integrity.mjs",
+      "owner": "Reproduction Evidence",
+      "matched_prefix": "dev/tools/runtime/verify-testline-integrity.mjs"
+    },
+    {
+      "path": "package.json",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "package.json"
+    },
+    {
+      "path": "README.md",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "README.md"
+    },
+    {
+      "path": "VERSION",
+      "owner": "Governance Control Plane",
+      "matched_prefix": "VERSION"
+    }
+  ],
+  "owner_summary": [
+    {
+      "owner": "Kernel Core",
+      "count": 12
+    },
+    {
+      "owner": "Authoritative Content",
+      "count": 13
+    },
+    {
+      "owner": "Reproduction Evidence",
+      "count": 37
+    },
+    {
+      "owner": "Governance Control Plane",
+      "count": 15
+    },
+    {
+      "owner": "Documentation V2",
+      "count": 6
+    }
+  ],
+  "ambiguous_files": [],
+  "unclassified_files": []
+}

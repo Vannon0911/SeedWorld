@@ -1,0 +1,28 @@
+{
+  "schema_version": "2.0.0",
+  "generated_at": "2026-03-31T09:19:33.087Z",
+  "tests": [
+    {
+      "test_id": "00-runtime-governance-suite",
+      "run_a_ref": "runtime\\evidence\\runs\\00-runtime-governance-suite-run-a.json",
+      "run_b_ref": "runtime\\evidence\\runs\\00-runtime-governance-suite-run-b.json",
+      "pair_ref": "runtime\\evidence\\pairs\\00-runtime-governance-suite-pair.json",
+      "status": "PASS_REPRODUCED"
+    },
+    {
+      "test_id": "10-determinism-seed-proof-suite",
+      "run_a_ref": "runtime\\evidence\\runs\\10-determinism-seed-proof-suite-run-a.json",
+      "run_b_ref": "runtime\\evidence\\runs\\10-determinism-seed-proof-suite-run-b.json",
+      "pair_ref": "runtime\\evidence\\pairs\\10-determinism-seed-proof-suite-pair.json",
+      "status": "PASS_REPRODUCED"
+    },
+    {
+      "test_id": "20-gameplay-state-suite",
+      "run_a_ref": "runtime\\evidence\\runs\\20-gameplay-state-suite-run-a.json",
+      "run_b_ref": "runtime\\evidence\\runs\\20-gameplay-state-suite-run-b.json",
+      "pair_ref": "runtime\\evidence\\pairs\\20-gameplay-state-suite-pair.json",
+      "status": "PASS_REPRODUCED"
+    }
+  ],
+  "overall_status": "PASS_REPRODUCED"
+}
