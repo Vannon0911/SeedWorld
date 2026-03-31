@@ -1,47 +1,29 @@
 import { chmod, mkdir, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = process.cwd();
-const hooksDir = resolve(root, ".githooks");
+const modulePath = fileURLToPath(import.meta.url);
+const isDirectRun = process.argv[1] ? resolve(process.argv[1]) === modulePath : false;
 
-const preCommit = `#!/bin/sh
+export const HOOKS_DIRNAME = ".githooks";
+export const HOOK_FILE_NAMES = Object.freeze({
+  preCommit: "pre-commit",
+  prePush: "pre-push"
+});
+
+export function renderPreCommitHook() {
+  return `#!/bin/sh
 set -e
 
-only_preflight_injection_changes() {
-  staged_files=$(git diff --cached --name-only --diff-filter=ACMR)
-  [ -n "$staged_files" ] || return 1
-
-  for file in $staged_files
-  do
-    case "$file" in
-      .githooks/pre-commit|\
-      dev/tools/runtime/installGitHooks.mjs|\
-      dev/tools/runtime/preflight-mutation-guard.mjs)
-        ;;
-      *)
-        return 1
-        ;;
-    esac
-  done
-
-  return 0
+echo "[hook:pre-commit] verify hook sync + deterministic core tests"
+npm run hooks:verify
+npm test
+`;
 }
 
-echo "[hook:pre-commit] signing guard + llm guard + guard challenge + enforce preflight"
-npm run signing:guard -- --config-only
-if only_preflight_injection_changes; then
-  echo "[hook:pre-commit] injection-only commit detected; skipping docs/SoT sync"
-else
-  npm run sot:apply
-  npm run sync:docs:apply
-  git add docs/INDEX.md docs/LLM/INDEX.md docs/LLM/AKTUELLE_RED_ACTIONS.md docs/SOT/ORIENTATION.md docs/SOT/REPO_HYGIENE_MAP.md app/src/sot/FUNCTION_SOT.json app/src/sot/REPO_HYGIENE_MAP.json
-fi
-npm run llm:guard -- --action commit
-PREFLIGHT_ASSUME_SYNCED=1 PREFLIGHT_GUARD_MODE=enforce npm run preflight
-`;
-
-const prePush = `#!/bin/sh
+export function renderPrePushHook() {
+  return `#!/bin/sh
 set -e
 
 ZERO_SHA="0000000000000000000000000000000000000000"
@@ -72,24 +54,40 @@ do
   fi
 done
 
-echo "[hook:pre-push] llm guard + signing guard + verify preflight"
-npm run llm:guard -- --action push
-npm run signing:guard -- --config-only
-PREFLIGHT_GUARD_MODE=verify npm run preflight
+echo "[hook:pre-push] verify hook sync + reproduced evidence line"
+npm run hooks:verify
+npm run check:required
 `;
-
-await mkdir(hooksDir, { recursive: true });
-await writeFile(resolve(hooksDir, "pre-commit"), preCommit, "utf8");
-await writeFile(resolve(hooksDir, "pre-push"), prePush, "utf8");
-await chmod(resolve(hooksDir, "pre-commit"), 0o755);
-await chmod(resolve(hooksDir, "pre-push"), 0o755);
-
-const configured = spawnSync("git", ["config", "core.hooksPath", ".githooks"], {
-  cwd: root,
-  stdio: "inherit"
-});
-if (configured.status !== 0) {
-  throw new Error("git config core.hooksPath .githooks failed");
 }
 
-console.log("[HOOKS] installed (.githooks)");
+export function getGeneratedHooks() {
+  return Object.freeze([
+    { name: HOOK_FILE_NAMES.preCommit, content: renderPreCommitHook() },
+    { name: HOOK_FILE_NAMES.prePush, content: renderPrePushHook() }
+  ]);
+}
+
+export async function installHooks(root = process.cwd()) {
+  const hooksDir = resolve(root, HOOKS_DIRNAME);
+  await mkdir(hooksDir, { recursive: true });
+
+  for (const hook of getGeneratedHooks()) {
+    const hookPath = resolve(hooksDir, hook.name);
+    await writeFile(hookPath, hook.content, "utf8");
+    await chmod(hookPath, 0o755);
+  }
+
+  const configured = spawnSync("git", ["config", "core.hooksPath", HOOKS_DIRNAME], {
+    cwd: root,
+    stdio: "inherit"
+  });
+  if (configured.status !== 0) {
+    throw new Error("git config core.hooksPath .githooks failed");
+  }
+
+  console.log("[HOOKS] installed (.githooks)");
+}
+
+if (isDirectRun) {
+  await installHooks();
+}
