@@ -18,7 +18,7 @@
     "versioning:verify": "node dev/tools/runtime/sync-versioning.mjs",
     "test": "node dev/scripts/test-runner.mjs && node dev/tools/runtime/verify-docs-v2-guards.mjs",
     "test:sync": "npm test && node dev/tools/runtime/scan-doc-tasks.mjs",
-    "test:verify": "npm test && npm run docs:tasks:verify",
+    "test:verify": "npm run evidence:verify && npm run docs:v2:guard && npm run docs:tasks:verify",
     "docs:tasks:verify": "node dev/tools/runtime/scan-doc-tasks-verify.mjs",
     "evidence:verify": "node dev/scripts/verify-evidence.mjs",
     "testline:verify": "node dev/tools/runtime/verify-testline-integrity.mjs",
