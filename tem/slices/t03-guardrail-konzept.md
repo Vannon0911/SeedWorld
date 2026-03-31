@@ -3,6 +3,10 @@
 ## Ziel
 Wrapper, Adapter und Legacy-Fallbacks duerfen nicht mehr heimlich herumliegen wie defekte Kabel hinter der Wand. Jeder Rest bekommt eine Frist, eine Referenz, eine klare Verantwortung und einen automatischen Check.
 
+## Slice-Entscheidung 2026-03-31
+- `wrp-main-menu-controller`: entfernen. Der tote Main-Menu-/Dev-/Game-Controller-Stack wird geloescht statt verlaengert.
+- `wrp-world-render-fallback`: entfernen. Der Browser-Worker-/WorldGen-Fallback in `app/public/game.html` wird gestrichen statt verlaengert.
+
 ## Wrapper-Ablaufdaten
 Jeder Wrapper fuehrt strukturierte Metadaten mit:
 - `wrapperId`: stabiler technischer Name

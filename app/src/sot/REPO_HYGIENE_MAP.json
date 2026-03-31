@@ -73,6 +73,25 @@
     "allFiles": 116,
     "codeFiles": 100
   },
+  "cleanupPressure": {
+    "reviewDate": "2026-03-31",
+    "wrapperExpiryDate": "2026-04-06",
+    "daysRemainingAtReview": 6,
+    "currentlyTrackedUnreachableCount": 59,
+    "documentedUnreachableTargetCount": 68,
+    "gapToTarget": 9
+  },
+  "documentedUnreachableSupplement": [
+    "app/public/game.html",
+    "app/src/main.js",
+    "app/src/ui/UIController.js",
+    "docs/INDEX.md",
+    "docs/SOT/ORIENTATION.md",
+    "docs/SOT/REPO_HYGIENE_MAP.md",
+    "legacy/UNVERFID/CANDIDATES.md",
+    "tem/slices/remaining-task-stubs.md",
+    "tem/t01-legacy-wrapper-inventur.md"
+  ],
   "unownedFiles": [],
   "unreachableCode": [
     "app/server/patchUtils.js",

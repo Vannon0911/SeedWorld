@@ -1,43 +1,65 @@
-# Remaining Task Stubs
+# Remaining Task Execution Plan
 
-Diese Datei enthaelt die offenen Aufgaben ohne `[CHECK]`-Marker aus `tem/beide-plaene.md` und `tem/langfristiger-bug-plan.md`. Sie ist bewusst als Stub-Sammlung gehalten: kurz, direkt, und mit klarer Verifikation.
+Stand: `2026-03-31`
+
+Diese Datei ist keine Stub-Sammlung mehr. Sie ist der operative Ablaufplan fuer die naechsten sechs Tage bis zur Wrapper-Expiry am `2026-04-06`.
+
+## Harte Reihenfolge
+1. Wrapper-Expiry absichern und dokumentieren.
+2. Die dokumentierten, aber noch nicht eingetragenen Hygiene-/Unreachable-Kandidaten in die SoT ziehen.
+3. CF-003 bis CF-012 nur noch in Sequenz abarbeiten, nicht als offene Wunschliste.
+
+## Blocker vor Canvas-Migration
+| Thema | Zustand | Deadline | Erledigt wenn |
+|---|---|---|---|
+| Wrapper-Expiry | erledigt im Code-Schnitt | `2026-04-06` | `wrapper-guardrails.json` enthaelt keine aktiven Wrapper mehr und `check-wrapper-guardrails.mjs` meldet `wrappers=0` |
+| Hygiene-Gap `59 -> 68` | offen | `2026-04-01` | `REPO_HYGIENE_MAP` fuehrt die 9 zusaetzlichen dokumentierten Cleanup-Kandidaten explizit |
+| Task-Stub-Drift | offen | `2026-03-31` | diese Datei ist zur Prioritaets- und Ausfuehrungslinie umgebaut |
 
 ## Canvas-First Plan
-| Task | Stub | Dateien/Module | Check/Test |
-|---|---|---|---|
-| CF-003 | Einen einzigen aktiven Frame-Scheduler festziehen; der Canvas-Loop darf nicht doppelt laufen. | `app/src/ui/TileAnimationSDK.js`, `app/src/ui/UIController.js`, `app/src/ui/RenderManager.js`, `app/src/main.js`, `app/public/game.html` | `test:playwright:fulltiles`, Browser-Konsole auf doppelte Frames und Flackern pruefen. |
-| CF-004 | Die Tile-Basisdarstellung auf Canvas ziehen; DOM bleibt nur Referenz. | `app/src/ui/TileGridRenderer.js`, `app/src/ui/TileAnimationSDK.js`, `app/src/ui/RenderManager.js`, `app/src/ui/UIController.js`, `app/src/ui/GameUIController.js`, `app/public/game.html`, `app/src/ui/tileGrid.css` | `npm test`, visueller Smoke, Screenshot-/Layout-Abgleich. |
-| CF-005 | Hover, Selection, Icons und Effekte als Canvas-Layer nachziehen. | `Interaction-Visuals`, `Effect-Renderer`, `Icon-Atlas`, `RenderManager`, `UIController` | Playwright-Interaktionssmoke, Overlay- und Z-Order-Check. |
-| CF-006 | World-/Voxel-Hintergrund in denselben Koordinatenraum ziehen. | `World-Background/Voxel-Renderer`, `RenderManager`, `UIController` | Resize-/Zoom-Smoke, Deckungsgleichheit bei Pan/Zoom pruefen. |
-| CF-007 | SVG auf Linien/Pulse reduzieren und die Layer-Reihenfolge sauber halten. | `SVG-Overlay-Komponente`, `Overlay-Controller`, `RenderManager` | Visueller Smoke nach Resize/Zoom, keine Lageverschiebung. |
-| CF-008 | Pointer-Hit-Testing von DOM-Rechtecken auf `screenToTile` umstellen. | `Pointer-/Mouse-Handler`, `Selection-Controller`, `RenderManager` | Edge-/Corner-Smoke, High-DPI- und Grenzpixel-Fall pruefen. |
-| CF-009 | DOM-Grid abbauen und DOM nur fuer HUD/Panel behalten. | `Grid-Component`, `HUD/Panel-Container`, `CSS/Layout` | Browser-Smoke, keine visuellen Tiles mehr im DOM, HUD bleibt intakt. |
-| CF-010 | Debug-State und `render_game_to_text` um Canvas-Sicht erweitern. | `Debug-State-Serializer`, `render_game_to_text`, `Dev-Overlay` | Debug-Ausgabe mit viewport, tile hit, selection und entity layer vergleichen. |
-| CF-011 | Deckungsgleichheit, Resize/Zoom und SVG-Overlay mit Tests absichern. | `E2E/Playwright`, `Visual-Regression-Tests` | `test:playwright:fulltiles`, Screenshot-Vergleich, Konsolenfehlerfrei. |
-| CF-012 | Canvas-Hit-Testing, HUD und Smoke-Automation stabilisieren. | `Interaction-Tests`, `Smoke-Suite`, `CI-Testjob` | Edge-/Corner-Interaktionen plus HUD-Flow in Automation gruens halten. |
+| Task | Ziel | Dateien/Module | Verifikation | Sequenz |
+|---|---|---|---|---|
+| CF-003 | Einen einzigen aktiven Frame-Scheduler festziehen; keine doppelte Canvas-/Render-Loop. | `app/src/ui/UIController.js`, `app/src/ui/RenderManager.js`, `app/src/main.js`, `app/public/game.html` | lokaler Render-Smoke, keine doppelten Frames, kein Flackern | Start nach Wrapper-Cut |
+| CF-004 | Tile-Basisdarstellung auf Canvas ziehen; DOM nur noch Referenzpfad. | `app/src/ui/TileGridRenderer.js`, `app/src/ui/RenderManager.js`, `app/src/ui/UIController.js`, `app/public/game.html`, `app/src/ui/tileGrid.css` | `npm test`, visueller Smoke, Screenshot-/Layout-Abgleich | nach CF-003 |
+| CF-005 | Hover, Selection, Icons und Effekte als Canvas-Layer nachziehen. | `Interaction-Visuals`, `Effect-Renderer`, `Icon-Atlas`, `RenderManager`, `UIController` | lokaler Interaktionssmoke, Overlay- und Z-Order-Check | nach CF-004 |
+| CF-006 | World-/Voxel-Hintergrund in denselben Koordinatenraum ziehen. | `World-Background/Voxel-Renderer`, `RenderManager`, `UIController` | Resize-/Zoom-Smoke, Deckungsgleichheit bei Pan/Zoom | nach CF-005 |
+| CF-007 | SVG auf Linien/Pulse reduzieren und Layer-Reihenfolge sauber halten. | `SVG-Overlay-Komponente`, `Overlay-Controller`, `RenderManager` | visueller Smoke nach Resize/Zoom, keine Lageverschiebung | nach CF-006 |
+| CF-008 | Pointer-Hit-Testing von DOM-Rechtecken auf `screenToTile` umstellen. | `Pointer-/Mouse-Handler`, `Selection-Controller`, `RenderManager` | Edge-/Corner-Smoke, High-DPI- und Grenzpixel-Fall | nach CF-007 |
+| CF-009 | DOM-Grid abbauen; DOM bleibt nur fuer HUD/Panel. | `Grid-Component`, `HUD/Panel-Container`, `CSS/Layout` | Browser-Smoke, keine visuellen Tiles mehr im DOM | nach CF-008 |
+| CF-010 | Debug-State und `render_game_to_text` um Canvas-Sicht erweitern. | `Debug-State-Serializer`, `render_game_to_text`, `Dev-Overlay` | Debug-Ausgabe mit viewport, tile hit, selection, entity layer | nach CF-009 |
+| CF-011 | Deckungsgleichheit, Resize/Zoom und Overlay per Tests absichern. | `E2E/Playwright`, `Visual-Regression-Tests` | Screenshot-Vergleich, konsolenfehlerfrei | nach CF-010 |
+| CF-012 | Canvas-Hit-Testing, HUD und Smoke-Automation stabilisieren. | `Interaction-Tests`, `Smoke-Suite`, `CI-Testjob` | Edge-/Corner-Interaktionen plus HUD-Flow in Automation | nach CF-011 |
 
 ## Legacy- und Wrapper-Plan
-| Task | Stub | Dateien/Module | Check/Test |
-|---|---|---|---|
-| T04 | Den BaseUIController-Cluster auf die kanonische API migrieren. | `app/src/ui/BaseUIController.js`, Consumer-Module | `check:required`, `npm test`, `test:playwright:fulltiles`. |
-| T05 | Den MainMenuController-Cluster migrieren. | `app/src/ui/MainMenuController.js`, Consumer-Module | Browser-Interaktionstest, `npm test`, kein Fallback-Branch im migrierten Cluster. |
-| T06 | Den UIController-Cluster auf die Ziel-Events/APIs umziehen. | `app/src/ui/UIController.js`, Consumer-Module | Eventfluss pruefen, `npm test`, kein Legacy-Wrapper mehr im Cluster. |
-| T07 | World-Render-Fallbacks auf das noetige Minimum reduzieren. | World-Render-Module, Renderer, Bootstrap | Browser-Smoke, dokumentierte Restfaelle, keine verdeckte Fallback-Aktivierung. |
-| T08 | `app/public/game.html` von ueberfluessigen Fallbacks bereinigen. | `app/public/game.html` | E2E-/Interaktionstest, keine toten Script-Pfade mehr. |
-| T09 | Event-/Interface-Wrapper entfernen, sobald die Caller komplett migriert sind. | Wrapper-Module, betroffene Imports | `rg` ohne produktive Treffer, Build + Tests gruen. |
-| T10 | Legacy-Code und tote Acceptance-Pfade loeschen. | Legacy-Ordner/Dateien, Navigation-Konfig | Keine unerreichbaren Pfade, Navigation nur mit aktiven Features. |
-| T11 | Obsolete JSON-/Schema-/Manifest-Artefakte bereinigen. | JSON, Schema, Manifest-Dateien | Loader- und Schema-Validierung ohne Fehler. |
-| T12 | Adapter erst nach nachgewiesener Caller-Migration final entfernen. | Adapter-Module | Referenzgraph auf 0 produktive Adapter-Caller, Pflichttests gruen. |
-| T13 | SoT-Dateien und Baselines synchronisieren. | `FUNCTION_SOT`, `REPO_HYGIENE_MAP`, Docs-Index, Release-/Test-Baselines | Integritaets-Checks, `npm test`, `npm run evidence:verify`. |
+| Task | Ziel | Dateien/Module | Verifikation | Termin |
+|---|---|---|---|---|
+| T04 | erledigt: BaseUI-/MainMenu-/DevUI-/GameUI-Stack loeschen. | geloeschte Legacy-Controller | `check:required`, `check-wrapper-guardrails` | abgeschlossen `2026-03-31` |
+| T05 | UIController-Cluster auf verbleibende Ziel-Events/APIs reduzieren. | `app/src/ui/UIController.js`, Consumer-Module | Eventfluss pruefen, kein Legacy-Wrapper mehr | als naechster UI-Slice |
+| T06 | World-Render-Fallbacks auf Null reduzieren. | `app/public/game.html`, Bootstrap | keine toten Script-Pfade mehr | abgeschlossen `2026-03-31` |
+| T07 | Event-/Interface-Wrapper entfernen, sobald Caller migriert sind. | Wrapper-Module, Imports | produktive Suche ohne Treffer | nach T05 |
+| T08 | Legacy-Code und tote Acceptance-Pfade loeschen. | Legacy-Ordner/Dateien, Navigation-Konfig | keine unerreichbaren Pfade im Pflichtpfad | fortlaufend |
+| T09 | Obsolete JSON-/Schema-/Manifest-Artefakte bereinigen. | JSON, Schema, Manifest-Dateien | Loader- und Schema-Validierung | nach T08 |
+| T10 | Adapter nach nachgewiesener Caller-Migration final entfernen. | Adapter-Module | Referenzgraph auf 0 produktive Adapter-Caller | nach T07 |
+| T11 | SoT-Dateien und Baselines synchronisieren. | `FUNCTION_SOT`, `REPO_HYGIENE_MAP`, Docs-Index, Release-/Test-Baselines | Integritaets-Checks, `npm run evidence:verify` | laufend, Pflicht vor jedem Push |
 
 ## Long-Term Bug Plan
-| Task | Stub | Dateien/Module | Check/Test |
-|---|---|---|---|
-| P0-1 | Die fehlende `jszip`-Abhaengigkeit im Evidence-Bundle-Skript beheben oder den Import entfernen. | `dev/scripts/build-evidence-bundle.mjs`, `package.json`, `package-lock.json` | `npm run evidence:bundle` laeuft in sauberer Installation ohne Modul-Load-Fehler. |
-| P0-2 | Einen Bootstrap-Regressionstest fuer RenderManager-Resize und TileGridRenderer-Synchronisation anlegen. | `app/src/main.js`, `app/src/ui/RenderManager.js`, `app/src/ui/TileGridRenderer.js` | Resize-/Grid-Resync-Test ist gruen und belegt den Live-Pfad. |
-| P0-3 | Den Update-Pfad fuer `app/src/sot/testline-integrity.json` auf den kanonischen Updater festziehen. | `app/src/sot/testline-integrity.json`, `dev/tools/runtime/update-testline-integrity.mjs` | Datei wird nur noch ueber den Updater geaendert, Verifikation bleibt gruen. |
-| P1-1 | `RenderManager` als alleinige Geometriequelle fuer Koordinaten- und Hit-Test-Pfade absichern. | `RenderManager`, Koordinaten- und Hit-Test-Verbraucher | Alle Berechnungen laufen nachweislich ueber die zentrale Geometriequelle. |
-| P1-2 | Einen Live-Resync fuer dynamische `gridBounds` und Viewport-Werte implementieren. | `RenderManager`, `TileGridRenderer`, Bootstrap-/Resize-Pfade | Geometrie bleibt nach init, resize und zoom synchron. |
-| P1-3 | Resize-, Zoom- und Edge-Hit-Tests fuer Eingabe und Darstellung erweitern. | QA, Playwright, Interaktions-Smokes | Automatisierte Tests decken Standardfall und Grenzfaelle ab und laufen stabil in CI. |
-| P2-1 | Legacy- und Fallback-Zweige in `app/public/game.html` und Runtime-Guards minimieren. | `app/public/game.html`, Runtime-Guards | Nur noetige Ersatzpfade bleiben, Rest ist dokumentiert oder entfernt. |
-| P2-2 | Evidence- und Determinismus-Gates fuer Release- und Merge-Prozesse verbindlich machen. | Release-/Governance-Checks, Evidence-Workflows | `npm test`, `npm run evidence:verify` und Integrity-Checks sind Pflichtgates. |
+| Task | Ziel | Dateien/Module | Check/Test | Prioritaet |
+|---|---|---|---|---|
+| P0-1 | `jszip`-Abhaengigkeit im Evidence-Bundle-Skript beheben oder Import entfernen. | `dev/scripts/build-evidence-bundle.mjs`, `package.json`, `package-lock.json` | `npm run evidence:bundle` ohne Modul-Load-Fehler | hoch |
+| P0-2 | Bootstrap-Regressionstest fuer RenderManager-Resize und TileGridRenderer-Synchronisation anlegen. | `app/src/main.js`, `app/src/ui/RenderManager.js`, `app/src/ui/TileGridRenderer.js` | Resize-/Grid-Resync-Test gruen | hoch |
+| P0-3 | Updater-Pfad fuer `testline-integrity.json` kanonisch halten. | `app/src/sot/testline-integrity.json`, `dev/tools/runtime/update-testline-integrity.mjs` | Datei nur ueber Updater, Verifikation gruen | erledigen bevor weitere Baseline-Arbeit startet |
+| P1-1 | `RenderManager` als alleinige Geometriequelle absichern. | `RenderManager`, Koordinaten- und Hit-Test-Verbraucher | zentrale Geometriequelle nachweisbar | mittel |
+| P1-2 | Live-Resync fuer `gridBounds` und Viewport-Werte implementieren. | `RenderManager`, `TileGridRenderer`, Bootstrap-/Resize-Pfade | Geometrie bleibt nach init, resize und zoom synchron | mittel |
+| P1-3 | Resize-, Zoom- und Edge-Hit-Tests erweitern. | QA, Interaktions-Smokes | Grenzfaelle automatisiert abgedeckt | mittel |
+| P2-1 | Legacy- und Fallback-Zweige in `game.html` und Runtime-Guards minimieren. | `app/public/game.html`, Runtime-Guards | nur noetige Ersatzpfade bleiben | mittel |
+| P2-2 | Evidence- und Determinismus-Gates fuer Merge/Release verbindlich halten. | Merge-/Release-Checks, Evidence-Workflows | `npm test`, `npm run evidence:verify`, `npm run testline:verify` sind Pflicht | laufend |
+
+## 6-Tage-Plan bis Wrapper-Expiry
+| Datum | Pflichtarbeit | Ergebnis |
+|---|---|---|
+| `2026-03-31` | Tasklinie konkretisieren, Hygiene-Gap offenlegen, Wrapper-Expiry sichtbar machen | keine Stub-Planung mehr |
+| `2026-04-01` | 9 dokumentierte Zusatzkandidaten in `REPO_HYGIENE_MAP` einziehen | `59 -> 68` Gap geschlossen |
+| `2026-04-02` | Restliche UI-/Bootstrap-Slices ohne neue Wrapper durchziehen | keine offene Ablauf-Unklarheit |
+| `2026-04-03` | CF-003 und CF-004 abarbeiten | Canvas-Basis steht |
+| `2026-04-04` | CF-005 bis CF-008 abarbeiten | Layer und Hit-Testing stehen |
+| `2026-04-05` bis `2026-04-06` | CF-009 bis CF-012 und Rest-Checks | Ablaufdatum ohne ungeklaerte Wrapper-Abhaengigkeit |
