@@ -1,14 +1,13 @@
-# Remaining Task Execution Plan
+# Remaining Task Legacy Summary
 
 Stand: `2026-03-31`
 
-Diese Datei bleibt nur noch ein Lesefenster. Der maschinenfuehrende offene Planungspfad liegt jetzt unter `tem/tasks/open/*.json`. Das Archiv liegt unter `tem/tasks/archive/*.json`.
+Diese Datei ist nicht mehr fuehrend. Der maschinenfuehrende offene Planungspfad liegt unter `tem/tasks/open/*.json`. Die menschenlesbare Primarschicht liegt unter `docs/V2/`. Das Archiv liegt unter `tem/tasks/archive/*.json`.
 
-## Harte Reihenfolge
-1. Offene Tasks nur noch atomar als JSON pflegen.
-2. Scanner bei jedem Testlauf mitlaufen lassen.
-3. Erledigte Tasks automatisch ins Archiv verschieben lassen.
-4. Diese Datei nur noch als menschenlesbare Zusammenfassung verwenden.
+## Status
+1. Nicht mehr als offene Planquelle verwenden.
+2. Nur als Altzusammenfassung behalten, bis ihre Inhalte vollstaendig in `docs/V2/` oder `tem/tasks/` aufgehen.
+3. Neue oder geaenderte Planung gehoert nicht mehr hier hinein.
 
 ## Blocker vor Canvas-Migration
 | Thema | Zustand | Deadline | Erledigt wenn |

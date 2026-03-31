@@ -27,6 +27,7 @@ npm run check:required
 
 ## 4) Hinweise
 
+- Menschenlesbare Fuehrung laeuft primär ueber `docs/V2/`.
 - Browser-Runtime fuehrt nur noch die reduzierte Spielansicht aus.
 - Pflichtqualitaet ist nur noch Doppel-Lauf plus Evidence plus Testline-Schlusstest.
 - Server-, Patch-, Menue- und Plugin-Reste sind nicht Teil des reproduzierbaren Pflichtpfads.

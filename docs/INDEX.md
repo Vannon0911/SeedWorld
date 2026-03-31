@@ -5,8 +5,10 @@ Dieser Ordner soll nur noch wenige fuehrende Einstiegspunkte haben. Fuehrend sin
 ## Fuehrende Einstiegspunkte
 
 - Root Start: `README.md`
-- Orientierung: [ORIENTATION](./SOT/ORIENTATION.md)
 - Documentation 2.0: [HOME](./V2/HOME.md)
+- Systemplan: [SYSTEM_PLAN](./V2/SYSTEM_PLAN.md)
+- Regeln: [RULES](./V2/RULES.md)
+- Orientierung: [ORIENTATION](./SOT/ORIENTATION.md)
 - Human Truth: [TRUTH](./V2/TRUTH.md)
 - Planning Path: [PLAN](./V2/PLAN.md)
 - Archive: [ARCHIVE](./V2/ARCHIVE.md)
@@ -25,8 +27,8 @@ Dieser Ordner soll nur noch wenige fuehrende Einstiegspunkte haben. Fuehrend sin
 
 ## Bereiche
 
+- `V2/`: primäre menschenlesbare Wahrheit, Systemplan, Regeln, offene Tasks und Archiv.
 - `SOT/`: fuehrende maschinennahe Referenzen.
-- `V2/`: menschenlesbare Wahrheit, atomare Planung und Archiv.
 - `MANUEL/`: knappe Handreichungen fuer den reduzierten Repo-Kern.
 - `LLM/`: nachrangige Sonderdoku ausserhalb des Pflichtkerns.
 - `IN PLANUNG/`: historische oder vorbereitende Texte, nicht fuehrend.

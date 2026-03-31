@@ -7,6 +7,8 @@
   prefixes: app/src/game/
 - **Reproduction Evidence**: Double-run orchestration, evidence generation, comparison and final proof
   prefixes: dev/scripts/evidence-shared.mjs, dev/scripts/test-runner.mjs, dev/scripts/verify-evidence.mjs, dev/tools/runtime/verify-testline-integrity.mjs, dev/tests/modules/
+- **Documentation V2**: Human-readable truth, atomic planning tasks and archive automation
+  prefixes: app/src/sot/docs-v2.json, docs/V2/, tem/tasks/, dev/tools/runtime/docs-v2-shared.mjs, dev/tools/runtime/scan-doc-tasks.mjs, dev/tools/runtime/sync-docs-v2.mjs
 - **Deprecated Runtime**: No longer part of mandatory truth or gates
   prefixes: app/server/, start-server.js, app/src/main.js, app/src/browser/, app/src/ui/, app/src/plugins/, app/src/workers/, app/src/SeedWorld_WorldGen.mjs, dev/tools/patch/, dev/patches/, dev/scripts/playwright-tiles-full.mjs, dev/tools/runtime/preflight.mjs
 

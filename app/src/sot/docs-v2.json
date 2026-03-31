@@ -10,13 +10,18 @@
   },
   "registeredControlFiles": [
     "app/src/sot/docs-v2.json",
+    "app/src/sot/FUNCTION_SOT.json",
+    "app/src/sot/REPO_HYGIENE_MAP.json",
     "app/src/sot/source-of-truth.json",
     "app/src/sot/repo-boundaries.json",
+    "app/src/sot/testline-integrity.json",
     "package.json",
     "docs/INDEX.md",
     "docs/SOT/ORIENTATION.md",
+    "docs/SOT/REPO_HYGIENE_MAP.md",
     "docs/MANUEL/WORKFLOW.md",
     "docs/MANUEL/wiki/Home.md",
+    "docs/MANUEL/wiki/Architecture.md",
     "docs/MANUEL/wiki/Developer-Onboarding.md",
     "tem/TODO.md",
     "tem/WORKFLOW.md",
@@ -29,15 +34,18 @@
     "dev/tools/runtime/sync-tem-control-files.mjs"
   ],
   "humanPlanViews": [
-    "tem/slices/remaining-task-stubs.md",
     "docs/V2/HOME.md",
     "docs/V2/TRUTH.md",
+    "docs/V2/SYSTEM_PLAN.md",
+    "docs/V2/RULES.md",
     "docs/V2/PLAN.md",
     "docs/V2/ARCHIVE.md"
   ],
   "generatedDocs": [
     "docs/V2/HOME.md",
     "docs/V2/TRUTH.md",
+    "docs/V2/SYSTEM_PLAN.md",
+    "docs/V2/RULES.md",
     "docs/V2/PLAN.md",
     "docs/V2/ARCHIVE.md"
   ],

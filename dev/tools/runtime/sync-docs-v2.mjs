@@ -113,6 +113,58 @@ function renderPlan(openTasks) {
   return `${lines.join("\n")}\n`;
 }
 
+function renderSystemPlan(docsV2, openTasks) {
+  const lines = [
+    "# System Plan",
+    "",
+    "Dies ist der laufende Systemplan fuer Documentation 2.0. Er deckt die aktiven Bereiche des Repos ab und verbindet sie mit offenen atomaren Tasks.",
+    "",
+    "## Bereiche",
+    ""
+  ];
+
+  for (const area of docsV2.systemPlan?.areas || []) {
+    const relatedTasks = openTasks.filter((task) =>
+      task.scope_paths.some((scopePath) => area.roots.some((root) => scopePath === root || scopePath.startsWith(`${root}/`)))
+    );
+    lines.push(`### ${area.id}`);
+    lines.push("");
+    lines.push(`- Truth: ${area.truth}`);
+    lines.push(`- Roots: ${area.roots.map((item) => `\`${item}\``).join(", ")}`);
+    lines.push(
+      `- Open Tasks: ${relatedTasks.length > 0 ? relatedTasks.map((task) => `\`${task.task_id}\``).join(", ") : "keine"}`
+    );
+    lines.push("");
+  }
+
+  return `${lines.join("\n")}\n`;
+}
+
+function renderRules(docsV2) {
+  const lines = [
+    "# Rules",
+    "",
+    "Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung.",
+    "",
+    "## Harte Regeln",
+    "",
+    "- Keine offene Planung ausserhalb von `tem/tasks/open/*.json`.",
+    "- Keine geaenderte Datei ohne Registrierung in `docs-v2.json`, Task-Scope oder Task-Source.",
+    "- Keine Testline ohne `docs:v2:guard` vor dem Scanner.",
+    "- Erledigte atomare Tasks werden vom Scanner nach `tem/tasks/archive/` verschoben.",
+    "- Menschenlesbare Fuehrungsseiten werden nur aus der Doku-2.0-SoT erzeugt.",
+    "",
+    "## Guard Entry",
+    "",
+    `- \`${docsV2.guards.entry}\``,
+    "",
+    "## Scanner Entry",
+    "",
+    `- \`${docsV2.scanner.entry}\``
+  ];
+  return `${lines.join("\n")}\n`;
+}
+
 function renderArchive(archivedTasks) {
   const lines = [
     "# Archive",
@@ -170,11 +222,15 @@ async function main() {
 
   const home = renderHome(openTasks, archivedTasks, docsV2);
   const truth = renderTruth(sourceOfTruth, repoBoundaries, docsV2);
+  const systemPlan = renderSystemPlan(docsV2, openTasks);
+  const rules = renderRules(docsV2);
   const plan = renderPlan(openTasks);
   const archive = renderArchive(archivedTasks);
 
   await syncOrVerify(path.join(docsV2Root(root), "HOME.md"), home);
   await syncOrVerify(path.join(docsV2Root(root), "TRUTH.md"), truth);
+  await syncOrVerify(path.join(docsV2Root(root), "SYSTEM_PLAN.md"), systemPlan);
+  await syncOrVerify(path.join(docsV2Root(root), "RULES.md"), rules);
   await syncOrVerify(path.join(docsV2Root(root), "PLAN.md"), plan);
   await syncOrVerify(path.join(docsV2Root(root), "ARCHIVE.md"), archive);
 

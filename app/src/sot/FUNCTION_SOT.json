@@ -2609,6 +2609,142 @@
       "category": "runtime-tooling"
     },
     {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#archiveTask@164",
+      "name": "archiveTask",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 164,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#archiveTasksRoot@14",
+      "name": "archiveTasksRoot",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 14,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#collectChangedFiles@94",
+      "name": "collectChangedFiles",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 94,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#docsV2EvidencePath@18",
+      "name": "docsV2EvidencePath",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 18,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#docsV2Root@6",
+      "name": "docsV2Root",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 6,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#loadArchivedTasks@81",
+      "name": "loadArchivedTasks",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 81,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#loadOpenTasks@77",
+      "name": "loadOpenTasks",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 77,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#loadTaskDir@54",
+      "name": "loadTaskDir",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 54,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#openTasksRoot@10",
+      "name": "openTasksRoot",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 10,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#parsePorcelainPath@85",
+      "name": "parsePorcelainPath",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 85,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#readJson@22",
+      "name": "readJson",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 22,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#renderTaskBullet@186",
+      "name": "renderTaskBullet",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 186,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#runGit@128",
+      "name": "runGit",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 128,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#taskDigest@190",
+      "name": "taskDigest",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 190,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#taskMatchesChangeSet@152",
+      "name": "taskMatchesChangeSet",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 152,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#validateTask@30",
+      "name": "validateTask",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 30,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/docs-v2-shared.mjs#writeJson@26",
+      "name": "writeJson",
+      "file": "dev/tools/runtime/docs-v2-shared.mjs",
+      "line": 26,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/evidence-lock.mjs#collectEvidenceFiles@37",
       "name": "collectEvidenceFiles",
       "file": "dev/tools/runtime/evidence-lock.mjs",
@@ -3529,6 +3665,22 @@
       "category": "runtime-tooling"
     },
     {
+      "id": "dev/tools/runtime/scan-doc-tasks.mjs#main@29",
+      "name": "main",
+      "file": "dev/tools/runtime/scan-doc-tasks.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/scan-doc-tasks.mjs#runNodeScript@13",
+      "name": "runNodeScript",
+      "file": "dev/tools/runtime/scan-doc-tasks.mjs",
+      "line": 13,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/signing-guard.mjs#ensureConfig@40",
       "name": "ensureConfig",
       "file": "dev/tools/runtime/signing-guard.mjs",
@@ -3609,6 +3761,78 @@
       "category": "runtime-tooling"
     },
     {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#main@210",
+      "name": "main",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 210,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#relLink@15",
+      "name": "relLink",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 15,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderArchive@166",
+      "name": "renderArchive",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 166,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderHome@19",
+      "name": "renderHome",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 19,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderPlan@85",
+      "name": "renderPlan",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 85,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderRules@141",
+      "name": "renderRules",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 141,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderSystemPlan@114",
+      "name": "renderSystemPlan",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 114,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#renderTruth@41",
+      "name": "renderTruth",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 41,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/sync-docs-v2.mjs#syncOrVerify@194",
+      "name": "syncOrVerify",
+      "file": "dev/tools/runtime/sync-docs-v2.mjs",
+      "line": 194,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
       "id": "dev/tools/runtime/sync-tem-control-files.mjs#classify@8",
       "name": "classify",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
@@ -3617,58 +3841,50 @@
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#loadArtifacts@99",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#loadArtifacts@101",
       "name": "loadArtifacts",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 99,
+      "line": 101,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#main@137",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#main@140",
       "name": "main",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 137,
+      "line": 140,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderSchema@73",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderSchema@75",
       "name": "renderSchema",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 73,
+      "line": 75,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderTodo@18",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderTodo@20",
       "name": "renderTodo",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 18,
+      "line": 20,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderWorkflow@46",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#renderWorkflow@48",
       "name": "renderWorkflow",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 46,
+      "line": 48,
       "kind": "function",
       "category": "runtime-tooling"
     },
     {
-      "id": "dev/tools/runtime/sync-tem-control-files.mjs#syncOrVerifyFile@119",
+      "id": "dev/tools/runtime/sync-tem-control-files.mjs#syncOrVerifyFile@122",
       "name": "syncOrVerifyFile",
       "file": "dev/tools/runtime/sync-tem-control-files.mjs",
-      "line": 119,
-      "kind": "function",
-      "category": "runtime-tooling"
-    },
-    {
-      "id": "dev/tools/runtime/syncDocs.mjs#runTool@10",
-      "name": "runTool",
-      "file": "dev/tools/runtime/syncDocs.mjs",
-      "line": 10,
+      "line": 122,
       "kind": "function",
       "category": "runtime-tooling"
     },
@@ -3741,6 +3957,38 @@
       "name": "runGit",
       "file": "dev/tools/runtime/updateRedActions.mjs",
       "line": 8,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-docs-v2-guards.mjs#addRegistered@29",
+      "name": "addRegistered",
+      "file": "dev/tools/runtime/verify-docs-v2-guards.mjs",
+      "line": 29,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-docs-v2-guards.mjs#isJsonTask@9",
+      "name": "isJsonTask",
+      "file": "dev/tools/runtime/verify-docs-v2-guards.mjs",
+      "line": 9,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-docs-v2-guards.mjs#isPlanCandidate@13",
+      "name": "isPlanCandidate",
+      "file": "dev/tools/runtime/verify-docs-v2-guards.mjs",
+      "line": 13,
+      "kind": "function",
+      "category": "runtime-tooling"
+    },
+    {
+      "id": "dev/tools/runtime/verify-docs-v2-guards.mjs#main@35",
+      "name": "main",
+      "file": "dev/tools/runtime/verify-docs-v2-guards.mjs",
+      "line": 35,
       "kind": "function",
       "category": "runtime-tooling"
     },

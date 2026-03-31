@@ -5,7 +5,7 @@
   "status": "open",
   "track": "canvas-migration",
   "source_docs": [
-    "tem/slices/remaining-task-stubs.md"
+    "docs/V2/SYSTEM_PLAN.md"
   ],
   "description": "Overlay-, Hover- und Effektlogik in denselben Canvas-Koordinatenraum ziehen.",
   "scope_paths": [

@@ -1,0 +1,19 @@
+# Rules
+
+Documentation 2.0 ist nicht nur Doku, sondern ein Guard-System fuer Planung und Archivierung.
+
+## Harte Regeln
+
+- Keine offene Planung ausserhalb von `tem/tasks/open/*.json`.
+- Keine geaenderte Datei ohne Registrierung in `docs-v2.json`, Task-Scope oder Task-Source.
+- Keine Testline ohne `docs:v2:guard` vor dem Scanner.
+- Erledigte atomare Tasks werden vom Scanner nach `tem/tasks/archive/` verschoben.
+- Menschenlesbare Fuehrungsseiten werden nur aus der Doku-2.0-SoT erzeugt.
+
+## Guard Entry
+
+- `dev/tools/runtime/verify-docs-v2-guards.mjs`
+
+## Scanner Entry
+
+- `dev/tools/runtime/scan-doc-tasks.mjs`

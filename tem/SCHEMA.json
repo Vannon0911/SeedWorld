@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "bcf119626ca5f523a2e34c4315f27b9798a1b21e67072a2c2d2803dc23de02db",
+  "snapshotId": "bb830d5ff5f721de66945e4d7012a9c558db0b4bb9048db456ccae8b6ce773b8",
   "controlFiles": [
     "TODO.md",
     "WORKFLOW.md",
@@ -164,7 +164,7 @@
     {
       "path": "tem/slices/remaining-task-stubs.md",
       "category": "implementierungs-slices",
-      "sha256": "31f698d94cc1cc0ae345eebdc15b964414d3d807335926860a016036f7300a57"
+      "sha256": "d616aa9976a5022840b44795ebbebd4e9292112713a8df8e5430cad36b479acb"
     },
     {
       "path": "tem/slices/t02-kanonische-api-matrix.md",
@@ -194,52 +194,52 @@
     {
       "path": "tem/tasks/open/CF-003.json",
       "category": "task-open",
-      "sha256": "c1fad9545d3e8b8e409e82db0dfdf1c1c0da057ae38554c789fafb9529a66b34"
+      "sha256": "703fb3c0c48fec898acd2b74a89a396e31e9ff8ad14efbbd3be72f589630ebcb"
     },
     {
       "path": "tem/tasks/open/CF-004.json",
       "category": "task-open",
-      "sha256": "7a867308a2ac6008cd3f0a443a040af65fef8fb8370d7d285e0bc6a70b8523b0"
+      "sha256": "8253516c169a22d9be623a38729b84e1688fd3ed50f2070ac846cbea6541f0a0"
     },
     {
       "path": "tem/tasks/open/CF-005.json",
       "category": "task-open",
-      "sha256": "5d9e188f2f1fec09001123f284549384d2ef5dedaad76814146601068cb10f78"
+      "sha256": "8e39fb25e0a6f5640343b5c34b58fafa5cf5f12a300cd6be7c0a5ab958f92b7b"
     },
     {
       "path": "tem/tasks/open/CF-006.json",
       "category": "task-open",
-      "sha256": "17aa98df1df7149025b9a00246671005f999900e6ed53437609d7b18228ab991"
+      "sha256": "481087129f0cdf3788d6c3c3077e26e85174b2c05d2a65b005faa9661400d746"
     },
     {
       "path": "tem/tasks/open/CF-007.json",
       "category": "task-open",
-      "sha256": "b5fc19c114802f4396d388f77940dc4d3c5f5f1a9fa81b7a05cc36e7a49e0da2"
+      "sha256": "a095203f01268daeaa4f9f7d49fd8167ab959995b02aec30c9a8580828883c9e"
     },
     {
       "path": "tem/tasks/open/CF-008.json",
       "category": "task-open",
-      "sha256": "a0c3c91ee4e98f4035ed537eef9f69dcd8cac2024894c37768039bad6e292c94"
+      "sha256": "0845299d8aec2305c0f9fed07a251b7fa8cf1d4f56570d98a2a885bbe26d0a0e"
     },
     {
       "path": "tem/tasks/open/CF-009.json",
       "category": "task-open",
-      "sha256": "5ade50a83f7c2ab01122d63dbfa6981c01b1bbd835f26e46c9326b50d17537d6"
+      "sha256": "5816d378342973fa7b50ed728eaf5bfd1d948b239dbe304908e6b5f145651f4f"
     },
     {
       "path": "tem/tasks/open/CF-010.json",
       "category": "task-open",
-      "sha256": "514780e0712f4ec6ea5288b763cf645607e558d30bf6d679925e3ebea03c8b24"
+      "sha256": "c23fcbaeea837622cd13726f289595714d6394ebb7f58b8daa047662b008f450"
     },
     {
       "path": "tem/tasks/open/CF-011.json",
       "category": "task-open",
-      "sha256": "6553beb23ed25523f56528917b9f5a08ddef742936baab143b393a7a27eb5b98"
+      "sha256": "6cd7dce5afde031f20546be449ed8463da6918654e014d2493f73a3b3be694a9"
     },
     {
       "path": "tem/tasks/open/CF-012.json",
       "category": "task-open",
-      "sha256": "7f0f4a03dc0edf60900a54a5eaf1ae9fa14d74395e274498d1ca57e6f7af4dc2"
+      "sha256": "470f79a0f9a292491e57f30fed8738abb1e1cbb0682baefbd0ccee201a856929"
     },
     {
       "path": "tem/test-evidence-report.md",

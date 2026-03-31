@@ -5,7 +5,7 @@
   "status": "open",
   "track": "canvas-migration",
   "source_docs": [
-    "tem/slices/remaining-task-stubs.md"
+    "docs/V2/SYSTEM_PLAN.md"
   ],
   "description": "World- oder Hintergrundlayer mit derselben Geometrie wie die Tile-Darstellung verbinden.",
   "scope_paths": [

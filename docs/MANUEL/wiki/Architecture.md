@@ -25,5 +25,7 @@ Tags: `architecture` `kernel` `content` `reproduction`
 
 ## Referenzen
 
+- [../../V2/SYSTEM_PLAN.md](../../V2/SYSTEM_PLAN.md)
+- [../../V2/RULES.md](../../V2/RULES.md)
 - [../../SOT/ORIENTATION.md](../../SOT/ORIENTATION.md)
 - [../../SOT/REPO_HYGIENE_MAP.md](../../SOT/REPO_HYGIENE_MAP.md)

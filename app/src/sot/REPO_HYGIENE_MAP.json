@@ -37,6 +37,18 @@
       "purpose": "Double-run orchestration, evidence generation, comparison and final proof"
     },
     {
+      "name": "Documentation V2",
+      "prefixes": [
+        "app/src/sot/docs-v2.json",
+        "docs/V2/",
+        "tem/tasks/",
+        "dev/tools/runtime/docs-v2-shared.mjs",
+        "dev/tools/runtime/scan-doc-tasks.mjs",
+        "dev/tools/runtime/sync-docs-v2.mjs"
+      ],
+      "purpose": "Human-readable truth, atomic planning tasks and archive automation"
+    },
+    {
       "name": "Deprecated Runtime",
       "prefixes": [
         "app/server/",

@@ -5,7 +5,7 @@
   "status": "open",
   "track": "canvas-migration",
   "source_docs": [
-    "tem/slices/remaining-task-stubs.md"
+    "docs/V2/SYSTEM_PLAN.md"
   ],
   "description": "Canvas als primaren Tile-Pfad setzen und DOM nur noch als Restadapter behandeln.",
   "scope_paths": [

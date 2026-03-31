@@ -5,7 +5,7 @@
   "status": "open",
   "track": "canvas-migration",
   "source_docs": [
-    "tem/slices/remaining-task-stubs.md"
+    "docs/V2/SYSTEM_PLAN.md"
   ],
   "description": "Interaktion nicht mehr ueber DOM-Rechtecke, sondern ueber Geometrie aus dem Renderpfad berechnen.",
   "scope_paths": [

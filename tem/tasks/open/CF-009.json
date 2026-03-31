@@ -5,7 +5,7 @@
   "status": "open",
   "track": "canvas-migration",
   "source_docs": [
-    "tem/slices/remaining-task-stubs.md"
+    "docs/V2/SYSTEM_PLAN.md"
   ],
   "description": "DOM soll nur noch HUD oder Panel tragen, nicht mehr die Tile-Flaeche selbst.",
   "scope_paths": [

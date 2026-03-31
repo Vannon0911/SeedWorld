@@ -98,6 +98,10 @@ export async function collectChangedFiles(root) {
   const changed = new Set();
   for (const line of output.split(/\r?\n/)) {
     if (!line.trim()) continue;
+    const status = line.slice(0, 2);
+    if (status.includes("D")) {
+      continue;
+    }
     const candidate = parsePorcelainPath(line.slice(3));
     if (!candidate) {
       continue;
