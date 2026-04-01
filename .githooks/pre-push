@@ -29,6 +29,7 @@ do
   fi
 done
 
-echo "[hook:pre-push] verify hook sync + reproduced evidence line"
+echo "[hook:pre-push] verify hook sync + llm gate + required checks"
 npm run hooks:verify
+npm run llm:guard -- --action push
 npm run check:required

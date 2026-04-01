@@ -16,8 +16,9 @@ export function renderPreCommitHook() {
   return `#!/bin/sh
 set -e
 
-echo "[hook:pre-commit] verify hook sync + deterministic core tests"
+echo "[hook:pre-commit] verify hook sync + llm gate + deterministic core tests"
 npm run hooks:verify
+npm run llm:guard -- --action commit
 npm test
 `;
 }
@@ -54,8 +55,9 @@ do
   fi
 done
 
-echo "[hook:pre-push] verify hook sync + reproduced evidence line"
+echo "[hook:pre-push] verify hook sync + llm gate + required checks"
 npm run hooks:verify
+npm run llm:guard -- --action push
 npm run check:required
 `;
 }

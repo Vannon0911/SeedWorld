@@ -4,7 +4,6 @@ import { readFile, stat } from 'node:fs/promises';
 const ROOT_DIR = process.cwd();
 const PUBLIC_DIR = resolve(ROOT_DIR, 'app', 'public');
 const SRC_DIR = resolve(ROOT_DIR, 'app', 'src');
-const PATCHES_DIR = resolve(ROOT_DIR, 'dev', 'patches');
 
 const CONTENT_TYPES = Object.freeze({
   '.html': 'text/html; charset=utf-8',
@@ -18,11 +17,6 @@ const CONTENT_TYPES = Object.freeze({
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8'
 });
-
-const PATCH_SCHEMA_PATHS = new Set([
-  '/patches/patch-schema.json',
-  '/patches/patch-matrix.json'
-]);
 
 /**
  * Rejects hidden path segments so static routing cannot expose dotfiles.
@@ -57,8 +51,6 @@ export function resolveStaticPath(pathname) {
     if (!isPathInside(SRC_DIR, candidate) || !new Set(['.js', '.mjs', '.css']).has(ext)) return null;
     return candidate;
   }
-
-  if (PATCH_SCHEMA_PATHS.has(pathname)) return resolve(PATCHES_DIR, pathname.split('/').pop());
   return null;
 }
 

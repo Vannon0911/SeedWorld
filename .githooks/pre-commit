@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
-echo "[hook:pre-commit] verify hook sync + deterministic core tests"
+echo "[hook:pre-commit] verify hook sync + llm gate + deterministic core tests"
 npm run hooks:verify
+npm run llm:guard -- --action commit
 npm test

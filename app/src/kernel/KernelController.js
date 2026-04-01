@@ -1,6 +1,8 @@
 import { withDeterminismGuards } from "./runtimeGuards.js";
 import { KernelRouter } from "./KernelRouter.js";
 import { ActionRegistry } from "./ActionRegistry.js";
+import { KernelGates } from "./KernelGates.js";
+import { GateManager } from "./GateManager.js";
 import { generateWorld } from "../game/worldGen.js";
 
 const DEFAULT_CONFIRMATION_PREFIX = "KERNEL-CONFIRM";
@@ -56,6 +58,13 @@ export class KernelController {
     this.router.registerHandler("game", (action) => this.#handleRegisteredAction("game", action));
     this.router.registerHandler("kernel", (action) => this.#handleRegisteredAction("kernel", action));
 
+    this.kernelGates = new KernelGates((...args) => this.#kernelInterface(...args));
+    this.gateManager = new GateManager({
+      kernelGates: this.kernelGates,
+      mode: this.governanceMode,
+      onAudit: (event) => this.#recordGovernanceAudit({ ...event, source: "gate" })
+    });
+
     this.actionRegistry = new ActionRegistry();
     this.#registerActions();
   }
@@ -77,6 +86,10 @@ export class KernelController {
       tick: this.currentTick,
       seed: this.deterministicSeed
     };
+  }
+
+  getCurrentTick() {
+    return this.currentTick;
   }
 
   async #execute(input) {
@@ -109,6 +122,21 @@ export class KernelController {
       throw this.#denyAction({
         code: "ACTION_VALIDATION_FAILED",
         reason: validation.reason || `Action-Validation fehlgeschlagen: ${domain}.${actionType}`,
+        domain,
+        actionType
+      });
+    }
+
+    const gateResult = await this.gateManager.enforce({
+      domain,
+      actionType,
+      requiredGate: definition.requiredGate,
+      context: this.#buildGateContext(input, action)
+    });
+    if (!gateResult.allowed) {
+      throw this.#denyAction({
+        code: "ACTION_GATE_DENIED",
+        reason: `Gate denied: ${definition.requiredGate}`,
         domain,
         actionType
       });
@@ -383,5 +411,33 @@ export class KernelController {
       throw new Error(`[KERNEL_CONTROLLER] ${key} muss eine ganze Zahl sein.`);
     }
     return num;
+  }
+
+  #buildGateContext(input, action) {
+    const gateContext = isPlainObject(input?.gateContext) ? input.gateContext : {};
+    return {
+      ...gateContext,
+      action,
+      actionType: action.type,
+      gameLogic: true,
+      devEnabled: input?.devEnabled === true,
+      patchData: isPlainObject(action?.patch) ? action.patch : null,
+      tickCount: Number.isFinite(Number(action?.ticks)) ? Number(action.ticks) : 0,
+      modification: isPlainObject(action?.state) ? action.state : null
+    };
+  }
+
+  #kernelInterface(command, arg) {
+    if (command === "system.ready") return true;
+    if (command === "game.exists") return true;
+    if (command === "dev.available") return false;
+    if (command === "patch.system.available") return false;
+    if (command === "user.can_patch") return false;
+    if (command === "tick.can_advance") return true;
+    if (command === "state.can_modify") return Boolean(arg && typeof arg === "object");
+    if (command === "system.can_reset") return false;
+    if (command === "system.can_shutdown") return false;
+    if (command === "patch.get") return null;
+    return false;
   }
 }
